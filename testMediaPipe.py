@@ -50,8 +50,8 @@ with mp_pose.Pose(min_detection_confidence=0.8, min_tracking_confidence=0.8) as 
                                             
             cv2.imshow('Mediapipe Feed', image)
 
-            if cv2.waitKey(10) & 0xFF == ord('q'):
-                break
+        if cv2.waitKey(10) & 0xFF == ord('q'):
+            break
 
         cap.release()
         cv2.destroyAllWindows()
