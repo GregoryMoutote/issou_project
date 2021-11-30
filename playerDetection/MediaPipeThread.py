@@ -1,4 +1,4 @@
-from testMediaPipe import MediaPipeTool
+from playerDetection.MediaPipeTool import MediaPipeTool
 import threading
 
 class MediaPipeThread(threading.Thread):

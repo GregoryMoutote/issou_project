@@ -1,5 +1,5 @@
 from mainMenuInterface import *
-from MediaPipeThread import MediaPipeThread
+from playerDetection.MediaPipeThread import MediaPipeThread
 
 detection = MediaPipeThread()
 detection.start()

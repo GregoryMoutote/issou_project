@@ -1,5 +1,5 @@
 from Interface import *
-from testMediaPipe import*
+
 
 class InterfaceCalibrage(Interface):
 
