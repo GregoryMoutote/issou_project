@@ -47,8 +47,8 @@ class MediaPipeTool :
                     self.hand = []
                     if resultsHand.multi_hand_landmarks:
                         for num, hand in enumerate(resultsHand.multi_hand_landmarks):
-                            hand_x = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x*image_width
-                            hand_y = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y*image_height
+                            hand_x = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x*image_width*1920/500
+                            hand_y = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y*image_height*1080/500
                             self.hand.append((hand_x,hand_y))
                             #mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,
                              #                         mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
