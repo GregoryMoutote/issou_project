@@ -18,7 +18,7 @@ class color_util :
 
         # Webcam
         cap = cv2.VideoCapture(0)
-        while(1):
+        while(len(self.colorPoint)!=4):
             _,image = cap.read()
         # FIN WEBCAM
 

@@ -9,3 +9,4 @@ class colorThread(threading.Thread):
 
     def run(self):
         self.colorClass.detect_color()
+        print(self.colorClass.colorPoint)
