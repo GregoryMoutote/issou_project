@@ -1,3 +1,7 @@
 from mainMenuInterface import *
+from MediaPipeThread import MediaPipeThread
 
-MainMenuInterface()
+detection = MediaPipeThread()
+detection.start()
+
+MainMenuInterface(detection)

@@ -10,10 +10,10 @@ height= user32.GetSystemMetrics(1)
 
 class MainMenuInterface:
 
-    def __init__(self):
+    def __init__(self,detection):
         pygame.init()
         print("init pygame")
-
+        self.detection=detection
         screenData = ctypes.windll.user32
         self.screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN,pygame.NOFRAME)
 
@@ -46,7 +46,7 @@ class MainMenuInterface:
                         self.show()
                         print("passage")
                     if self.botton[1].botton.collidepoint(pos):
-                        InterfaceCalibrage(screenData,self.screen)
+                        InterfaceCalibrage(screenData,self.screen,self.detection)
                         self.show()
                         print("passage")
                     if self.botton[4].botton.collidepoint(pos):
