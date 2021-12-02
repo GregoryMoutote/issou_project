@@ -75,5 +75,7 @@ class color_util :
             # Program Termination
             cv2.imshow("Multiple Color Detection in Real-TIme", image)
             if cv2.waitKey(10) & 0xFF == ord('q'):
-                cap.release()
-                cv2.destroyAllWindows()
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()

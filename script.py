@@ -11,8 +11,10 @@ from MediaPipeThread import MediaPipeThread
 
 detection = colorThread()
 detection.start()
-"""while 1:
+while 1:
     if len(detection.colorClass.colorPoint) != 0:
         print(detection.colorClass.colorPoint)
     if keyboard.is_pressed("q"):
-        break"""
+        break
+    if len(detection.colorClass.colorPoint) >= 4:
+        break

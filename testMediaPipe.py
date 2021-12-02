@@ -11,7 +11,6 @@ class MediaPipeTool :
         mp_holistic = mp.solutions.holistic
         cap = cv2.VideoCapture(0)
 
-        cap = cv2.VideoCapture(0)
         ## Setup mediapipe instance
         with mp_pose.Pose(min_detection_confidence=0.8, min_tracking_confidence=0.8) as pose:
             with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
