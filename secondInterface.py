@@ -5,7 +5,6 @@ from math import *
 
 class SecondInterface (Interface):
 
-
     def __init__(self,screenData,screen):
         super().__init__(screenData,screen)
         background = pygame.image.load("picture/fond.png")
@@ -41,5 +40,3 @@ class SecondInterface (Interface):
                     return True
 
         return False
-
-

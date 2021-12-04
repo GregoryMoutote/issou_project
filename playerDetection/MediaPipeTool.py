@@ -5,6 +5,7 @@ import numpy as np
 class MediaPipeTool :
     def __init__(self):
         self.hand = []
+
     def body_detection(self):
         mp_drawing = mp.solutions.drawing_utils
         mp_hands = mp.solutions.hands

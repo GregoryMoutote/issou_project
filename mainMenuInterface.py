@@ -1,4 +1,7 @@
 import ctypes
+
+import pygame.draw
+
 from secondInterface import *
 from botton import *
 from interfaceCalibrage import *
@@ -28,30 +31,42 @@ class MainMenuInterface:
         self.botton.append(Botton(width/6*3+5,height/2+113,width/2.4,75,self.screen,(0,112,192),"QUITTER",40,275,"Glitch.otf",(255,255,255)))
 
         self.screen.blit(self.fondLogo, (width/10, height/2-249))
+        self.x=0
+        self.y=0
 
         continuer=True
 
         while continuer:
+            hand = self.detection.mediaPipeClass.hand
+            if (len(hand)):
+                self.x = hand[0][0]
+                self.y = hand[0][1]
+
             pygame.display.update()
 
-            for event in pygame.event.get():
-                x,y=pygame.mouse.get_pos()
-                if event.type == pygame.KEYDOWN :
-                    if event.key == pygame.K_SPACE:
-                        continuer = False
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
-                    if self.botton[0].botton.collidepoint(pos):
-                        SecondInterface(screenData, self.screen)
-                        self.show()
-                        print("passage")
-                    if self.botton[1].botton.collidepoint(pos):
-                        InterfaceCalibrage(screenData,self.screen,self.detection)
-                        self.show()
-                        print("passage")
-                    if self.botton[4].botton.collidepoint(pos):
-                        continuer=False
-                        print("arrêt")
+            #for event in pygame.event.get():
+                #x,y=pygame.mouse.get_pos()
+                #if event.type == pygame.KEYDOWN :
+                 #   if event.key == pygame.K_SPACE:
+                  #      continuer = False
+                #if event.type == pygame.MOUSEBUTTONDOWN:
+                 #   pos = pygame.mouse.get_pos()
+
+            if self.x>self.botton[0].x and self.x<(self.botton[0].x+self.botton[0].width) and self.y>self.botton[0].y and self.y<(self.botton[0].y+self.botton[0].height):
+               print("passage")
+               SecondInterface(screenData, self.screen)
+               self.x = 0
+               self.y = 0
+               self.show()
+
+                    #if self.botton[1].botton.collidepoint(pos):
+                     #   InterfaceCalibrage(screenData,self.screen,self.detection)
+                      #  self.show()
+                       # print("passage")
+                    #if self.botton[4].botton.collidepoint(pos):
+                     #   self.detection.stop()
+                      #  continuer=False
+                       # print("arrêt")
 
     def toucheCible(left,top,radius,x,y):
 
@@ -73,3 +88,5 @@ class MainMenuInterface:
         self.screen.blit(self.fondLogo, (width/10, height/2-249))
 
 
+    def testAffichage(self):
+        pygame.draw.circle(self.screen, (0, 255,0), (self.x, self.y), 10)
