@@ -7,6 +7,7 @@ class MediaPipeTool :
         self.hand = []
 
     def body_detection(self):
+        self.continuer=True
         mp_drawing = mp.solutions.drawing_utils
         mp_hands = mp.solutions.hands
         mp_pose = mp.solutions.pose
@@ -48,8 +49,8 @@ class MediaPipeTool :
                     self.hand = []
                     if resultsHand.multi_hand_landmarks:
                         for num, hand in enumerate(resultsHand.multi_hand_landmarks):
-                            hand_x = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x*image_width*1920/500
-                            hand_y = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y*image_height*1080/500
+                            hand_x = hand.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x*image_width*1920/500
+                            hand_y = hand.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y*image_height*1080/500
                             self.hand.append((hand_x,hand_y))
                             #mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,
                              #                         mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
@@ -59,9 +60,12 @@ class MediaPipeTool :
 
                     cv2.imshow('Mediapipe Feed', image)
 
-                    if cv2.waitKey(10) & 0xFF == ord('q'):
+                    if self.continuer==False:
                         break
 
                 cap.release()
                 cv2.destroyAllWindows()
+
+    def finMediaPipe(self):
+        self.continuer=False
 

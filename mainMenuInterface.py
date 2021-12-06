@@ -31,16 +31,24 @@ class MainMenuInterface:
         self.botton.append(Botton(width/6*3+5,height/2+113,width/2.4,75,self.screen,(0,112,192),"QUITTER",40,275,"Glitch.otf",(255,255,255)))
 
         self.screen.blit(self.fondLogo, (width/10, height/2-249))
-        self.x=0
-        self.y=0
+        self.rightX=0
+        self.rightY=0
+        self.leftX=0
+        self.leftY=0
 
         continuer=True
 
         while continuer:
             hand = self.detection.mediaPipeClass.hand
-            if (len(hand)):
-                self.x = hand[0][0]
-                self.y = hand[0][1]
+            if (len(hand)==1):
+                self.rightX = hand[0][0]
+                self.rightY = hand[0][1]
+            if (len(hand)==2):
+                self.leftX = hand[1][0]
+                self.leftY = hand[1][1]
+
+
+            self.testAffichage()
 
             pygame.display.update()
 
@@ -52,12 +60,19 @@ class MainMenuInterface:
                 #if event.type == pygame.MOUSEBUTTONDOWN:
                  #   pos = pygame.mouse.get_pos()
 
-            if self.x>self.botton[0].x and self.x<(self.botton[0].x+self.botton[0].width) and self.y>self.botton[0].y and self.y<(self.botton[0].y+self.botton[0].height):
+            if self.rightX>self.botton[0].x and self.rightX<(self.botton[0].x+self.botton[0].width) and self.rightY>self.botton[0].y and self.rightY<(self.botton[0].y+self.botton[0].height):
                print("passage")
                SecondInterface(screenData, self.screen)
-               self.x = 0
-               self.y = 0
+               self.rightX = 0
+               self.rightY = 0
+               self.leftX = 0
+               self.leftY = 0
                self.show()
+
+            #if self.rightX > self.botton[4].x and self.rightX < (self.botton[4].x + self.botton[4].width) and self.rightY >self.botton[4].y and self.rightY < (self.botton[4].y + self.botton[4].height):
+             #   self.detection.mediaPipeClass.finMediaPipe()
+              #  self.detection.stop()
+               # continuer=False
 
                     #if self.botton[1].botton.collidepoint(pos):
                      #   InterfaceCalibrage(screenData,self.screen,self.detection)
@@ -89,4 +104,6 @@ class MainMenuInterface:
 
 
     def testAffichage(self):
-        pygame.draw.circle(self.screen, (0, 255,0), (self.x, self.y), 10)
+
+        pygame.draw.circle(self.screen, (0, 255,0), (self.rightX,self.rightY), 10)
+        pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX, self.leftY), 10)
