@@ -37,15 +37,19 @@ class MainMenuInterface:
         self.leftY=0
 
         continuer=True
+        print("start")
 
         while continuer:
             hand = self.detection.mediaPipeClass.hand
+
             if (len(hand)==1):
                 self.rightX = hand[0][0]
                 self.rightY = hand[0][1]
             if (len(hand)==2):
-                self.leftX = hand[1][0]
-                self.leftY = hand[1][1]
+                self.rightX = hand[1][0]
+                self.rightY = hand[1][1]
+                self.leftX = hand[0][0]
+                self.leftY = hand[0][1]
 
 
             self.testAffichage()
@@ -104,6 +108,5 @@ class MainMenuInterface:
 
 
     def testAffichage(self):
-
-        pygame.draw.circle(self.screen, (0, 255,0), (self.rightX,self.rightY), 10)
+        pygame.draw.circle(self.screen, (0, 255, 0), (self.rightX, self.rightY), 10)
         pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX, self.leftY), 10)
