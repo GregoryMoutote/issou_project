@@ -1,4 +1,6 @@
 import pygame
+from pygame.transform import smoothscale
+
 
 class Botton:
 
@@ -16,9 +18,9 @@ class Botton:
         self.font="font/"+font
         self.textColor=textColor
         self.botton=pygame.Rect(x,y,width,height)
-        self.showTarget()
+        self.showBotton()
 
-    def showTarget(self):
+    def showBotton(self):
         pygame.font.init()
         pygame.draw.rect(self.screen, self.color, self.botton)
         myfont = pygame.font.Font(self.font, self.textSize)
@@ -26,3 +28,6 @@ class Botton:
         self.screen.blit(textsurface, (self.x+self.textLeftSpace, self.y+(self.height-self.textSize)/2))
         pygame.display.update()
         pygame.font.quit()
+
+    def animeBotton(self):
+        self.botton=smoothscale(self.botton ,(self.x,self.y+50));

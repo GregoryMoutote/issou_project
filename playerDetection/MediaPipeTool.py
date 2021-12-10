@@ -58,7 +58,7 @@ class MediaPipeTool :
                                #                                              circle_radius=2),
                                 #                      )
 
-                    cv2.imshow('Mediapipe Feed', image)
+                    #cv2.imshow('Mediapipe Feed', image)
 
                     if self.continuer==False:
                         break

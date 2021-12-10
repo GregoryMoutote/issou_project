@@ -1,7 +1,7 @@
-from mainMenuInterface import *
+from InterfaceCalibrage import *
 from playerDetection.MediaPipeThread import MediaPipeThread
 
 detection = MediaPipeThread()
 detection.start()
 
-MainMenuInterface(detection)
+InterfaceCalibrage(detection)
