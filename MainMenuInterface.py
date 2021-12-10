@@ -49,14 +49,18 @@ class MainMenuInterface(Interface):
 
             pygame.display.update()
 
-            #if self.rightX>self.botton[0].x and self.rightX<(self.botton[0].x+self.botton[0].width) and self.rightY>self.botton[0].y and self.rightY<(self.botton[0].y+self.botton[0].height):
-               #SecondInterface(screenData, self.screen)
-               #self.botton[0].animeBotton();
-               #self.rightX = 0
-               #self.rightY = 0
-               #self.leftX = 0
-               #self.leftY = 0
-               #self.show()
+            if self.rightX>self.botton[0].x and self.rightX<(self.botton[0].x+self.botton[0].width) and self.rightY>self.botton[0].y and self.rightY<(self.botton[0].y+self.botton[0].height):
+               SecondInterface(self.screenData, self.screen)
+               self.rightX = 0
+               self.rightY = 0
+               self.leftX = 0
+               self.leftY = 0
+               self.show()
+
+            if self.rightX>self.botton[4].x and self.rightX<(self.botton[4].x+self.botton[4].width) and self.rightY>self.botton[4].y and self.rightY<(self.botton[4].y+self.botton[4].height):
+               self.detection.mediaPipeClass.finMediaPipe()
+               self.detection.stop()
+               continuer=False
 
         pygame.quit()
 
