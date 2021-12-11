@@ -5,11 +5,13 @@ from secondInterface import *
 from botton import *
 from InterfaceCalibrage import *
 from Interface import *
+from playerDetection.MediaPipeTool import *
 
 class MainMenuInterface(Interface):
 
     def __init__(self,detection,screendata,screen):
         self.detection=detection
+        self.detection.initHandCapture()
         self.screenData=screendata
         self.screen=screen
         super().__init__(self.screenData, self.screen)
@@ -33,8 +35,10 @@ class MainMenuInterface(Interface):
 
         continuer=True
 
+
+
         while continuer:
-            hand = self.detection.mediaPipeClass.hand
+            hand = self.detection.hand_detection()
 
             if (len(hand)==1):
                 self.rightX = hand[0][0]
@@ -58,11 +62,11 @@ class MainMenuInterface(Interface):
                self.show()
 
             if self.rightX>self.botton[4].x and self.rightX<(self.botton[4].x+self.botton[4].width) and self.rightY>self.botton[4].y and self.rightY<(self.botton[4].y+self.botton[4].height):
-               self.detection.mediaPipeClass.finMediaPipe()
-               self.detection.stop()
+               self.detection.closeCamera()
                continuer=False
 
         pygame.quit()
+
 
     def toucheCible(left,top,radius,x,y):
 
