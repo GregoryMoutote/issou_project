@@ -1,4 +1,4 @@
-from test_color import color_util
+from color_util import color_util
 from color_thread import colorThread
 import pygame
 import threading

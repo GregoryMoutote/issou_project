@@ -1,6 +1,6 @@
 import threading
 import time
-from test_color import color_util
+from color_util import color_util
 
 class colorThread(threading.Thread):
     def __init__(self):

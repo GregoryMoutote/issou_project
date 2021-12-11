@@ -1,9 +1,15 @@
 import mediapipe as mp
 import cv2
+import multitasking
 import numpy as np
+
+
+
 class MediaPipeTool :
     def __init__(self):
         self.hand = []
+
+    @multitasking.task
     def body_detection(self):
         mp_drawing = mp.solutions.drawing_utils
         mp_hands = mp.solutions.hands
@@ -48,11 +54,8 @@ class MediaPipeTool :
                             hand_x = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x*image_width
                             hand_y = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y*image_height
                             self.hand.append((hand_x,hand_y))
-                            #mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,
-                             #                         mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
-                              #                        mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2,
-                               #                                              circle_radius=2),
-                                #                      )
+
+
 
                     cv2.imshow('Mediapipe Feed', image)
 

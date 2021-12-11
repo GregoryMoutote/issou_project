@@ -6,6 +6,6 @@ class Thread1 (threading.Thread):
         threading.Thread.__init__(self)  # ne pas oublier cette ligne
 
     def run(self):
-        print("cc les bgs from a thread")
-        time.sleep(3)
+        print("j'ai envie de mourir")
+        time.sleep(3)   
 
