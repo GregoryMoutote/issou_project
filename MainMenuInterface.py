@@ -2,7 +2,8 @@ import pygame.draw
 import ctypes
 
 from secondInterface import *
-from botton import *
+from NavigationBotton import *
+from BooleanBotton import *
 from InterfaceCalibrage import *
 from Interface import *
 from playerDetection.MediaPipeTool import *
@@ -21,11 +22,13 @@ class MainMenuInterface(Interface):
         self.screen.blit(self.background, (0, 0))
         self.screen.fill((0, 0, 0))
 
-        self.botton=[Botton(self.screenWidth/6*3+5,self.screenHeight/2-187,self.screenWidth/2.4,75,self.screen,(0,112,192),"JOUER",40,290,"Glitch.otf",(255,255,255))]
-        self.botton.append(Botton(self.screenWidth/6*3+5,self.screenHeight/2-112,self.screenWidth/2.4,75,self.screen,(0,172,240),"TUTORIAL",40,260,"Glitch.otf",(255,255,255)))
-        self.botton.append(Botton(self.screenWidth/6*3+5,self.screenHeight/2-37,self.screenWidth/2.4,75,self.screen,(0,112,192),"PARAMETRE",40,230,"Glitch.otf",(255,255,255)))
-        self.botton.append(Botton(self.screenWidth/6*3+5,self.screenHeight/2+38,self.screenWidth/2.4,75,self.screen,(0,172,240),"CREER UN NIVEAU",40,160,"Glitch.otf",(255,255,255)))
-        self.botton.append(Botton(self.screenWidth/6*3+5,self.screenHeight/2+113,self.screenWidth/2.4,75,self.screen,(0,112,192),"QUITTER",40,275,"Glitch.otf",(255,255,255)))
+        self.botton=[navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2-187,self.screenWidth/2.4,75,self.screen,(0,112,192),"JOUER",40,290,"Glitch.otf",(255,255,255))]
+        self.botton.append(navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2-112,self.screenWidth/2.4,75,self.screen,(0,172,240),"TUTORIAL",40,260,"Glitch.otf",(255,255,255)))
+        self.botton.append(navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2-37,self.screenWidth/2.4,75,self.screen,(0,112,192),"PARAMETRE",40,230,"Glitch.otf",(255,255,255)))
+        self.botton.append(navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2+38,self.screenWidth/2.4,75,self.screen,(0,172,240),"CREER UN NIVEAU",40,160,"Glitch.otf",(255,255,255)))
+        self.botton.append(navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2+113,self.screenWidth/2.4,75,self.screen,(0,112,192),"QUITTER",40,275,"Glitch.otf",(255,255,255)))
+
+        self.coche=cocheBotton(200,200,50,self.screen,(255,0,0),(0,255,0),False)
 
         self.screen.blit(self.fondLogo, (self.screenWidth/10, self.screenHeight/2-249))
         self.rightX=0
@@ -40,6 +43,14 @@ class MainMenuInterface(Interface):
             self.rightHand = self.detection.getRightHand()
             self.leftHand = self.detection.getLeftHand()
 
+            if len(self.rightHand) > 0:
+                self.rightX = self.rightHand[0]
+                self.rightY = self.rightHand[1]
+
+            if len(self.leftHand) > 0:
+                self.leftX = self.leftHand[0]
+                self.leftY = self.leftHand[1]
+
             self.testAffichage()
 
             pygame.display.update()
@@ -51,6 +62,10 @@ class MainMenuInterface(Interface):
                self.leftX = 0
                self.leftY = 0
                self.show()
+
+            if self.rightX>self.coche.x and self.rightX<(self.coche.x+self.coche.radius) and self.rightY>self.coche.y and self.rightY<(self.coche.y+self.coche.radius):
+                self.coche.changeStat();
+
 
             if self.rightX>self.botton[4].x and self.rightX<(self.botton[4].x+self.botton[4].width) and self.rightY>self.botton[4].y and self.rightY<(self.botton[4].y+self.botton[4].height):
                self.detection.closeCamera()
@@ -82,7 +97,7 @@ class MainMenuInterface(Interface):
     def testAffichage(self):
 
         if len(self.rightHand)>0:
-            print("right", self.rightHand[0], "  ", self.rightHand[1])
+            #print("right", self.rightHand[0], "  ", self.rightHand[1])
             pygame.draw.circle(self.screen, (255, 255, 255), (self.rightHand[0], self.rightHand[1]), 10)
 
         if len(self.leftHand)>0:

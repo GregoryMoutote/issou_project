@@ -1,6 +1,6 @@
 import pygame.draw
 import ctypes
-from botton import *
+from NavigationBotton import *
 
 pygame.init()
 user32 = ctypes.windll.user32
