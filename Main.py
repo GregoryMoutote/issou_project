@@ -1,7 +1,6 @@
 from InterfaceCalibrage import *
-from playerDetection.MediaPipeThread import MediaPipeThread
+from playerDetection.MediaPipeTool import MediaPipeTool
 
-detection = MediaPipeThread()
-detection.start()
+detection = MediaPipeTool()
 
 InterfaceCalibrage(detection)
