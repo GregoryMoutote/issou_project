@@ -25,9 +25,12 @@ class InterfaceCalibrage(Interface):
 
         self.screen.fill((0,0,0))
         pygame.draw.circle(self.screen, (200,0,0), (50,50), 50)
+        print("lageur",self.screenWidth);
+        print("hauteur",self.screenHeight);
         pygame.draw.circle(self.screen, (200,0,0), (self.screenWidth-50, 50), 50)
         pygame.draw.circle(self.screen, (200,0,0), (50, self.screenHeight-50), 50)
         pygame.draw.circle(self.screen, (200,0,0), (self.screenWidth-50, self.screenHeight-50), 50)
+
         pygame.font.init()
         myfont = pygame.font.Font("C:\Windows\Fonts\Arial.ttf", 50)
         self.textsurface = myfont.render("Calibrage en cours", True, (255,255,255))

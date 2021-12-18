@@ -16,7 +16,7 @@ class MainMenuInterface(Interface):
 
         self.background=pygame.image.load("picture/fond.png")
         self.fondLogo=pygame.image.load("picture/fondLogo.png")
-        #self.screen.blit(self.background, (0, 0))
+        self.screen.blit(self.background, (0, 0))
         self.screen.fill((0, 0, 0))
 
         self.botton=[Botton(self.screenWidth/6*3+5,self.screenHeight/2-187,self.screenWidth/2.4,75,self.screen,(0,112,192),"JOUER",40,290,"Glitch.otf",(255,255,255))]
