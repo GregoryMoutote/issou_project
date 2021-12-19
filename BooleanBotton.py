@@ -4,7 +4,6 @@ from pygame.transform import smoothscale
 
 class cocheBotton:
 
-
     def __init__(self, x, y, radius, screen,color1,color2,actif):
         self.x = x
         self.y = y
