@@ -1,5 +1,4 @@
 import pygame
-from pygame.transform import smoothscale
 
 
 class navigationBotton:

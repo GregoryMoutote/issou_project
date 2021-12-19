@@ -1,4 +1,4 @@
-from Interface import *
+from Interface.Interface import *
 from target import *
 import pygame
 from math import *
@@ -7,7 +7,7 @@ class SecondInterface (Interface):
 
     def __init__(self,screenData,screen):
         super().__init__(screenData,screen)
-        background = pygame.image.load("picture/fond.png")
+        background = pygame.image.load("./picture/fond.png")
         screen.blit(background, (0, 0))
         self.cible=[Target("rondBleu.png",500,400,100,screen)]
         self.cible.append(Target("rondVert.png",100,0,300,screen))

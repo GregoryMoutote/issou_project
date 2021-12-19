@@ -1,7 +1,5 @@
-from Interface import *
-from MainMenuInterface import *
+from Interface.MainMenuInterface import *
 import ctypes
-import pygame, sys
 from sprite_animation_final import *
 
 user32 = ctypes.windll.user32

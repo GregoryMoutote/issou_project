@@ -1,12 +1,11 @@
 import pygame.draw
-import ctypes
 
-from secondInterface import *
-from NavigationBotton import *
-from BooleanBotton import *
-from InterfaceCalibrage import *
-from Interface import *
-from playerDetection.MediaPipeTool import *
+from botton.NavigationBotton import *
+from botton.BooleanBotton import *
+
+from Interface.secondInterface import *
+from Interface.Interface import *
+from Interface.InterfaceSettings import *
 
 class MainMenuInterface(Interface):
 
@@ -16,11 +15,10 @@ class MainMenuInterface(Interface):
         self.screenData=screendata
         self.screen=screen
         super().__init__(self.screenData, self.screen)
+        self.background=pygame.image.load("./picture/fond.png")
+        self.fondLogo=pygame.image.load("./picture/fondLogo.png")
 
-        self.background=pygame.image.load("picture/fond.png")
-        self.fondLogo=pygame.image.load("picture/fondLogo.png")
         self.screen.blit(self.background, (0, 0))
-        self.screen.fill((0, 0, 0))
 
         self.botton=[navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2-187,self.screenWidth/2.4,75,self.screen,(0,112,192),"JOUER",40,290,"Glitch.otf",(255,255,255))]
         self.botton.append(navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2-112,self.screenWidth/2.4,75,self.screen,(0,172,240),"TUTORIAL",40,260,"Glitch.otf",(255,255,255)))
@@ -29,8 +27,8 @@ class MainMenuInterface(Interface):
         self.botton.append(navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2+113,self.screenWidth/2.4,75,self.screen,(0,112,192),"QUITTER",40,275,"Glitch.otf",(255,255,255)))
 
         self.coche=cocheBotton(200,200,50,self.screen,(255,0,0),(0,255,0),False)
-
         self.screen.blit(self.fondLogo, (self.screenWidth/10, self.screenHeight/2-249))
+
         self.rightX=0
         self.rightY=0
         self.leftX=0
@@ -60,6 +58,14 @@ class MainMenuInterface(Interface):
                self.leftX = 0
                self.leftY = 0
                self.show()
+
+            if self.rightX>self.botton[2].x and self.rightX<(self.botton[2].x+self.botton[2].width) and self.rightY>self.botton[2].y and self.rightY<(self.botton[2].y+self.botton[2].height):
+                InterfaceSettings(self.detection,self.screenData, self.screen)
+                self.rightX = 0
+                self.rightY = 0
+                self.leftX = 0
+                self.leftY = 0
+                self.show()
 
             if self.rightX>self.coche.x and self.rightX<(self.coche.x+self.coche.radius) and self.rightY>self.coche.y and self.rightY<(self.coche.y+self.coche.radius):
                 self.coche.changeStat();
