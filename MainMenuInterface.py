@@ -40,16 +40,14 @@ class MainMenuInterface(Interface):
 
         while continuer:
             hand=self.detection.hand_detection()
-            self.rightHand = self.detection.getRightHand()
-            self.leftHand = self.detection.getLeftHand()
 
-            if len(self.rightHand) > 0:
-                self.rightX = self.rightHand[0]
-                self.rightY = self.rightHand[1]
+            if len(self.detection.rightHand) > 0:
+                self.rightX = self.detection.rightHand[0]
+                self.rightY = self.detection.rightHand[1]
 
-            if len(self.leftHand) > 0:
-                self.leftX = self.leftHand[0]
-                self.leftY = self.leftHand[1]
+            if len(self.detection.leftHand) > 0:
+                self.leftX = self.detection.leftHand[0]
+                self.leftY = self.detection.leftHand[1]
 
             self.testAffichage()
 
@@ -96,9 +94,9 @@ class MainMenuInterface(Interface):
 
     def testAffichage(self):
 
-        if len(self.rightHand)>0:
+        if len(self.detection.leftHand)>0:
             #print("right", self.rightHand[0], "  ", self.rightHand[1])
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightHand[0], self.rightHand[1]), 10)
+            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.leftHand[0], self.detection.leftHand[1]), 10)
 
-        if len(self.leftHand)>0:
-            pygame.draw.circle(self.screen, (255, 0, 0), (self.leftHand[0],  self.leftHand[1]), 10)
+        if len(self.detection.rightHand)>0:
+           pygame.draw.circle(self.screen, (255, 0, 0), (self.detection.rightHand[0],  self.detection.rightHand[1]), 10)

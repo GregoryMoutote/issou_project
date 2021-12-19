@@ -40,9 +40,3 @@ class MediaPipeTool :
 
     def closeCamera(self):
         self.cap.release()
-
-    def getRightHand(self):
-        return self.rightHand
-
-    def getLeftHand(self):
-        return self.leftHand
