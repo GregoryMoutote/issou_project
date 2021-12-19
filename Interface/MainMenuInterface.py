@@ -11,10 +11,11 @@ class MainMenuInterface(Interface):
 
     def __init__(self,detection,screendata,screen):
         self.detection=detection
-        self.detection.initHandCapture()
         self.screenData=screendata
         self.screen=screen
+
         super().__init__(self.screenData, self.screen)
+
         self.background=pygame.image.load("./picture/fond.png")
         self.fondLogo=pygame.image.load("./picture/fondLogo.png")
 
@@ -26,7 +27,6 @@ class MainMenuInterface(Interface):
         self.botton.append(navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2+38,self.screenWidth/2.4,75,self.screen,(0,172,240),"CREER UN NIVEAU",40,160,"Glitch.otf",(255,255,255)))
         self.botton.append(navigationBotton(self.screenWidth/6*3+5,self.screenHeight/2+113,self.screenWidth/2.4,75,self.screen,(0,112,192),"QUITTER",40,275,"Glitch.otf",(255,255,255)))
 
-        self.coche=cocheBotton(200,200,50,self.screen,(255,0,0),(0,255,0),False)
         self.screen.blit(self.fondLogo, (self.screenWidth/10, self.screenHeight/2-249))
 
         self.rightX=0
@@ -37,7 +37,8 @@ class MainMenuInterface(Interface):
         continuer=True
 
         while continuer:
-            hand=self.detection.hand_detection()
+
+            detection.hand_detection()
 
             if len(self.detection.rightHand) > 0:
                 self.rightX = self.detection.rightHand[0]
@@ -66,10 +67,6 @@ class MainMenuInterface(Interface):
                 self.leftX = 0
                 self.leftY = 0
                 self.show()
-
-            if self.rightX>self.coche.x and self.rightX<(self.coche.x+self.coche.radius) and self.rightY>self.coche.y and self.rightY<(self.coche.y+self.coche.radius):
-                self.coche.changeStat();
-
 
             if self.rightX>self.botton[4].x and self.rightX<(self.botton[4].x+self.botton[4].width) and self.rightY>self.botton[4].y and self.rightY<(self.botton[4].y+self.botton[4].height):
                self.detection.closeCamera()
@@ -101,8 +98,8 @@ class MainMenuInterface(Interface):
     def testAffichage(self):
 
         if len(self.detection.leftHand)>0:
-            #print("right", self.rightHand[0], "  ", self.rightHand[1])
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.leftHand[0], self.detection.leftHand[1]), 10)
+            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
+            pygame.draw.circle(self.screen, (255, 0, 0), (self.detection.leftHand[0], self.detection.leftHand[1]), 10)
 
         if len(self.detection.rightHand)>0:
-           pygame.draw.circle(self.screen, (255, 0, 0), (self.detection.rightHand[0],  self.detection.rightHand[1]), 10)
+           pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.rightHand[0],  self.detection.rightHand[1]), 10)

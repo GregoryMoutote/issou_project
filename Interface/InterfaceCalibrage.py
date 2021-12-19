@@ -8,11 +8,11 @@ height= user32.GetSystemMetrics(1)
 
 class InterfaceCalibrage(Interface):
 
-    def __init__(self,detection):
+    def __init__(self,detection,screenData,screen):
 
-        self.screenData = ctypes.windll.user32
-        pygame.init()
-        self.screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN,pygame.NOFRAME)
+        self.screenData=screenData
+        self.screen=screen
+
         super().__init__(self.screenData, self.screen)
 
         clock = pygame.time.Clock()
@@ -23,8 +23,6 @@ class InterfaceCalibrage(Interface):
 
         self.screen.fill((0,0,0))
         pygame.draw.circle(self.screen, (200,0,0), (50,50), 50)
-        print("lageur",self.screenWidth);
-        print("hauteur",self.screenHeight);
         pygame.draw.circle(self.screen, (200,0,0), (self.screenWidth-50, 50), 50)
         pygame.draw.circle(self.screen, (200,0,0), (50, self.screenHeight-50), 50)
         pygame.draw.circle(self.screen, (200,0,0), (self.screenWidth-50, self.screenHeight-50), 50)
@@ -44,17 +42,12 @@ class InterfaceCalibrage(Interface):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         continuer = False
-                        print("mainmenuInterface")
-                    if event.key == pygame.K_a:
-                        player.attack()
 
             self.screen.fill((0, 0, 0))
             moving_sprites.draw(self.screen)
             moving_sprites.update(0.25)
             clock.tick(60)
             self.show()
-
-        MainMenuInterface(detection,self.screenData,self.screen)
 
 
     def show(self):

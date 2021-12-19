@@ -35,7 +35,6 @@ class MediaPipeTool :
                     if resultsHand.multi_handedness[num].classification[0].label == "Left":
                         self.leftHand = (hand_x,hand_y)
                     result.append((hand_x,hand_y))
-
             return result
 
     def closeCamera(self):

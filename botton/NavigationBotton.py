@@ -12,7 +12,7 @@ class navigationBotton:
         self.text = text
         self.textSize = textSize
         self.textLeftSpace = textLeftSpace
-        self.font = "font/" + font
+        self.font = "./font/" + font
         self.textColor = textColor
         self.color = color
         self.showBotton()
