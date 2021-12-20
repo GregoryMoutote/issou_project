@@ -1,4 +1,5 @@
 import mediapipe as mp
+from math import *
 import cv2
 import numpy as np
 class MediaPipeTool :
@@ -48,11 +49,66 @@ class MediaPipeTool :
                             hand_x = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x*image_width
                             hand_y = hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y*image_height
                             self.hand.append((hand_x,hand_y))
-                            #mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,
-                             #                         mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
-                              #                        mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2,
-                               #                                              circle_radius=2),
-                                #                      )
+                            #print((hand_x,hand_y))
+                            distanceIndexExtremities = sqrt(
+                                (hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].y -
+                                 hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_MCP].y) ** 2 +
+                                 (hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP].x -
+                                 hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_MCP].x) ** 2)
+                            distanceMiddleExtremities = sqrt(
+                                (hand.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y -
+                                 hand.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y) ** 2 +
+                                 (hand.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x -
+                                 hand.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x) ** 2)
+                            distanceRingExtremities = sqrt(
+                                (hand.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].y -
+                                 hand.landmark[mp_hands.HandLandmark.RING_FINGER_MCP].y) ** 2 +
+                                 (hand.landmark[mp_hands.HandLandmark.RING_FINGER_TIP].x -
+                                 hand.landmark[mp_hands.HandLandmark.RING_FINGER_MCP].x) ** 2)
+                            distancePinkyExtremities = sqrt(
+                                (hand.landmark[mp_hands.HandLandmark.PINKY_TIP].y -
+                                 hand.landmark[mp_hands.HandLandmark.PINKY_MCP].y) ** 2 +
+                                 (hand.landmark[mp_hands.HandLandmark.PINKY_TIP].x -
+                                 hand.landmark[mp_hands.HandLandmark.PINKY_MCP].x) ** 2)
+                            wristX = hand.landmark[mp_hands.HandLandmark.PINKY_TIP].x
+                            wristY = hand.landmark[mp_hands.HandLandmark.PINKY_TIP].y
+                            distanceIndexWrist = sqrt(
+                                (wristY - hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_MCP].y) ** 2 +
+                                 (wristX - hand.landmark[mp_hands.HandLandmark.INDEX_FINGER_MCP].x) ** 2)
+                            distanceMiddleWrist = sqrt(
+                                (wristY - hand.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y) ** 2 +
+                                 (wristX - hand.landmark[mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x) ** 2)
+                            distanceRingWrist = sqrt(
+                                (wristY - hand.landmark[mp_hands.HandLandmark.RING_FINGER_MCP].y) ** 2 +
+                                 (wristX - hand.landmark[mp_hands.HandLandmark.RING_FINGER_MCP].x) ** 2)
+                            distancePinkyWrist = sqrt(
+                                (wristY - hand.landmark[mp_hands.HandLandmark.PINKY_MCP].y) ** 2 +
+                                 (wristX - hand.landmark[mp_hands.HandLandmark.PINKY_MCP].x) ** 2)
+                            numberOfFingersClosed = 0
+                            if distanceIndexExtremities * 1.5 < distanceIndexWrist :
+                                numberOfFingersClosed += 1
+                            if distanceMiddleExtremities * 1.5 < distanceMiddleWrist :
+                                numberOfFingersClosed += 1
+                            if distanceRingExtremities * 1.5 < distanceRingWrist :
+                                numberOfFingersClosed += 1
+                            if distancePinkyExtremities * 1.5 < distancePinkyWrist :
+                                numberOfFingersClosed += 1
+                            print(distanceIndexExtremities)
+                            print(distanceMiddleExtremities)
+                            print(distanceRingExtremities)
+                            print(distancePinkyExtremities)
+                            print(distanceIndexWrist)
+                            print(distanceMiddleWrist)
+                            print(distanceRingWrist)
+                            print(distancePinkyWrist)
+                            print(numberOfFingersClosed)
+                            if numberOfFingersClosed >= 3 :
+                                print ("Coucou")
+                            mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,
+                                                      mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
+                                                      mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2,
+                                                                             circle_radius=2),
+                                                      )
 
                     cv2.imshow('Mediapipe Feed', image)
 
