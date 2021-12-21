@@ -8,28 +8,31 @@ from botton.NavigationBotton import *
 class InterfaceSettings(Interface):
 
     def __init__(self,detection,screendata,screen):
-        print("paramètre")
         self.detection=detection
         self.detection.initHandCapture()
         self.screenData=screendata
         self.screen=screen
 
         super().__init__(self.screenData, self.screen)
+
+        self.background = pygame.image.load("./picture/fond.png")
         self.fondLogo=pygame.image.load("./picture/fondLogo.png")
+
+        self.screen.blit(self.background, (0, 0))
         #self.screen.fill((0, 0, 0))
 
-        self.botton = [navigationBotton(100, self.screenHeight/2+50, self.screenWidth / 2.4, 75,self.screen, (0, 112, 192,0), "FAIRE LE TUTORIAL", 50, 0, "Arial.ttf", (255, 255, 255))]
-        self.botton.append(navigationBotton(100, self.screenHeight/2+150, self.screenWidth / 2.4, 75,self.screen, (0, 172, 240,0), "RECALIBRER", 50, 0, "Arial.ttf", (255, 255, 255)))
-        self.botton.append(navigationBotton(100, self.screenHeight/2+250, self.screenWidth / 2.4, 75,self.screen, (0, 112, 192,0), "AIDE", 50,0, "Arial.ttf", (255, 255, 255)))
+        self.botton = [navigationBotton(100, self.screenHeight/2+50, self.screenWidth*0.85, 100,self.screen, (0, 112, 192,0), "Faire le calibrage", 50,self.screenWidth*0.5-300, "Arial.ttf", (255, 255, 255))]
+        self.botton.append(navigationBotton(100, self.screenHeight/2+150, self.screenWidth*0.85, 100,self.screen, (0, 172, 240,0), "Recalibrer", 50, self.screenWidth*0.5-230, "Arial.ttf", (255, 255, 255)))
+        self.botton.append(navigationBotton(100, self.screenHeight/2+250, self.screenWidth*0.85, 100,self.screen, (0, 112, 192,0), "Aide", 50,self.screenWidth*0.5-180, "Arial.ttf", (255, 255, 255)))
 
-        self.animation = cocheBotton(self.screenWidth/2, self.screenHeight/2, 25, self.screen, (255, 0, 0), (0, 255, 0), True)
+        self.animation = cocheBotton(650, self.screenHeight/2 -25, 35, self.screen, (255, 0, 0), (0, 255, 0), True)
 
         pygame.font.init()
         fontGlitch=pygame.font.Font("./font/Glitch.otf",100)
         fontArial=pygame.font.Font("./font/Arial.ttf",50)
 
         volume = fontGlitch.render("OPTIONS", True, (255, 255, 255))
-        self.screen.blit(volume, (self.screenWidth/2-300, self.screenHeight / 2 - 350))
+        self.screen.blit(volume, (self.screenWidth/2-200, self.screenHeight / 2 - 350))
 
         volume = fontArial.render("Volume du jeux", True, (255,255,255))
         self.screen.blit(volume, (100, self.screenHeight/2-250))
@@ -52,6 +55,12 @@ class InterfaceSettings(Interface):
 
         while continuer:
 
+            detection.hand_detection()
+
+            self.testAffichage()
+
+            pygame.display.update()
+
             if len(self.detection.rightHand) > 0:
                 self.rightX = self.detection.rightHand[0]
                 self.rightY = self.detection.rightHand[1]
@@ -59,6 +68,9 @@ class InterfaceSettings(Interface):
             if len(self.detection.leftHand) > 0:
                 self.leftX = self.detection.leftHand[0]
                 self.leftY = self.detection.leftHand[1]
+
+            if self.rightX>(self.animation.x-self.animation.radius) and self.rightX<(self.animation.x+self.animation.radius) and self.rightY>(self.animation.y-self.animation.radius) and self.rightY<(self.animation.y+self.animation.radius):
+               self.animation.changeStat()
 
             self.testAffichage()
 
@@ -72,8 +84,8 @@ class InterfaceSettings(Interface):
     def testAffichage(self):
 
         if len(self.detection.leftHand)>0:
-            #print("right", self.rightHand[0], "  ", self.rightHand[1])
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.leftHand[0], self.detection.leftHand[1]), 10)
+            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
+            pygame.draw.circle(self.screen, (255, 0, 0), (self.detection.leftHand[0], self.detection.leftHand[1]), 10)
 
         if len(self.detection.rightHand)>0:
-           pygame.draw.circle(self.screen, (255, 0, 0), (self.detection.rightHand[0],  self.detection.rightHand[1]), 10)
+           pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.rightHand[0],  self.detection.rightHand[1]), 10)
