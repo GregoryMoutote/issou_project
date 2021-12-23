@@ -1,7 +1,7 @@
 import pygame.draw
 
 from botton.NavigationBotton import *
-from botton.BooleanBotton import *
+from botton.CocheBotton import *
 
 from Interface.secondInterface import *
 from Interface.Interface import *

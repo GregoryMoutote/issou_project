@@ -1,8 +1,10 @@
 import pygame.draw
 
 from Interface.Interface import *
-from botton.BooleanBotton import *
+
+from botton.CocheBotton import *
 from botton.NavigationBotton import *
+from botton.MultipleBotton import *
 
 
 class InterfaceSettings(Interface):
@@ -37,8 +39,7 @@ class InterfaceSettings(Interface):
         volume = fontArial.render("Volume du jeux", True, (255,255,255))
         self.screen.blit(volume, (100, self.screenHeight/2-250))
 
-        luminosité = fontArial.render("Luminosite", True, (255,255,255))
-        self.screen.blit(luminosité, (100, self.screenHeight / 2-150))
+        self.volumeBotton = multipleBotton(100,self.screenHeight / 2-175,1500,100,self.screen,(120, 120, 120), (0, 255, 0),10,settings.getVolume())
 
         animation = fontArial.render("Activer les animations", True, (255,255,255))
         self.screen.blit(animation, (100, self.screenHeight / 2-50))
@@ -71,6 +72,10 @@ class InterfaceSettings(Interface):
 
             if self.rightX>(self.animation.x-self.animation.radius) and self.rightX<(self.animation.x+self.animation.radius) and self.rightY>(self.animation.y-self.animation.radius) and self.rightY<(self.animation.y+self.animation.radius):
                self.animation.changeStat()
+
+            for i in range(0, self.volumeBotton.nbBotton):
+                if self.rightX>(self.volumeBotton.coche[i].x-self.volumeBotton.coche[i].radius) and self.rightX<(self.volumeBotton.coche[i].x+self.volumeBotton.coche[i].radius) and self.rightY>(self.volumeBotton.coche[i].y-self.volumeBotton.coche[i].radius) and self.rightY<(self.volumeBotton.coche[i].y+self.volumeBotton.coche[i].radius):
+                    self.volumeBotton.changeStat(i)
 
             self.testAffichage()
 
