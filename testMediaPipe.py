@@ -5,6 +5,8 @@ import numpy as np
 class MediaPipeTool :
     def __init__(self):
         self.hand = []
+        self.isFistClosed = 0
+
     def body_detection(self):
         mp_drawing = mp.solutions.drawing_utils
         mp_hands = mp.solutions.hands
@@ -93,17 +95,10 @@ class MediaPipeTool :
                                 numberOfFingersClosed += 1
                             if distancePinkyExtremities * 1.5 < distancePinkyWrist :
                                 numberOfFingersClosed += 1
-                            print(distanceIndexExtremities)
-                            print(distanceMiddleExtremities)
-                            print(distanceRingExtremities)
-                            print(distancePinkyExtremities)
-                            print(distanceIndexWrist)
-                            print(distanceMiddleWrist)
-                            print(distanceRingWrist)
-                            print(distancePinkyWrist)
-                            print(numberOfFingersClosed)
                             if numberOfFingersClosed >= 3 :
-                                print ("Coucou")
+                                self.isFistClosed = 1
+                            else :
+                                self.isFistClosed = 0
                             mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,
                                                       mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
                                                       mp_drawing.DrawingSpec(color=(250, 44, 250), thickness=2,
