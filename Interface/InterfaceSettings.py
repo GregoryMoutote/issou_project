@@ -15,8 +15,8 @@ class InterfaceSettings(Interface):
 
         super().__init__(self.screenData, self.screen)
 
-        self.background = pygame.image.load("./picture/fond.png")
-        self.fondLogo=pygame.image.load("./picture/fondLogo.png")
+        self.background = pygame.image.load("./picture/interface/fond.png")
+        self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
 
         self.screen.blit(self.background, (0, 0))
         #self.screen.fill((0, 0, 0))

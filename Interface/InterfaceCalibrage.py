@@ -1,6 +1,6 @@
 from Interface.MainMenuInterface import *
 import ctypes
-from sprite_animation_final import *
+from CalibrageGIF import *
 
 user32 = ctypes.windll.user32
 width = user32.GetSystemMetrics(0)
@@ -18,8 +18,8 @@ class InterfaceCalibrage(Interface):
         clock = pygame.time.Clock()
         pygame.display.set_caption("Sprite Animation")
         moving_sprites = pygame.sprite.Group()
-        player = Player(self.screenWidth/2+100,self.screenHeight/2-50,self.screen)
-        moving_sprites.add(player)
+        ISSOUlaod = loadGIF(self.screenWidth/2-300,self.screenHeight/2,self.screen)
+        moving_sprites.add(ISSOUlaod)
 
         self.screen.fill((0,0,0))
         pygame.draw.circle(self.screen, (200,0,0), (50,50), 50)
@@ -29,8 +29,8 @@ class InterfaceCalibrage(Interface):
 
         pygame.font.init()
         myfont = pygame.font.Font("C:\Windows\Fonts\Arial.ttf", 50)
-        self.textsurface = myfont.render("Calibrage en cours", True, (255,255,255))
-        self.screen.blit(self.textsurface, (self.screenWidth/2, self.screenHeight/2-25))
+        self.textsurface = myfont.render("Calibrage en cours...", True, (255,255,255))
+        self.screen.blit(self.textsurface, (self.screenWidth/2-100, self.screenHeight/2-100))
         pygame.font.quit()
 
         pygame.display.update()
@@ -56,5 +56,5 @@ class InterfaceCalibrage(Interface):
         pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, 50), 50)
         pygame.draw.circle(self.screen, (200, 0, 0), (50, self.screenHeight - 50), 50)
         pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, self.screenHeight - 50), 50)
-        self.screen.blit(self.textsurface, (self.screenWidth / 2 - 400, self.screenHeight / 2 - 25))
+        self.screen.blit(self.textsurface, (self.screenWidth/2 - 250, self.screenHeight / 2 - 100))
         pygame.display.update()

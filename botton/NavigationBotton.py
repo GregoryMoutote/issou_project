@@ -24,6 +24,5 @@ class navigationBotton:
         myfont = pygame.font.Font(self.font, self.textSize)
         textsurface = myfont.render(self.text, True, self.textColor)
         self.screen.blit(textsurface, (self.x+self.textLeftSpace, self.y+(self.height-self.textSize)/2))
-        pygame.display.update()
         pygame.font.quit()
 

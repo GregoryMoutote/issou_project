@@ -1,11 +1,8 @@
 import pygame.draw
 
-from botton.NavigationBotton import *
-from botton.CocheBotton import *
-
 from Interface.secondInterface import *
-from Interface.Interface import *
 from Interface.InterfaceSettings import *
+from MainMenuGIF import *
 
 class MainMenuInterface(Interface):
 
@@ -17,8 +14,15 @@ class MainMenuInterface(Interface):
 
         super().__init__(self.screenData, self.screen)
 
-        self.background=pygame.image.load("./picture/fond.png")
-        self.fondLogo=pygame.image.load("./picture/fondLogo.png")
+        self.background=pygame.image.load("./picture/interface/fond.png")
+
+        #clock = pygame.time.Clock()
+        #pygame.display.set_caption("Sprite Animation")
+        #moving_sprites = pygame.sprite.Group()
+        #ISSOUlaod = MenuGIF(self.screenWidth/2-300,self.screenHeight/2,self.screen)
+        #moving_sprites.add(ISSOUlaod)
+
+        self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
 
         self.screen.blit(self.background, (0, 0))
 
