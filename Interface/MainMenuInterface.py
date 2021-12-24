@@ -9,7 +9,8 @@ from Interface.InterfaceSettings import *
 
 class MainMenuInterface(Interface):
 
-    def __init__(self,detection,screendata,screen):
+    def __init__(self,detection,screendata,screen,settings):
+        self.settings=settings
         self.detection=detection
         self.screenData=screendata
         self.screen=screen
@@ -61,7 +62,7 @@ class MainMenuInterface(Interface):
                self.show()
 
             if self.rightX>self.botton[2].x and self.rightX<(self.botton[2].x+self.botton[2].width) and self.rightY>self.botton[2].y and self.rightY<(self.botton[2].y+self.botton[2].height):
-                InterfaceSettings(self.detection,self.screenData, self.screen)
+                InterfaceSettings(self.detection,self.screenData, self.screen,self.settings)
                 self.rightX = 0
                 self.rightY = 0
                 self.leftX = 0

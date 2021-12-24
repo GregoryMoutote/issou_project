@@ -4,19 +4,20 @@ class Settings:
         self.animation=True
         self.volume=5
 
-    @classmethod
     def setAnimation(self,anim):
         self.animation=anim
 
-    @classmethod
+    def changeAnimation(self):
+        if self.animation:
+            self.animation=False
+        else:
+            self.animation=True
+
     def getAnimation(self):
         return self.animation
 
-    @classmethod
     def setVolume(self,vol):
         self.volume=vol
 
-    @classmethod
     def getVolume(self):
         return self.volume
-

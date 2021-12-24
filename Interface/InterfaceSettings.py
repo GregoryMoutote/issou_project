@@ -1,15 +1,13 @@
 import pygame.draw
 
 from Interface.Interface import *
-
-from botton.CocheBotton import *
 from botton.NavigationBotton import *
 from botton.MultipleBotton import *
 
-
 class InterfaceSettings(Interface):
 
-    def __init__(self,detection,screendata,screen):
+    def __init__(self,detection,screendata,screen,settings):
+        self.settings=settings
         self.detection=detection
         self.detection.initHandCapture()
         self.screenData=screendata
@@ -27,7 +25,6 @@ class InterfaceSettings(Interface):
         self.botton.append(navigationBotton(100, self.screenHeight/2+150, self.screenWidth*0.85, 100,self.screen, (0, 172, 240,0), "Recalibrer", 50, self.screenWidth*0.5-230, "Arial.ttf", (255, 255, 255)))
         self.botton.append(navigationBotton(100, self.screenHeight/2+250, self.screenWidth*0.85, 100,self.screen, (0, 112, 192,0), "Aide", 50,self.screenWidth*0.5-180, "Arial.ttf", (255, 255, 255)))
 
-        self.animation = cocheBotton(650, self.screenHeight/2 -25, 35, self.screen, (255, 0, 0), (0, 255, 0), True)
 
         pygame.font.init()
         fontGlitch=pygame.font.Font("./font/Glitch.otf",100)
@@ -39,10 +36,11 @@ class InterfaceSettings(Interface):
         volume = fontArial.render("Volume du jeux", True, (255,255,255))
         self.screen.blit(volume, (100, self.screenHeight/2-250))
 
-        self.volumeBotton = multipleBotton(100,self.screenHeight / 2-175,1500,100,self.screen,(120, 120, 120), (0, 255, 0),10,settings.getVolume())
+        self.volumeBotton = multipleBotton(100,self.screenHeight / 2-175,1500,100,self.screen,(0, 255, 0),(120, 120, 120),10,self.settings.volume)
+        self.animation = cocheBotton(650, self.screenHeight / 2 - 25, 35, self.screen, (0, 255, 0), (255,0,0), self.settings.animation)
 
-        animation = fontArial.render("Activer les animations", True, (255,255,255))
-        self.screen.blit(animation, (100, self.screenHeight / 2-50))
+        animationText = fontArial.render("Activer les animations", True, (255,255,255))
+        self.screen.blit(animationText, (100, self.screenHeight / 2-50))
 
         pygame.display.update()
         pygame.font.quit()
@@ -57,10 +55,13 @@ class InterfaceSettings(Interface):
         while continuer:
 
             detection.hand_detection()
-
             self.testAffichage()
-
             pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        continuer = False
 
             if len(self.detection.rightHand) > 0:
                 self.rightX = self.detection.rightHand[0]
@@ -71,17 +72,16 @@ class InterfaceSettings(Interface):
                 self.leftY = self.detection.leftHand[1]
 
             if self.rightX>(self.animation.x-self.animation.radius) and self.rightX<(self.animation.x+self.animation.radius) and self.rightY>(self.animation.y-self.animation.radius) and self.rightY<(self.animation.y+self.animation.radius):
-               self.animation.changeStat()
+                self.settings.setAnimation(self.animation.changeStat())
 
             for i in range(0, self.volumeBotton.nbBotton):
                 if self.rightX>(self.volumeBotton.coche[i].x-self.volumeBotton.coche[i].radius) and self.rightX<(self.volumeBotton.coche[i].x+self.volumeBotton.coche[i].radius) and self.rightY>(self.volumeBotton.coche[i].y-self.volumeBotton.coche[i].radius) and self.rightY<(self.volumeBotton.coche[i].y+self.volumeBotton.coche[i].radius):
                     self.volumeBotton.changeStat(i)
+                    self.settings.volume=i
 
             self.testAffichage()
 
             pygame.display.update()
-
-        pygame.quit()
 
     def show(self):
         self.screen.blit(self.fondLogo, (self.screenWidth/10, self.screenHeight/2-249))
