@@ -2,22 +2,28 @@ import pygame
 
 class cocheBotton:
 
-    def __init__(self, x, y, radius, screen,trueColor,falseColor,actif):
+    def __init__(self, x, y, radius, screen,truePicture,falsePicture,actif):
         self.x = x
         self.y = y
         self.radius=radius
         self.screen = screen
-        self.trueColor = trueColor
-        self.falseColor = falseColor
+
+        self.picture = pygame.image.load("picture/cible/" + truePicture)
+        self.truePicture = pygame.transform.scale(self.picture, (self.radius * 2, self.radius * 2))
+        self.picture2 = pygame.image.load("picture/cible/" + falsePicture)
+        self.falsePicture = pygame.transform.scale(self.picture2, (self.radius * 2, self.radius * 2))
+
         self.actif = actif
         self.showBotton()
 
 
     def showBotton(self):
         if self.actif:
-            pygame.draw.circle(self.screen, self.trueColor, (self.x,self.y), self.radius)
+            #pygame.draw.circle(self.screen, self.trueColor, (self.x,self.y), self.radius)
+            self.screen.blit(self.truePicture, (self.x - self.radius, self.y - self.radius))
         else:
-            pygame.draw.circle(self.screen, self.falseColor, (self.x,self.y), self.radius)
+            #pygame.draw.circle(self.screen, self.falseColor, (self.x,self.y), self.radius)
+            self.screen.blit(self.falsePicture, (self.x - self.radius, self.y - self.radius))
 
         pygame.display.update()
 
@@ -31,3 +37,5 @@ class cocheBotton:
             self.showBotton()
             return True
 
+    def setActif(self,actif):
+        self.actif=actif

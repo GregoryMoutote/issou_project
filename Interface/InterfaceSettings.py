@@ -19,7 +19,6 @@ class InterfaceSettings(Interface):
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
 
         self.screen.blit(self.background, (0, 0))
-        #self.screen.fill((0, 0, 0))
 
         self.botton = [navigationBotton(100, self.screenHeight/2+50, self.screenWidth*0.85, 100,self.screen, (0, 112, 192,0), "Faire le calibrage", 50,self.screenWidth*0.5-300, "Arial.ttf", (255, 255, 255))]
         self.botton.append(navigationBotton(100, self.screenHeight/2+150, self.screenWidth*0.85, 100,self.screen, (0, 172, 240,0), "Recalibrer", 50, self.screenWidth*0.5-230, "Arial.ttf", (255, 255, 255)))
@@ -28,19 +27,20 @@ class InterfaceSettings(Interface):
 
         pygame.font.init()
         fontGlitch=pygame.font.Font("./font/Glitch.otf",100)
-        fontArial=pygame.font.Font("./font/Arial.ttf",50)
+        fontArial=pygame.font.Font("./font/Arial.ttf",55)
 
         volume = fontGlitch.render("OPTIONS", True, (255, 255, 255))
-        self.screen.blit(volume, (self.screenWidth/2-200, self.screenHeight / 2 - 350))
+        self.screen.blit(volume, (self.screenWidth/2-250, self.screenHeight / 2 - 350))
 
         volume = fontArial.render("Volume du jeux", True, (255,255,255))
-        self.screen.blit(volume, (100, self.screenHeight/2-250))
+        self.screen.blit(volume, (100, self.screenHeight/2-200))
 
-        self.volumeBotton = multipleBotton(100,self.screenHeight / 2-175,1500,100,self.screen,(0, 255, 0),(120, 120, 120),10,self.settings.volume)
-        self.animation = cocheBotton(650, self.screenHeight / 2 - 25, 35, self.screen, (0, 255, 0), (255,0,0), self.settings.animation)
+        self.volumeBotton = multipleBotton(550,self.screenHeight / 2-200,1000,80,self.screen,"rondVert.png","rondGris.png",10,self.settings.volume)
 
         animationText = fontArial.render("Activer les animations", True, (255,255,255))
-        self.screen.blit(animationText, (100, self.screenHeight / 2-50))
+        self.screen.blit(animationText, (100, self.screenHeight / 2-75))
+
+        self.animation = cocheBotton(750, self.screenHeight / 2 - 50, 40, self.screen, "rondVert.png", "rondGris.png",self.settings.animation)
 
         pygame.display.update()
         pygame.font.quit()

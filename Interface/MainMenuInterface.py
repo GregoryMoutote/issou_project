@@ -16,11 +16,11 @@ class MainMenuInterface(Interface):
 
         self.background=pygame.image.load("./picture/interface/fond.png")
 
-        #clock = pygame.time.Clock()
-        #pygame.display.set_caption("Sprite Animation")
-        #moving_sprites = pygame.sprite.Group()
-        #ISSOUlaod = MenuGIF(self.screenWidth/2-300,self.screenHeight/2,self.screen)
-        #moving_sprites.add(ISSOUlaod)
+        clock = pygame.time.Clock()
+        pygame.display.set_caption("Sprite Animation")
+        moving_sprites = pygame.sprite.Group()
+        ISSOUlaod = MenuGIF(self.screenWidth/2-525,self.screenHeight/2-75,self.screen)
+        moving_sprites.add(ISSOUlaod)
 
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
 
@@ -65,7 +65,7 @@ class MainMenuInterface(Interface):
                self.leftY = 0
                self.show()
 
-            if self.rightX>self.botton[2].x and self.rightX<(self.botton[2].x+self.botton[2].width) and self.rightY>self.botton[2].y and self.rightY<(self.botton[2].y+self.botton[2].height):
+            elif self.rightX>self.botton[2].x and self.rightX<(self.botton[2].x+self.botton[2].width) and self.rightY>self.botton[2].y and self.rightY<(self.botton[2].y+self.botton[2].height):
                 InterfaceSettings(self.detection,self.screenData, self.screen,self.settings)
                 self.rightX = 0
                 self.rightY = 0
@@ -73,9 +73,13 @@ class MainMenuInterface(Interface):
                 self.leftY = 0
                 self.show()
 
-            if self.rightX>self.botton[4].x and self.rightX<(self.botton[4].x+self.botton[4].width) and self.rightY>self.botton[4].y and self.rightY<(self.botton[4].y+self.botton[4].height):
+            elif self.rightX>self.botton[4].x and self.rightX<(self.botton[4].x+self.botton[4].width) and self.rightY>self.botton[4].y and self.rightY<(self.botton[4].y+self.botton[4].height):
                self.detection.closeCamera()
                continuer=False
+
+            moving_sprites.draw(self.screen)
+            moving_sprites.update(1)
+            clock.tick(60)
 
         pygame.quit()
 

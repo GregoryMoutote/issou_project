@@ -30,7 +30,6 @@ class InterfaceCalibrage(Interface):
         pygame.font.init()
         myfont = pygame.font.Font("C:\Windows\Fonts\Arial.ttf", 50)
         self.textsurface = myfont.render("Calibrage en cours...", True, (255,255,255))
-        self.screen.blit(self.textsurface, (self.screenWidth/2-100, self.screenHeight/2-100))
         pygame.font.quit()
 
         pygame.display.update()
@@ -43,7 +42,6 @@ class InterfaceCalibrage(Interface):
                     if event.key == pygame.K_SPACE:
                         continuer = False
 
-            self.screen.fill((0, 0, 0))
             moving_sprites.draw(self.screen)
             moving_sprites.update(0.25)
             clock.tick(60)
