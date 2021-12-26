@@ -15,7 +15,7 @@ class multipleBotton:
         self.coche=[]
 
         for i in range(0, self.nbBotton):
-            if i <= self.nbActif:
+            if i < self.nbActif:
                 self.coche.append(cocheBotton(self.x +self.height/2+ i * self.width / (self.nbBotton+1), self.y + self.height/2, self.height/2,self.screen, self.trueColor, self.falseColor, True))
             else:
                 self.coche.append(cocheBotton(self.x +self.height/2+ i * self.width / (self.nbBotton+1), self.y + self.height/2, self.height/2,self.screen, self.trueColor, self.falseColor, False))
@@ -31,9 +31,12 @@ class multipleBotton:
         self.nbActif=nbActif
 
         for i in range(0, self.nbBotton):
-            if i <= self.nbActif:
-                self.coche[i].setActif(True)
+            if i < self.nbActif:
+                self.coche[i].actif=True
             else:
-                self.coche[i].setActif(False)
+                self.coche[i].actif=False
 
         self.showBotton()
+
+    def __del__(self):
+        self.coche.clear()

@@ -8,14 +8,13 @@ class cocheBotton:
         self.radius=radius
         self.screen = screen
 
-        self.picture = pygame.image.load("picture/cible/" + truePicture)
+        self.picture = pygame.image.load("picture/interface/" + truePicture)
         self.truePicture = pygame.transform.scale(self.picture, (self.radius * 2, self.radius * 2))
-        self.picture2 = pygame.image.load("picture/cible/" + falsePicture)
+        self.picture2 = pygame.image.load("picture/interface/" + falsePicture)
         self.falsePicture = pygame.transform.scale(self.picture2, (self.radius * 2, self.radius * 2))
 
         self.actif = actif
         self.showBotton()
-
 
     def showBotton(self):
         if self.actif:
@@ -36,6 +35,3 @@ class cocheBotton:
             self.actif=True
             self.showBotton()
             return True
-
-    def setActif(self,actif):
-        self.actif=actif

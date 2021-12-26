@@ -20,27 +20,32 @@ class InterfaceSettings(Interface):
 
         self.screen.blit(self.background, (0, 0))
 
-        self.botton = [navigationBotton(100, self.screenHeight/2+50, self.screenWidth*0.85, 100,self.screen, (0, 112, 192,0), "Faire le calibrage", 50,self.screenWidth*0.5-300, "Arial.ttf", (255, 255, 255))]
-        self.botton.append(navigationBotton(100, self.screenHeight/2+150, self.screenWidth*0.85, 100,self.screen, (0, 172, 240,0), "Recalibrer", 50, self.screenWidth*0.5-230, "Arial.ttf", (255, 255, 255)))
-        self.botton.append(navigationBotton(100, self.screenHeight/2+250, self.screenWidth*0.85, 100,self.screen, (0, 112, 192,0), "Aide", 50,self.screenWidth*0.5-180, "Arial.ttf", (255, 255, 255)))
-
+        self.botton = [navigationBotton(100, self.screenHeight/2+50, self.screenWidth*0.85, 70,self.screen, (0, 112, 192), "Faire le calibrage", 50,self.screenWidth*0.5-300, "Arial.ttf", (255, 255, 255))]
+        self.botton.append(navigationBotton(100, self.screenHeight/2+120, self.screenWidth*0.85, 70,self.screen, (0, 172, 240), "Recalibrer", 50, self.screenWidth*0.5-230, "Arial.ttf", (255, 255, 255)))
+        self.botton.append(navigationBotton(100, self.screenHeight/2+190, self.screenWidth*0.85, 70,self.screen, (0, 112, 192), "Aide", 50,self.screenWidth*0.5-180, "Arial.ttf", (255, 255, 255)))
+        self.botton.append(navigationBotton(100, self.screenHeight/2+260, self.screenWidth*0.85, 70,self.screen, (120, 120, 120), "Quitter", 50,self.screenWidth*0.5-180, "Arial.ttf", (255, 255, 255)))
 
         pygame.font.init()
         fontGlitch=pygame.font.Font("./font/Glitch.otf",100)
         fontArial=pygame.font.Font("./font/Arial.ttf",55)
 
-        volume = fontGlitch.render("OPTIONS", True, (255, 255, 255))
-        self.screen.blit(volume, (self.screenWidth/2-250, self.screenHeight / 2 - 350))
+        text = fontGlitch.render("OPTIONS", True, (255, 255, 255))
+        self.screen.blit(text, (self.screenWidth/2-250, self.screenHeight / 2 - 350))
 
-        volume = fontArial.render("Volume du jeux", True, (255,255,255))
-        self.screen.blit(volume, (100, self.screenHeight/2-200))
+        text = fontArial.render("Volume", True, (255,255,255))
+        self.screen.blit(text, (100, self.screenHeight/2-200))
 
-        self.volumeBotton = multipleBotton(550,self.screenHeight / 2-200,1000,80,self.screen,"rondVert.png","rondGris.png",10,self.settings.volume)
+        self.volumeBotton = multipleBotton(400,self.screenHeight / 2-205,1100,88,self.screen,"soundOn.png","soundOff.png",10,self.settings.volume)
 
-        animationText = fontArial.render("Activer les animations", True, (255,255,255))
-        self.screen.blit(animationText, (100, self.screenHeight / 2-75))
+        if(self.settings.volume==0):
+            self.muteBotton = cocheBotton(345,self.screenHeight / 2-160, 45, self.screen, "SoundMute.png", "SoundActive.png",True)
+        else:
+            self.muteBotton = cocheBotton(345,self.screenHeight / 2-160, 45, self.screen, "SoundMute.png","SoundActive.png", False)
 
-        self.animation = cocheBotton(750, self.screenHeight / 2 - 50, 40, self.screen, "rondVert.png", "rondGris.png",self.settings.animation)
+        text = fontArial.render("Activer les animations", True, (255,255,255))
+        self.screen.blit(text, (100, self.screenHeight / 2-75))
+
+        self.animationBotton = cocheBotton(730, self.screenHeight / 2 - 45, 40, self.screen, "animationOn.png", "animationOff.png",self.settings.animation)
 
         pygame.display.update()
         pygame.font.quit()
@@ -71,13 +76,29 @@ class InterfaceSettings(Interface):
                 self.leftX = self.detection.leftHand[0]
                 self.leftY = self.detection.leftHand[1]
 
-            if self.rightX>(self.animation.x-self.animation.radius) and self.rightX<(self.animation.x+self.animation.radius) and self.rightY>(self.animation.y-self.animation.radius) and self.rightY<(self.animation.y+self.animation.radius):
-                self.settings.setAnimation(self.animation.changeStat())
+            if self.rightX>(self.animationBotton.x-self.animationBotton.radius) and self.rightX<(self.animationBotton.x+self.animationBotton.radius) and self.rightY>(self.animationBotton.y-self.animationBotton.radius) and self.rightY<(self.animationBotton.y+self.animationBotton.radius):
+                self.settings.animation=self.animationBotton.changeStat()
+
+            if self.rightX>(self.muteBotton.x-self.muteBotton.radius) and self.rightX<(self.muteBotton.x+self.muteBotton.radius) and self.rightY>(self.muteBotton.y-self.muteBotton.radius) and self.rightY<(self.muteBotton.y+self.muteBotton.radius):
+                self.muteBotton.changeStat()
+                if(self.muteBotton.actif):
+                    self.settings.volume=0
+                    self.volumeBotton.changeStat(0)
+                else:
+                    self.settings.volume = 1
+                    self.volumeBotton.changeStat(1)
+
+
+            if self.rightX>(self.botton[3].x) and self.rightX<(self.botton[3].x+self.botton[3].width) and self.rightY>(self.botton[3].y) and self.rightY<(self.botton[3].y+self.botton[3].height):
+                continuer=False
 
             for i in range(0, self.volumeBotton.nbBotton):
                 if self.rightX>(self.volumeBotton.coche[i].x-self.volumeBotton.coche[i].radius) and self.rightX<(self.volumeBotton.coche[i].x+self.volumeBotton.coche[i].radius) and self.rightY>(self.volumeBotton.coche[i].y-self.volumeBotton.coche[i].radius) and self.rightY<(self.volumeBotton.coche[i].y+self.volumeBotton.coche[i].radius):
-                    self.volumeBotton.changeStat(i)
-                    self.settings.volume=i
+                    self.volumeBotton.changeStat(i+1)
+                    self.settings.volume = i+1
+                    if(self.muteBotton.actif==True):
+                        self.muteBotton.changeStat()
+
 
             self.testAffichage()
 
