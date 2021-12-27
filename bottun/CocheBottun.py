@@ -1,6 +1,6 @@
 import pygame
 
-class cocheBotton:
+class cocheBottun:
 
     def __init__(self, x, y, radius, screen,truePicture,falsePicture,actif):
         self.x = x

@@ -1,7 +1,7 @@
 import pygame
 
 
-class navigationBotton:
+class navigationBottun:
 
     def __init__(self, x, y, width, height, screen,color, text, textSize, textLeftSpace, font,textColor):
         self.x = x

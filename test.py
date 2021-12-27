@@ -1,5 +1,5 @@
 import ctypes
-from botton.NavigationBotton import *
+from bottun.NavigationBottoun import *
 
 pygame.init()
 user32 = ctypes.windll.user32

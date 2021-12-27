@@ -1,6 +1,6 @@
-from botton.CocheBotton import *
+from bottun.CocheBottun import *
 
-class multipleBotton:
+class multipleBottun:
 
     def __init__(self, x, y, width, height, screen,trueColor,falseColor,nbBotton,nbActif):
         self.x = x
