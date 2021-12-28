@@ -3,7 +3,7 @@ from target import *
 import pygame
 from math import *
 
-class SecondInterface (Interface):
+class SecondInterface (interface):
 
     def __init__(self,screenData,screen):
         super().__init__(screenData,screen)

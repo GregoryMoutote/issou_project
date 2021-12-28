@@ -1,4 +1,4 @@
-from Interface.MainMenuInterface import *
+from Interface.Interface import *
 import ctypes
 from CalibrageGIF import *
 
@@ -6,14 +6,11 @@ user32 = ctypes.windll.user32
 width = user32.GetSystemMetrics(0)
 height= user32.GetSystemMetrics(1)
 
-class InterfaceCalibrage(Interface):
+class InterfaceCalibrage(interface):
 
-    def __init__(self,detection,screenData,screen):
+    def __init__(self,screenData,screen):
 
-        self.screenData=screenData
-        self.screen=screen
-
-        super().__init__(self.screenData, self.screen)
+        super().__init__(screenData, screen)
 
         clock = pygame.time.Clock()
         pygame.display.set_caption("Sprite Animation")
@@ -41,6 +38,8 @@ class InterfaceCalibrage(Interface):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         continuer = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.rightX, self.rightY = pygame.mouse.get_pos()
 
             moving_sprites.draw(self.screen)
             moving_sprites.update(0.25)

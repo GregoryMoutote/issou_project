@@ -1,7 +1,6 @@
 import pygame
-from abc import ABC, abstractmethod
 
-class Interface(ABC):
+class interface:
 
     def __init__(self,screenData,screen):
         self.screen=screen

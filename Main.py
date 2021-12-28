@@ -15,5 +15,5 @@ settings = Settings()
 pygame.init()
 screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN,pygame.NOFRAME)
 
-InterfaceCalibrage(detection,screenData,screen)
+InterfaceCalibrage(screenData,screen)
 MainMenuInterface(detection,screenData,screen,settings)

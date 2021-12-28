@@ -1,24 +1,20 @@
 import pygame
+from Bottun.Bottun import *
 
-
-class navigationBottun:
+class colorBottun(bottun):
 
     def __init__(self, x, y, width, height, screen,color, text, textSize, textLeftSpace, font,textColor):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.screen = screen
+        super().__init__(x,y,width,height,screen)
         self.text = text
         self.textSize = textSize
         self.textLeftSpace = textLeftSpace
         self.font = "./font/" + font
         self.textColor = textColor
         self.color = color
-        self.showBotton()
+        self.showBottun()
 
 
-    def showBotton(self):
+    def showBottun(self):
         pygame.font.init()
         pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height))
         myfont = pygame.font.Font(self.font, self.textSize)

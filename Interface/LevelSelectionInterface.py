@@ -1,18 +1,16 @@
 import pygame.draw
 
 from Interface.Interface import *
-from bottun.NavigationBottoun import *
+from Bottun.ColorBottun import *
 
 
-class LevelSelectionInterface(Interface):
+class LevelSelectionInterface(interface):
 
-    def __init__(self,detection,screendata,screen):
+    def __init__(self,detection,screenData,screen):
         self.detection=detection
         self.detection.initHandCapture()
-        self.screenData=screendata
-        self.screen=screen
 
-        super().__init__(self.screenData, self.screen)
+        super().__init__(screenData, screen)
 
         self.background = pygame.image.load("./picture/interface/fond.png")
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
@@ -23,11 +21,19 @@ class LevelSelectionInterface(Interface):
 
         pygame.draw.rect(self.screen,(50,50,50),(0,self.screenHeight*0.9,self.screenWidth,self.screenHeight*0.1))
 
-        self.quit=navigationBottun(0,self.screenHeight*0.91,self.screenWidth/5,self.screenHeight*0.08,self.screen ,(100,100,100),"retour",50,50,"Glitch.otf",(255,255,255))
+        self.quit=colorBottun(0,self.screenHeight*0.91,self.screenWidth/5,self.screenHeight*0.08,self.screen ,(100,100,100),"retour",50,50,"Glitch.otf",(255,255,255))
 
-        self.random = pygame.image.load("./picture/interface/dice.png")
-        self.up=pygame.image.load("./picture/interface/arrowUp.png")
-        self.down = pygame.image.load("./picture/interface/arrowDown.png")
+        self.randomPicture = pygame.image.load("./picture/interface/dice.png")
+        self.randomButton = pygame.transform.scale(self.randomPicture,(self.screenHeight*0.08, self.screenHeight*0.08))
+        self.screen.blit(self.randomButton, (self.screenWidth/20*17, self.screenHeight*0.91))
+
+        self.upPicture=pygame.image.load("./picture/interface/arrowUp.png")
+        self.upButton = pygame.transform.scale(self.upPicture,(self.screenHeight*0.08, self.screenHeight*0.08))
+        self.screen.blit(self.upButton, (self.screenWidth/20*18, self.screenHeight*0.91))
+
+        self.downPicture = pygame.image.load("./picture/interface/arrowDown.png")
+        self.downButton = pygame.transform.scale(self.downPicture,(self.screenHeight*0.08, self.screenHeight*0.08))
+        self.screen.blit(self.downButton, (self.screenWidth/20*16, self.screenHeight*0.91))
 
         pygame.display.update()
 
@@ -48,6 +54,8 @@ class LevelSelectionInterface(Interface):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         continuer = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.rightX, self.rightY = pygame.mouse.get_pos()
 
             if len(self.detection.rightHand) > 0:
                 self.rightX = self.detection.rightHand[0]
