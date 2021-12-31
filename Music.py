@@ -18,4 +18,4 @@ class Stage:
         authors = [""]
 
     def load_details(self, music_details_path):
-        None
+        pass
