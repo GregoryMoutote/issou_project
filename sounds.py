@@ -5,9 +5,15 @@ mixer.init()
 #mixer.music.load('musics/12.wav')
 #mixer.music.set_volume(0.1)
 #mixer.music.play(-1)
-sound = mixer.Sound('musics/12.wav')
-sound.play()
-sound.set_volume(0.1)
+sound = None
+try:
+    sound = mixer.Sound('musics/12.wav')
+    sound.play()
+    sound.set_volume(0.1)
+except FileNotFoundError:
+    print("Erreur")
+if sound:
+    print("Ok")
 sound2 = mixer.Sound('musics/12.wav')
 sound2.set_volume(0.1)
 image = cv2.imread("black_pixel.png")

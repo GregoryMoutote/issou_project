@@ -97,6 +97,7 @@ class MediaPipeTool :
                                 numberOfFingersClosed += 1
                             if numberOfFingersClosed >= 3 :
                                 self.isFistClosed = 1
+                                print("coucou")
                             else :
                                 self.isFistClosed = 0
                             mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS,
