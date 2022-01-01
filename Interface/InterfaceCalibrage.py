@@ -12,27 +12,15 @@ class InterfaceCalibrage(interface):
 
         super().__init__(screenData, screen)
 
+        self.show()
+
         clock = pygame.time.Clock()
         pygame.display.set_caption("Sprite Animation")
         moving_sprites = pygame.sprite.Group()
-        ISSOUlaod = loadGIF(self.screenWidth/2-300,self.screenHeight/2,self.screen)
-        moving_sprites.add(ISSOUlaod)
-
-        self.screen.fill((0,0,0))
-        pygame.draw.circle(self.screen, (200,0,0), (50,50), 50)
-        pygame.draw.circle(self.screen, (200,0,0), (self.screenWidth-50, 50), 50)
-        pygame.draw.circle(self.screen, (200,0,0), (50, self.screenHeight-50), 50)
-        pygame.draw.circle(self.screen, (200,0,0), (self.screenWidth-50, self.screenHeight-50), 50)
-
-        pygame.font.init()
-        myfont = pygame.font.Font("C:\Windows\Fonts\Arial.ttf", 50)
-        self.textsurface = myfont.render("Calibrage en cours...", True, (255,255,255))
-        pygame.font.quit()
-
-        pygame.display.update()
+        ISSOUlaodGIF = loadGIF(self.screenWidth/2-300,self.screenHeight/2,self.screen)
+        moving_sprites.add(ISSOUlaodGIF)
 
         continuer=True
-
         while continuer:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -44,14 +32,21 @@ class InterfaceCalibrage(interface):
             moving_sprites.draw(self.screen)
             moving_sprites.update(0.25)
             clock.tick(60)
-            self.show()
+            pygame.display.update()
 
 
     def show(self):
 
+        self.screen.fill((0, 0, 0))
         pygame.draw.circle(self.screen, (200, 0, 0), (50, 50), 50)
         pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, 50), 50)
         pygame.draw.circle(self.screen, (200, 0, 0), (50, self.screenHeight - 50), 50)
         pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, self.screenHeight - 50), 50)
-        self.screen.blit(self.textsurface, (self.screenWidth/2 - 250, self.screenHeight / 2 - 100))
+
+        pygame.font.init()
+        arialFont = pygame.font.Font("C:\Windows\Fonts\Arial.ttf", 50)
+        text = arialFont.render("Calibrage en cours...", True, (255, 255, 255))
+        pygame.font.quit()
+        self.screen.blit(text, (self.screenWidth / 2 - 250, self.screenHeight / 2 - 100))
+
         pygame.display.update()
