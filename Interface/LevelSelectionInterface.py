@@ -3,6 +3,7 @@ import pygame.draw
 from Interface.Interface import *
 from Bottun.PictureBottun import *
 from Level import *
+from random import *
 
 class LevelSelectionInterface(interface):
 
@@ -75,10 +76,13 @@ class LevelSelectionInterface(interface):
                 self.resetCoo()
 
             if self.rightX>self.randomBottun.x and self.rightX<(self.randomBottun.x+self.randomBottun.width) and self.rightY>self.randomBottun.y and self.rightY<(self.randomBottun.y+self.randomBottun.height):
-               continuer=False
+                for i in range(0,int(random()*len(self.levels))):
+                    self.levels.append(self.levels[0])
+                    del self.levels[0]
+                self.resetCoo()
+                self.show()
 
             self.testAffichage()
-
             pygame.display.update()
 
     def showDescription(self,name,picture,difficulty,description,duration,nbStar):
