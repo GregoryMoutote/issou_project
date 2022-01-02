@@ -19,3 +19,11 @@ class Stage:
 
     def load_details(self, music_details_path):
         pass
+
+    def play(self):
+        if is_music_loaded:
+            music.play()
+
+    def pause(self):
+        if is_music_loaded:
+            music.stop()
