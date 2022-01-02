@@ -1,11 +1,14 @@
 import mediapipe as mp
+from math import *
 import cv2
+import numpy as np
 
 class MediaPipeTool :
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
         self.leftHand = ()
         self.rightHand = ()
+        self.isFistClosed = 0
 
     def initHandCapture(self):
         self.mp_hands = mp.solutions.hands
@@ -28,13 +31,73 @@ class MediaPipeTool :
             self.rightHand = ()
             if resultsHand.multi_hand_landmarks:
                 for num, hand in enumerate(resultsHand.multi_hand_landmarks):
-                    hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x*image_width*1920/800
-                    hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y*image_height*1080/600
+
+                    hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * image_width * 1920/800
+                    hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * image_height * 1080/600
+
+                    # print((hand_x,hand_y))
+                    distanceIndexExtremities = sqrt(
+                        (hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y -
+                         hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y) ** 2 +
+                        (hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x -
+                         hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x) ** 2)
+                    distanceMiddleExtremities = sqrt(
+                        (hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y -
+                         hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y) ** 2 +
+                        (hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x -
+                         hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x) ** 2)
+                    distanceRingExtremities = sqrt(
+                        (hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].y -
+                         hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y) ** 2 +
+                        (hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].x -
+                         hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x) ** 2)
+                    distancePinkyExtremities = sqrt(
+                        (hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y -
+                         hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y) ** 2 +
+                        (hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x -
+                         hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x) ** 2)
+                    wristX = hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x
+                    wristY = hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y
+                    distanceIndexWrist = sqrt(
+                        (wristY - hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y) ** 2 +
+                        (wristX - hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x) ** 2)
+                    distanceMiddleWrist = sqrt(
+                        (wristY - hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y) ** 2 +
+                        (wristX - hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x) ** 2)
+                    distanceRingWrist = sqrt(
+                        (wristY - hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y) ** 2 +
+                        (wristX - hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x) ** 2)
+                    distancePinkyWrist = sqrt(
+                        (wristY - hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y) ** 2 +
+                        (wristX - hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x) ** 2)
+                    numberOfFingersClosed = 0
+                    if distanceIndexExtremities * 1.5 < distanceIndexWrist:
+                        numberOfFingersClosed += 1
+                    if distanceMiddleExtremities * 1.5 < distanceMiddleWrist:
+                        numberOfFingersClosed += 1
+                    if distanceRingExtremities * 1.5 < distanceRingWrist:
+                        numberOfFingersClosed += 1
+                    if distancePinkyExtremities * 1.5 < distancePinkyWrist:
+                        numberOfFingersClosed += 1
+                    if numberOfFingersClosed >= 3:
+                        self.isFistClosed = 1
+                    else:
+                        self.isFistClosed = 0
+
                     if resultsHand.multi_handedness[num].classification[0].label == "Right":
-                        self.rightHand = (hand_x,hand_y)
+                        if self.isFistClosed == 1:
+                            self.rightHand = (hand_x,hand_y)
+                        else:
+                            self.rightHand = (-1, -1)
                     if resultsHand.multi_handedness[num].classification[0].label == "Left":
-                        self.leftHand = (hand_x,hand_y)
-                    result.append((hand_x,hand_y))
+                        if self.isFistClosed == 1:
+                            self.leftHand = (hand_x,hand_y)
+                        else:
+                            self.leftHand = (-1, -1)
+                    if self.isFistClosed == 1:
+                        result.append((hand_x,hand_y))
+                    else:
+                        result.append((-1, -1))
             return result
 
     def closeCamera(self):
