@@ -1,6 +1,5 @@
-import pygame.draw
 import ctypes
-from botton import *
+from Bottun.ColorBottun import *
 
 pygame.init()
 user32 = ctypes.windll.user32
@@ -18,5 +17,4 @@ while continuer:
             if event.key == pygame.K_SPACE:
                    continuer = False
         if event.type == pygame.MOUSEBUTTONDOWN :
-            if botton[0].botton.collidepoint(pygame.mouse.get_pos()):
-                botton[0].animeBotton();
+            self.rightX,self.rightY=pygame.mouse.get_pos()

@@ -7,7 +7,7 @@ class Target:
         self.y=y
         self.radius=radius
         self.screen=screen
-        self.picture=pygame.image.load("picture/"+picture)
+        self.picture=pygame.image.load("picture/cible/"+picture)
         self.picture=pygame.transform.scale(self.picture, (self.radius*2, self.radius*2))
         self.showTarget()
 
