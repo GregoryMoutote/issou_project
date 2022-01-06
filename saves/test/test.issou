@@ -1,0 +1,24 @@
+ext=issou
+type=stage
+owner=game
+$
+title=test
+difficulty=1
+$
+title=test
+desc=§What a wonderful music ! I never listened something like that !
+(What a good joke too ;) !)§
+authors=§Greg
+Guigui
+Dodo§
+$
+type=1
+coo=15|12
+dur=4
+val=15
+col=125|125|125
+type=1
+coo=18|12
+dur=5
+val=13
+col=125|255|125

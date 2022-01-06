@@ -1,29 +1,29 @@
 from pygame import mixer
 
-class Stage:
-    def __init__(self, music_path, music_details_path):
-        music = None
-        is_music_loaded = False
-        duration = 0
-        try:
-            music = mixer.Sound(music_path)
-            duration = music.get_length()
-        except FileNotFoundError:
-            pass
-        if music:
-            is_music_loaded = True
-        name = ""
-        description = ""
-        illustration_path = ""
-        authors = [""]
-
-    def load_details(self, music_details_path):
-        pass
+class Music:
+    def __init__(self, music_path):
+        self.music = None
+        self.is_music_loaded = False
+        self.duration = 0
+        self.music_path = music_path
+        self.name = ""
+        self.description = ""
+        self.illustration_path = ""
+        self.authors = []
 
     def play(self):
-        if is_music_loaded:
-            music.play()
+        if self.is_music_loaded:
+            self.music.play()
+
+    def load(self):
+        try:
+            self.music = mixer.Sound(self.music_path)
+            self.duration = self.music.get_length()
+        except FileNotFoundError:
+            pass
+        if self.music:
+            self.is_music_loaded = True
 
     def pause(self):
-        if is_music_loaded:
-            music.stop()
+        if self.is_music_loaded:
+            self.music.stop()
