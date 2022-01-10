@@ -14,6 +14,7 @@ class Stage:
         self.stage_music = None
         self.is_stage_usable = False
         self.pre_load_stage()
+        self.load_targets()
 
     def pre_load_stage(self):
         if ".issou" not in self.path:
@@ -108,11 +109,6 @@ class Stage:
         if self.stage_music and self.targets:
             self.is_stage_usable = self.stage_music.is_music_loaded
 
-    def display_test(self):
-        print(self.name, self.difficulty, self.stage_music.name)
-        print(self.best_score)
-        print(self.stage_music.description, self.stage_music.authors)
-
     def load_best_score(self, ):
         if ".issou" not in self.path:
             return
@@ -147,3 +143,86 @@ class Stage:
         with open(best_score_path, 'w') as file:
             file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
             file.close()
+
+    def load_targets(self):
+        if ".issou" not in self.path:
+            return
+        with open(self.path, 'r') as file:
+            line = file.readline()
+            if "ext=issou" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "type=stage" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "owner=" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "$" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "title=" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "difficulty=" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "$" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "title=" not in line:
+                file.close()
+                return
+            line = file.readline()
+            while line and '$' not in line:
+                line = file.readline()
+            if not line:
+                file.close()
+                return
+            line = file.readline()
+            targetsListData = []
+            while line:
+                targetData = []
+                if "type=" not in line or not line or '\n' not in line:
+                    break
+                targetData.append(int(line[5:-1]))
+                line = file.readline()
+                if "coo=" not in line or '|' not in line or not line or '\n' not in line:
+                    break
+                targetData.append(int(line[4:line.find('|')]))
+                targetData.append(int(line[line.find('|') + 1:-1]))
+                line = file.readline()
+                if "dur=" not in line or not line or '\n' not in line:
+                    break
+                targetData.append(int(line[4:-1]))
+                line = file.readline()
+                if "val=" not in line or not line or '\n' not in line:
+                    break
+                targetData.append(int(line[4:-1]))
+                line = file.readline()
+                if "col=" not in line or not line or '\n' not in line:
+                    break
+                firstSeparator = line.find('|')
+                secondSeparator = line.find('|', firstSeparator + 1)
+                targetData.append(int(line[4:firstSeparator]))
+                targetData.append(int(line[firstSeparator + 1:secondSeparator]))
+                targetData.append(int(line[secondSeparator + 1:len(line)]))
+                line = file.readline()
+                targetsListData.append(targetData)
+            print(targetsListData)
+            file.close()
+
+
+
+
+    def display_test(self):
+        print(self.name, self.difficulty, self.stage_music.name)
+        print(self.best_score)
+        print(self.stage_music.description, self.stage_music.authors)
