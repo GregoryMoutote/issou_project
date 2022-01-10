@@ -5,6 +5,7 @@ import time
 
 class Stage:
     def __init__(self, file_path):
+        self.path = file_path
         self.targets = []
         self.difficulty = 0
         self.name = ""
@@ -12,14 +13,13 @@ class Stage:
         self.activeTargets = []
         self.stage_music = None
         self.is_stage_usable = False
-        self.pre_load_stage(file_path)
-        #TODO get the best score from the file on the preloading
+        self.pre_load_stage()
 
-    def pre_load_stage(self, file_path):
-        if ".issou" not in file_path:
+    def pre_load_stage(self):
+        if ".issou" not in self.path:
             return
-        self.stage_music = Music(file_path[0:file_path.find(".issou") - 1] + ".wav")
-        with open(file_path, 'r') as file:
+        self.stage_music = Music(self.path[0:self.path.find(".issou") - 1] + ".wav")
+        with open(self.path, 'r') as file:
             line = file.readline()
             if "ext=issou" not in line:
                 file.close()
@@ -83,7 +83,7 @@ class Stage:
                 else:
                     self.stage_music.authors.append(line[0:-1])
             file.close()
-            self.load_best_score(file_path)
+            self.load_best_score()
 
     def play(self):
         if is_stage_usable:
@@ -113,10 +113,10 @@ class Stage:
         print(self.best_score)
         print(self.stage_music.description, self.stage_music.authors)
 
-    def load_best_score(self, file_path):
-        if ".issou" not in file_path:
+    def load_best_score(self, ):
+        if ".issou" not in self.path:
             return
-        best_score_path = file_path[0:file_path.find(".issou")] + "_bs.issou"
+        best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
         with open(best_score_path, 'r') as file:
             line = file.readline()
             if "ext=issou" not in line:
@@ -139,3 +139,11 @@ class Stage:
                 file.close()
                 return
             self.best_score = int(line[line.find('=') + 1:len(line)])
+
+    def save_best_score(self):
+        if ".issou" not in self.path:
+            return
+        best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
+        with open(best_score_path, 'w') as file:
+            file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
+            file.close()
