@@ -203,11 +203,15 @@ class Stage:
                     break
                 targetData.append(int(line[4:-1]))
                 line = file.readline()
+                if "del=" not in line or not line or '\n' not in line:
+                    break
+                targetData.append(int(line[4:-1]))
+                line = file.readline()
                 if "val=" not in line or not line or '\n' not in line:
                     break
                 targetData.append(int(line[4:-1]))
                 line = file.readline()
-                if "col=" not in line or not line or '\n' not in line:
+                if "col=" not in line or not line:
                     break
                 firstSeparator = line.find('|')
                 secondSeparator = line.find('|', firstSeparator + 1)

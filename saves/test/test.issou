@@ -15,10 +15,12 @@ $
 type=1
 coo=15|12
 dur=4
+del=5
 val=15
 col=125|125|125
 type=1
 coo=18|12
 dur=5
+del=5
 val=13
 col=125|255|125
