@@ -1,8 +1,9 @@
 from pygame import mixer
 from abc import ABC, abstractmethod
 from Music import Music
+from Target import Target
 import time
-
+#TODO Add the creation date
 class Stage:
     def __init__(self, file_path):
         self.path = file_path
@@ -187,7 +188,6 @@ class Stage:
                 file.close()
                 return
             line = file.readline()
-            targetsListData = []
             while line:
                 targetData = []
                 if "type=" not in line or not line or '\n' not in line:
@@ -219,12 +219,11 @@ class Stage:
                 targetData.append(int(line[firstSeparator + 1:secondSeparator]))
                 targetData.append(int(line[secondSeparator + 1:len(line)]))
                 line = file.readline()
-                targetsListData.append(targetData)
-            print(targetsListData)
+                self.targets.append(Target(targetData))
+                #TODO Adapt to the target the number of lines
+            for target in self.targets:
+                target.display()
             file.close()
-
-
-
 
     def display_test(self):
         print(self.name, self.difficulty, self.stage_music.name)
