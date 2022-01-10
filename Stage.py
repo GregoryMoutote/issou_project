@@ -13,35 +13,36 @@ class Stage:
         self.stage_music = None
         self.is_stage_usable = False
         self.pre_load_stage(file_path)
+        #TODO get the best score from the file on the preloading
 
     def pre_load_stage(self, file_path):
         if ".issou" not in file_path:
             return
         self.stage_music = Music(file_path[0:file_path.find(".issou") - 1] + ".wav")
         with open(file_path, 'r') as file:
-            line = file.readline();
+            line = file.readline()
             if "ext=issou" not in line:
                 file.close()
                 return
-            line = file.readline();
-            if "type=" not in line:
+            line = file.readline()
+            if "type=stage" not in line:
                 file.close()
                 return
-            line = file.readline();
+            line = file.readline()
             if "owner=" not in line:
                 file.close()
                 return
-            line = file.readline();
+            line = file.readline()
             if "$" not in line:
                 file.close()
                 return
-            line = file.readline();
+            line = file.readline()
             if "title=" not in line:
                 file.close()
                 return
             else:
                 self.name = line[6:-1]
-            line = file.readline();
+            line = file.readline()
             if "difficulty=" not in line:
                 file.close()
                 return
@@ -69,6 +70,7 @@ class Stage:
                         self.stage_music.description += line[delimiter + 1:-1]
                 else:
                     self.stage_music.description += line[:]
+                self.stage_music.description += '\n'
             line = "pass"
             while line and line.find('§') != len(line) - 2:
                 line = file.readline()
@@ -81,6 +83,7 @@ class Stage:
                 else:
                     self.stage_music.authors.append(line[0:-1])
             file.close()
+            self.load_best_score(file_path)
 
     def play(self):
         if is_stage_usable:
@@ -107,4 +110,32 @@ class Stage:
 
     def display_test(self):
         print(self.name, self.difficulty, self.stage_music.name)
+        print(self.best_score)
         print(self.stage_music.description, self.stage_music.authors)
+
+    def load_best_score(self, file_path):
+        if ".issou" not in file_path:
+            return
+        best_score_path = file_path[0:file_path.find(".issou")] + "_bs.issou"
+        with open(best_score_path, 'r') as file:
+            line = file.readline()
+            if "ext=issou" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "type=best_score" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "owner=" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "$" not in line:
+                file.close()
+                return
+            line = file.readline()
+            if "val=" not in line:
+                file.close()
+                return
+            self.best_score = int(line[line.find('=') + 1:len(line)])
