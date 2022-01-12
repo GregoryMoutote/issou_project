@@ -10,4 +10,4 @@ class Target:
             self.color = [int(targetData[6]), int(targetData[7]), int(targetData[8])]
 
     def display(self):
-        print(self.coordinates.x, self.coordinates.y, self.duration, self.delay, self.value, self.color)
+        print(self.coordinates, self.duration, self.delay, self.value, self.color)

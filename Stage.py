@@ -2,6 +2,7 @@ from pygame import mixer
 from abc import ABC, abstractmethod
 from Music import Music
 from Target import Target
+from Date import Date
 import time
 #TODO Add the creation date
 class Stage:
@@ -13,6 +14,7 @@ class Stage:
         self.best_score = 0
         self.activeTargets = []
         self.stage_music = None
+        self.date = None
         self.is_stage_usable = False
         self.pre_load_stage()
         self.load_targets()
@@ -34,6 +36,17 @@ class Stage:
             if "owner=" not in line:
                 file.close()
                 return
+            line = file.readline()
+            if "crea_date=" not in line:
+                file.close()
+                return
+            else:
+                first_delimiter = line.find('/')
+                day = line[10:first_delimiter]
+                second_delimiter = line.find('/', first_delimiter + 1)
+                month = line[first_delimiter + 1: second_delimiter]
+                year = line[second_delimiter + 1: -1]
+                self.date = Date(day, month, year)
             line = file.readline()
             if "$" not in line:
                 file.close()
@@ -227,5 +240,10 @@ class Stage:
 
     def display_test(self):
         print(self.name, self.difficulty, self.stage_music.name)
-        print(self.best_score)
+        print(self.best_score, self.date)
         print(self.stage_music.description, self.stage_music.authors)
+
+    def __del__(self):
+        if self.targets != None:
+            self.targets.clear()
+        self.stage_music = None
