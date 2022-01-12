@@ -2,6 +2,9 @@ from pygame import mixer
 from abc import ABC, abstractmethod
 from Music import Music
 from Target import Target
+from Dynamic_target import Dynamic_target
+from Moving_target import Moving_target
+from Rail_target import Rail_target
 from Date import Date
 import time
 #TODO Add the creation date
@@ -175,6 +178,10 @@ class Stage:
                 file.close()
                 return
             line = file.readline()
+            if "crea_date=" not in line:
+                file.close()
+                return
+            line = file.readline()
             if "$" not in line:
                 file.close()
                 return
@@ -232,7 +239,39 @@ class Stage:
                 targetData.append(int(line[firstSeparator + 1:secondSeparator]))
                 targetData.append(int(line[secondSeparator + 1:len(line)]))
                 line = file.readline()
-                self.targets.append(Target(targetData))
+                if targetData[0] == 2:
+                    if "end_coo=" not in line or not line:
+                        break
+                    if "coo=" not in line or '|' not in line or not line:
+                        break
+                    targetData.append(int(line[8:line.find('|')]))
+                    targetData.append(int(line[line.find('|') + 1:-1]))
+                    line = file.readline()
+                elif targetData[0] == 3:
+                    if "end_val=" not in line or not line:
+                        break
+                    targetData.append(int(line[8:-1]))
+                    line = file.readline()
+                elif targetData[0] == 4:
+                    if "step=" not in line or not line:
+                        break
+                    delimiter = line.find('§')
+                    while '§' in line[delimiter + 1: len(line)]:
+                        next_delimiter = line.find('§', delimiter + 1)
+                        toProcess = line[delimiter + 1: next_delimiter - 1]
+                        print(toProcess, toProcess[0:toProcess.find('|')], toProcess[toProcess.find('|') + 1:len(toProcess)])
+                        targetData.append(int(toProcess[0:toProcess.find('|')]))
+                        targetData.append(int(toProcess[toProcess.find('|') + 1:len(toProcess)]))
+                        delimiter = next_delimiter
+                    line = file.readline()
+                if targetData[0] == 2:
+                    self.targets.append(Moving_target(targetData))
+                elif targetData[0] == 3:
+                    self.targets.append(Dynamic_target(targetData))
+                elif targetData[0] == 4:
+                    self.targets.append(Rail_target(targetData))
+                else:
+                    self.targets.append(Target(targetData))
                 #TODO Adapt to the target the number of lines
             for target in self.targets:
                 target.display()
