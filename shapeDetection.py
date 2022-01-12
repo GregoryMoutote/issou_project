@@ -6,16 +6,16 @@ from matplotlib import pyplot as plt
 cap = cv2.VideoCapture(0)
 
 while (1):
-    img, _ = cap.read()
+    _, img = cap.read()
 
     # converting image into grayscale image
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
     # setting threshold of gray image
-    _, threshold = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+    threshold, _ = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
 
     # using a findContours() function
-    contours, _ = cv2.findContours(
+    _, contours = cv2.findContours(
         threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     i = 0
