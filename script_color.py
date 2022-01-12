@@ -1,12 +1,5 @@
-from color_util import color_util
 from color_thread import colorThread
-import pygame
-import threading
 import keyboard
-import cv2
-import time
-from MediaPipeThread import MediaPipeThread
-
 
 import cv2 as cv
 import matplotlib.pyplot as plt
