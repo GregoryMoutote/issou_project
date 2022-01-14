@@ -1,7 +1,7 @@
 import pygame.draw
 
 from Interface.Interface import *
-from Bottun.PictureBottun import *
+from Button.PictureButton import *
 from Level import *
 from random import *
 
@@ -16,32 +16,35 @@ class LevelSelectionInterface(interface):
         self.background = pygame.image.load("./picture/interface/fond.png")
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
 
-        self.levels=[level("Day of the Lords",3,"day of the Lords.png","description de Day of the Lords","MEDIUM","3:20")]
-        self.levels.append(level("One More Time",4,"one More Time.png","description One More Time","MEDIUM","2:56"))
-        self.levels.append(level("Something",5,"something.png","descritpion Something","HARD","3:03"))
-        self.levels.append(level("Welcome Home",2,"welcome Home.png","description Welcome Home","EASY","2:59"))
-        self.levels.append(level("In Bloom",4,"in Bloom.png","description In Bloom","MEDIUM","3:42"))
-        self.levels.append(level("On the Run",4,"on the Run.png","description On the Run","EASY","4:01"))
-        self.levels.append(level("Welcome to the Machine",3,"welcome to the Machine.jpg","description Welcome to the Machine","EASY","2:51"))
-        self.levels.append(level("In the Flesh?",4,"in the Flesh.jpg","description In the Flesh?","MEDIUM","3:00"))
-        self.levels.append(level("Thriller",1,"thriller.jpg","description Thriller","HARD","5:51"))
+        self.levels=[level("Day of the Lords",3,"day of the Lords.png","description de Day of the Lords",1,"3:20")]
+        self.levels.append(level("One More Time",4,"one More Time.png","description One More Time",1,"2:56"))
+        self.levels.append(level("Something",5,"something.png","descritpion Something",2,"3:03"))
+        self.levels.append(level("Welcome Home",2,"welcome Home.png","description Welcome Home",0,"2:59"))
+        self.levels.append(level("In Bloom",4,"in Bloom.png","description In Bloom",1,"3:42"))
+        self.levels.append(level("On the Run",4,"on the Run.png","description On the Run",0,"4:01"))
+        self.levels.append(level("Welcome to the Machine",3,"welcome to the Machine.jpg","description Welcome to the Machine",0,"2:51"))
+        self.levels.append(level("In the Flesh?",4,"in the Flesh.jpg","description In the Flesh?",1,"3:00"))
+        self.levels.append(level("Thriller",1,"thriller.jpg","description Thriller",2,"5:51"))
 
         self.bannerBottomPicture = pygame.image.load("./picture/interface/bannerBottom.png")
         self.bannerBottomPicture = pygame.transform.scale(self.bannerBottomPicture,(self.screenWidth, self.screenHeight*0.15))
 
-        self.randomBottun=pictureBottun(self.screenWidth*0.8,self.screenHeight*0.86,self.screenHeight*0.13,self.screenHeight*0.13,self.screen ,"dice.png","",50,50,"Arial.ttf",(255,255,255))
-        self.upBottun=pictureBottun(self.screenWidth*0.9,self.screenHeight*0.86,self.screenHeight*0.13,self.screenHeight*0.13,self.screen ,"arrowUp.png","",50,50,"Arial.ttf",(255,255,255))
-        self.downBottun=pictureBottun(self.screenWidth*0.7,self.screenHeight*0.86,self.screenHeight*0.13,self.screenHeight*0.13,self.screen ,"arrowDown.png","",50,50,"Arial.ttf",(255,255,255))
-        self.quitBottun=pictureBottun(0,self.screenHeight*0.9,self.screenWidth*0.25,self.screenHeight*0.08,self.screen,"bottun1.png","retour",50,50,"Glitch.otf",(255,255,255))
+        self.randomBottun=pictureButton(self.screenWidth * 0.8, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.upBottun=pictureButton(self.screenWidth * 0.9, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.downBottun=pictureButton(self.screenWidth * 0.7, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.quitBottun=pictureButton(0, self.screenHeight * 0.9, self.screenWidth * 0.25, self.screenHeight * 0.08, self.screen, "bottun1.png", "retour", 50, 50, "Glitch.otf", (255, 255, 255))
 
         self.show()
         self.resetCoo()
+        self.loop()
 
+
+    def loop(self):
         continuer=True
 
         while continuer:
 
-            detection.hand_detection()
+            self.detection.hand_detection()
             self.testAffichage()
             pygame.display.update()
 
@@ -85,6 +88,7 @@ class LevelSelectionInterface(interface):
             self.testAffichage()
             pygame.display.update()
 
+
     def showDescription(self,name,picture,difficulty,description,duration,nbStar):
 
         self.bannerTopPicture = pygame.image.load("./picture/interface/bannerTop.png")
@@ -112,10 +116,18 @@ class LevelSelectionInterface(interface):
         fontArial=pygame.font.Font("./font/Arial.ttf",30)
         fontBigArial = pygame.font.Font("./font/Arial.ttf", 40)
 
+        if(len(name)>15):
+            name=name[0:15]+"..."
+
         self.title = fontGlitch.render(name, True, (255, 255, 255))
         self.screen.blit(self.title, (self.screenHeight / 5, 10))
 
-        self.difficulty = fontBigArial.render(difficulty, True, (255, 0, 0))
+        if(difficulty==0):
+            self.difficulty = fontBigArial.render("EASY", True, (0, 255, 0))
+        elif(difficulty==1):
+            self.difficulty = fontBigArial.render("MEDIUM", True, (255, 128, 0))
+        else:
+            self.difficulty = fontBigArial.render("HARD", True, (255, 0, 0))
         self.screen.blit(self.difficulty, (self.screenWidth*0.64, 25))
 
         for i in range(0, len(description), 80):
@@ -139,7 +151,7 @@ class LevelSelectionInterface(interface):
         self.musicPicture = pygame.transform.scale(self.musicPicture,(200, 200))
         self.screen.blit(self.musicPicture, (self.screenWidth/5, self.screenHeight/2-100))
 
-        for i in range(0,len(self.levels)):
+        for i in range(0,6):
             if(i==2):
                 self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.167 * i, self.screenWidth * 0.40, self.screenHeight * 0.167)
             else:

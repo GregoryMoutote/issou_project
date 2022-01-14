@@ -1,5 +1,5 @@
 import ctypes
-from Bottun.ColorBottun import *
+from Button.ColorButton import *
 
 pygame.init()
 user32 = ctypes.windll.user32

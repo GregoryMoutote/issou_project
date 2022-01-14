@@ -1,7 +1,7 @@
 import pygame
-from Bottun.Bottun import *
+from Button.Button import *
 
-class cocheBottun(bottun):
+class cocheBotton(Button):
 
     def __init__(self, x, y, width,height, screen,truePicture,falsePicture,actif):
         super().__init__(x,y,width,height,screen)

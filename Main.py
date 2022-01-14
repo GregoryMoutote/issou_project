@@ -1,6 +1,6 @@
 from Interface.InterfaceCalibrage import *
 from Interface.MainMenuInterface import *
-from playerDetection.MediaPipeTool import MediaPipeTool
+from playerDetection.MediaPipeToolOld import MediaPipeTool
 from Settings import *
 
 import pygame

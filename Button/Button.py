@@ -1,5 +1,5 @@
 
-class bottun:
+class Button:
 
     def __init__(self, x, y, width, height, screen):
         self.x = x

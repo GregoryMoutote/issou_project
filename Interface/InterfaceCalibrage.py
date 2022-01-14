@@ -14,13 +14,17 @@ class InterfaceCalibrage(interface):
 
         self.show()
 
-        clock = pygame.time.Clock()
-        pygame.display.set_caption("Sprite Animation")
-        moving_sprites = pygame.sprite.Group()
-        ISSOUlaodGIF = loadGIF(self.screenWidth/2-300,self.screenHeight/2,self.screen)
-        moving_sprites.add(ISSOUlaodGIF)
+        #self.clock = pygame.time.Clock()
+        #pygame.display.set_caption("Sprite Animation")
+        #self.moving_sprites = pygame.sprite.Group()
+        #ISSOUlaodGIF = loadGIF(self.screenWidth/2-300,self.screenHeight/2,self.screen)
+        #self.moving_sprites.add(ISSOUlaodGIF)
 
-        continuer=True
+        self.loop()
+
+
+    def loop(self):
+        continuer = True
         while continuer:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -29,24 +33,23 @@ class InterfaceCalibrage(interface):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
 
-            moving_sprites.draw(self.screen)
-            moving_sprites.update(0.25)
-            clock.tick(60)
+            # self.moving_sprites.draw(self.screen)
+            # self.moving_sprites.update(0.25)
+            #self.clock.tick(60)
             pygame.display.update()
-
 
     def show(self):
 
-        self.screen.fill((0, 0, 0))
-        pygame.draw.circle(self.screen, (200, 0, 0), (50, 50), 50)
-        pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, 50), 50)
-        pygame.draw.circle(self.screen, (200, 0, 0), (50, self.screenHeight - 50), 50)
-        pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, self.screenHeight - 50), 50)
+        self.screen.fill((188 , 124, 169))
+        #pygame.draw.circle(self.screen, (200  , 0, 0), (50, 50), 50)
+        #pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, 50), 50)
+        #pygame.draw.circle(self.screen, (200, 0, 0), (50, self.screenHeight - 50), 50)
+        #pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, self.screenHeight - 50), 50)
 
         pygame.font.init()
         arialFont = pygame.font.Font("C:\Windows\Fonts\Arial.ttf", 50)
         text = arialFont.render("Calibrage en cours...", True, (255, 255, 255))
         pygame.font.quit()
-        self.screen.blit(text, (self.screenWidth / 2 - 250, self.screenHeight / 2 - 100))
+        #self.screen.blit(text, (self.screenWidth / 2 - 250, self.screenHeight / 2 - 100))
 
         pygame.display.update()
