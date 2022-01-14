@@ -27,7 +27,7 @@ while 1 :
 
         M = cv2.moments(contour)
 
-        if taille > 200:
+        if taille > 50:
 
             if M['m00'] != 0.0:
                 x = int(M['m10'] / M['m00'])

@@ -23,7 +23,7 @@ while (1):
     # Set range for red color and
     # define mask
     red_lower = np.array([136, 87, 111], np.uint8)
-    red_upper = np.array([220, 255, 255], np.uint8)
+    red_upper = np.array([156, 255, 255], np.uint8)
     red_mask = cv2.inRange(hsvFrame, red_lower, red_upper)
 
 
