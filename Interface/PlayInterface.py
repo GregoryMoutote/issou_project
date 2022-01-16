@@ -13,7 +13,9 @@ class playInterface(interface):
 
         super().__init__(screenData, screen)
 
-        self.pauseButton= pictureButton(30,30,100,100,self.screen,"pause.png","",0,0,"",(0,0,0))
+        self.background=pygame.image.load("./levels/"+levelName+"/background.png")
+        self.background = pygame.transform.scale(self.background, (width, height))
+        self.pauseButton= pictureButton(20,20,100,100,self.screen,"pause.png","",0,0,"",(0,0,0))
 
         self.show()
         self.resetCoo()
@@ -57,6 +59,7 @@ class playInterface(interface):
 
 
     def show(self):
+        self.screen.blit(self.background, (0, 0))
         self.pauseButton.showButton()
         pygame.display.update()
 
