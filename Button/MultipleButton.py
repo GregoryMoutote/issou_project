@@ -13,16 +13,14 @@ class multipleButton(Button):
 
         for i in range(0, self.nbBottun):
             if i < self.nbActif:
-                self.coche.append(cocheBotton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, True))
+                self.coche.append(cocheButton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, True))
             else:
-                self.coche.append(cocheBotton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, False))
+                self.coche.append(cocheButton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, False))
+        self.showButton()
 
-        self.showBottun()
-
-    def showBottun(self):
+    def showButton(self):
         for i in range(0, self.nbBottun):
-             self.coche[i].showBottun()
-        pygame.display.update()
+             self.coche[i].showButton()
 
     def changeStat(self,nbActif):
         self.nbActif=nbActif
@@ -32,8 +30,7 @@ class multipleButton(Button):
                 self.coche[i].actif=True
             else:
                 self.coche[i].actif=False
-
-        self.showBottun()
+        self.showButton()
 
     def __del__(self):
         self.coche.clear()

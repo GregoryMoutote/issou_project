@@ -6,7 +6,7 @@ from Interface.InterfaceCalibrage import *
 
 class InterfaceSettings(interface):
 
-    def __init__(self,detection,screenData,screen,settings):
+    def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
         self.detection=detection
         self.detection.initHandCapture()
@@ -16,20 +16,19 @@ class InterfaceSettings(interface):
         self.background = pygame.image.load("./picture/interface/fond.png")
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
 
-        self.bottun = [(colorBotton(100, self.screenHeight / 2 + 120, self.screenWidth * 0.85, 70, self.screen, (0, 172, 240), "Recalibrer", 50, self.screenWidth * 0.5 - 230, "Arial.ttf", (255, 255, 255)))]
-        self.bottun.append(colorBotton(100, self.screenHeight / 2 + 190, self.screenWidth * 0.85, 70, self.screen, (0, 112, 192), "Aide", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
-        self.bottun.append(colorBotton(100, self.screenHeight / 2 + 260, self.screenWidth * 0.85, 70, self.screen, (120, 120, 120), "Quitter", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
+        self.button = [(colorButton(100, self.screenHeight / 2 + 120, self.screenWidth * 0.85, 70, self.screen, (0, 172, 240), "Recalibrer", 50, self.screenWidth * 0.5 - 230, "Arial.ttf", (255, 255, 255)))]
+        self.button.append(colorButton(100, self.screenHeight / 2 + 190, self.screenWidth * 0.85, 70, self.screen, (0, 112, 192), "Aide", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
+        self.button.append(colorButton(100, self.screenHeight / 2 + 260, self.screenWidth * 0.85, 70, self.screen, (120, 120, 120), "Quitter", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
 
-        self.volumeBottun = multipleButton(225, self.screenHeight / 2 - 217, 1350, 100, self.screen, "soundOn.png", "soundOff.png", 10, self.settings.volume)
+        self.volumeButton = multipleButton(225, self.screenHeight / 2 - 217, 1350, 100, self.screen, "soundOn.png", "soundOff.png", 10, self.settings.volume)
 
         if(self.settings.volume==0):
-            self.muteBottun = cocheBotton(100, self.screenHeight / 2 - 217, 100, 100, self.screen, "SoundMute.png", "SoundActive.png", True)
+            self.muteButton = cocheButton(100, self.screenHeight / 2 - 217, 100, 100, self.screen, "SoundMute.png", "SoundActive.png", True)
         else:
-            self.muteBottun = cocheBotton(100, self.screenHeight / 2 - 217, 100, 100, self.screen, "SoundMute.png", "SoundActive.png", False)
+            self.muteButton = cocheButton(100, self.screenHeight / 2 - 217, 100, 100, self.screen, "SoundMute.png", "SoundActive.png", False)
 
-        self.animationBottun = cocheBotton(700, self.screenHeight / 2 - 92, 100, 100, self.screen, "checkedOn.png", "checkedOff.png", self.settings.animation)
+        self.animationButton = cocheButton(700, self.screenHeight / 2 - 92, 100, 100, self.screen, "checkedOn.png", "checkedOff.png", self.settings.animation)
 
-        self.show()
         self.resetCoo()
         self.loop()
 
@@ -49,36 +48,6 @@ class InterfaceSettings(interface):
                 self.leftX = self.detection.leftHand[0]
                 self.leftY = self.detection.leftHand[1]
 
-            if self.rightX>self.animationBottun.x and self.rightX<(self.animationBottun.x+self.animationBottun.width) and self.rightY>self.animationBottun.y and self.rightY<(self.animationBottun.y+self.animationBottun.height):
-                self.settings.animation=self.animationBottun.changeStat()
-                self.resetCoo()
-
-            elif self.rightX>self.muteBottun.x and self.rightX<(self.muteBottun.x+self.muteBottun.width) and self.rightY>self.muteBottun.y and self.rightY<(self.muteBottun.y+self.muteBottun.height):
-                self.muteBottun.changeStat()
-                if(self.muteBottun.actif):
-                    self.settings.volume=0
-                    self.volumeBottun.changeStat(0)
-                else:
-                    self.settings.volume = 1
-                    self.volumeBottun.changeStat(1)
-                self.resetCoo()
-
-
-            elif self.rightX > self.bottun[0].x and self.rightX < (self.bottun[0].x + self.bottun[0].width) and self.rightY > self.bottun[0].y and self.rightY < (self.bottun[0].y + self.bottun[0].height):
-                InterfaceCalibrage(self.screenData, self.screen)
-                self.resetCoo()
-                self.show()
-
-            elif self.rightX>(self.bottun[2].x) and self.rightX<(self.bottun[2].x+self.bottun[2].width) and self.rightY>(self.bottun[2].y) and self.rightY<(self.bottun[2].y+self.bottun[2].height):
-                continuer=False
-
-            for i in range(0, self.volumeBottun.nbBottun):
-                if self.rightX>self.volumeBottun.coche[i].x and self.rightX<(self.volumeBottun.coche[i].x+self.volumeBottun.coche[i].width) and self.rightY>self.volumeBottun.coche[i].y and self.rightY<(self.volumeBottun.coche[i].y+self.volumeBottun.coche[i].height):
-                    self.volumeBottun.changeStat(i+1)
-                    self.settings.volume = i+1
-                    if(self.muteBottun.actif==True):
-                        self.muteBottun.changeStat()
-
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
@@ -86,44 +55,73 @@ class InterfaceSettings(interface):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
 
-            self.testAffichage()
-            pygame.display.update()
+            self.showHand()
 
+            if self.rightX>self.animationButton.x and self.rightX<(self.animationButton.x + self.animationButton.width) and self.rightY>self.animationButton.y and self.rightY<(self.animationButton.y + self.animationButton.height):
+                self.settings.animation=self.animationButton.changeStat()
+                self.resetCoo()
 
-    def testAffichage(self):
+            elif self.rightX>self.muteButton.x and self.rightX<(self.muteButton.x + self.muteButton.width) and self.rightY>self.muteButton.y and self.rightY<(self.muteButton.y + self.muteButton.height):
+                self.muteButton.changeStat()
+                if(self.muteButton.actif):
+                    self.settings.volume=0
+                    self.volumeButton.changeStat(0)
+                else:
+                    self.settings.volume = 1
+                    self.volumeButton.changeStat(1)
+                self.resetCoo()
 
-        if len(self.detection.leftHand)>0:
-            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
-            pygame.draw.circle(self.screen, (255, 0, 0), (self.detection.leftHand[0]-5, self.detection.leftHand[1]-5), 10)
+            elif self.rightX > self.button[0].x and self.rightX < (self.button[0].x + self.button[0].width) and self.rightY > self.button[0].y and self.rightY < (self.button[0].y + self.button[0].height):
+                InterfaceCalibrage(self.screenData, self.screen)
+                self.resetCoo()
+                self.show()
 
-        if len(self.detection.rightHand)>0:
-           pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.rightHand[0]-5,  self.detection.rightHand[1]-5), 10)
+            elif self.rightX>(self.button[2].x) and self.rightX<(self.button[2].x + self.button[2].width) and self.rightY>(self.button[2].y) and self.rightY<(self.button[2].y + self.button[2].height):
+                continuer=False
 
+            for i in range(0, self.volumeButton.nbBottun):
+                if self.rightX>self.volumeButton.coche[i].x and self.rightX<(self.volumeButton.coche[i].x + self.volumeButton.coche[i].width) and self.rightY>self.volumeButton.coche[i].y and self.rightY<(self.volumeButton.coche[i].y + self.volumeButton.coche[i].height):
+                    self.volumeButton.changeStat(i + 1)
+                    self.settings.volume = i+1
+                    if(self.muteButton.actif==True):
+                        self.muteButton.changeStat()
 
     def show(self):
+        print("paasage")
         pygame.font.init()
-        fontGlitch=pygame.font.Font("./font/Glitch.otf",100)
-        fontArial=pygame.font.Font("./font/Arial.ttf",56)
+        fontGlitch = pygame.font.Font("./font/Glitch.otf", 100)
+        fontArial = pygame.font.Font("./font/Arial.ttf", 56)
 
         text = fontGlitch.render("OPTIONS", True, (255, 255, 255))
         text2 = fontArial.render("Activer les animations", True, (255, 255, 255))
         pygame.font.quit()
 
         self.screen.blit(self.background, (0, 0))
-        for c in self.bottun:
-            c.showBottun()
+        for c in self.button:
+            c.showButton()
 
         self.screen.blit(text, (self.screenWidth / 2 - 250, self.screenHeight / 2 - 350))
         self.screen.blit(text2, (100, self.screenHeight / 2 - 75))
 
-        #text = fontArial.render("Volume", True, (255, 255, 255))
-        #self.screen.blit(text, (100, self.screenHeight / 2 - 200))
+        # text = fontArial.render("Volume", True, (255, 255, 255))
+        # self.screen.blit(text, (100, self.screenHeight / 2 - 200))
 
-        self.volumeBottun.showBottun()
-        self.muteBottun.showBottun()
-        self.animationBottun.showBottun()
-
+        self.volumeButton.showButton()
+        self.muteButton.showButton()
+        self.animationButton.showButton()
         pygame.display.update()
+
+
+    def showHand(self):
+        self.show()
+        if len(self.detection.leftHand)>0:
+            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
+            pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
+
+        if len(self.detection.rightHand)>0:
+           pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
+        pygame.display.update()
+
 
     def resetCoo(self):
         self.rightX=0

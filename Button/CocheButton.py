@@ -1,7 +1,7 @@
 import pygame
 from Button.Button import *
 
-class cocheBotton(Button):
+class cocheButton(Button):
 
     def __init__(self, x, y, width,height, screen,truePicture,falsePicture,actif):
         super().__init__(x,y,width,height,screen)
@@ -9,11 +9,10 @@ class cocheBotton(Button):
         self.truePicture = pygame.transform.scale(self.picture, (self.width, self.height))
         self.picture2 = pygame.image.load("picture/interface/" + falsePicture)
         self.falsePicture = pygame.transform.scale(self.picture2, (self.width, self.height))
-
         self.actif = actif
-        self.showBottun()
+        self.showButton()
 
-    def showBottun(self):
+    def showButton(self):
         if self.actif:
             #pygame.draw.circle(self.screen, self.trueColor, (self.x,self.y), self.radius)
             self.screen.blit(self.truePicture, (self.x, self.y))
@@ -21,14 +20,13 @@ class cocheBotton(Button):
             #pygame.draw.circle(self.screen, self.falseColor, (self.x,self.y), self.radius)
             self.screen.blit(self.falsePicture, (self.x, self.y))
 
-        pygame.display.update()
 
     def changeStat(self):
         if self.actif:
             self.actif=False
-            self.showBottun()
+            self.showButton()
             return False
         else:
             self.actif=True
-            self.showBottun()
+            self.showButton()
             return True

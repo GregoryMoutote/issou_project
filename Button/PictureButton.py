@@ -12,14 +12,15 @@ class pictureButton(Button):
         self.textLeftSpace = textLeftSpace
         self.font = "./font/" + font
         self.textColor = textColor
-        self.showBottun()
+        self.showButton()
 
 
-    def showBottun(self):
+    def showButton(self):
         self.screen.blit(self.picture, (self.x, self.y))
-        pygame.font.init()
-        myfont = pygame.font.Font(self.font, self.textSize)
-        textsurface = myfont.render(self.text, True, self.textColor)
-        self.screen.blit(textsurface, (self.x + self.textLeftSpace, self.y + (self.height - self.textSize) / 2))
-        pygame.font.quit()
+        if(self.text!=""):
+            pygame.font.init()
+            myfont = pygame.font.Font(self.font, self.textSize)
+            textsurface = myfont.render(self.text, True, self.textColor)
+            self.screen.blit(textsurface, (self.x + self.textLeftSpace, self.y + (self.height - self.textSize) / 2))
+            pygame.font.quit()
 
