@@ -73,10 +73,6 @@ class MainMenuInterface(interface):
                self.detection.closeCamera()
                continuer=False
 
-            self.moving_sprites.draw(self.screen)
-            self.moving_sprites.update(1)
-            self.clock.tick(60)
-
 
     def toucheCible(left,top,radius,x,y):
 
@@ -96,6 +92,9 @@ class MainMenuInterface(interface):
         for c in self.bottun:
             c.showButton()
         self.screen.blit(self.fondLogo, (self.screenWidth/10, self.screenHeight/2-249))
+        self.moving_sprites.draw(self.screen)
+        self.moving_sprites.update(1)
+        self.clock.tick(60)
         pygame.display.update()
 
 

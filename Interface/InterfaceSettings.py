@@ -87,7 +87,6 @@ class InterfaceSettings(interface):
                         self.muteButton.changeStat()
 
     def show(self):
-        print("paasage")
         pygame.font.init()
         fontGlitch = pygame.font.Font("./font/Glitch.otf", 100)
         fontArial = pygame.font.Font("./font/Arial.ttf", 56)
