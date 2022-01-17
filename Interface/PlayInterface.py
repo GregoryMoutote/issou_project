@@ -52,6 +52,7 @@ class playInterface(interface):
             if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
                 self.stage.pause()
                 pauseInterface(self.screenData, self.screen, self.detection, self.settings,self)
+                self.stage.resume()
                 self.resetCoo()
                 #self.stage.stage_music.music.unpause()
                 self.show()

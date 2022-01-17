@@ -138,15 +138,15 @@ class Stage:
                         else:
                             self.activeTargets[iterator][0].showTarget()
 
-
-
     def pause(self):
         self.spend = time.time()
         self.is_stage_usable = False
         self.stage_music.pause()
 
+    def resume(self):
+        self.load_stage()
+
     def load_stage(self):
-        print("Music", self.stage_music == None, self.stage_music.is_music_loaded, "Targets", self.targets == None)
         if self.stage_music and self.targets:
             self.is_stage_usable = self.stage_music.is_music_loaded
 
