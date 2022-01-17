@@ -6,6 +6,7 @@ from Targets.Dynamic_target import Dynamic_target
 from Targets.Moving_target import Moving_target
 from Targets.Rail_target import Rail_target
 from Date import Date
+from pygame import mixer
 import time
 #TODO Add the creation date
 class Stage:
@@ -113,22 +114,29 @@ class Stage:
 
     def play(self):
         if self.is_stage_usable:
-            if self.spend and self.start:
+            if self.spend > 0:
                 if self.start <= 0:
                     self.stage_music.play()
                 self.start += time.time() - self.spend
-            else:
+                self.spend = -1
+            elif not mixer.music.get_busy():
                 self.start = time.time()
-
-            if len(self.targets) > 0 and self.is_stage_usable:
-                self.next_action >= time.time() + self.targets[0].delay
-                if self.next_action >= time.time():
-                    self.activeTargets.append([self.targets.pop(0), time.time() + self.targets[0].duration])
-                for iterator in range(len(self.activeTargets) -1, 0, -1):
-                    if self.activeTargets[iterator][1] >= time.time():
-                        self.activeTargets.pop(iterator)
-                    self.activeTargets[iterator][0].showTarget()
-                pygame.display.update()
+                self.stage_music.play()
+            if self.is_stage_usable:
+                if len(self.targets) > 0:
+                    self.next_action = self.start + self.targets[0].delay
+                    if self.next_action <= time.time():
+                        self.activeTargets.append([self.targets[0], time.time() + self.targets[0].duration])
+                        self.targets.pop(0)
+                if len(self.activeTargets) > 0:
+                    for iterator in range(len(self.activeTargets) - 1, -1, -1):
+                        print(iterator, len(self.activeTargets))
+                        if self.activeTargets[iterator][1] <= time.time():
+                            print("Del")
+                            self.activeTargets.pop(iterator)
+                        else:
+                            self.activeTargets[iterator][0].showTarget()
+                    pygame.display.update()
 
 
     def pause(self):
