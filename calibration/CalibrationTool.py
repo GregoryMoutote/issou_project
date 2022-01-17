@@ -11,6 +11,7 @@ class CalibrationTool:
         self.pts1 = None
         self.pts2 = None
         self.M = None
+        self.isDone = False
 
     def initCamera(self):
         self.webcam = cv2.VideoCapture(0)
@@ -26,11 +27,11 @@ class CalibrationTool:
         self.shape_util.webcam = self.webcam
         print("RECUPERATION DES POINTS...")
         while len(self.matrix) != 4:
-            self.matrix = self.shape_util.detectFromPicture()
+            self.matrix = self.shape_util.detectBoard()
         print(self.matrix)
 
     def calcMatrix(self):
-        img = cv2.imread("calibration/table.jpg")
+        img = self.webcam.read()
 
         rows, cols, ch = img.shape
 
@@ -40,11 +41,13 @@ class CalibrationTool:
 
         self.M = cv2.getPerspectiveTransform(self.pts1, self.pts2)
 
+        self.isDone = True
+
     def calibratePicture(self, img, preview: bool):
         rows, cols, ch = img.shape
 
         dst = cv2.warpPerspective(img, self.M, (cols, rows))
-        if (preview):
+        if preview:
             plt.subplot(121), plt.imshow(img), plt.title('Input')
             plt.subplot(122), plt.imshow(dst), plt.title('Output')
             plt.show()
