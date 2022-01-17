@@ -32,7 +32,6 @@ class playInterface(interface):
         while self.continuer:
 
             self.detection.hand_detection()
-            self.stage.play()
 
             if len(self.detection.rightHand) > 0:
                 self.rightX = self.detection.rightHand[0]
@@ -68,14 +67,18 @@ class playInterface(interface):
 
         if len(self.detection.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
+        self.stage.play()
         pygame.display.update()
 
 
     def show(self):
         self.screen.blit(self.background, (0, 0))
         self.pauseButton.showButton()
-        #self.screen.blit(self.trois, (self.screenWidth / 2 - 150, self.screenHeight / 2 - 150))
-        pygame.display.update()
+        pygame.font.init()
+        myfont = pygame.font.Font("./font/lemonmilk.otf", 80)
+        textsurface = myfont.render("score: "+ str(self.stage.score), True, (255,255,255))
+        pygame.font.quit()
+        self.screen.blit(textsurface, (self.screenWidth/2-200, 30))
 
     def resetCoo(self):
         self.rightX=0

@@ -95,7 +95,6 @@ class MainMenuInterface(interface):
         self.moving_sprites.draw(self.screen)
         self.moving_sprites.update(1)
         self.clock.tick(60)
-        pygame.display.update()
 
 
     def showHand(self):
@@ -106,6 +105,7 @@ class MainMenuInterface(interface):
 
         if len(self.detection.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
+        pygame.display.update()
 
     def resetCoo(self):
         self.rightX=0

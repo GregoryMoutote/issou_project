@@ -13,6 +13,7 @@ class Stage:
     def __init__(self, file_path,screen):
         self.screen=screen
         self.path = file_path
+        self.score=0
         self.targets = []
         self.difficulty = 0
         self.name = ""
@@ -136,7 +137,7 @@ class Stage:
                             self.activeTargets.pop(iterator)
                         else:
                             self.activeTargets[iterator][0].showTarget()
-                    pygame.display.update()
+
 
 
     def pause(self):

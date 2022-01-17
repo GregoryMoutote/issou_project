@@ -73,8 +73,6 @@ class pauseInterface(interface):
         for c in self.bottun:
             c.showButton()
 
-        pygame.display.update()
-
 
     def showHand(self):
         self.show()
@@ -84,6 +82,7 @@ class pauseInterface(interface):
 
         if len(self.detection.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
+        pygame.display.update()
 
     def resetCoo(self):
         self.rightX=0

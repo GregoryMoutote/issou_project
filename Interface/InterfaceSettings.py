@@ -108,7 +108,6 @@ class InterfaceSettings(interface):
         self.volumeButton.showButton()
         self.muteButton.showButton()
         self.animationButton.showButton()
-        pygame.display.update()
 
 
     def showHand(self):

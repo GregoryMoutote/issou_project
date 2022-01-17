@@ -184,7 +184,6 @@ class LevelSelectionInterface(interface):
         self.downButtun.showButton()
         self.quitButton.showButton()
         self.randomButton.showButton()
-        pygame.display.update()
 
 
     def resetCoo(self):
