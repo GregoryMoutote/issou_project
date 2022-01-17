@@ -2,21 +2,33 @@ import mediapipe as mp
 from math import *
 import cv2
 import numpy as np
+from calibration import CalibrationTool
 
 class MediaPipeTool :
     def __init__(self):
+
+        self.calibr_util = CalibrationTool()
+        self.calibr_util.initCamera()
+        self.calibr_util.getPoints()
+        self.calibr_util.calcMatrix()
+        self.closeCamera()
+
         self.cap = cv2.VideoCapture(0)
         self.leftHand = ()
         self.rightHand = ()
         self.isFistClosed = 0
 
+
+
     def initHandCapture(self):
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5)
 
+
+
     def hand_detection(self):
         if self.cap.isOpened():
-            ret, frame = self.cap.read()
+            ret,frame = self.cap.read()
 
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image = cv2.flip(image, 1)
@@ -33,7 +45,13 @@ class MediaPipeTool :
                 for num, hand in enumerate(resultsHand.multi_hand_landmarks):
 
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * image_width * 1920/800
+
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * image_height * 1080/600
+
+                    #CALIBRAGE
+                    calibrated_coord = self.calibr_util.calibratePoint((hand_x,hand_y))
+                    hand_x = calibrated_coord[0]
+                    hand_y = calibrated_coord[1]
 
                     # print((hand_x,hand_y))
                     distanceIndexExtremities = sqrt(
