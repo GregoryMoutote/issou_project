@@ -28,12 +28,14 @@ class CalibrationTool:
         print("RECUPERATION DES POINTS...")
         while len(self.matrix) != 4:
             self.matrix = self.shape_util.detectBoard()
+        #self.matrix = self.shape_util.detectFromPicture()
         print(self.matrix)
         self.shape_util.closeCamera()
 
     def calcMatrix(self):
         self.initCamera()
         _, img = self.webcam.read()
+
 
         rows, cols, ch = img.shape
 
@@ -49,6 +51,7 @@ class CalibrationTool:
 
         self.isDone = True
         self.closeCamera()
+        self.triPoint()
 
     def triPoint(self):
         firstSum = self.matrix[0][0] + self.matrix[0][1]
@@ -58,21 +61,21 @@ class CalibrationTool:
 
         points = [self.matrix[0], self.matrix[1],
                   self.matrix[2], self.matrix[3]]
-        print(points)
-        print(self.pts1)
+        print("Points = " + str(points))
+        print("Pts1 = " + str(self.pts1))
 
         if firstSum < secondSum & firstSum < thirdSum & firstSum < fourthSum:
             self.pts1[0] = points[0]
-            del points[0]
+
         elif secondSum < firstSum & secondSum < thirdSum & secondSum < fourthSum:
             self.pts1[0] = points[1]
-            del points[1]
+
         elif thirdSum < firstSum & thirdSum < secondSum & thirdSum < fourthSum:
             self.pts1[0] = points[2]
-            del points[2]
+
         else:
             self.pts1[0] = points[3]
-            del points[3]
+
 
         if firstSum > secondSum & firstSum > thirdSum & firstSum > fourthSum:
             self.pts1[3] = points[0]

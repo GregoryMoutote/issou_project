@@ -11,5 +11,6 @@ print(calibr_util.calibratePoint((276.0,150.0)))
 
 cap = cv2.VideoCapture(0)
 _, img = cap.read()
-img_calibr = calibr_util.calibratePicture(img, True)
 cap.release()
+
+img_calibr = calibr_util.calibratePicture(img, True)
