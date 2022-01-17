@@ -1,19 +1,9 @@
-from Interface.InterfaceCalibrage import *
-from Interface.MainMenuInterface import *
-from playerDetection.MediaPipeToolOld import MediaPipeTool
-from Settings import *
+from MediaPipeThread import MediaPipeThread
+from Stage import Stage
 
-import pygame
-
-detection = MediaPipeTool()
-detection.initHandCapture()
-
-screenData = ctypes.windll.user32
-
-settings = Settings()
-
-pygame.init()
-screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN,pygame.NOFRAME)
-
-InterfaceCalibrage(screenData,screen)
-MainMenuInterface(detection,screenData,screen,settings)
+stage = Stage("saves/test_v2/test_v2.issou")
+stage.display_test()
+"""
+detection = MediaPipeThread()
+detection.start()
+"""

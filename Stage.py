@@ -1,10 +1,8 @@
-from pygame import mixer
-from abc import ABC, abstractmethod
 from Music import Music
-from Target import Target
-from Dynamic_target import Dynamic_target
-from Moving_target import Moving_target
-from Rail_target import Rail_target
+from Targets.Target import Target
+from Targets.Dynamic_target import Dynamic_target
+from Targets.Moving_target import Moving_target
+from Targets.Rail_target import Rail_target
 from Date import Date
 import time
 #TODO Add the creation date

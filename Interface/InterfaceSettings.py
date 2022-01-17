@@ -1,7 +1,7 @@
 import pygame.draw
 
-from Button.ColorButton import *
-from Button.MultipleButton import *
+from Buttons.ColorButton import *
+from Buttons.MultipleButton import *
 from Interface.InterfaceCalibrage import *
 
 class InterfaceSettings(interface):
