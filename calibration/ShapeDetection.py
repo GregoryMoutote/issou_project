@@ -35,41 +35,42 @@ class ShapeDetection():
             #Detection de la plus grosse forme
             for contour in contours:
                 contourSize.append(cv2.contourArea(contour))
-            index = contourSize.index(max(contourSize))
+            if len(contourSize)>0:
+                index = contourSize.index(max(contourSize))
 
 
-            approx = cv2.approxPolyDP(contours[index], 0.01 * cv2.arcLength(contours[index], True), True)
+                approx = cv2.approxPolyDP(contours[index], 0.01 * cv2.arcLength(contours[index], True), True)
 
-            cv2.drawContours(img, [contours[index]], 0, (0, 0, 255), 5)
+                cv2.drawContours(img, [contours[index]], 0, (0, 0, 255), 5)
 
-            corner = approx.ravel()
+                corner = approx.ravel()
 
-            i = 0
+                i = 0
 
-            ##Detection des coordonnees du contour
-            for j in corner:
-                if (i % 2 == 0):
-                    x = corner[i]
-                    y = corner[i + 1]
+                ##Detection des coordonnees du contour
+                for j in corner:
+                    if (i % 2 == 0):
+                        x = corner[i]
+                        y = corner[i + 1]
 
-                    self.corners.append((x,y))
+                        self.corners.append((x,y))
 
-                    if (self.isDisplaying):
-                        string = str(x) + " " + str(y)
+                        if (self.isDisplaying):
+                            string = str(x) + " " + str(y)
 
-                        if (i != 0):
-                            cv2.putText(img, string, (x, y),
-                                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0))
-                i = i + 1
+                            if (i != 0):
+                                cv2.putText(img, string, (x, y),
+                                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0))
+                    i = i + 1
 
 
-            if (self.isDisplaying):
-                while 1:
-                    cv2.imshow('Flux Camera', img)
+                if (self.isDisplaying):
+                    while 1:
+                        cv2.imshow('Flux Camera', img)
 
-                    if cv2.waitKey(10) & 0xFF == ord('q'):
-                        break
-            return self.corners
+                        if cv2.waitKey(10) & 0xFF == ord('q'):
+                            break
+                return self.corners
         else:
             print("FLUX CAMERA NON INITIALISE, AUCUN POINT RETOURNE...")
 
@@ -86,36 +87,38 @@ class ShapeDetection():
         # Detection de la plus grosse forme
         for contour in contours:
             contourSize.append(cv2.contourArea(contour))
-        index = contourSize.index(max(contourSize))
 
-        approx = cv2.approxPolyDP(contours[index], 0.01 * cv2.arcLength(contours[index], True), True)
+        if len(contourSize)>0:
+            index = contourSize.index(max(contourSize))
 
-        cv2.drawContours(img, [contours[index]], 0, (0, 0, 255), 5)
+            approx = cv2.approxPolyDP(contours[index], 0.01 * cv2.arcLength(contours[index], True), True)
 
-        corner = approx.ravel()
+            cv2.drawContours(img, [contours[index]], 0, (0, 0, 255), 5)
 
-        i = 0
+            corner = approx.ravel()
 
-        ##Detection des coordonnees du contour
-        for j in corner:
-            if (i % 2 == 0):
-                x = corner[i]
-                y = corner[i + 1]
+            i = 0
 
-                self.corners.append((x, y))
+            ##Detection des coordonnees du contour
+            for j in corner:
+                if (i % 2 == 0):
+                    x = corner[i]
+                    y = corner[i + 1]
 
-                if (self.isDisplaying):
-                    string = str(x) + " " + str(y)
+                    self.corners.append((x, y))
 
-                    if (i != 0):
-                        cv2.putText(img, string, (x, y),
-                                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0))
-            i = i + 1
+                    if (self.isDisplaying):
+                        string = str(x) + " " + str(y)
 
-        if (self.isDisplaying):
-            while 1:
-                cv2.imshow('Flux Camera', img)
+                        if (i != 0):
+                            cv2.putText(img, string, (x, y),
+                                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0))
+                i = i + 1
 
-                if cv2.waitKey(10) & 0xFF == ord('q'):
-                    break
-        return self.corners
+            if (self.isDisplaying):
+                while 1:
+                    cv2.imshow('Flux Camera', img)
+
+                    if cv2.waitKey(10) & 0xFF == ord('q'):
+                        break
+            return self.corners
