@@ -104,23 +104,26 @@ class Stage:
             self.load_best_score()
 
     def play(self):
-        if is_stage_usable:
-            stage_music.play()
-            while len(targets) > 0 and len(activeTargets) > 0 and is_stage_usable:
-                time.sleep(0.1)
-                targets[0][1] -= 0.1
-                while targets[0][1] <= 0:
-                    activeTargets.append(targets.pop(0))
+        if self.is_stage_usable:
+            if self.spend and self.start:
+                self.start += time.time() - self.spend
+            else:
+                self.start = time.time()
+            self.stage_music.play()
+            if len(self.targets) > 0 and self.is_stage_usable:
+                self.next_action = time.time() + self.targets[0].delay
+                if self.next_action >= time.time():
+                    self.activeTargets.append([targets.pop(0), time.time() + self.targets[0].duration])
                     #TODO Display the target
-                for iterator in range(len(activeTargets) -1, 0, -1):
-                    activeTargets[iterator][1] -= 0.1
-                    if activeTargets[iterator][1] == 0:
-                        activeTargets.pop(iterator)
+                for iterator in range(len(self.activeTargets) -1, 0, -1):
+                    if self.activeTargets[iterator][1] >= time.time():
+                        self.activeTargets.pop(iterator)
                         #TODO Undisplay the target
 
     def pause(self):
-        is_stage_usable = False
-        stage_music.pause()
+        self.spend = time.time()
+        self.is_stage_usable = False
+        self.stage_music.pause()
 
     def load_stage(self, file_path):
         if self.stage_music and self.targets:
