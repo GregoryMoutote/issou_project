@@ -53,42 +53,71 @@ class CalibrationTool:
         self.closeCamera()
         self.triPoint()
 
+    # def triPoint(self):
+    #     firstSum = self.matrix[0][0] + self.matrix[0][1]
+    #     secondSum = self.matrix[1][0] + self.matrix[1][1]
+    #     thirdSum = self.matrix[2][0] + self.matrix[2][1]
+    #     fourthSum = self.matrix[3][0] + self.matrix[3][1]
+    #
+    #     points = [self.matrix[0], self.matrix[1],
+    #               self.matrix[2], self.matrix[3]]
+    #     print("Points = " + str(points))
+    #     print("Pts1 = " + str(self.pts1))
+    #
+    #     if firstSum < secondSum & firstSum < thirdSum & firstSum < fourthSum:
+    #         self.pts1[0] = points[0]
+    #
+    #     elif secondSum < firstSum & secondSum < thirdSum & secondSum < fourthSum:
+    #         self.pts1[0] = points[1]
+    #
+    #     elif thirdSum < firstSum & thirdSum < secondSum & thirdSum < fourthSum:
+    #         self.pts1[0] = points[2]
+    #
+    #     else:
+    #         self.pts1[0] = points[3]
+    #
+    #
+    #     if firstSum > secondSum & firstSum > thirdSum & firstSum > fourthSum:
+    #         self.pts1[3] = points[0]
+    #         del points[0]
+    #     elif secondSum > firstSum & secondSum > thirdSum & secondSum > fourthSum:
+    #         self.pts1[3] = points[1]
+    #         del points[1]
+    #     elif thirdSum > firstSum & thirdSum > secondSum & thirdSum > fourthSum:
+    #         self.pts1[3] = points[2]
+    #         del points[2]
+    #     else:
+    #         self.pts1[3] = points[3]
+    #         del points[3]
+
     def triPoint(self):
-        firstSum = self.matrix[0][0] + self.matrix[0][1]
-        secondSum = self.matrix[1][0] + self.matrix[1][1]
-        thirdSum = self.matrix[2][0] + self.matrix[2][1]
-        fourthSum = self.matrix[3][0] + self.matrix[3][1]
+        tabSum = [self.matrix[0][0] + self.matrix[0][1], self.matrix[1][0] + self.matrix[1][1],
+                  self.matrix[2][0] + self.matrix[2][1], self.matrix[3][0] + self.matrix[3][1]]
+        pointOrder = []
+        tabIndex = [0,1,2,3]
 
-        points = [self.matrix[0], self.matrix[1],
-                  self.matrix[2], self.matrix[3]]
-        print("Points = " + str(points))
-        print("Pts1 = " + str(self.pts1))
+        pointOrder.append(tabSum.index(min(tabSum)))
+        tabSum.pop(tabSum.index(min(tabSum)))
+        tabIndex.pop(tabSum.index(min(tabSum)))
 
-        if firstSum < secondSum & firstSum < thirdSum & firstSum < fourthSum:
-            self.pts1[0] = points[0]
+        lastIndex = tabSum.index(max(tabSum))
+        tabSum.pop(lastIndex)
+        tabIndex.pop(lastIndex)
 
-        elif secondSum < firstSum & secondSum < thirdSum & secondSum < fourthSum:
-            self.pts1[0] = points[1]
-
-        elif thirdSum < firstSum & thirdSum < secondSum & thirdSum < fourthSum:
-            self.pts1[0] = points[2]
-
+        if self.matrix[tabIndex[0]][0]>self.matrix[tabIndex[1]][0] :
+            pointOrder.append(tabIndex[0])
+            pointOrder.append(tabIndex[1])
         else:
-            self.pts1[0] = points[3]
+            pointOrder.append(tabIndex[1])
+            pointOrder.append(tabIndex[0])
 
+        pointOrder.append(lastIndex)
 
-        if firstSum > secondSum & firstSum > thirdSum & firstSum > fourthSum:
-            self.pts1[3] = points[0]
-            del points[0]
-        elif secondSum > firstSum & secondSum > thirdSum & secondSum > fourthSum:
-            self.pts1[3] = points[1]
-            del points[1]
-        elif thirdSum > firstSum & thirdSum > secondSum & thirdSum > fourthSum:
-            self.pts1[3] = points[2]
-            del points[2]
-        else:
-            self.pts1[3] = points[3]
-            del points[3]
+        self.pts1 = np.float32([[self.matrix[pointOrder[0]][0], self.matrix[pointOrder[0]][1]],
+                                [self.matrix[pointOrder[1]][0], self.matrix[pointOrder[1]][1]],
+                                [self.matrix[pointOrder[2]][0], self.matrix[pointOrder[2]][1]],
+                                [self.matrix[pointOrder[3]][0], self.matrix[pointOrder[3]][1]]])
+
 
     def calibratePicture(self, img, preview: bool):
         rows, cols, ch = img.shape
