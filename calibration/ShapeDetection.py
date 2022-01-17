@@ -75,7 +75,7 @@ class ShapeDetection():
             print("FLUX CAMERA NON INITIALISE, AUCUN POINT RETOURNE...")
 
     def detectFromPicture(self,):
-        img = cv2.imread("calibration/table.jpg")
+        img = cv2.imread("calibration/tableBite.jpg")
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
         _, threshold = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
