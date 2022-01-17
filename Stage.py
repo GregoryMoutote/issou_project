@@ -107,20 +107,23 @@ class Stage:
 
     def play(self):
         if self.is_stage_usable:
+            if self.spend and self.start:
+                self.start += time.time() - self.spend
+            else:
+                self.start = time.time()
             self.stage_music.play()
-            while len(self.targets) > 0 and len(self.activeTargets) > 0 and self.is_stage_usable:
-                time.sleep(0.1)
-                self.targets[0][1] -= 0.1
-                while self.targets[0][1] <= 0:
-                    self.activeTargets.append(self.targets.pop(0))
+            if len(self.targets) > 0 and self.is_stage_usable:
+                self.next_action = time.time() + self.targets[0].delay
+                if self.next_action >= time.time():
+                    self.activeTargets.append([targets.pop(0), time.time() + self.targets[0].duration])
                     #TODO Display the target
                 for iterator in range(len(self.activeTargets) -1, 0, -1):
-                    self.activeTargets[iterator][1] -= 0.1
-                    if self.activeTargets[iterator][1] == 0:
+                    if self.activeTargets[iterator][1] >= time.time():
                         self.activeTargets.pop(iterator)
                         #TODO Undisplay the target
 
     def pause(self):
+        self.spend = time.time()
         self.is_stage_usable = False
         self.stage_music.pause()
 
