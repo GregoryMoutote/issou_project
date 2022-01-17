@@ -13,7 +13,7 @@ class Music:
 
     def play(self):
         if self.is_music_loaded:
-            self.music.play()
+            mixer.music.unpause()
 
     def load(self):
         try:
@@ -24,9 +24,12 @@ class Music:
             pass
         print(self.music_path)
         if self.music:
-            print("Yep")
             self.is_music_loaded = True
+            self.music = None
+            mixer.music.load(self.music_path)
+            mixer.music.play(-1)
+            mixer.music.pause()
 
     def pause(self):
         if self.is_music_loaded:
-            self.music.stop()
+            mixer.music.pause()
