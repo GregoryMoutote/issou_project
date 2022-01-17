@@ -3,7 +3,7 @@ import pygame.draw
 from Interface.LevelSelectionInterface import *
 from Interface.secondInterface import *
 from Interface.InterfaceSettings import *
-from MainMenuGIF import *
+from Interface.GIF.MainMenuGIF import *
 
 class MainMenuInterface(interface):
 
@@ -14,6 +14,7 @@ class MainMenuInterface(interface):
         super().__init__(screenData, screen)
 
         self.background=pygame.image.load("./picture/interface/fond.png")
+
 
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Sprite Animation")

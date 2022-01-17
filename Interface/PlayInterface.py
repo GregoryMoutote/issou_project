@@ -2,6 +2,7 @@ import pygame.draw
 
 from Button.PictureButton import *
 from Interface.InterfaceCalibrage import *
+from pygame.locals import *
 
 class playInterface(interface):
 
@@ -16,6 +17,18 @@ class playInterface(interface):
         self.background=pygame.image.load("./levels/"+levelName+"/background.png")
         self.background = pygame.transform.scale(self.background, (width, height))
         self.pauseButton= pictureButton(20,20,100,100,self.screen,"pause.png","",0,0,"",(0,0,0))
+        un=pygame.image.load("./picture/interface/nb_1.png")
+        deux = pygame.image.load("./picture/interface/nb_2.png")
+        self.trois = pygame.image.load("./picture/interface/nb_3.png")
+        self.clock = pygame.time.Clock()
+        #self.timer=pygame.time.timer(USEREVENT+0,1000)
+
+        pygame.font.init()
+        self.font=pygame.font.SysFont('Cambria',12)
+        self.fps_label=self.font.render('FPS: {}'.format(self.clock.get_fps()),True,(255,255,255))
+        fenetre=(1920,1080)
+        self.fps_rect=self.fps_label.get_rect(bottomright=fenetre)
+        pygame.font.quit()
 
         self.show()
         self.resetCoo()
@@ -61,6 +74,8 @@ class playInterface(interface):
     def show(self):
         self.screen.blit(self.background, (0, 0))
         self.pauseButton.showButton()
+        self.screen.blit(self.trois, (self.screenWidth / 2 - 150, self.screenHeight / 2 - 150))
+        self.screen.blit(self.fps_label,self.fps_rect)
         pygame.display.update()
 
     def resetCoo(self):

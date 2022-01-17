@@ -1,6 +1,6 @@
 from Interface.Interface import *
 import ctypes
-from CalibrageGIF import *
+from Interface.GIF.CalibrageGIF import *
 
 user32 = ctypes.windll.user32
 width = user32.GetSystemMetrics(0)
