@@ -115,7 +115,7 @@ class Stage:
             else:
                 self.start = time.time()
             self.stage_music.play()
-         
+
             if len(self.targets) > 0 and self.is_stage_usable:
                 self.next_action = time.time() + self.targets[0].delay
                 if self.next_action >= time.time():
@@ -283,7 +283,7 @@ class Stage:
                     self.targets.append(Rail_target(targetData,self.screen,"basic_blue.png"))
                 else:
                     self.targets.append(Target(targetData,self.screen,"basic_blue.png"))
-                #TODO Adapt to the target the number of lines
+                #TODO Adapt to the targets the number of lines
             for target in self.targets:
                 target.display()
             file.close()

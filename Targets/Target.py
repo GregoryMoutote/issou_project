@@ -5,7 +5,7 @@ class Target:
     def __init__(self, targetData,screen, picture):
         if isinstance(targetData, list) and len(targetData) >= 9:
             self.screen=screen
-            self.picture=pygame.image.load("picture/target/"+picture)
+            self.picture=pygame.image.load("picture/targets/"+picture)
             self.picture = pygame.transform.scale(self.picture, (100, 100))
 
             self.coordinates = Coordinates(targetData[1], targetData[2])
