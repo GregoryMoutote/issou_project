@@ -47,7 +47,6 @@ class pauseInterface(interface):
 
             self.showHand()
 
-
     def show(self):
         self.screen.blit(self.background, (self.screenWidth/2-225,self.screenHeight/2-300))
         for c in self.bottun:

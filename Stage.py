@@ -1,3 +1,5 @@
+import pygame.display
+
 from Music import Music
 from Targets.Target import Target
 from Targets.Dynamic_target import Dynamic_target
@@ -106,21 +108,25 @@ class Stage:
             self.load_best_score()
 
     def play(self):
+        print("test ", self.is_stage_usable)
         if self.is_stage_usable:
             if self.spend and self.start:
                 self.start += time.time() - self.spend
             else:
                 self.start = time.time()
             self.stage_music.play()
+         
             if len(self.targets) > 0 and self.is_stage_usable:
                 self.next_action = time.time() + self.targets[0].delay
                 if self.next_action >= time.time():
-                    self.activeTargets.append([targets.pop(0), time.time() + self.targets[0].duration])
-                    #TODO Display the target
+                    print("passage if")
+                    self.activeTargets.append([self.targets.pop(0), time.time() + self.targets[0].duration])
                 for iterator in range(len(self.activeTargets) -1, 0, -1):
                     if self.activeTargets[iterator][1] >= time.time():
                         self.activeTargets.pop(iterator)
-                        #TODO Undisplay the target
+                    self.activeTargets[iterator][0].showTarget()
+                pygame.display.update()
+
 
     def pause(self):
         self.spend = time.time()

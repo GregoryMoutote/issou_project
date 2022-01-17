@@ -32,6 +32,7 @@ class playInterface(interface):
         while continuer:
 
             self.detection.hand_detection()
+            self.stage.play()
 
             if len(self.detection.rightHand) > 0:
                 self.rightX = self.detection.rightHand[0]
@@ -71,7 +72,6 @@ class playInterface(interface):
         self.screen.blit(self.background, (0, 0))
         self.pauseButton.showButton()
         #self.screen.blit(self.trois, (self.screenWidth / 2 - 150, self.screenHeight / 2 - 150))
-        self.stage.tmp().showTarget()
         pygame.display.update()
 
     def resetCoo(self):
