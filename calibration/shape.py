@@ -21,7 +21,7 @@ while 1 :
 
 
         cv2.drawContours(img, [contour], 0, (0, 0, 255), 5)
-        if cv2.contourArea(contour) > 1000:
+        if cv2.contourArea(contour) > 100000:
 
             contour_corner = []
 
@@ -35,6 +35,7 @@ while 1 :
 
                     # String containing the co-ordinates.
                     string = str(x) + " " + str(y)
+                    print(string)
                     contour_corner.append(string)
 
                     if (i != 0):
