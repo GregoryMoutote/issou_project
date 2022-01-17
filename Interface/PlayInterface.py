@@ -50,7 +50,7 @@ class playInterface(interface):
                     self.rightX, self.rightY = pygame.mouse.get_pos()
 
             if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
-                self.stage.stage_music.pause()
+                self.stage.pause()
                 pauseInterface(self.screenData, self.screen, self.detection, self.settings,self)
                 self.resetCoo()
                 #self.stage.stage_music.music.unpause()
