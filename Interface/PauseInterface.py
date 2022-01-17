@@ -1,11 +1,12 @@
 import pygame.draw
 
-from Interface.Interface import *
 from Buttons.PictureButton import *
+from Interface.InterfaceSettings import *
 
 class pauseInterface(interface):
 
-    def __init__(self,screenData,screen,detection,settings):
+    def __init__(self,screenData,screen,detection,settings,parent):
+        self.parent=parent
         self.settings=settings
         self.detection=detection
 
@@ -22,6 +23,7 @@ class pauseInterface(interface):
         self.show()
         self.resetCoo()
         self.loop()
+
 
     def loop(self):
         continuer=True
@@ -45,13 +47,31 @@ class pauseInterface(interface):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
 
+            if self.rightX > self.bottun[0].x and self.rightX < (self.bottun[0].x + self.bottun[0].width) and self.rightY > self.bottun[0].y and self.rightY < (self.bottun[0].y + self.bottun[0].height):
+                continuer=False
+
+            elif self.rightX > self.bottun[1].x and self.rightX < (self.bottun[1].x + self.bottun[1].width) and self.rightY > self.bottun[1].y and self.rightY < (self.bottun[1].y + self.bottun[1].height):
+                InterfaceCalibrage(self.screenData,self.screen)
+                self.resetCoo()
+                self.parent.show()
+                self.show()
+
+            elif self.rightX > self.bottun[2].x and self.rightX < (self.bottun[2].x + self.bottun[2].width) and self.rightY > self.bottun[2].y and self.rightY < (self.bottun[2].y + self.bottun[2].height):
+                InterfaceSettings(self.screenData,self.screen,self.detection,self.settings)
+                self.resetCoo()
+                self.parent.show()
+                self.show()
+
+            elif self.rightX > self.bottun[3].x and self.rightX < (self.bottun[3].x + self.bottun[3].width) and self.rightY > self.bottun[3].y and self.rightY < (self.bottun[3].y + self.bottun[3].height):
+                self.parent.continuer=False
+                continuer=False
+
             self.showHand()
 
     def show(self):
         self.screen.blit(self.background, (self.screenWidth/2-225,self.screenHeight/2-300))
         for c in self.bottun:
             c.showButton()
-
 
         pygame.display.update()
 

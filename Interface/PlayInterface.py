@@ -27,9 +27,9 @@ class playInterface(interface):
 
 
     def loop(self):
-        continuer=True
+        self.continuer=True
 
-        while continuer:
+        while self.continuer:
 
             self.detection.hand_detection()
             self.stage.play()
@@ -45,13 +45,16 @@ class playInterface(interface):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        continuer = False
+                        self.continuer = False
+                        self.stage.stage_music.pause()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
 
             if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
-                pauseInterface(self.screenData, self.screen, self.detection, self.settings)
+                self.stage.stage_music.pause()
+                pauseInterface(self.screenData, self.screen, self.detection, self.settings,self)
                 self.resetCoo()
+                #self.stage.stage_music.music.unpause()
                 self.show()
 
             self.showHand()
