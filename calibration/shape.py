@@ -16,34 +16,43 @@ while 1 :
     i = 0
 
     for contour in contours:
-
-        if i == 0:
-            i = 1
-            continue
-
-            # cv2.approxPloyDP() function to approximate the shape
+        # cv2.approxPloyDP() function to approximate the shape
         approx = cv2.approxPolyDP(
             contour, 0.01 * cv2.arcLength(contour, True), True)
 
         # using drawContours() function
         cv2.drawContours(img, [contour], 0, (0, 0, 255), 5)
+        if cv2.contourArea(contour) > 1000:
 
-        # finding center point of shape
-        M = cv2.moments(contour)
-        x = 0
-        y = 0
-        if M['m00'] != 0.0:
-            x = int(M['m10'] / M['m00'])
-            y = int(M['m01'] / M['m00'])
-            print(x,y)
+            if i == 0:
+                i = 1
+                continue
 
+
+
+            coin = approx.ravel()
+            i = 0
+
+            for j in coin:
+                if (i % 2 == 0):
+                    x = coin[i]
+                    y = coin[i + 1]
+
+                    # String containing the co-ordinates.
+                    string = str(x) + " " + str(y)
+
+                    if (i != 0):
+                        # text on remaining co-ordinates.
+                        cv2.putText(img, string, (x, y),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0))
+                i = i + 1
 
         # putting shape name at center of each shape
         # if len(approx) == 3:
         #     cv2.putText(img, 'Triangle', (x, y),
         #                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
         #
-        # elif len(approx) == 4:
+        # if len(approx) == 4:
         #     cv2.putText(img, 'Quadrilateral', (x, y),
         #                 cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
         #
