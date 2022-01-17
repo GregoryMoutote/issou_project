@@ -26,7 +26,7 @@ class level:
             level = pygame.transform.scale(level, (width, height))
             screen.blit(level, (x, y))
 
-        image = pygame.image.load("./picture/music/"+self.picture)
+        image = pygame.image.load("stages/"+self.picture+"/"+self.picture+".png")
         image = pygame.transform.scale(image, (height-10, height-10))
         screen.blit(image, (x+5, y+5))
 

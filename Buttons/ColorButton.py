@@ -1,5 +1,5 @@
 import pygame
-from Button.Button import *
+from Buttons.Button import *
 
 class colorButton(Button):
 

@@ -1,13 +1,12 @@
 import pygame.draw
 
 from Interface.LevelSelectionInterface import *
-from Interface.secondInterface import *
 from Interface.InterfaceSettings import *
 from Interface.GIF.MainMenuGIF import *
 
 class MainMenuInterface(interface):
 
-    def __init__(self,detection,screenData,screen,settings):
+    def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
         self.detection=detection
 

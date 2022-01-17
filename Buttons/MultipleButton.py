@@ -1,5 +1,5 @@
-from Button.CocheButton import *
-from Button.Button import *
+from Buttons.CocheButton import *
+from Buttons.Button import *
 
 class multipleButton(Button):
 

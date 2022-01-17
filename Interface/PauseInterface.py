@@ -1,30 +1,27 @@
 import pygame.draw
 
-from Interface.InterfaceCalibrage import *
-from Interface.PauseInterface import *
+from Interface.Interface import *
+from Buttons.PictureButton import *
 
-class playInterface(interface):
+class pauseInterface(interface):
 
-    def __init__(self,screenData,screen,detection,settings,stage):
-        self.stage=stage
+    def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
         self.detection=detection
-        self.detection.initHandCapture()
 
         super().__init__(screenData, screen)
 
-        self.stage.load()
-        self.background=pygame.image.load("./stages/"+self.stage.name+"/background.png")
-        self.background = pygame.transform.scale(self.background, (width, height))
-        self.pauseButton= pictureButton(20,20,100,100,self.screen,"pause.png","",0,0,"",(0,0,0))
-        un=pygame.image.load("./picture/interface/nb_1.png")
-        deux = pygame.image.load("./picture/interface/nb_2.png")
-        self.trois = pygame.image.load("./picture/interface/nb_3.png")
+        background=pygame.image.load("./picture/interface/parameterBackground.png")
+        self.background = pygame.transform.scale(background, (450, 600))
+
+        self.bottun=[pictureButton(self.screenWidth/2-200,self.screenHeight/2-160,400,100,self.screen,"button2.png","REPRENDRE",30,50,"Glitch.otf", (255, 255, 255))]
+        self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 -50, 400, 100, self.screen, "button2.png","RECALIBRER", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 60, 400, 100, self.screen, "button2.png","PARAMETRE", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 170, 400, 100, self.screen, "button2.png","QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
 
         self.show()
         self.resetCoo()
         self.loop()
-
 
     def loop(self):
         continuer=True
@@ -48,12 +45,16 @@ class playInterface(interface):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
 
-            if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
-                pauseInterface(self.screenData, self.screen, self.detection, self.settings)
-                self.resetCoo()
-                self.show()
-
             self.showHand()
+
+
+    def show(self):
+        self.screen.blit(self.background, (self.screenWidth/2-225,self.screenHeight/2-300))
+        for c in self.bottun:
+            c.showButton()
+
+
+        pygame.display.update()
 
 
     def showHand(self):
@@ -64,15 +65,6 @@ class playInterface(interface):
 
         if len(self.detection.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
-        pygame.display.update()
-
-
-    def show(self):
-        self.screen.blit(self.background, (0, 0))
-        self.pauseButton.showButton()
-        #self.screen.blit(self.trois, (self.screenWidth / 2 - 150, self.screenHeight / 2 - 150))
-        self.stage.tmp().showTarget()
-        pygame.display.update()
 
     def resetCoo(self):
         self.rightX=0

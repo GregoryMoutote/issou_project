@@ -40,11 +40,13 @@ class InterfaceCalibrage(interface):
 
     def show(self):
 
-        self.screen.fill((188 , 124, 169))
-        #pygame.draw.circle(self.screen, (200  , 0, 0), (50, 50), 50)
-        #pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, 50), 50)
-        #pygame.draw.circle(self.screen, (200, 0, 0), (50, self.screenHeight - 50), 50)
-        #pygame.draw.circle(self.screen, (200, 0, 0), (self.screenWidth - 50, self.screenHeight - 50), 50)
+        self.screen.fill((255, 255, 255))
+        #print(self.screenWidth,"/",self.screenHeight)
+        #pygame.draw.rect(self.screen,(255,0,0),(20, 20, self.screenWidth-40, self.screenHeight-40))
+        #pygame.draw.circle(self.screen, (0,255, 0), (50, 50), 50)
+        #pygame.draw.circle(self.screen, (0,255, 0), (self.screenWidth - 50, 50), 50)
+        #pygame.draw.circle(self.screen, (0,255, 0), (50, self.screenHeight - 50), 50)
+        #pygame.draw.circle(self.screen, (0,255, 0), (self.screenWidth - 50, self.screenHeight - 50), 50)
 
         pygame.font.init()
         arialFont = pygame.font.Font("C:\Windows\Fonts\Arial.ttf", 50)

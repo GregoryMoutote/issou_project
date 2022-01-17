@@ -1,9 +1,9 @@
-import ColorDetection
 import numpy as np
 
 class CalibrationTool:
     def __init__(self):
-        self.colorFinder = ColorDetection()
+        print("pass")
+        #self.colorFinder = ColorDetection()
 
     def calibrate(self):
         self.colorFinder.detect_color()

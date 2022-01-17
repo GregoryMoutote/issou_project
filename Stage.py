@@ -7,7 +7,8 @@ from Date import Date
 import time
 #TODO Add the creation date
 class Stage:
-    def __init__(self, file_path):
+    def __init__(self, file_path,screen):
+        self.screen=screen
         self.path = file_path
         self.targets = []
         self.difficulty = 0
@@ -18,7 +19,10 @@ class Stage:
         self.date = None
         self.is_stage_usable = False
         self.pre_load_stage()
+
+    def load(self):
         self.load_targets()
+        self.load_stage()
 
     def pre_load_stage(self):
         if ".issou" not in self.path:
@@ -102,25 +106,25 @@ class Stage:
             self.load_best_score()
 
     def play(self):
-        if is_stage_usable:
-            stage_music.play()
-            while len(targets) > 0 and len(activeTargets) > 0 and is_stage_usable:
+        if self.is_stage_usable:
+            self.stage_music.play()
+            while len(self.targets) > 0 and len(self.activeTargets) > 0 and self.is_stage_usable:
                 time.sleep(0.1)
-                targets[0][1] -= 0.1
-                while targets[0][1] <= 0:
-                    activeTargets.append(targets.pop(0))
+                self.targets[0][1] -= 0.1
+                while self.targets[0][1] <= 0:
+                    self.activeTargets.append(self.targets.pop(0))
                     #TODO Display the target
-                for iterator in range(len(activeTargets) -1, 0, -1):
-                    activeTargets[iterator][1] -= 0.1
-                    if activeTargets[iterator][1] == 0:
-                        activeTargets.pop(iterator)
+                for iterator in range(len(self.activeTargets) -1, 0, -1):
+                    self.activeTargets[iterator][1] -= 0.1
+                    if self.activeTargets[iterator][1] == 0:
+                        self.activeTargets.pop(iterator)
                         #TODO Undisplay the target
 
     def pause(self):
-        is_stage_usable = False
-        stage_music.pause()
+        self.is_stage_usable = False
+        self.stage_music.pause()
 
-    def load_stage(self, file_path):
+    def load_stage(self):
         if self.stage_music and self.targets:
             self.is_stage_usable = self.stage_music.is_music_loaded
 
@@ -263,13 +267,13 @@ class Stage:
                         delimiter = next_delimiter
                     line = file.readline()
                 if targetData[0] == 2:
-                    self.targets.append(Moving_target(targetData))
+                    self.targets.append(Moving_target(targetData,self.screen,"basic_blue.png"))
                 elif targetData[0] == 3:
-                    self.targets.append(Dynamic_target(targetData))
+                    self.targets.append(Dynamic_target(targetData,self.screen,"basic_blue.png"))
                 elif targetData[0] == 4:
-                    self.targets.append(Rail_target(targetData))
+                    self.targets.append(Rail_target(targetData,self.screen,"basic_blue.png"))
                 else:
-                    self.targets.append(Target(targetData))
+                    self.targets.append(Target(targetData,self.screen,"basic_blue.png"))
                 #TODO Adapt to the target the number of lines
             for target in self.targets:
                 target.display()
@@ -284,3 +288,6 @@ class Stage:
         if self.targets != None:
             self.targets.clear()
         self.stage_music = None
+
+    def tmp(self):
+        return self.targets[0]
