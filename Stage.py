@@ -21,15 +21,19 @@ class Stage:
         self.date = None
         self.is_stage_usable = False
         self.pre_load_stage()
+        self.spend = -1
+        self.start = -1
+        self.next_action = -1
 
     def load(self):
         self.load_targets()
+        self.stage_music.load()
         self.load_stage()
 
     def pre_load_stage(self):
         if ".issou" not in self.path:
             return
-        self.stage_music = Music(self.path[0:self.path.find(".issou") - 1] + ".wav")
+        self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".wav")
         with open(self.path, 'r') as file:
             line = file.readline()
             if "ext=issou" not in line:
@@ -108,18 +112,17 @@ class Stage:
             self.load_best_score()
 
     def play(self):
-        print("test ", self.is_stage_usable)
         if self.is_stage_usable:
             if self.spend and self.start:
+                if self.start <= 0:
+                    self.stage_music.play()
                 self.start += time.time() - self.spend
             else:
                 self.start = time.time()
-            self.stage_music.play()
 
             if len(self.targets) > 0 and self.is_stage_usable:
-                self.next_action = time.time() + self.targets[0].delay
+                self.next_action >= time.time() + self.targets[0].delay
                 if self.next_action >= time.time():
-                    print("passage if")
                     self.activeTargets.append([self.targets.pop(0), time.time() + self.targets[0].duration])
                 for iterator in range(len(self.activeTargets) -1, 0, -1):
                     if self.activeTargets[iterator][1] >= time.time():
@@ -134,10 +137,11 @@ class Stage:
         self.stage_music.pause()
 
     def load_stage(self):
+        print("Music", self.stage_music == None, self.stage_music.is_music_loaded, "Targets", self.targets == None)
         if self.stage_music and self.targets:
             self.is_stage_usable = self.stage_music.is_music_loaded
 
-    def load_best_score(self, ):
+    def load_best_score(self):
         if ".issou" not in self.path:
             return
         best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
