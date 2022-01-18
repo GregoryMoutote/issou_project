@@ -39,7 +39,7 @@ class CalibrationTool:
         self.shape_util = ShapeDetection.ShapeDetection()
         print("ANALYSE DE L'IMAGE...")
         self.matrix = self.shape_util.detectFromPicture(self.image)
-        if len(self.matrix)==4:
+        if self.matrix is not None and len(self.matrix)==4:
             return True
         else:
             print("ECHEC DE RECUPERATION...")
@@ -49,7 +49,7 @@ class CalibrationTool:
 
     def calcMatrix(self):
         print("CALCUL DE LA MATRICE...")
-        if len(self.matrix)>=4:
+        if self.matrix is not None and len(self.matrix)>=4:
             rows, cols, ch = self.image.shape
 
             self.pts1 = np.float32([[self.matrix[0][0], self.matrix[0][1]], [self.matrix[3][0], self.matrix[3][1]],
