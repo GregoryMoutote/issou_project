@@ -101,5 +101,8 @@ class CalibrationTool:
         return dst
 
     def calibratePoint(self, coord):
-        result_matrix = np.matmul(self.M, np.float32([[coord[0]], [coord[1]], [1]]))
-        return result_matrix[0][0] / result_matrix[2][0], result_matrix[1][0] / result_matrix[2][0]
+        if self.M is not None:
+            result_matrix = np.matmul(self.M, np.float32([[coord[0]], [coord[1]], [1]]))
+            return result_matrix[0][0] / result_matrix[2][0], result_matrix[1][0] / result_matrix[2][0]
+        else:
+            return coord
