@@ -312,8 +312,6 @@ class Stage:
                 else:
                     self.targets.append(Target(targetData,self.screen,"basic_blue.png"))
                 #TODO Adapt to the targets the number of lines
-            for target in self.targets:
-                target.display()
             file.close()
 
     def display_test(self):
