@@ -6,7 +6,7 @@ user32 = ctypes.windll.user32
 width = user32.GetSystemMetrics(0)
 height= user32.GetSystemMetrics(1)
 
-class InterfaceCalibrage(interface):
+class CalibrageInterface(Interface):
 
     def __init__(self,screenData,screen,detection):
 

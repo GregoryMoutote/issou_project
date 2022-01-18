@@ -1,9 +1,9 @@
 import pygame.draw
 
-from Interface.InterfaceCalibrage import *
+from Interface.CalibrageInterface import *
 from Interface.PauseInterface import *
 
-class playInterface(interface):
+class PlayInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings,stage):
         self.stage=stage
@@ -55,7 +55,7 @@ class playInterface(interface):
             if self.detection.isFistClosed == 1:
                 if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
                     self.stage.pause()
-                    pauseInterface(self.screenData, self.screen, self.detection, self.settings,self)
+                    PauseInterface(self.screenData, self.screen, self.detection, self.settings, self)
                     self.stage.resume()
                     self.resetCoo()
                     self.show()

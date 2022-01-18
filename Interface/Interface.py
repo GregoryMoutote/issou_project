@@ -1,6 +1,6 @@
 import pygame
 
-class interface:
+class Interface:
 
     def __init__(self,screenData,screen):
         self.screen=screen

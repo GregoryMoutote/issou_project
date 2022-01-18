@@ -2,9 +2,9 @@ import pygame.draw
 
 from Buttons.ColorButton import *
 from Buttons.MultipleButton import *
-from Interface.InterfaceCalibrage import *
+from Interface.CalibrageInterface import *
 
-class InterfaceSettings(interface):
+class SettingsInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
@@ -74,7 +74,7 @@ class InterfaceSettings(interface):
                     self.resetCoo()
 
                 elif self.rightX > self.button[0].x and self.rightX < (self.button[0].x + self.button[0].width) and self.rightY > self.button[0].y and self.rightY < (self.button[0].y + self.button[0].height):
-                    InterfaceCalibrage(self.screenData, self.screen,self.detection)
+                    CalibrageInterface(self.screenData, self.screen, self.detection)
                     self.resetCoo()
                     self.show()
 
@@ -82,7 +82,7 @@ class InterfaceSettings(interface):
                     self.settings.saveChange()
                     continuer=False
 
-                for i in range(0, self.volumeButton.nbBottun):
+                for i in range(0, self.volumeButton.nbButton):
                     if self.rightX>self.volumeButton.coche[i].x and self.rightX<(self.volumeButton.coche[i].x + self.volumeButton.coche[i].width) and self.rightY>self.volumeButton.coche[i].y and self.rightY<(self.volumeButton.coche[i].y + self.volumeButton.coche[i].height):
                         self.volumeButton.changeStat(i + 1)
                         self.settings.volume = i+1
