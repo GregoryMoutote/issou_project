@@ -79,7 +79,7 @@ class MediaPipeTool :
                         self.rightHand = (hand_x, hand_y)
                     if resultsHand.multi_handedness[num].classification[0].label == "Left":
                         self.leftHand = (hand_x, hand_y)
-                    result.append((hand_x, hand_y))
+                    result.append((self.calibr_util.calibratePoint((hand_x, hand_y))))
             return result
 
     def complete_hand_detection(self):

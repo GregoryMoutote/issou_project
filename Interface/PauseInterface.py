@@ -33,7 +33,7 @@ class pauseInterface(interface):
             self.detection.hand_detection()
 
             if len(self.detection.rightHand) > 0:
-                self.rightX = self.detection.rightHand[0]
+                self.rightX = self.screenWidth-self.detection.rightHand[0]
                 self.rightY = self.detection.rightHand[1]
 
             if len(self.detection.leftHand) > 0:
@@ -46,6 +46,7 @@ class pauseInterface(interface):
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
+                    self.detection.isFistClosed = 1
 
             self.showHand()
 
@@ -58,7 +59,7 @@ class pauseInterface(interface):
                     continuer=False
 
                 elif self.rightX > self.bottun[1].x and self.rightX < (self.bottun[1].x + self.bottun[1].width) and self.rightY > self.bottun[1].y and self.rightY < (self.bottun[1].y + self.bottun[1].height):
-                    InterfaceCalibrage(self.screenData,self.screen)
+                    InterfaceCalibrage(self.screenData,self.screen,self.detection)
                     self.resetCoo()
                     self.show()
 

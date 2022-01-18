@@ -47,7 +47,7 @@ class LevelSelectionInterface(interface):
             self.detection.hand_detection()
 
             if len(self.detection.rightHand) > 0:
-                self.rightX = self.detection.rightHand[0]
+                self.rightX = self.screenWidth-self.detection.rightHand[0]
                 self.rightY = self.detection.rightHand[1]
 
             if len(self.detection.leftHand) > 0:
@@ -60,6 +60,7 @@ class LevelSelectionInterface(interface):
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
+                    self.detection.isFistClosed = 1
 
             self.showHand()
 

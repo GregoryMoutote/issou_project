@@ -14,7 +14,6 @@ class MainMenuInterface(interface):
 
         self.background=pygame.image.load("./picture/interface/fond.png")
 
-
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Sprite Animation")
         self.moving_sprites = pygame.sprite.Group()
@@ -43,7 +42,7 @@ class MainMenuInterface(interface):
             self.detection.hand_detection()
 
             if len(self.detection.rightHand) > 0:
-                self.rightX = self.detection.rightHand[0]
+                self.rightX = self.screenWidth-self.detection.rightHand[0]
                 self.rightY = self.detection.rightHand[1]
 
             if len(self.detection.leftHand) > 0:
@@ -56,6 +55,7 @@ class MainMenuInterface(interface):
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
+                    self.detection.isFistClosed=1
 
             self.showHand()
 
