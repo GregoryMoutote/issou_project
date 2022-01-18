@@ -3,7 +3,7 @@ import pygame.draw
 from Interface.InterfaceCalibrage import *
 from Interface.PauseInterface import *
 
-class Interface(interface):
+class playInterface(interface):
 
     def __init__(self,screenData,screen,detection,settings,stage):
         self.stage=stage
