@@ -53,13 +53,11 @@ class pauseInterface(interface):
             elif self.rightX > self.bottun[1].x and self.rightX < (self.bottun[1].x + self.bottun[1].width) and self.rightY > self.bottun[1].y and self.rightY < (self.bottun[1].y + self.bottun[1].height):
                 InterfaceCalibrage(self.screenData,self.screen)
                 self.resetCoo()
-                self.parent.show()
                 self.show()
 
             elif self.rightX > self.bottun[2].x and self.rightX < (self.bottun[2].x + self.bottun[2].width) and self.rightY > self.bottun[2].y and self.rightY < (self.bottun[2].y + self.bottun[2].height):
                 InterfaceSettings(self.screenData,self.screen,self.detection,self.settings)
                 self.resetCoo()
-                self.parent.show()
                 self.show()
 
             elif self.rightX > self.bottun[3].x and self.rightX < (self.bottun[3].x + self.bottun[3].width) and self.rightY > self.bottun[3].y and self.rightY < (self.bottun[3].y + self.bottun[3].height):
@@ -75,6 +73,7 @@ class pauseInterface(interface):
 
 
     def showHand(self):
+        self.parent.show()
         self.show()
         if len(self.detection.leftHand)>0:
             #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])

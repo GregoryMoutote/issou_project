@@ -28,6 +28,12 @@ class Stage:
         self.next_action = -1
 
     def load(self):
+        self.targets.clear()
+        self.activeTargets.clear()
+        self.is_stage_usable = False
+        self.spend = -1
+        self.start = -1
+        self.next_action = -1
         self.load_targets()
         self.stage_music.load()
         self.load_stage()
