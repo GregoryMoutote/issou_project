@@ -1,12 +1,11 @@
 import cv2
-from calibration.CalibrationTool import *
 
-random_image =  cv2.imread("calibration/table3.jpg")
-
-print(type(random_image))
-
-calibr_util = CalibrationTool()
-calibr_util.setup(random_image)
-calibr_util.calibratePoint((1,2))
-
-calibr_util.calibratePicture(True)
+cap = cv2.VideoCapture(0)
+cap.set(3, 1280)
+cap.set(4, 720)
+while 1 :
+    _, img = cap.read()
+    cv2.imshow("Flux Camera", img)
+    if cv2.waitKey(10) & 0xFF == ord('q'):
+        break
+cv2.destroyAllWindows()

@@ -11,6 +11,8 @@ class MediaPipeTool :
         self.calibr_util = CalibrationTool()
 
         self.cap = cv2.VideoCapture(0)
+        self.cap.set(3, 1280)
+        self.cap.set(4, 720)
         self.leftHand = ()
         self.rightHand = ()
         self.isFistClosed = 0
