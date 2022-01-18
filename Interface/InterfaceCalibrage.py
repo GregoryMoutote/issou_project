@@ -19,7 +19,6 @@ class InterfaceCalibrage(interface):
         self.moving_sprites = pygame.sprite.Group()
         ISSOUlaodGIF = loadGIF(self.screenWidth/2-299,self.screenHeight/2-88,self.screen)
         self.moving_sprites.add(ISSOUlaodGIF)
-
         self.loop()
 
 

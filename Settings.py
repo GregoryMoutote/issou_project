@@ -31,9 +31,7 @@ class Settings:
     def chargeChange(self):
         with open("data.issou", "r") as filin:
             line = filin.readline()
-            print(line)
             if line=="Data file ISSOU\n":
-                print("passage")
                 self.volume=int(filin.readline())
                 if filin.readline()=="True\n":
                     self.animation =True
