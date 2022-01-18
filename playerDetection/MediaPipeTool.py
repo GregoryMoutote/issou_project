@@ -10,7 +10,13 @@ class MediaPipeTool :
 
         self.calibr_util = CalibrationTool()
 
+<<<<<<< HEAD
         #self.cap = cv2.VideoCapture(701)
+=======
+
+        #self.cap = cv2.VideoCapture(701)
+        #  if not self.cap.isOpened():
+>>>>>>> 148a172aa66bae6b0548fbf29372885299a54424
         self.cap = cv2.VideoCapture(0)
 
         self.cap.set(3, 1280)
