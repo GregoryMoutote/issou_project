@@ -14,11 +14,11 @@ class InterfaceCalibrage(interface):
 
         self.show()
 
-        #self.clock = pygame.time.Clock()
-        #pygame.display.set_caption("Sprite Animation")
-        #self.moving_sprites = pygame.sprite.Group()
-        #ISSOUlaodGIF = loadGIF(self.screenWidth/2-299,self.screenHeight/2-88,self.screen)
-        #self.moving_sprites.add(ISSOUlaodGIF)
+        self.clock = pygame.time.Clock()
+        pygame.display.set_caption("Sprite Animation")
+        self.moving_sprites = pygame.sprite.Group()
+        ISSOUlaodGIF = loadGIF(self.screenWidth/2-299,self.screenHeight/2-88,self.screen)
+        self.moving_sprites.add(ISSOUlaodGIF)
 
         self.loop()
 
@@ -33,9 +33,9 @@ class InterfaceCalibrage(interface):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
 
-            #self.moving_sprites.draw(self.screen)
-            #self.moving_sprites.update(0.25)
-            #self.clock.tick(60)
+            self.moving_sprites.draw(self.screen)
+            self.moving_sprites.update(0.25)
+            self.clock.tick(60)
             pygame.display.update()
 
     def show(self):
