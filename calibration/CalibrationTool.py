@@ -43,7 +43,6 @@ class CalibrationTool:
             return True
         else:
             print("ECHEC DE RECUPERATION...")
-            self.matrix.clear()
             return False
 
 
