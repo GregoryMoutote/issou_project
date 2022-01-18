@@ -9,10 +9,10 @@ calibr_util.calcMatrix()
 calibr_util.closeCamera()
 print(calibr_util.calibratePoint((276.0,150.0)))
 
-#cap = cv2.VideoCapture(0)
-#_, img = cap.read()
-#cap.release()
+cap = cv2.VideoCapture(0)
+_, img = cap.read()
+cap.release()
 
-img = cv2.imread("calibration/tableBite.jpg")
+
 
 img_calibr = calibr_util.calibratePicture(img, True)
