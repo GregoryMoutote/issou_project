@@ -122,6 +122,8 @@ class Stage:
     def play(self):
         if self.is_stage_usable:
             if self.spend > 0:
+                for iterator in range (0, len(self.activeTargets)):
+                    self.activeTargets[iterator][1] += self.spend
                 if self.start <= 0:
                     self.stage_music.play()
                 self.start += time.time() - self.spend
@@ -137,9 +139,7 @@ class Stage:
                         self.targets.pop(0)
                 if len(self.activeTargets) > 0:
                     for iterator in range(len(self.activeTargets) - 1, -1, -1):
-                        print(iterator, len(self.activeTargets))
                         if self.activeTargets[iterator][1] <= time.time():
-                            print("Del")
                             self.activeTargets.pop(iterator)
                         else:
                             self.activeTargets[iterator][0].showTarget()
@@ -150,7 +150,11 @@ class Stage:
         self.stage_music.pause()
 
     def resume(self):
+        if len(self.activeTargets) > 0:
+            self.activeTargets[0][1]
         self.load_stage()
+        self.spend = time.time() - self.spend
+        print(self.spend)
 
     def load_stage(self):
         if self.stage_music and self.targets:
@@ -289,7 +293,6 @@ class Stage:
                     while '§' in line[delimiter + 1: len(line)]:
                         next_delimiter = line.find('§', delimiter + 1)
                         toProcess = line[delimiter + 1: next_delimiter - 1]
-                        print(toProcess, toProcess[0:toProcess.find('|')], toProcess[toProcess.find('|') + 1:len(toProcess)])
                         targetData.append(int(toProcess[0:toProcess.find('|')]))
                         targetData.append(int(toProcess[toProcess.find('|') + 1:len(toProcess)]))
                         delimiter = next_delimiter
@@ -319,3 +322,7 @@ class Stage:
 
     def tmp(self):
         return self.targets[0]
+
+    def test_collision(self, x, y):
+        pass
+        #TODO Try to find if these coordinates are in a target area and set its duration to 0
