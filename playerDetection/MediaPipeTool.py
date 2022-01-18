@@ -9,8 +9,10 @@ class MediaPipeTool :
     def __init__(self):
 
         self.calibr_util = CalibrationTool()
-
-        self.cap = cv2.VideoCapture(0)
+        try:
+            self.cap = cv2.VideoCapture(701) #700 same as 0
+        except:
+            self.cap = cv2.VideoCapture(0)
         self.cap.set(3, 1280)
         self.cap.set(4, 720)
         self.leftHand = ()
