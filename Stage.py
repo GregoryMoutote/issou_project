@@ -126,11 +126,17 @@ class Stage:
     def play(self):
         if self.is_stage_usable:
             if self.spend > 0:
+                print("Delay application")
                 for iterator in range (0, len(self.activeTargets)):
+                    print(self.activeTargets[iterator][1])
                     self.activeTargets[iterator][1] += self.spend
+                    print(self.activeTargets[iterator][1])
                 if self.start <= 0:
                     self.stage_music.play()
-                self.start += time.time() - self.spend
+                print()
+                print(self.start)
+                self.start += self.spend
+                print(self.start)
                 self.spend = -1
             elif not mixer.music.get_busy():
                 self.start = time.time()
@@ -144,24 +150,23 @@ class Stage:
                 if len(self.activeTargets) > 0:
                     for iterator in range(len(self.activeTargets) - 1, -1, -1):
                         if self.activeTargets[iterator][1] <= time.time():
+                            print(self.activeTargets[iterator], time.time())
                             self.activeTargets.pop(iterator)
 
     def show_targets(self):
         for target,delay in self.activeTargets:
-            print("affiche")
             target.showTarget()
  
     def pause(self):
+        print(time.time(), self.next_action)
         self.spend = time.time()
         self.is_stage_usable = False
         self.stage_music.pause()
 
     def resume(self):
-        if len(self.activeTargets) > 0:
-            self.activeTargets[0][1]
         self.load_stage()
         self.spend = time.time() - self.spend
-        print(self.spend)
+        print(time.time(), self.next_action)
 
     def load_stage(self):
         if self.stage_music and self.targets:
@@ -312,9 +317,6 @@ class Stage:
                     self.targets.append(Rail_target(targetData,self.screen,"basic_blue.png"))
                 else:
                     self.targets.append(Target(targetData,self.screen,"basic_blue.png"))
-                #TODO Adapt to the targets the number of lines
-            for target in self.targets:
-                target.display()
             file.close()
 
     def display_test(self):
@@ -327,9 +329,6 @@ class Stage:
             self.targets.clear()
         self.stage_music = None
 
-    def tmp(self):
-        return self.targets[0]
-
     def test_collision(self, x, y):
         for iterator in range(0, len(self.activeTargets)):
             if (self.activeTargets[iterator][0].coordinates.x - x) ^ 2 +\
@@ -337,4 +336,3 @@ class Stage:
                 self.activeTargets[iterator][1] = 0
                 self.score += self.activeTargets[iterator][0].value
                 self.play()
-        #TODO Try to find if these coordinates are in a target area and set its duration to 0

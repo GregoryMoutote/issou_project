@@ -79,7 +79,6 @@ class pauseInterface(interface):
         self.parent.show()
         self.show()
         if len(self.detection.leftHand)>0:
-            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
         if len(self.detection.rightHand)>0:

@@ -54,7 +54,7 @@ class playInterface(interface):
                 pauseInterface(self.screenData, self.screen, self.detection, self.settings,self)
                 self.stage.resume()
                 self.resetCoo()
-                #self.stage.stage_music.music.unpause()
+
                 self.show()
 
             self.stage.play()
@@ -64,7 +64,6 @@ class playInterface(interface):
     def showHand(self):
         self.show()
         if len(self.detection.leftHand)>0:
-            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
         if len(self.detection.rightHand)>0:
