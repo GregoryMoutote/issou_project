@@ -73,6 +73,11 @@ class pauseInterface(interface):
         self.screen.blit(self.background, (self.screenWidth/2-225,self.screenHeight/2-300))
         for c in self.bottun:
             c.showButton()
+        pygame.font.init()
+        myfont = pygame.font.Font("./font/lemonmilk.otf", 60)
+        textsurface = myfont.render("PAUSE", True, (255, 255, 255))
+        pygame.font.quit()
+        self.screen.blit(textsurface, (self.screenWidth / 2 - 110, self.screenHeight/2-270))
 
 
     def showHand(self):

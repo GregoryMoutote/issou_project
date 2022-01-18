@@ -77,6 +77,7 @@ class InterfaceSettings(interface):
                 self.show()
 
             elif self.rightX>(self.button[2].x) and self.rightX<(self.button[2].x + self.button[2].width) and self.rightY>(self.button[2].y) and self.rightY<(self.button[2].y + self.button[2].height):
+                self.settings.saveChange()
                 continuer=False
 
             for i in range(0, self.volumeButton.nbBottun):

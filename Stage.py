@@ -148,7 +148,6 @@ class Stage:
 
     def show_targets(self):
         for target,delay in self.activeTargets:
-            print("affiche")
             target.showTarget()
  
     def pause(self):
