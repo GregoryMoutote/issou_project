@@ -141,9 +141,11 @@ class Stage:
                     for iterator in range(len(self.activeTargets) - 1, -1, -1):
                         if self.activeTargets[iterator][1] <= time.time():
                             self.activeTargets.pop(iterator)
-                        else:
-                            self.activeTargets[iterator][0].showTarget()
 
+    def show_targets(self):
+        for iterator in range(len(self.activeTargets) - 1, -1, -1):
+            self.activeTargets[iterator][0].showTarget()
+ 
     def pause(self):
         self.spend = time.time()
         self.is_stage_usable = False

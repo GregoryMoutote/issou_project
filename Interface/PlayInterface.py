@@ -57,6 +57,7 @@ class playInterface(interface):
                 #self.stage.stage_music.music.unpause()
                 self.show()
 
+            self.stage.play()
             self.showHand()
 
 
@@ -74,7 +75,7 @@ class playInterface(interface):
     def show(self):
         self.screen.blit(self.background, (0, 0))
         self.pauseButton.showButton()
-        self.stage.play()
+        self.stage.show_targets()
         pygame.font.init()
         myfont = pygame.font.Font("./font/lemonmilk.otf", 80)
         textsurface = myfont.render("score: "+ str(self.stage.score), True, (255,255,255))
