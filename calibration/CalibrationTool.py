@@ -22,8 +22,6 @@ class CalibrationTool:
         return isDone
 
 
-
-
     def initCamera(self):
         self.webcam = cv2.VideoCapture(0)
         print("CAMERA INITIALISATION...")

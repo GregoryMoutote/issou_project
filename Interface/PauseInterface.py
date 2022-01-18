@@ -16,7 +16,7 @@ class pauseInterface(interface):
         self.background = pygame.transform.scale(background, (450, 600))
 
         self.bottun=[pictureButton(self.screenWidth/2-200,self.screenHeight/2-160,400,100,self.screen,"button2.png","REPRENDRE",30,50,"Glitch.otf", (255, 255, 255))]
-        self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 -50, 400, 100, self.screen, "button2.png","RECALIBRER", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 -50, 400, 100, self.screen, "button2.png","REDEMARRER", 30, 50, "Glitch.otf", (255, 255, 255)))
         self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 60, 400, 100, self.screen, "button2.png","PARAMETRE", 30, 50, "Glitch.otf", (255, 255, 255)))
         self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 170, 400, 100, self.screen, "button2.png","QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
 
@@ -59,9 +59,10 @@ class pauseInterface(interface):
                     continuer=False
 
                 elif self.rightX > self.bottun[1].x and self.rightX < (self.bottun[1].x + self.bottun[1].width) and self.rightY > self.bottun[1].y and self.rightY < (self.bottun[1].y + self.bottun[1].height):
-                    InterfaceCalibrage(self.screenData,self.screen,self.detection)
+                    self.parent.stage.load()
                     self.resetCoo()
                     self.show()
+                    continuer=False
 
                 elif self.rightX > self.bottun[2].x and self.rightX < (self.bottun[2].x + self.bottun[2].width) and self.rightY > self.bottun[2].y and self.rightY < (self.bottun[2].y + self.bottun[2].height):
                     InterfaceSettings(self.screenData,self.screen,self.detection,self.settings)

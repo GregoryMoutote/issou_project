@@ -10,7 +10,12 @@ class MediaPipeTool :
 
         self.calibr_util = CalibrationTool()
 
-        self.cap = cv2.VideoCapture(0)
+        try:
+            self.cap = cv2.VideoCapture(701)
+            if not self.cap.isOpened() :
+                self.cap = cv2.VideoCapture(0)
+        except:
+            self.cap = cv2.VideoCapture(0)
         self.cap.set(3, 1280)
         self.cap.set(4, 720)
         self.leftHand = ()
@@ -24,11 +29,9 @@ class MediaPipeTool :
         return self.calibr_util.setup(img)
 
 
-
     def initHandCapture(self):
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5)
-
 
 
     def hand_detection(self):

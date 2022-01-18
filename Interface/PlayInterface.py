@@ -65,11 +65,8 @@ class playInterface(interface):
 
     def showHand(self):
         self.show()
-        if len(self.detection.leftHand)>0:
-            pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
-
-        if len(self.detection.rightHand)>0:
-           pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
+        if len(self.detection.hand_points)>0:
+            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.hand_points[0][0]-10, self.detection.hand_points[0][1]-10), 20)
         pygame.display.update()
 
 

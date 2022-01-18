@@ -332,7 +332,7 @@ class Stage:
     def test_collision(self, x, y):
         iterator = 0
         for target, delay in self.activeTargets:
-            if int(target.coordinates.x - x) ^ 2 + int(target.coordinates.y - y) ^ 2 <= Constants.TARGET_RADIUS:
+            if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
                 self.score += self.activeTargets[iterator][0].value
                 del self.activeTargets[iterator]
             iterator += 1

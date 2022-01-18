@@ -20,23 +20,18 @@ class InterfaceCalibrage(interface):
         ISSOUlaodGIF = loadGIF(self.screenWidth/2-299,self.screenHeight/2-88,self.screen)
         self.moving_sprites.add(ISSOUlaodGIF)
 
-        result=False
-
-        while result==False:
-            result=self.detection.setUpCalibration()  
-
-        #self.loop()
+        self.loop()
 
 
     def loop(self):
-        continuer = True
-        while continuer:
+        result=False
+
+        while result==False:
+            result=self.detection.setUpCalibration()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        continuer = False
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.rightX, self.rightY = pygame.mouse.get_pos()
+                        result = True
 
             self.moving_sprites.draw(self.screen)
             self.moving_sprites.update(0.25)
