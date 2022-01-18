@@ -87,9 +87,6 @@ class MediaPipeTool :
             if resultsHand.multi_hand_landmarks:
                 for num, hand in enumerate(resultsHand.multi_hand_landmarks):
 
-                    hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * image_width * 1920 / 960
-                    hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * image_height * 1080 / 480
-
                     numberOfFingersClosed = 0
 
                     if hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y <= \
@@ -114,11 +111,26 @@ class MediaPipeTool :
                     else:
                         self.isFistClosed = 0
 
-                    if resultsHand.multi_handedness[num].classification[0].label == "Right":
-                        self.rightHand = (hand_x, hand_y)
-                    if resultsHand.multi_handedness[num].classification[0].label == "Left":
-                        self.leftHand = (hand_x, hand_y)
-                    result.append((hand_x, hand_y))
+                    self.hand_points.clear()
+
+                    screen = ctypes.windll.user32
+                    hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * screen.GetSystemMetrics(0)
+                    hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * screen.GetSystemMetrics(1)
+                    self.hand_points.append((hand_x, hand_y))
+                    hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x * screen.GetSystemMetrics(0)
+                    hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y * screen.GetSystemMetrics(1)
+                    self.hand_points.append((hand_x, hand_y))
+                    hand_x = hand.landmark[self.mp_hands.HandLandmark.THUMB_TIP].x * screen.GetSystemMetrics(0)
+                    hand_y = hand.landmark[self.mp_hands.HandLandmark.THUMB_TIP].y * screen.GetSystemMetrics(1)
+                    self.hand_points.append((hand_x, hand_y))
+                    hand_x = hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x * screen.GetSystemMetrics(0)
+                    hand_y = hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y * screen.GetSystemMetrics(1)
+                    self.hand_points.append((hand_x, hand_y))
+                    hand_x = hand.landmark[self.mp_hands.HandLandmark.WRIST].x * screen.GetSystemMetrics(0)
+                    hand_y = hand.landmark[self.mp_hands.HandLandmark.WRIST].y * screen.GetSystemMetrics(1)
+                    self.hand_points.append((hand_x, hand_y))
+                    result.extend(self.hand_points)
+                    print(self.hand_points[0][0])
             return result
 
     def closeCamera(self):

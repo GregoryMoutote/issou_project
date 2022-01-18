@@ -31,15 +31,14 @@ class playInterface(interface):
 
         while self.continuer:
 
-            self.detection.hand_detection()
+            self.detection.complete_hand_detection()
 
-            if len(self.detection.rightHand) > 0:
-                self.rightX = self.detection.rightHand[0]
-                self.rightY = self.detection.rightHand[1]
+            if len(self.detection.hand_points) > 0:
+                self.rightX = int(self.detection.hand_points[0][0])
+                self.rightY = int(self.detection.hand_points[0][1])
 
-            if len(self.detection.leftHand) > 0:
-                self.leftX = self.detection.leftHand[0]
-                self.leftY = self.detection.leftHand[1]
+            for x, y in self.detection.hand_points:
+                self.stage.test_collision(x, y)
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
