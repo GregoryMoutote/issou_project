@@ -96,6 +96,7 @@ class MediaPipeTool :
             image.flags.writeable = False
 
             resultsHand = self.hands.process(image)
+            screen = ctypes.windll.user32
 
             image_height, image_width, _ = image.shape
 
@@ -134,19 +135,19 @@ class MediaPipeTool :
                     screen = ctypes.windll.user32
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * screen.GetSystemMetrics(1)
-                    self.hand_points.append((hand_x, hand_y))
+                    self.hand_points.append((screen.GetSystemMetrics(0)-hand_x, hand_y))
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x * screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y * screen.GetSystemMetrics(1)
-                    self.hand_points.append((hand_x, hand_y))
+                    self.hand_points.append((screen.GetSystemMetrics(0)-hand_x, hand_y))
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.THUMB_TIP].x * screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.THUMB_TIP].y * screen.GetSystemMetrics(1)
-                    self.hand_points.append((hand_x, hand_y))
+                    self.hand_points.append((screen.GetSystemMetrics(0)-hand_x, hand_y))
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x * screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y * screen.GetSystemMetrics(1)
-                    self.hand_points.append((hand_x, hand_y))
+                    self.hand_points.append((screen.GetSystemMetrics(0)-hand_x, hand_y))
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.WRIST].x * screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.WRIST].y * screen.GetSystemMetrics(1)
-                    self.hand_points.append((hand_x, hand_y))
+                    self.hand_points.append((screen.GetSystemMetrics(0)-hand_x, hand_y))
                     result.extend(self.hand_points)
                     print(self.hand_points[0][0])
             return result
