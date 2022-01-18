@@ -59,19 +59,20 @@ class MainMenuInterface(interface):
 
             self.showHand()
 
-            if self.rightX>self.bottun[0].x and self.rightX<(self.bottun[0].x+self.bottun[0].width) and self.rightY>self.bottun[0].y and self.rightY<(self.bottun[0].y+self.bottun[0].height):
-               LevelSelectionInterface(self.screenData, self.screen,self.detection,self.settings)
-               self.resetCoo()
-               self.show()
+            if self.detection.isFistClosed==1:
+                if self.rightX>self.bottun[0].x and self.rightX<(self.bottun[0].x+self.bottun[0].width) and self.rightY>self.bottun[0].y and self.rightY<(self.bottun[0].y+self.bottun[0].height):
+                   LevelSelectionInterface(self.screenData, self.screen,self.detection,self.settings)
+                   self.resetCoo()
+                   self.show()
 
-            elif self.rightX>self.bottun[2].x and self.rightX<(self.bottun[2].x+self.bottun[2].width) and self.rightY>self.bottun[2].y and self.rightY<(self.bottun[2].y+self.bottun[2].height):
-                InterfaceSettings(self.screenData, self.screen,self.detection,self.settings)
-                self.resetCoo()
-                self.show()
+                elif self.rightX>self.bottun[2].x and self.rightX<(self.bottun[2].x+self.bottun[2].width) and self.rightY>self.bottun[2].y and self.rightY<(self.bottun[2].y+self.bottun[2].height):
+                    InterfaceSettings(self.screenData, self.screen,self.detection,self.settings)
+                    self.resetCoo()
+                    self.show()
 
-            elif self.rightX>self.bottun[4].x and self.rightX<(self.bottun[4].x+self.bottun[4].width) and self.rightY>self.bottun[4].y and self.rightY<(self.bottun[4].y+self.bottun[4].height):
-               self.detection.closeCamera()
-               continuer=False
+                elif self.rightX>self.bottun[4].x and self.rightX<(self.bottun[4].x+self.bottun[4].width) and self.rightY>self.bottun[4].y and self.rightY<(self.bottun[4].y+self.bottun[4].height):
+                   self.detection.closeCamera()
+                   continuer=False
 
 
     def toucheCible(left,top,radius,x,y):

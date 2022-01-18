@@ -63,44 +63,45 @@ class LevelSelectionInterface(interface):
 
             self.showHand()
 
-            if self.rightX>self.quitButton.x and self.rightX<(self.quitButton.x + self.quitButton.width) and self.rightY>self.quitButton.y and self.rightY<(self.quitButton.y + self.quitButton.height):
-               continuer=False
+            if self.detection.isFistClosed == 1:
+                if self.rightX>self.quitButton.x and self.rightX<(self.quitButton.x + self.quitButton.width) and self.rightY>self.quitButton.y and self.rightY<(self.quitButton.y + self.quitButton.height):
+                   continuer=False
 
-            elif self.rightX>self.playButton.x and self.rightX<(self.playButton.x + self.playButton.width) and self.rightY>self.playButton.y and self.rightY<(self.playButton.y + self.playButton.height):
-                playInterface(self.screenData,self.screen,self.detection,self.settings,self.stages[self.index])
-                self.show()
-                self.resetCoo()
+                elif self.rightX>self.playButton.x and self.rightX<(self.playButton.x + self.playButton.width) and self.rightY>self.playButton.y and self.rightY<(self.playButton.y + self.playButton.height):
+                    playInterface(self.screenData,self.screen,self.detection,self.settings,self.stages[self.index])
+                    self.show()
+                    self.resetCoo()
 
-            elif self.rightX>self.downButtun.x and self.rightX<(self.downButtun.x + self.downButtun.width) and self.rightY>self.downButtun.y and self.rightY<(self.downButtun.y + self.downButtun.height):
-                self.levels.append(self.levels[0])
-                del self.levels[0]
-                self.show()
-                self.resetCoo()
-                if(self.index==len(self.levels)-1):
-                    self.index=0
-                else:
-                    self.index+=1
-
-            elif self.rightX>self.upButton.x and self.rightX<(self.upButton.x + self.upButton.width) and self.rightY>self.upButton.y and self.rightY<(self.upButton.y + self.upButton.height):
-                self.levels.insert(0,self.levels[len(self.levels)-1])
-                del self.levels[len(self.levels)-1]
-                self.show()
-                self.resetCoo()
-                if(self.index==0):
-                    self.index=len(self.levels)-1
-                else:
-                    self.index-=1
-
-            elif self.rightX>self.randomButton.x and self.rightX<(self.randomButton.x + self.randomButton.width) and self.rightY>self.randomButton.y and self.rightY<(self.randomButton.y + self.randomButton.height):
-                for i in range(0,int(random()*len(self.levels))):
+                elif self.rightX>self.downButtun.x and self.rightX<(self.downButtun.x + self.downButtun.width) and self.rightY>self.downButtun.y and self.rightY<(self.downButtun.y + self.downButtun.height):
                     self.levels.append(self.levels[0])
                     del self.levels[0]
-                    if (self.index == len(self.levels) - 1):
-                        self.index = 0
+                    self.show()
+                    self.resetCoo()
+                    if(self.index==len(self.levels)-1):
+                        self.index=0
                     else:
-                        self.index += 1
-                self.resetCoo()
-                self.show()
+                        self.index+=1
+
+                elif self.rightX>self.upButton.x and self.rightX<(self.upButton.x + self.upButton.width) and self.rightY>self.upButton.y and self.rightY<(self.upButton.y + self.upButton.height):
+                    self.levels.insert(0,self.levels[len(self.levels)-1])
+                    del self.levels[len(self.levels)-1]
+                    self.show()
+                    self.resetCoo()
+                    if(self.index==0):
+                        self.index=len(self.levels)-1
+                    else:
+                        self.index-=1
+
+                elif self.rightX>self.randomButton.x and self.rightX<(self.randomButton.x + self.randomButton.width) and self.rightY>self.randomButton.y and self.rightY<(self.randomButton.y + self.randomButton.height):
+                    for i in range(0,int(random()*len(self.levels))):
+                        self.levels.append(self.levels[0])
+                        del self.levels[0]
+                        if (self.index == len(self.levels) - 1):
+                            self.index = 0
+                        else:
+                            self.index += 1
+                    self.resetCoo()
+                    self.show()
 
 
     def showDescription(self,name,picture,difficulty,description,duration,nbStar):

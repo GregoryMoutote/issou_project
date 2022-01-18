@@ -1,10 +1,12 @@
 import pygame
 from Buttons.Button import *
+import time
 
 class cocheButton(Button):
 
     def __init__(self, x, y, width,height, screen,truePicture,falsePicture,actif):
         super().__init__(x,y,width,height,screen)
+        self.time=time.time()
         self.picture = pygame.image.load("picture/interface/" + truePicture)
         self.truePicture = pygame.transform.scale(self.picture, (self.width, self.height))
         self.picture2 = pygame.image.load("picture/interface/" + falsePicture)
@@ -22,11 +24,13 @@ class cocheButton(Button):
 
 
     def changeStat(self):
-        if self.actif:
-            self.actif=False
-            self.showButton()
-            return False
-        else:
-            self.actif=True
-            self.showButton()
-            return True
+        if(time.time()-self.time>1):
+            self.time=time.time()
+            if self.actif:
+                self.actif=False
+                self.showButton()
+                return False
+            else:
+                self.actif=True
+                self.showButton()
+                return True

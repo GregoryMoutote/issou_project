@@ -57,35 +57,36 @@ class InterfaceSettings(interface):
 
             self.showHand()
 
-            if self.rightX>self.animationButton.x and self.rightX<(self.animationButton.x + self.animationButton.width) and self.rightY>self.animationButton.y and self.rightY<(self.animationButton.y + self.animationButton.height):
-                self.settings.animation=self.animationButton.changeStat()
-                self.resetCoo()
+            if self.detection.isFistClosed == 1:
+                if self.rightX>self.animationButton.x and self.rightX<(self.animationButton.x + self.animationButton.width) and self.rightY>self.animationButton.y and self.rightY<(self.animationButton.y + self.animationButton.height):
+                    self.settings.animation=self.animationButton.changeStat()
+                    self.resetCoo()
 
-            elif self.rightX>self.muteButton.x and self.rightX<(self.muteButton.x + self.muteButton.width) and self.rightY>self.muteButton.y and self.rightY<(self.muteButton.y + self.muteButton.height):
-                self.muteButton.changeStat()
-                if(self.muteButton.actif):
-                    self.settings.volume=0
-                    self.volumeButton.changeStat(0)
-                else:
-                    self.settings.volume = 1
-                    self.volumeButton.changeStat(1)
-                self.resetCoo()
+                elif self.rightX>self.muteButton.x and self.rightX<(self.muteButton.x + self.muteButton.width) and self.rightY>self.muteButton.y and self.rightY<(self.muteButton.y + self.muteButton.height):
+                    self.muteButton.changeStat()
+                    if(self.muteButton.actif):
+                        self.settings.volume=0
+                        self.volumeButton.changeStat(0)
+                    else:
+                        self.settings.volume = 1
+                        self.volumeButton.changeStat(1)
+                    self.resetCoo()
 
-            elif self.rightX > self.button[0].x and self.rightX < (self.button[0].x + self.button[0].width) and self.rightY > self.button[0].y and self.rightY < (self.button[0].y + self.button[0].height):
-                InterfaceCalibrage(self.screenData, self.screen)
-                self.resetCoo()
-                self.show()
+                elif self.rightX > self.button[0].x and self.rightX < (self.button[0].x + self.button[0].width) and self.rightY > self.button[0].y and self.rightY < (self.button[0].y + self.button[0].height):
+                    InterfaceCalibrage(self.screenData, self.screen)
+                    self.resetCoo()
+                    self.show()
 
-            elif self.rightX>(self.button[2].x) and self.rightX<(self.button[2].x + self.button[2].width) and self.rightY>(self.button[2].y) and self.rightY<(self.button[2].y + self.button[2].height):
-                self.settings.saveChange()
-                continuer=False
+                elif self.rightX>(self.button[2].x) and self.rightX<(self.button[2].x + self.button[2].width) and self.rightY>(self.button[2].y) and self.rightY<(self.button[2].y + self.button[2].height):
+                    self.settings.saveChange()
+                    continuer=False
 
-            for i in range(0, self.volumeButton.nbBottun):
-                if self.rightX>self.volumeButton.coche[i].x and self.rightX<(self.volumeButton.coche[i].x + self.volumeButton.coche[i].width) and self.rightY>self.volumeButton.coche[i].y and self.rightY<(self.volumeButton.coche[i].y + self.volumeButton.coche[i].height):
-                    self.volumeButton.changeStat(i + 1)
-                    self.settings.volume = i+1
-                    if(self.muteButton.actif==True):
-                        self.muteButton.changeStat()
+                for i in range(0, self.volumeButton.nbBottun):
+                    if self.rightX>self.volumeButton.coche[i].x and self.rightX<(self.volumeButton.coche[i].x + self.volumeButton.coche[i].width) and self.rightY>self.volumeButton.coche[i].y and self.rightY<(self.volumeButton.coche[i].y + self.volumeButton.coche[i].height):
+                        self.volumeButton.changeStat(i + 1)
+                        self.settings.volume = i+1
+                        if(self.muteButton.actif==True):
+                            self.muteButton.changeStat()
 
     def show(self):
         pygame.font.init()
