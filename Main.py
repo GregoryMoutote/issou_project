@@ -1,5 +1,5 @@
 from Interface.MainMenuInterface import *
-from playerDetection.MediaPipeToolOld import MediaPipeTool
+from playerDetection.MediaPipeTool import MediaPipeTool
 from Settings import *
 import pygame
 

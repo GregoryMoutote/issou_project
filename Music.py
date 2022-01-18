@@ -17,6 +17,7 @@ class Music:
 
     def load(self):
         try:
+            print(self.music_path)
             self.music = mixer.Sound(self.music_path)
             self.duration = self.music.get_length()
         except FileNotFoundError:
