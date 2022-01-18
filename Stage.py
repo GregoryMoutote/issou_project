@@ -8,12 +8,15 @@ from Targets.Rail_target import Rail_target
 from Date import Date
 from pygame import mixer
 import time
+
+from Constants import Constants
+
 #TODO Add the creation date
 class Stage:
     def __init__(self, file_path,screen):
         self.screen=screen
         self.path = file_path
-        self.score=0
+        self.score = 0
         self.targets = []
         self.difficulty = 0
         self.name = ""
@@ -28,6 +31,7 @@ class Stage:
         self.next_action = -1
 
     def load(self):
+        self.score = 0
         self.load_targets()
         self.stage_music.load()
         self.load_stage()
@@ -318,5 +322,10 @@ class Stage:
         return self.targets[0]
 
     def test_collision(self, x, y):
-        pass
+        for iterator in range(0, len(self.activeTargets)):
+            if (self.activeTargets[iterator][0].coordinates.x - x) ^ 2 +\
+                (self.activeTargets[iterator][0].coordinates.y - y) ^ 2 <= Constants.TARGET_RADIUS:
+                self.activeTargets[iterator][1] = 0
+                self.score += self.activeTargets[iterator][0].value
+                self.play()
         #TODO Try to find if these coordinates are in a target area and set its duration to 0
