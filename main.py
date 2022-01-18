@@ -1,5 +1,5 @@
 from Interface.MainMenuInterface import *
-from playerDetection.MediaPipeToolOld import MediaPipeTool
+from playerDetection.MediaPipeTool import MediaPipeTool
 from Settings import *
 import pygame
 
@@ -13,5 +13,5 @@ settings = Settings()
 pygame.init()
 screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN,pygame.NOFRAME)
 
-InterfaceCalibrage(screenData,screen)
+InterfaceCalibrage(screenData,screen,detection)
 MainMenuInterface(screenData,screen,detection,settings)

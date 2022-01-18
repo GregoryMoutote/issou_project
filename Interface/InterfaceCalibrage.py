@@ -8,10 +8,10 @@ height= user32.GetSystemMetrics(1)
 
 class InterfaceCalibrage(interface):
 
-    def __init__(self,screenData,screen):
+    def __init__(self,screenData,screen,detection):
 
         super().__init__(screenData, screen)
-
+        self.detection=detection
         self.show()
 
         self.clock = pygame.time.Clock()
@@ -20,7 +20,12 @@ class InterfaceCalibrage(interface):
         ISSOUlaodGIF = loadGIF(self.screenWidth/2-299,self.screenHeight/2-88,self.screen)
         self.moving_sprites.add(ISSOUlaodGIF)
 
-        self.loop()
+        result=False
+
+        while result==False:
+            result=self.detection.setUpCalibration()  
+
+        #self.loop()
 
 
     def loop(self):

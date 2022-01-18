@@ -2,21 +2,22 @@ import mediapipe as mp
 from math import *
 import cv2
 import numpy as np
-from calibration import CalibrationTool
+from calibration.CalibrationTool import *
 
 class MediaPipeTool :
     def __init__(self):
 
         self.calibr_util = CalibrationTool()
-        self.calibr_util.initCamera()
-        self.calibr_util.getPoints()
-        self.calibr_util.calcMatrix()
-        self.closeCamera()
 
         self.cap = cv2.VideoCapture(0)
         self.leftHand = ()
         self.rightHand = ()
         self.isFistClosed = 0
+
+
+    def setUpCalibration(self):
+        _,img=self.cap.read()
+        return self.calibr_util.setup(img)
 
 
 
