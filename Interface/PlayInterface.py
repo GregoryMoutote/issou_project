@@ -3,7 +3,7 @@ import pygame.draw
 from Interface.InterfaceCalibrage import *
 from Interface.PauseInterface import *
 
-class playInterface(interface):
+class Interface(interface):
 
     def __init__(self,screenData,screen,detection,settings,stage):
         self.stage=stage
@@ -68,13 +68,13 @@ class playInterface(interface):
 
         if len(self.detection.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
-        self.stage.play()
         pygame.display.update()
 
 
     def show(self):
         self.screen.blit(self.background, (0, 0))
         self.pauseButton.showButton()
+        self.stage.play()
         pygame.font.init()
         myfont = pygame.font.Font("./font/lemonmilk.otf", 80)
         textsurface = myfont.render("score: "+ str(self.stage.score), True, (255,255,255))

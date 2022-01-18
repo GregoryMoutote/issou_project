@@ -32,9 +32,12 @@ class Stage:
 
     def load(self):
         self.score = 0
-        self.load_targets()
-        self.stage_music.load()
-        self.load_stage()
+        self.targets.clear()
+        self.activeTargets.clear()
+        self.is_stage_usable = False
+        self.spend = -1
+        self.start = -1
+        self.next_action = -1
 
     def pre_load_stage(self):
         if ".issou" not in self.path:

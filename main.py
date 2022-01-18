@@ -3,8 +3,6 @@ from playerDetection.MediaPipeToolOld import MediaPipeTool
 from Settings import *
 import pygame
 
-TARGET_RADIUS = 50
-
 detection = MediaPipeTool()
 detection.initHandCapture()
 
