@@ -7,5 +7,6 @@ print(type(random_image))
 
 calibr_util = CalibrationTool()
 calibr_util.setup(random_image)
+calibr_util.calibratePoint((1,2))
 
 calibr_util.calibratePicture(True)
