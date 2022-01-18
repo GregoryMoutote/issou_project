@@ -28,13 +28,15 @@ class CalibrationTool:
         print("RECUPERATION DES POINTS...")
         #while len(self.matrix) != 4:
             #self.matrix = self.shape_util.detectBoard()
-        self.matrix = self.shape_util.detectBoard()
+        self.matrix = self.shape_util.detectFromPicture()
         print(self.matrix)
         self.shape_util.closeCamera()
 
     def calcMatrix(self):
         self.initCamera()
-        _, img = self.webcam.read()
+        #_, img = self.webcam.read()
+
+        img = cv2.imread("calibration/table2.png")
 
 
         rows, cols, ch = img.shape
@@ -43,6 +45,12 @@ class CalibrationTool:
 
         self.pts1 = np.float32([[self.matrix[0][0], self.matrix[0][1]], [self.matrix[3][0], self.matrix[3][1]],
                                 [self.matrix[1][0], self.matrix[1][1]], [self.matrix[2][0], self.matrix[2][1]]])
+
+        print("Premiere Matrice : " + '\n' + str(self.pts1))
+
+        self.triPoint()
+
+        print("Seconde Matrice : " + '\n' + str(self.pts1))
 
 
         self.pts2 = np.float32([[0, 0], [cols, 0], [0, rows], [cols, rows]])
@@ -92,21 +100,28 @@ class CalibrationTool:
         tabIndex = [0,1,2,3]
         minIndex = tabSum.index(min(tabSum))
         maxIndex = tabSum.index(max(tabSum))
+        print("Max Index " + str(maxIndex))
+        print("Min Index " + str(minIndex))
         pointOrder.append(minIndex)
         tabIndex.pop(tabIndex.index(minIndex))
         tabIndex.pop(tabIndex.index(maxIndex))
 
+        print(tabIndex)
+
         if self.matrix[tabIndex[0]][0]>self.matrix[tabIndex[1]][0] :
             pointOrder.append(tabIndex[0])
             pointOrder.append(tabIndex[1])
+
         else:
             pointOrder.append(tabIndex[1])
             pointOrder.append(tabIndex[0])
-            pointOrder.append(maxIndex)
-            self.pts1 = np.float32([[self.matrix[pointOrder[0]][0], self.matrix[pointOrder[0]][1]],
-                                [self.matrix[pointOrder[1]][0], self.matrix[pointOrder[1]][1]],
-                                [self.matrix[pointOrder[2]][0], self.matrix[pointOrder[2]][1]],
-                                [self.matrix[pointOrder[3]][0], self.matrix[pointOrder[3]][1]]])
+
+
+        pointOrder.append(maxIndex)
+        self.pts1 = np.float32([[self.matrix[pointOrder[0]][0], self.matrix[pointOrder[0]][1]],
+                            [self.matrix[pointOrder[1]][0], self.matrix[pointOrder[1]][1]],
+                            [self.matrix[pointOrder[2]][0], self.matrix[pointOrder[2]][1]],
+                            [self.matrix[pointOrder[3]][0], self.matrix[pointOrder[3]][1]]])
 
         print(pointOrder)
 
