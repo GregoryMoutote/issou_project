@@ -2,10 +2,6 @@ from Interface.MainMenuInterface import *
 from playerDetection.MediaPipeToolOld import MediaPipeTool
 from Settings import *
 import pygame
-from subprocess import PIPE
-import subprocess
-
-#print(subprocess.run("ls", stdout = PIPE, stderr = PIPE))
 
 detection = MediaPipeTool()
 detection.initHandCapture()

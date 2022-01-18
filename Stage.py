@@ -38,6 +38,9 @@ class Stage:
         self.spend = -1
         self.start = -1
         self.next_action = -1
+        self.load_targets()
+        self.stage_music.load()
+        self.load_stage()
 
     def pre_load_stage(self):
         if ".issou" not in self.path:
@@ -144,8 +147,9 @@ class Stage:
                             self.activeTargets.pop(iterator)
 
     def show_targets(self):
-        for iterator in range(len(self.activeTargets) - 1, -1, -1):
-            self.activeTargets[iterator][0].showTarget()
+        for target,delay in self.activeTargets:
+            print("affiche")
+            target.showTarget()
  
     def pause(self):
         self.spend = time.time()
