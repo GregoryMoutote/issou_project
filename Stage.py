@@ -330,9 +330,9 @@ class Stage:
         self.stage_music = None
 
     def test_collision(self, x, y):
-        for iterator in range(0, len(self.activeTargets)):
-            if (self.activeTargets[iterator][0].coordinates.x - x) ^ 2 +\
-                (self.activeTargets[iterator][0].coordinates.y - y) ^ 2 <= Constants.TARGET_RADIUS:
-                self.activeTargets[iterator][1] = 0
+        iterator = 0
+        for target, delay in self.activeTargets:
+            if int(target.coordinates.x - x) ^ 2 + int(target.coordinates.y - y) ^ 2 <= Constants.TARGET_RADIUS:
                 self.score += self.activeTargets[iterator][0].value
-                self.play()
+                del self.activeTargets[iterator]
+            iterator += 1
