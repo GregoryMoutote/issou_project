@@ -7,15 +7,28 @@ from calibration import ShapeDetection
 class CalibrationTool:
     def __init__(self):
         self.matrix = []
-        self.webcam = None
+        self.image = None
         self.pts1 = None
         self.pts2 = None
         self.M = None
         self.isDone = False
 
+    def setup(self, img:np.ndarray):
+        self.image = img
+        print("TENTATIVE DE RECUPERATION DES POINTS...")
+        isDone = self.getPoints()
+        if isDone:
+            self.calcMatrix()
+        return isDone
+
+
+
+
     def initCamera(self):
         self.webcam = cv2.VideoCapture(0)
         print("CAMERA INITIALISATION...")
+
+
 
     def closeCamera(self):
         if self.webcam is not None:
@@ -24,35 +37,34 @@ class CalibrationTool:
 
     def getPoints(self):
         self.shape_util = ShapeDetection.ShapeDetection()
-        self.shape_util.initCamera()
-        print("RECUPERATION DES POINTS...")
-        #while len(self.matrix) != 4:
-            # self.matrix = self.shape_util.detectBoard()
-        self.matrix = self.shape_util.detectFromPicture()
-        self.shape_util.closeCamera()
+        print("ANALYSE DE L'IMAGE...")
+        self.matrix = self.shape_util.detectFromPicture(self.image)
+        if len(self.matrix)==4:
+            return True
+        else:
+            print("ECHEC DE RECUPERATION...")
+            self.matrix.clear()
+            return False
+
 
     def calcMatrix(self):
         print("CALCUL DE LA MATRICE...")
-        self.initCamera()
-        # _, img = self.webcam.read()
+        if len(self.matrix)>=4:
+            rows, cols, ch = self.image.shape
 
-        img = cv2.imread("calibration/table2.png")
+            self.pts1 = np.float32([[self.matrix[0][0], self.matrix[0][1]], [self.matrix[3][0], self.matrix[3][1]],
+                                    [self.matrix[1][0], self.matrix[1][1]], [self.matrix[2][0], self.matrix[2][1]]])
 
-        rows, cols, ch = img.shape
+            self.triPoint()
 
-        self.pts1 = np.float32([[self.matrix[0][0], self.matrix[0][1]], [self.matrix[3][0], self.matrix[3][1]],
-                                [self.matrix[1][0], self.matrix[1][1]], [self.matrix[2][0], self.matrix[2][1]]])
+            self.pts2 = np.float32([[0, 0], [cols, 0], [0, rows], [cols, rows]])
 
-        self.triPoint()
+            self.M = cv2.getPerspectiveTransform(self.pts1, self.pts2)
 
-
-        self.pts2 = np.float32([[0, 0], [cols, 0], [0, rows], [cols, rows]])
-
-        self.M = cv2.getPerspectiveTransform(self.pts1, self.pts2)
-
-        self.isDone = True
-        self.closeCamera()
-        print("MATRICE CALCULEE...")
+            self.isDone = True
+            print("MATRICE CALCULEE...")
+        else:
+            print("MATRICE PAS DEFINI CORRECTEMENT")
 
     def triPoint(self):
         print("TRI DES POINTS...")
@@ -79,11 +91,11 @@ class CalibrationTool:
                                 [self.matrix[pointOrder[2]][0], self.matrix[pointOrder[2]][1]],
                                 [self.matrix[pointOrder[3]][0], self.matrix[pointOrder[3]][1]]])
 
-    def calibratePicture(self, img, preview: bool):
-        rows, cols, ch = img.shape
-        dst = cv2.warpPerspective(img, self.M, (cols, rows))
+    def calibratePicture(self,  preview: bool):
+        rows, cols, ch = self.image.shape
+        dst = cv2.warpPerspective(self.image, self.M, (cols, rows))
         if preview:
-            plt.subplot(121), plt.imshow(img), plt.title('Input')
+            plt.subplot(121), plt.imshow(self.image), plt.title('Input')
             plt.subplot(122), plt.imshow(dst), plt.title('Output')
             plt.show()
         return dst
