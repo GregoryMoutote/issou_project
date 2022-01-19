@@ -7,4 +7,4 @@ for i in range (10):
     time.sleep(1)
     print("ca continue...")
 
-eye.end()
+eye.endDetection()

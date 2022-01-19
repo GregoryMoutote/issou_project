@@ -3,13 +3,16 @@ import pygame.draw
 from Interface.LevelSelectionInterface import *
 from Interface.InterfaceSettings import *
 from Interface.GIF.MainMenuGIF import *
-
+from playerDetection.MediaPipeThread import *
+from Interface.ResfreshThread import RefreshThread
+import math
 
 class MainMenuInterface(interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
-        self.detection=detection
+        self.detection= MediaPipeThread()
+        self.tRefresh = RefreshThread(screen,self)
 
         super().__init__(screenData, screen)
 
@@ -38,41 +41,49 @@ class MainMenuInterface(interface):
     def loop(self):
         continuer=True
 
+        self.detection.start()
+        self.tRefresh.start()
+
         while continuer:
 
-            self.detection.hand_detection()
 
-            if len(self.detection.rightHand) > 0:
-                self.rightX = self.detection.rightHand[0]
-                self.rightY = self.detection.rightHand[1]
+            if len(self.detection.mediaPipe.rightHand) > 0:
+                self.rightX = self.detection.mediaPipe.rightHand[0]
+                self.rightY = self.detection.mediaPipe.rightHand[1]
 
-            if len(self.detection.leftHand) > 0:
-                self.leftX = self.detection.leftHand[0]
-                self.leftY = self.detection.leftHand[1]
+            if len(self.detection.mediaPipe.leftHand) > 0:
+                self.leftX = self.detection.mediaPipe.leftHand[0]
+                self.leftY = self.detection.mediaPipe.leftHand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         continuer = False
+                        self.detection.endDetection()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
                     self.detection.isFistClosed=1
 
             self.showHand()
 
-            if self.detection.isFistClosed==1:
+            if self.detection.mediaPipe.isFistClosed==1:
                 if self.rightX>self.bottun[0].x and self.rightX<(self.bottun[0].x+self.bottun[0].width) and self.rightY>self.bottun[0].y and self.rightY<(self.bottun[0].y+self.bottun[0].height):
-                   LevelSelectionInterface(self.screenData, self.screen,self.detection,self.settings)
+                   LevelSelectionInterface(self.screenData, self.screen,self.detection.mediaPipe,self.settings)
                    self.resetCoo()
                    self.show()
+                   self.detection.endDetection()
+                   self.tRefresh.stop()
 
                 elif self.rightX>self.bottun[2].x and self.rightX<(self.bottun[2].x+self.bottun[2].width) and self.rightY>self.bottun[2].y and self.rightY<(self.bottun[2].y+self.bottun[2].height):
-                    InterfaceSettings(self.screenData, self.screen,self.detection,self.settings)
+                    InterfaceSettings(self.screenData, self.screen,self.detection.mediaPipe,self.settings)
                     self.resetCoo()
                     self.show()
+                    self.detection.endDetection()
+                    self.tRefresh.stop()
 
                 elif self.rightX>self.bottun[4].x and self.rightX<(self.bottun[4].x+self.bottun[4].width) and self.rightY>self.bottun[4].y and self.rightY<(self.bottun[4].y+self.bottun[4].height):
-                   self.detection.closeCamera()
+                   self.detection.endDetection()
+                   self.tRefresh.stop()
                    continuer=False
 
 
@@ -82,7 +93,7 @@ class MainMenuInterface(interface):
             hypotenuse=(radius)**2
             adjacent=(left-x)**2
             if(adjacent<=hypotenuse):
-                axeY=sqrt(hypotenuse-adjacent)
+                axeY=math.sqrt(hypotenuse-adjacent)
 
                 if(y>top-axeY and y<top+axeY):
                     return True
@@ -101,11 +112,11 @@ class MainMenuInterface(interface):
 
     def showHand(self):
         self.show()
-        if len(self.detection.leftHand)>0:
-            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
+        if len(self.detection.mediaPipe.leftHand)>0:
+            #print("right", self.detection.mediaPipe.leftHand[0], "  ", self.detection.mediaPipe.leftHand[1])
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
-        if len(self.detection.rightHand)>0:
+        if len(self.detection.mediaPipe.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
         pygame.display.update()
 
