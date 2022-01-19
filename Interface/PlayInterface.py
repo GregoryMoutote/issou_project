@@ -34,7 +34,7 @@ class playInterface(interface):
             self.detection.complete_hand_detection()
 
             if len(self.detection.hand_points) > 0:
-                self.rightX = self.screenWidth-int(self.detection.hand_points[0][0])
+                self.rightX = int(self.detection.hand_points[0][0])
                 self.rightY = int(self.detection.hand_points[0][1])
 
             for x, y in self.detection.hand_points:

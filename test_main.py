@@ -1,11 +1,10 @@
-import cv2
+from playerDetection.MediaPipeThread import MediaPipeThread
+import time
 
-cap = cv2.VideoCapture(0)
-cap.set(3, 1280)
-cap.set(4, 720)
-while 1 :
-    _, img = cap.read()
-    cv2.imshow("Flux Camera", img)
-    if cv2.waitKey(10) & 0xFF == ord('q'):
-        break
-cv2.destroyAllWindows()
+eye = MediaPipeThread()
+eye.start()
+for i in range (10):
+    time.sleep(1)
+    print("ca continue...")
+
+eye.end()
