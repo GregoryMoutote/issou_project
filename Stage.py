@@ -128,15 +128,10 @@ class Stage:
             if self.spend > 0:
                 print("Delay application")
                 for iterator in range (0, len(self.activeTargets)):
-                    print(self.activeTargets[iterator][1])
                     self.activeTargets[iterator][1] += self.spend
-                    print(self.activeTargets[iterator][1])
                 if self.start <= 0:
                     self.stage_music.play()
-                print()
-                print(self.start)
                 self.start += self.spend
-                print(self.start)
                 self.spend = -1
             elif not mixer.music.get_busy():
                 self.start = time.time()
