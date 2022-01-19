@@ -10,13 +10,6 @@ class Music:
         self.description = ""
         self.illustration_path = ""
         self.authors = []
-        try:
-            self.music = mixer.Sound(self.music_path)
-            self.duration = self.music.get_length()
-        except FileNotFoundError:
-            pass
-        if self.music:
-            self.music = None
 
     def play(self):
         if self.is_music_loaded:
@@ -25,6 +18,7 @@ class Music:
     def load(self):
         try:
             self.music = mixer.Sound(self.music_path)
+            self.duration = self.music.get_length()
         except FileNotFoundError:
             pass
         if self.music:

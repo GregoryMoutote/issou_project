@@ -128,10 +128,15 @@ class Stage:
             if self.spend > 0:
                 print("Delay application")
                 for iterator in range (0, len(self.activeTargets)):
+                    print(self.activeTargets[iterator][1])
                     self.activeTargets[iterator][1] += self.spend
+                    print(self.activeTargets[iterator][1])
                 if self.start <= 0:
                     self.stage_music.play()
+                print()
+                print(self.start)
                 self.start += self.spend
+                print(self.start)
                 self.spend = -1
             elif not mixer.music.get_busy():
                 self.start = time.time()
@@ -145,6 +150,7 @@ class Stage:
                 if len(self.activeTargets) > 0:
                     for iterator in range(len(self.activeTargets) - 1, -1, -1):
                         if self.activeTargets[iterator][1] <= time.time():
+                            print(self.activeTargets[iterator], time.time())
                             self.activeTargets.pop(iterator)
 
     def show_targets(self):
@@ -152,6 +158,7 @@ class Stage:
             target.showTarget()
  
     def pause(self):
+        print(time.time(), self.next_action)
         self.spend = time.time()
         self.is_stage_usable = False
         self.stage_music.pause()
@@ -159,14 +166,11 @@ class Stage:
     def resume(self):
         self.load_stage()
         self.spend = time.time() - self.spend
+        print(time.time(), self.next_action)
 
     def load_stage(self):
         if self.stage_music and self.targets:
             self.is_stage_usable = self.stage_music.is_music_loaded
-
-    def is_end(self):
-        return self.start+self.stage_music.duration<time.time()
-
 
     def load_best_score(self):
         if ".issou" not in self.path:

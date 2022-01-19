@@ -6,7 +6,7 @@ from random import *
 from Stage import *
 import os
 
-class LevelSelectionInterface(Interface):
+class LevelSelectionInterface(interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.detection=detection
@@ -22,7 +22,7 @@ class LevelSelectionInterface(Interface):
 
         self.levels=[]
         for stage in self.stages:
-            self.levels.append(level(stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,stage.stage_music.duration))
+            self.levels.append(level(stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,"4:00"))
 
         self.bannerBottomPicture = pygame.image.load("./picture/interface/bannerBottom.png")
         self.bannerBottomPicture = pygame.transform.scale(self.bannerBottomPicture,(self.screenWidth, self.screenHeight*0.15))
@@ -67,7 +67,7 @@ class LevelSelectionInterface(Interface):
                    continuer=False
 
                 elif self.rightX>self.playButton.x and self.rightX<(self.playButton.x + self.playButton.width) and self.rightY>self.playButton.y and self.rightY<(self.playButton.y + self.playButton.height):
-                    PlayInterface(self.screenData, self.screen, self.detection, self.settings, self.stages[self.index])
+                    playInterface(self.screenData,self.screen,self.detection,self.settings,self.stages[self.index])
                     self.show()
                     self.resetCoo()
 
@@ -103,7 +103,7 @@ class LevelSelectionInterface(Interface):
                     self.show()
 
 
-    def showDescription(self,name,picture,difficulty,description,duration):
+    def showDescription(self,name,picture,difficulty,description,duration,nbStar):
 
         self.bannerTopPicture = pygame.image.load("./picture/interface/bannerTop.png")
         self.bannerTopPicture = pygame.transform.scale(self.bannerTopPicture,(self.screenWidth, self.screenHeight / 4.5))
@@ -113,17 +113,17 @@ class LevelSelectionInterface(Interface):
         self.musicPicture = pygame.transform.scale(self.musicPicture,(self.screenHeight / 5 - 20, self.screenHeight / 5 - 20))
         self.screen.blit(self.musicPicture, (10, 10))
 
-        #self.starUnchecked = pygame.image.load("./picture/interface/starUnchecked.png")
-        #self.starUnchecked = pygame.transform.scale(self.starUnchecked,(60, 60))
+        self.starUnchecked = pygame.image.load("./picture/interface/starUnchecked.png")
+        self.starUnchecked = pygame.transform.scale(self.starUnchecked,(60, 60))
 
-        #self.starChecked = pygame.image.load("./picture/interface/starChecked.png")
-        #self.starChecked = pygame.transform.scale(self.starChecked,(60, 60))
+        self.starChecked = pygame.image.load("./picture/interface/starChecked.png")
+        self.starChecked = pygame.transform.scale(self.starChecked,(60, 60))
 
-        #for i in range(0,5):
-            #if(i<nbStar):
-            #    self.screen.blit(self.starChecked, (self.screenWidth*0.75+70*i, 10))
-            #else:
-            #   self.screen.blit(self.starUnchecked,(self.screenWidth*0.75+70*i, 10))
+        for i in range(0,5):
+            if(i<nbStar):
+                self.screen.blit(self.starChecked, (self.screenWidth*0.75+70*i, 10))
+            else:
+                self.screen.blit(self.starUnchecked,(self.screenWidth*0.75+70*i, 10))
 
         pygame.font.init()
         fontGlitch=pygame.font.Font("./font/Glitch.otf",70)
@@ -153,10 +153,7 @@ class LevelSelectionInterface(Interface):
             else:
                 self.screen.blit(text, (self.screenHeight / 5, 130, 1000, 100))
 
-        min=str(int(duration/60))
-        sec=str(int(duration%60))
-
-        durationText = fontBigArial.render("Durée: "+min+":"+sec, True, (255, 255, 255))
+        durationText = fontBigArial.render("Durée: "+duration, True, (255, 255, 255))
         self.screen.blit(durationText, (self.screenWidth / 5 * 4.2, self.screenHeight / 10))
         pygame.font.quit()
 
@@ -179,7 +176,7 @@ class LevelSelectionInterface(Interface):
                     self.levels[i].show(self.screen, self.screenWidth * 0.65, self.screenHeight * 0.167 * i,self.screenWidth * 0.35, self.screenHeight * 0.167)
 
         if(len(self.levels)>2):
-            self.showDescription(self.levels[2].name,self.levels[2].picture,self.levels[2].difficulty,self.levels[2].descritpion,self.levels[2].duration)
+            self.showDescription(self.levels[2].name,self.levels[2].picture,self.levels[2].difficulty,self.levels[2].descritpion,self.levels[2].duration,self.levels[2].marck)
 
         self.screen.blit(self.bannerBottomPicture, (0, self.screenHeight * 0.85))
 

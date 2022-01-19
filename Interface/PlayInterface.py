@@ -1,10 +1,9 @@
 import pygame.draw
 
-from Interface.CalibrageInterface import *
+from Interface.InterfaceCalibrage import *
 from Interface.PauseInterface import *
-from Interface.EndInterface import *
 
-class PlayInterface(Interface):
+class playInterface(interface):
 
     def __init__(self,screenData,screen,detection,settings,stage):
         self.stage=stage
@@ -17,6 +16,9 @@ class PlayInterface(Interface):
         self.background=pygame.image.load("./stages/"+self.stage.name+"/background.png")
         self.background = pygame.transform.scale(self.background, (width, height))
         self.pauseButton= pictureButton(20,20,100,100,self.screen,"pause.png","",0,0,"",(0,0,0))
+        un=pygame.image.load("./picture/interface/nb_1.png")
+        deux = pygame.image.load("./picture/interface/nb_2.png")
+        self.trois = pygame.image.load("./picture/interface/nb_3.png")
 
         self.show()
         self.resetCoo()
@@ -34,7 +36,6 @@ class PlayInterface(Interface):
 
             for x, y in self.detection.mediaPipe.hand_points:
                 self.stage.test_collision(x, y)
-            self.stage.test_collision(self.rightX,self.rightY)
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -48,11 +49,6 @@ class PlayInterface(Interface):
             self.stage.play()
             self.showHand()
 
-            if self.stage.is_end():
-                pygame.mixer.music.stop()
-                EndInterface(self.screenData, self.screen, self.detection, self.settings, self)
-
-           
             if self.detection.mediaPipe.isFistClosed == 1:
                 if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
                     self.stage.pause()
