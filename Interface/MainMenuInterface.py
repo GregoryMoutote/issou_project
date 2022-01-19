@@ -31,7 +31,8 @@ class MainMenuInterface(Interface):
         self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 + 50, self.screenWidth / 2, 100, self.screen, (0, 172, 240), "CREER UN NIVEAU", 50, 300, "Glitch.otf", (255, 255, 255)))
         self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 + 150, self.screenWidth / 2, 100, self.screen, (0, 112, 192), "QUITTER", 50, 450, "Glitch.otf", (255, 255, 255)))
 
-        self.detection= MediaPipeThread()
+        self.detection = MediaPipeThread()
+
 
         self.show()
         self.resetCoo()
