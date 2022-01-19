@@ -89,7 +89,7 @@ class Stage:
                 file.close()
                 return
             else:
-                self.name = line[6:-1]
+                self.name = line[6:-1].lower()
             line = file.readline()
             if "difficulty=" not in line:
                 file.close()
