@@ -3,6 +3,7 @@ import pygame.draw
 from Interface.LevelSelectionInterface import *
 from Interface.SettingsInterface import *
 from Interface.GIF.MainMenuGIF import *
+from Interface.LevelCreationFirstInterface import *
 
 class MainMenuInterface(Interface):
 
@@ -70,22 +71,14 @@ class MainMenuInterface(Interface):
                     self.resetCoo()
                     self.show()
 
+                elif self.rightX>self.button[3].x and self.rightX<(self.button[3].x+self.button[3].width) and self.rightY>self.button[3].y and self.rightY<(self.button[3].y+self.button[3].height):
+                    LevelCreationFirstInterface(self.screenData, self.screen, self.detection, self.settings)
+                    self.resetCoo()
+                    self.show()
+
                 elif self.rightX>self.button[4].x and self.rightX<(self.button[4].x+self.button[4].width) and self.rightY>self.button[4].y and self.rightY<(self.button[4].y+self.button[4].height):
-                   self.detection.closeCamera()
-                   continuer=False
-
-
-    def toucheCible(left,top,radius,x,y):
-
-        if(x>left-radius and x<left+radius):
-            hypotenuse=(radius)**2
-            adjacent=(left-x)**2
-            if(adjacent<=hypotenuse):
-                axeY=sqrt(hypotenuse-adjacent)
-
-                if(y>top-axeY and y<top+axeY):
-                    return True
-        return False
+                    self.detection.closeCamera()
+                    continuer=False
 
 
     def show(self):

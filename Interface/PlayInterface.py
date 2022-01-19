@@ -66,10 +66,11 @@ class PlayInterface(Interface):
     def showHand(self):
         self.show()
         if len(self.detection.hand_points)>0:
-            if abs(self.detection.hand_points[1][0]-self.detection.hand_points[4][0])>abs(self.detection.hand_points[2][0]-self.detection.hand_points[3][0]):
-                pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.hand_points[0][0]-abs(self.detection.hand_points[1][0]-self.detection.hand_points[4][0])/2, self.detection.hand_points[0][1]-abs(self.detection.hand_points[1][0]-self.detection.hand_points[4][0])/2), abs(self.detection.hand_points[1][0]-self.detection.hand_points[4][0]))
-            else:
-                pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.hand_points[0][0] - abs(self.detection.hand_points[2][0] - self.detection.hand_points[3][0]) / 2,self.detection.hand_points[0][1] - abs(self.detection.hand_points[2][0] -self.detection.hand_points[3][0]) / 2),abs(self.detection.hand_points[2][0] - self.detection.hand_points[3][0]))
+            #if abs(self.detection.hand_points[1][0]-self.detection.hand_points[4][0])>abs(self.detection.hand_points[2][0]-self.detection.hand_points[3][0]):
+            #    pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.hand_points[0][0]-abs(self.detection.hand_points[1][0]-self.detection.hand_points[4][0])/2, self.detection.hand_points[0][1]-abs(self.detection.hand_points[1][0]-self.detection.hand_points[4][0])/2), abs(self.detection.hand_points[1][0]-self.detection.hand_points[4][0]))
+            #else:
+            #    pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.hand_points[0][0] - abs(self.detection.hand_points[2][0] - self.detection.hand_points[3][0]) / 2,self.detection.hand_points[0][1] - abs(self.detection.hand_points[2][0] -self.detection.hand_points[3][0]) / 2),abs(self.detection.hand_points[2][0] - self.detection.hand_points[3][0]))
+            pygame.draw.circle(self.screen,(255, 255, 255),(self.detection.hand_points[0][0]-10,self.detection.hand_points[0][1]-10),20)
         pygame.display.update()
 
 
