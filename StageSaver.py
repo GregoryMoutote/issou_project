@@ -66,8 +66,7 @@ class Stage_Saver:
                 file.write("del=" + str(target.delay) + '\n')
                 file.write("val=" + str(target.value) + '\n')
 
-                #file.write("texture=" + target.image + '\n')
-                file.write("texture=basic_blue\n")
+                file.write("texture=" + target.image + '\n')
 
                 if isinstance(target, Rail_target):
                     string = "steps=§"
@@ -81,6 +80,6 @@ class Stage_Saver:
                     file.write('\n')
 
     def create_best_score(self):
-        with open("stages/" + self.stage.name + "/" + self.stage.name + ".issou", "w") as file:
+        with open("stages/" + self.stage.name + "/" + self.stage.name + "_bs.issou", "w") as file:
             file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=0")
             file.close()

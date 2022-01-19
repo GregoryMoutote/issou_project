@@ -18,10 +18,12 @@ class Target:
                     self.picture = pygame.image.load("picture/targets/basics/" + targetData[6] + ".png")
                     self.picture = pygame.transform.scale(self.picture,
                                                           (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
+                    self.image = targetData[6]
                 elif os.path.isfile("picture/targets/imported/" + targetData[6] + ".png"):
                     self.picture = pygame.image.load("picture/targets/imported/" + targetData[6] + ".png")
                     self.picture = pygame.transform.scale(self.picture,
                                                           (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
+                    self.image = targetData[6]
                 else:
                     not_found = True
             else:
@@ -30,7 +32,7 @@ class Target:
                 self.picture = pygame.image.load("picture/targets/basic_blue.png")
                 self.picture = pygame.transform.scale(self.picture,
                                                       (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
-                # TODO delete dependencies of files
+                self.image = "basic_blue"
 
     def display(self):
         print(self.coordinates, self.duration, self.delay, self.value)
