@@ -13,12 +13,8 @@ class Dynamic_target(Target):
     def display(self):
         print(self.coordinates, self.duration, self.delay, self.value, self.end_value, self.color)
 
-    def updatevalue(self):
+    def update(self):
         if self.beginTime == 0:
             self.beginTime = time.time()
         self.value =int(self.begin_value - (self.begin_value - self.end_value) * (
                     (time.time() - self.beginTime) / self.duration))
-
-    def showTarget(self):
-        self.updatevalue()
-        self.screen.blit(self.picture,(self.coordinates.x - Constants.TARGET_RADIUS, self.coordinates.y - Constants.TARGET_RADIUS))

@@ -3,7 +3,7 @@ import pygame.draw
 from Buttons.PictureButton import *
 from Interface.InterfaceSettings import *
 
-class pauseInterface(interface):
+class PauseInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings,parent):
         self.parent=parent

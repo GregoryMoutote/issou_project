@@ -4,14 +4,13 @@ from Interface.LevelSelectionInterface import *
 from Interface.InterfaceSettings import *
 from Interface.GIF.MainMenuGIF import *
 from playerDetection.MediaPipeThread import *
-from Interface.ResfreshThread import RefreshThread
+from Interface.LevelCreationFirstInterface import *
 import math
 
-class MainMenuInterface(interface):
+class MainMenuInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
-
 
         super().__init__(screenData, screen)
 
@@ -20,20 +19,19 @@ class MainMenuInterface(interface):
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Sprite Animation")
         self.moving_sprites = pygame.sprite.Group()
-        ISSOUlaod = MenuGIF(self.screenWidth/2-525,self.screenHeight/2-75,self.screen)
+        ISSOUlaod = MenuGIF(self.screenWidth*0.17,self.screenHeight/2-75,self.screen)
         self.moving_sprites.add(ISSOUlaod)
 
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
+        self.fondLogo= pygame.transform.scale(self.fondLogo, (787, 500))
 
-        self.bottun=[colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 - 187, self.screenWidth / 2.4, 75, self.screen, (0, 112, 192), "JOUER", 40, 290, "Glitch.otf", (255, 255, 255))]
-        self.bottun.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 - 112, self.screenWidth / 2.4, 75, self.screen, (0, 172, 240), "TUTORIEL", 40, 260, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 - 37, self.screenWidth / 2.4, 75, self.screen, (0, 112, 192), "PARAMETRE", 40, 230, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 + 38, self.screenWidth / 2.4, 75, self.screen, (0, 172, 240), "CREER UN NIVEAU", 40, 160, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 + 113, self.screenWidth / 2.4, 75, self.screen, (0, 112, 192), "QUITTER", 40, 275, "Glitch.otf", (255, 255, 255)))
-
+        self.bottun=[colorButton(self.screenWidth*0.4, self.screenHeight / 2 - 250, self.screenWidth / 2, 100, self.screen, (0, 112, 192), "JOUER", 50, 450, "Glitch.otf", (255, 255, 255))]
+        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 - 150, self.screenWidth / 2, 100, self.screen, (0, 172, 240), "TUTORIEL", 50, 420, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 - 50, self.screenWidth / 2, 100, self.screen, (0, 112, 192), "PARAMETRE", 50, 380, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 + 50, self.screenWidth / 2, 100, self.screen, (0, 172, 240), "CREER UN NIVEAU", 50, 300, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 + 150, self.screenWidth / 2, 100, self.screen, (0, 112, 192), "QUITTER", 50, 450, "Glitch.otf", (255, 255, 255)))
 
         self.detection= MediaPipeThread()
-
 
         self.show()
         self.resetCoo()
@@ -45,7 +43,6 @@ class MainMenuInterface(interface):
 
     def loop(self):
         continuer=True
-
 
         while continuer:
 
@@ -80,6 +77,11 @@ class MainMenuInterface(interface):
                     self.resetCoo()
                     self.show()
 
+                elif self.rightX>self.bottun[3].x and self.rightX<(self.bottun[3].x+self.bottun[3].width) and self.rightY>self.bottun[3].y and self.rightY<(self.bottun[3].y+self.bottun[3].height):
+                    LevelCreationFirstInterface(self.screenData, self.screen,self.detection,self.settings)
+                    self.resetCoo()
+                    self.show()
+
                 elif self.rightX>self.bottun[4].x and self.rightX<(self.bottun[4].x+self.bottun[4].width) and self.rightY>self.bottun[4].y and self.rightY<(self.bottun[4].y+self.bottun[4].height):
                    self.detection.endDetection()
                    continuer=False
@@ -102,7 +104,7 @@ class MainMenuInterface(interface):
         self.screen.blit(self.background, (0, 0))
         for c in self.bottun:
             c.showButton()
-        self.screen.blit(self.fondLogo, (self.screenWidth/10, self.screenHeight/2-249))
+        self.screen.blit(self.fondLogo, (self.screenWidth*0.13, self.screenHeight / 2 - 250))
         self.moving_sprites.draw(self.screen)
         self.moving_sprites.update(1)
         self.clock.tick(60)
@@ -111,7 +113,6 @@ class MainMenuInterface(interface):
     def showHand(self):
         self.show()
         if len(self.detection.mediaPipe.leftHand)>0:
-            #print("right", self.detection.mediaPipe.leftHand[0], "  ", self.detection.mediaPipe.leftHand[1])
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
         if len(self.detection.mediaPipe.rightHand)>0:

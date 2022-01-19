@@ -15,15 +15,10 @@ class Moving_target(Target):
     def display(self):
         print(self.coordinates, self.end_coordinates, self.duration, self.delay, self.value, self.color)
 
-    def uptdatePos(self):
+    def update(self):
         if self.beginTime == 0:
             self.beginTime = time.time()
         self.coordinates.x = self.begin_coordinates.x + (self.end_coordinates.x - self.begin_coordinates.x) * (
                     (time.time() - self.beginTime) / self.duration)
         self.coordinates.y = self.begin_coordinates.y + (self.end_coordinates.y - self.begin_coordinates.y) * (
                     (time.time() - self.beginTime) / self.duration)
-
-    def showTarget(self):
-        self.uptdatePos()
-        self.screen.blit(self.picture,(self.coordinates.x-Constants.TARGET_RADIUS,self.coordinates.y- Constants.TARGET_RADIUS))
-

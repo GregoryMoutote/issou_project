@@ -6,7 +6,7 @@ from random import *
 from Stage import *
 import os
 
-class LevelSelectionInterface(interface):
+class LevelSelectionInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.detection=detection
@@ -67,7 +67,7 @@ class LevelSelectionInterface(interface):
                    continuer=False
 
                 elif self.rightX>self.playButton.x and self.rightX<(self.playButton.x + self.playButton.width) and self.rightY>self.playButton.y and self.rightY<(self.playButton.y + self.playButton.height):
-                    playInterface(self.screenData,self.screen,self.detection,self.settings,self.stages[self.index])
+                    PlayInterface(self.screenData, self.screen, self.detection, self.settings, self.stages[self.index])
                     self.show()
                     self.resetCoo()
 

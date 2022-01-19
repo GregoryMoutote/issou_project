@@ -4,7 +4,7 @@ from Buttons.ColorButton import *
 from Buttons.MultipleButton import *
 from Interface.InterfaceCalibrage import *
 
-class InterfaceSettings(interface):
+class InterfaceSettings(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings

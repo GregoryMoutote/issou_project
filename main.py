@@ -11,7 +11,7 @@ screenData = ctypes.windll.user32
 settings = Settings()
 
 pygame.init()
-screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN,pygame.NOFRAME)
+screen = pygame.display.set_mode((1920,1080),pygame.FULLSCREEN,pygame.NOFRAME)
 
 InterfaceCalibrage(screenData,screen,detection)
 MainMenuInterface(screenData,screen,detection,settings)
