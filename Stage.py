@@ -172,6 +172,10 @@ class Stage:
         if self.stage_music and self.targets:
             self.is_stage_usable = self.stage_music.is_music_loaded
 
+    def is_end(self):
+        return self.start+self.stage_music.duration<time.time()
+
+
     def load_best_score(self):
         if ".issou" not in self.path:
             return

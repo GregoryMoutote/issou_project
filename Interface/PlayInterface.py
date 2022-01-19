@@ -2,6 +2,7 @@ import pygame.draw
 
 from Interface.CalibrageInterface import *
 from Interface.PauseInterface import *
+from Interface.EndInterface import *
 
 class PlayInterface(Interface):
 
@@ -59,6 +60,9 @@ class PlayInterface(Interface):
                     self.stage.resume()
                     self.resetCoo()
                     self.show()
+
+            if self.stage.is_end():
+                EndInterface(self.screenData, self.screen, self.detection, self.settings, self)
 
             self.showHand()
 
