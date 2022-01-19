@@ -1,10 +1,6 @@
-from playerDetection.MediaPipeThread import MediaPipeThread
-import time
+from datetime import datetime
 
-eye = MediaPipeThread()
-eye.start()
-for i in range (10):
-    time.sleep(1)
-    print("ca continue...")
+now = datetime.now()
 
-eye.endDetection()
+current_time = now.strftime("%H:%M:%S")
+print("Current Time =", current_time)

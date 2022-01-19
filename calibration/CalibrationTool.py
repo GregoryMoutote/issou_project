@@ -19,7 +19,7 @@ class CalibrationTool:
     def setup(self, img:np.ndarray):
         self.screen = ctypes.windll.user32
         self.image = img
-        print("TENTATIVE DE RECUPERATION DES POINTS...")
+        #print("TENTATIVE DE RECUPERATION DES POINTS...")
         isDone = self.getPoints()
         if isDone:
             self.calcMatrix()
@@ -28,28 +28,28 @@ class CalibrationTool:
 
     def initCamera(self):
         self.webcam = cv2.VideoCapture(0)
-        print("CAMERA INITIALISATION...")
+        #print("CAMERA INITIALISATION...")
 
 
 
     def closeCamera(self):
         if self.webcam is not None:
             self.webcam.release()
-            print("CAMERA CLOSED...")
+            #print("CAMERA CLOSED...")
 
     def getPoints(self):
         self.shape_util = ShapeDetection.ShapeDetection()
-        print("ANALYSE DE L'IMAGE...")
+        #print("ANALYSE DE L'IMAGE...")
         self.matrix = self.shape_util.detectFromPicture(self.image)
         if self.matrix is not None and len(self.matrix)==4:
             return True
         else:
-            print("ECHEC DE RECUPERATION...")
+            #print("ECHEC DE RECUPERATION...")
             return False
 
 
     def calcMatrix(self):
-        print("CALCUL DE LA MATRICE...")
+        #print("CALCUL DE LA MATRICE...")
         if self.matrix is not None and len(self.matrix)>=4:
             rows, cols, ch = self.image.shape
 
@@ -61,12 +61,13 @@ class CalibrationTool:
             self.M = cv2.getPerspectiveTransform(self.pts1, self.pts2)
 
             self.isDone = True
-            print("MATRICE CALCULEE...")
+            #print("MATRICE CALCULEE...")
         else:
-            print("MATRICE PAS DEFINI CORRECTEMENT")
+            #print("MATRICE PAS DEFINI CORRECTEMENT")
+            pass
 
     def triPoint(self):
-        print("TRI DES POINTS...")
+        #print("TRI DES POINTS...")
         tabSum = [self.matrix[0][0] + self.matrix[0][1], self.matrix[1][0] + self.matrix[1][1],
                   self.matrix[2][0] + self.matrix[2][1], self.matrix[3][0] + self.matrix[3][1]]
         pointOrder = []
