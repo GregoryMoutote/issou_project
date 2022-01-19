@@ -3,6 +3,8 @@ from Targets.Rail_target import Rail_target
 from Targets.Dynamic_target import Dynamic_target
 from Targets.Moving_target import Moving_target
 from Targets.Target import Target
+import mutagen
+import os
 
 
 class Stage_Saver:
@@ -28,10 +30,15 @@ class Stage_Saver:
 
     def save_music_header(self):
         with open("stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
-            #TODO Meta data
-            file.write("title=" + self.stage.stage_music.title)
-            file.write("desc=" + "Benjamin is not yours ;) !")
-            file.write("authors=§" + "" + "§")
+            if os.path.isfile("stages/" + self.stage.name + "/" + self.stage.name + ".mp3"):
+                audioReader = mutagen.File("stages/" + self.stage.name + "/" + self.stage.name + ".mp3")
+                file.write("title=" + str(audioReader["TIT2"]))
+                file.write("desc=" + str(audioReader["TXXX:"]))
+                file.write("authors=§" + str(audioReader["TPE2"]) + "§")
+            else:
+                file.write("title=" + self.stage.stage_music.name)
+                file.write("desc=" + "No description")
+                file.write("authors=§" + "Unknown author" "§")
             file.writer("$")
             file.close()
 
