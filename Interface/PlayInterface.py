@@ -18,9 +18,6 @@ class PlayInterface(Interface):
         self.background=pygame.image.load("./stages/"+self.stage.name+"/background.png")
         self.background = pygame.transform.scale(self.background, (width, height))
         self.pauseButton= pictureButton(20,20,100,100,self.screen,"pause.png","",0,0,"",(0,0,0))
-        un=pygame.image.load("./picture/interface/nb_1.png")
-        deux = pygame.image.load("./picture/interface/nb_2.png")
-        self.trois = pygame.image.load("./picture/interface/nb_3.png")
 
         self.show()
         self.resetCoo()
@@ -40,6 +37,7 @@ class PlayInterface(Interface):
 
             for x, y in self.detection.hand_points:
                 self.stage.test_collision(x, y)
+            self.stage.test_collision(self.rightX,self.rightY)
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -54,6 +52,7 @@ class PlayInterface(Interface):
             self.showHand()
 
             if self.stage.is_end():
+                pygame.mixer.music.stop()
                 EndInterface(self.screenData, self.screen, self.detection, self.settings, self)
 
             if self.detection.isFistClosed == 1:

@@ -47,7 +47,7 @@ class MainMenuInterface(Interface):
                 self.rightY = self.detection.rightHand[1]
 
             if len(self.detection.leftHand) > 0:
-                self.leftX = self.detection.leftHand[0]
+                self.leftX = self.screenWidth-self.detection.leftHand[0]
                 self.leftY = self.detection.leftHand[1]
 
             for event in pygame.event.get():
@@ -61,22 +61,26 @@ class MainMenuInterface(Interface):
             self.showHand()
 
             if self.detection.isFistClosed==1:
-                if self.rightX>self.button[0].x and self.rightX<(self.button[0].x+self.button[0].width) and self.rightY>self.button[0].y and self.rightY<(self.button[0].y+self.button[0].height):
-                   LevelSelectionInterface(self.screenData, self.screen,self.detection,self.settings)
-                   self.resetCoo()
-                   self.show()
+                if (self.rightX > self.button[0].x and self.rightX < (self.button[0].x + self.button[0].width) and self.rightY > self.button[0].y and self.rightY < (self.button[0].y + self.button[0].height)) or(
+                    self.leftX > self.button[0].x and self.leftX < (self.button[0].x + self.button[0].width) and self.leftY > self.button[0].y and self.leftY < (self.button[0].y + self.button[0].height)):
+                    LevelSelectionInterface(self.screenData, self.screen,self.detection,self.settings)
+                    self.resetCoo()
+                    self.show()
 
-                elif self.rightX>self.button[2].x and self.rightX<(self.button[2].x+self.button[2].width) and self.rightY>self.button[2].y and self.rightY<(self.button[2].y+self.button[2].height):
+                elif (self.rightX > self.button[2].x and self.rightX < (self.button[2].x + self.button[2].width) and self.rightY > self.button[2].y and self.rightY < (self.button[2].y + self.button[2].height)) or(
+                    self.leftX > self.button[2].x and self.leftX < (self.button[2].x + self.button[2].width) and self.leftY > self.button[2].y and self.leftY < (self.button[2].y + self.button[2].height)):
                     SettingsInterface(self.screenData, self.screen, self.detection, self.settings)
                     self.resetCoo()
                     self.show()
 
-                elif self.rightX>self.button[3].x and self.rightX<(self.button[3].x+self.button[3].width) and self.rightY>self.button[3].y and self.rightY<(self.button[3].y+self.button[3].height):
+                elif (self.rightX > self.button[3].x and self.rightX < (self.button[3].x + self.button[3].width) and self.rightY > self.button[3].y and self.rightY < (self.button[3].y + self.button[3].height)) or(
+                    self.leftX > self.button[3].x and self.leftX < (self.button[3].x + self.button[3].width) and self.leftY > self.button[3].y and self.leftY < (self.button[3].y + self.button[3].height)):
                     LevelCreationFirstInterface(self.screenData, self.screen, self.detection, self.settings)
                     self.resetCoo()
                     self.show()
 
-                elif self.rightX>self.button[4].x and self.rightX<(self.button[4].x+self.button[4].width) and self.rightY>self.button[4].y and self.rightY<(self.button[4].y+self.button[4].height):
+                elif (self.rightX > self.button[4].x and self.rightX < (self.button[4].x + self.button[4].width) and self.rightY > self.button[4].y and self.rightY < (self.button[4].y + self.button[4].height)) or(
+                    self.leftX > self.button[4].x and self.leftX < (self.button[4].x + self.button[4].width) and self.leftY > self.button[4].y and self.leftY < (self.button[4].y + self.button[4].height)):
                     self.detection.closeCamera()
                     continuer=False
 

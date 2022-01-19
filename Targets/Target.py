@@ -21,3 +21,6 @@ class Target:
 
     def showTarget(self):
         self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,self.coordinates.y - Constants.TARGET_RADIUS))
+
+    def update(self):
+        pass
