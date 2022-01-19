@@ -7,7 +7,9 @@ from Targets.Moving_target import Moving_target
 from Targets.Rail_target import Rail_target
 from Date import Date
 from pygame import mixer
+from StageSaver import Stage_Saver
 import time
+import os
 
 from Constants import Constants
 
@@ -42,10 +44,17 @@ class Stage:
         self.stage_music.load()
         self.load_stage()
 
+        self.name = "test"
+        Stage_Saver(self)
+        self.name = "test_v2"
+
     def pre_load_stage(self):
         if ".issou" not in self.path:
             return
-        self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".wav")
+        if os.path.isfile(self.path[0:self.path.find(".issou")] + ".mp3"):
+            self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".mp3")
+        else:
+            self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".wav")
         with open(self.path, 'r') as file:
             line = file.readline()
             if "ext=issou" not in line:
