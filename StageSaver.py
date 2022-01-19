@@ -81,6 +81,6 @@ class Stage_Saver:
                     file.write('\n')
 
     def create_best_score(self):
-        with open("stages/" + self.stage.name + "/" + self.stage.name + "_bs.issou", "w") as file:
+        with open("stages/" + self.stage.name + "/" + self.stage.name + ".issou", "w") as file:
             file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=0")
             file.close()
