@@ -5,7 +5,7 @@ class multipleButton(Button):
 
     def __init__(self, x, y, width, height, screen,trueColor,falseColor,nbBottun,nbActif):
         super().__init__(x,y,width,height,screen)
-        self.nbBottun = nbBottun
+        self.nbButtun = nbBottun
         self.nbActif = nbActif
         self.trueColor = trueColor
         self.falseColor = falseColor
