@@ -70,7 +70,7 @@ class MainMenuInterface(Interface):
 
             self.showHand()
 
-            if self.detection.isFistClosed==1:
+            if self.detection.mediaPipe.isFistClosed==1:
                 if (self.rightX > self.button[0].x and self.rightX < (self.button[0].x + self.button[0].width) and self.rightY > self.button[0].y and self.rightY < (self.button[0].y + self.button[0].height)) or(
                     self.leftX > self.button[0].x and self.leftX < (self.button[0].x + self.button[0].width) and self.leftY > self.button[0].y and self.leftY < (self.button[0].y + self.button[0].height)):
                     LevelSelectionInterface(self.screenData, self.screen,self.detection,self.settings)
@@ -91,7 +91,8 @@ class MainMenuInterface(Interface):
 
                 elif (self.rightX > self.button[4].x and self.rightX < (self.button[4].x + self.button[4].width) and self.rightY > self.button[4].y and self.rightY < (self.button[4].y + self.button[4].height)) or(
                     self.leftX > self.button[4].x and self.leftX < (self.button[4].x + self.button[4].width) and self.leftY > self.button[4].y and self.leftY < (self.button[4].y + self.button[4].height)):
-                    self.detection.closeCamera()
+                    self.detection.mediaPipe.closeCamera()
+                    self.detection.endDetection()
                     continuer=False
 
 

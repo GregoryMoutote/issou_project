@@ -3,8 +3,8 @@ from playerDetection.MediaPipeTool import MediaPipeTool
 from Settings import *
 import pygame
 
-detection = MediaPipeTool()
-detection.initHandCapture()
+detection = MediaPipeThread()
+
 
 screenData = ctypes.windll.user32
 
