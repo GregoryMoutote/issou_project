@@ -6,12 +6,17 @@ class MediaPipeThread(threading.Thread):
         threading.Thread.__init__(self)
         self.mediaPipe = MediaPipeTool()
         self.continuer = True
+        self.fullDetection = False
 
     def run(self):
         self.mediaPipe.initHandCapture()
-
         while self.continuer:
-            self.mediaPipe.hand_detection()
+            if self.fullDetection:
+                self.mediaPipe.complete_hand_detection()
+            else:
+                self.mediaPipe.hand_detection()
+
+
 
     def endDetection(self):
         self.continuer = False

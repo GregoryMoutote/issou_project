@@ -11,8 +11,7 @@ class MainMenuInterface(interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
-        self.detection= MediaPipeThread()
-        self.tRefresh = RefreshThread(screen,self)
+
 
         super().__init__(screenData, screen)
 
@@ -32,20 +31,23 @@ class MainMenuInterface(interface):
         self.bottun.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 + 38, self.screenWidth / 2.4, 75, self.screen, (0, 172, 240), "CREER UN NIVEAU", 40, 160, "Glitch.otf", (255, 255, 255)))
         self.bottun.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 + 113, self.screenWidth / 2.4, 75, self.screen, (0, 112, 192), "QUITTER", 40, 275, "Glitch.otf", (255, 255, 255)))
 
+
+        self.detection= MediaPipeThread()
+
+
         self.show()
         self.resetCoo()
+        self.detection.start()
         self.loop()
+
 
         pygame.quit()
 
     def loop(self):
         continuer=True
 
-        self.detection.start()
-        self.tRefresh.start()
 
         while continuer:
-
 
             if len(self.detection.mediaPipe.rightHand) > 0:
                 self.rightX = self.detection.mediaPipe.rightHand[0]
@@ -54,6 +56,7 @@ class MainMenuInterface(interface):
             if len(self.detection.mediaPipe.leftHand) > 0:
                 self.leftX = self.detection.mediaPipe.leftHand[0]
                 self.leftY = self.detection.mediaPipe.leftHand[1]
+
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -68,22 +71,17 @@ class MainMenuInterface(interface):
 
             if self.detection.mediaPipe.isFistClosed==1:
                 if self.rightX>self.bottun[0].x and self.rightX<(self.bottun[0].x+self.bottun[0].width) and self.rightY>self.bottun[0].y and self.rightY<(self.bottun[0].y+self.bottun[0].height):
-                   LevelSelectionInterface(self.screenData, self.screen,self.detection.mediaPipe,self.settings)
+                   LevelSelectionInterface(self.screenData, self.screen,self.detection,self.settings)
                    self.resetCoo()
                    self.show()
-                   self.detection.endDetection()
-                   self.tRefresh.stop()
 
                 elif self.rightX>self.bottun[2].x and self.rightX<(self.bottun[2].x+self.bottun[2].width) and self.rightY>self.bottun[2].y and self.rightY<(self.bottun[2].y+self.bottun[2].height):
-                    InterfaceSettings(self.screenData, self.screen,self.detection.mediaPipe,self.settings)
+                    InterfaceSettings(self.screenData, self.screen,self.detection,self.settings)
                     self.resetCoo()
                     self.show()
-                    self.detection.endDetection()
-                    self.tRefresh.stop()
 
                 elif self.rightX>self.bottun[4].x and self.rightX<(self.bottun[4].x+self.bottun[4].width) and self.rightY>self.bottun[4].y and self.rightY<(self.bottun[4].y+self.bottun[4].height):
                    self.detection.endDetection()
-                   self.tRefresh.stop()
                    continuer=False
 
 

@@ -90,14 +90,17 @@ class CalibrationTool:
                                 [self.matrix[pointOrder[2]][0], self.matrix[pointOrder[2]][1]],
                                 [self.matrix[pointOrder[3]][0], self.matrix[pointOrder[3]][1]]])
 
-    def calibratePicture(self,  preview: bool):
-        rows, cols, ch = self.image.shape
-        dst = cv2.warpPerspective(self.image, self.M, (cols, rows))
-        if preview:
-            plt.subplot(121), plt.imshow(self.image), plt.title('Input')
-            plt.subplot(122), plt.imshow(dst), plt.title('Output')
-            plt.show()
-        return dst
+    def calibratePicture(self, img,  preview: bool):
+        if self.M is not None:
+            rows, cols, ch = img.shape
+            dst = cv2.warpPerspective(img, self.M, (cols, rows))
+            if preview:
+                plt.subplot(121), plt.imshow(img), plt.title('Input')
+                plt.subplot(122), plt.imshow(dst), plt.title('Output')
+                plt.show()
+            return dst
+        else:
+            return img
 
     def calibratePoint(self, coord):
         if self.M is not None:
@@ -106,3 +109,9 @@ class CalibrationTool:
                    result_matrix[1][0] / result_matrix[2][0]
         else:
             return (coord[0],coord[1])
+
+    def inverseGD(self, coord):
+        if self.M is not None:
+            return((self.screen.GetSystemMetrics(0)-coord[0]),coord[1])
+        else:
+            return (coord[0], coord[1])

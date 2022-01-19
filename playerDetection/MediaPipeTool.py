@@ -132,21 +132,20 @@ class MediaPipeTool :
 
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * self.screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * self.screen.GetSystemMetrics(1)
-                    self.hand_points.append((self.screen.GetSystemMetrics(0)-hand_x, hand_y))
+                    self.hand_points.append((self.calibr_util.calibratePoint((hand_x, hand_y))))
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x * self.screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y * self.screen.GetSystemMetrics(1)
-                    self.hand_points.append((self.screen.GetSystemMetrics(0)-hand_x, hand_y))
+                    self.hand_points.append((self.calibr_util.calibratePoint((hand_x, hand_y))))
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.THUMB_TIP].x * self.screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.THUMB_TIP].y * self.screen.GetSystemMetrics(1)
-                    self.hand_points.append((self.screen.GetSystemMetrics(0)-hand_x, hand_y))
+                    self.hand_points.append((self.calibr_util.calibratePoint((hand_x, hand_y))))
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x * self.screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y * self.screen.GetSystemMetrics(1)
-                    self.hand_points.append((self.screen.GetSystemMetrics(0)-hand_x, hand_y))
+                    self.hand_points.append((self.calibr_util.calibratePoint((hand_x, hand_y))))
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.WRIST].x * self.screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.WRIST].y * self.screen.GetSystemMetrics(1)
-                    self.hand_points.append((self.screen.GetSystemMetrics(0)-hand_x, hand_y))
+                    self.hand_points.append((self.calibr_util.calibratePoint((hand_x, hand_y))))
                     result.extend(self.hand_points)
-                    print(self.hand_points[0][0])
             return result
 
     def closeCamera(self):

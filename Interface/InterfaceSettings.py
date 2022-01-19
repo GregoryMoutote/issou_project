@@ -9,7 +9,6 @@ class InterfaceSettings(interface):
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
         self.detection=detection
-        self.detection.initHandCapture()
 
         super().__init__(screenData, screen)
 
@@ -38,15 +37,14 @@ class InterfaceSettings(interface):
 
         while continuer:
 
-            self.detection.hand_detection()
 
-            if len(self.detection.rightHand) > 0:
-                self.rightX = self.detection.rightHand[0]
-                self.rightY = self.detection.rightHand[1]
+            if len(self.detection.mediaPipe.rightHand) > 0:
+                self.rightX = self.detection.mediaPipe.rightHand[0]
+                self.rightY = self.detection.mediaPipe.rightHand[1]
 
-            if len(self.detection.leftHand) > 0:
-                self.leftX = self.detection.leftHand[0]
-                self.leftY = self.detection.leftHand[1]
+            if len(self.detection.mediaPipe.leftHand) > 0:
+                self.leftX = self.detection.mediaPipe.leftHand[0]
+                self.leftY = self.detection.mediaPipe.leftHand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -54,11 +52,11 @@ class InterfaceSettings(interface):
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
-                    self.detection.isFistClosed = 1
+                    self.detection.mediaPipe.isFistClosed = 1
 
             self.showHand()
 
-            if self.detection.isFistClosed == 1:
+            if self.detection.mediaPipe.isFistClosed == 1:
                 if self.rightX>self.animationButton.x and self.rightX<(self.animationButton.x + self.animationButton.width) and self.rightY>self.animationButton.y and self.rightY<(self.animationButton.y + self.animationButton.height):
                     self.settings.animation=self.animationButton.changeStat()
                     self.resetCoo()
@@ -115,11 +113,11 @@ class InterfaceSettings(interface):
 
     def showHand(self):
         self.show()
-        if len(self.detection.leftHand)>0:
+        if len(self.detection.mediaPipe.leftHand)>0:
             #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
-        if len(self.detection.rightHand)>0:
+        if len(self.detection.mediaPipe.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
         pygame.display.update()
 
