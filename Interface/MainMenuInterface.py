@@ -4,12 +4,15 @@ from Interface.LevelSelectionInterface import *
 from Interface.SettingsInterface import *
 from Interface.GIF.MainMenuGIF import *
 from Interface.LevelCreationFirstInterface import *
+from playerDetection.MediaPipeThread import *
+from Interface.ResfreshThread import RefreshThread
+import math
 
 class MainMenuInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
-        self.detection=detection
+
 
         super().__init__(screenData, screen)
 
@@ -29,31 +32,38 @@ class MainMenuInterface(Interface):
         self.button.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 + 38, self.screenWidth / 2.4, 75, self.screen, (0, 172, 240), "CREER UN NIVEAU", 40, 160, "Glitch.otf", (255, 255, 255)))
         self.button.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 + 113, self.screenWidth / 2.4, 75, self.screen, (0, 112, 192), "QUITTER", 40, 275, "Glitch.otf", (255, 255, 255)))
 
+
+        self.detection= MediaPipeThread()
+
+
         self.show()
         self.resetCoo()
+        self.detection.start()
         self.loop()
+
 
         pygame.quit()
 
     def loop(self):
         continuer=True
 
+
         while continuer:
 
-            self.detection.hand_detection()
+            if len(self.detection.mediaPipe.rightHand) > 0:
+                self.rightX = self.detection.mediaPipe.rightHand[0]
+                self.rightY = self.detection.mediaPipe.rightHand[1]
 
-            if len(self.detection.rightHand) > 0:
-                self.rightX = self.screenWidth-self.detection.rightHand[0]
-                self.rightY = self.detection.rightHand[1]
+            if len(self.detection.mediaPipe.leftHand) > 0:
+                self.leftX = self.detection.mediaPipe.leftHand[0]
+                self.leftY = self.detection.mediaPipe.leftHand[1]
 
-            if len(self.detection.leftHand) > 0:
-                self.leftX = self.screenWidth-self.detection.leftHand[0]
-                self.leftY = self.detection.leftHand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         continuer = False
+                        self.detection.endDetection()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
                     self.detection.isFistClosed=1
@@ -97,11 +107,11 @@ class MainMenuInterface(Interface):
 
     def showHand(self):
         self.show()
-        if len(self.detection.leftHand)>0:
-            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
+        if len(self.detection.mediaPipe.leftHand)>0:
+            #print("right", self.detection.mediaPipe.leftHand[0], "  ", self.detection.mediaPipe.leftHand[1])
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
-        if len(self.detection.rightHand)>0:
+        if len(self.detection.mediaPipe.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
         pygame.display.update()
 

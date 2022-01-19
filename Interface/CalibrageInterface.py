@@ -27,7 +27,7 @@ class CalibrageInterface(Interface):
         result=False
 
         while result==False:
-            result=self.detection.setUpCalibration()
+            result=self.detection.mediaPipe.setUpCalibration()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:

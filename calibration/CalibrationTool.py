@@ -2,6 +2,8 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 from calibration import ShapeDetection
+import ctypes
+
 
 
 class CalibrationTool:
@@ -12,8 +14,10 @@ class CalibrationTool:
         self.pts2 = None
         self.M = None
         self.isDone = False
+        self.screen = None
 
     def setup(self, img:np.ndarray):
+        self.screen = ctypes.windll.user32
         self.image = img
         print("TENTATIVE DE RECUPERATION DES POINTS...")
         isDone = self.getPoints()
@@ -49,8 +53,6 @@ class CalibrationTool:
         if self.matrix is not None and len(self.matrix)>=4:
             rows, cols, ch = self.image.shape
 
-            self.pts1 = np.float32([[self.matrix[0][0], self.matrix[0][1]], [self.matrix[3][0], self.matrix[3][1]],
-                                    [self.matrix[1][0], self.matrix[1][1]], [self.matrix[2][0], self.matrix[2][1]]])
 
             self.triPoint()
 
@@ -88,18 +90,28 @@ class CalibrationTool:
                                 [self.matrix[pointOrder[2]][0], self.matrix[pointOrder[2]][1]],
                                 [self.matrix[pointOrder[3]][0], self.matrix[pointOrder[3]][1]]])
 
-    def calibratePicture(self,  preview: bool):
-        rows, cols, ch = self.image.shape
-        dst = cv2.warpPerspective(self.image, self.M, (cols, rows))
-        if preview:
-            plt.subplot(121), plt.imshow(self.image), plt.title('Input')
-            plt.subplot(122), plt.imshow(dst), plt.title('Output')
-            plt.show()
-        return dst
+    def calibratePicture(self, img,  preview: bool):
+        if self.M is not None:
+            rows, cols, ch = img.shape
+            dst = cv2.warpPerspective(img, self.M, (cols, rows))
+            if preview:
+                plt.subplot(121), plt.imshow(img), plt.title('Input')
+                plt.subplot(122), plt.imshow(dst), plt.title('Output')
+                plt.show()
+            return dst
+        else:
+            return img
 
     def calibratePoint(self, coord):
         if self.M is not None:
             result_matrix = np.matmul(self.M, np.float32([[coord[0]], [coord[1]], [1]]))
-            return result_matrix[0][0] / result_matrix[2][0], result_matrix[1][0] / result_matrix[2][0]
+            return (self.screen.GetSystemMetrics(0)-result_matrix[0][0]) / result_matrix[2][0], \
+                   result_matrix[1][0] / result_matrix[2][0]
         else:
-            return coord
+            return (coord[0],coord[1])
+
+    def inverseGD(self, coord):
+        if self.M is not None:
+            return((self.screen.GetSystemMetrics(0)-coord[0]),coord[1])
+        else:
+            return (coord[0], coord[1])
