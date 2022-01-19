@@ -20,5 +20,4 @@ class Target:
         print(self.coordinates, self.duration, self.delay, self.value, self.color)
 
     def showTarget(self):
-        self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,
-                                        self.coordinates.y - Constants.TARGET_RADIUS))
+        self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,self.coordinates.y - Constants.TARGET_RADIUS))
