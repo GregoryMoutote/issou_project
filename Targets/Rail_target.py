@@ -7,6 +7,8 @@ from Constants import *
 class Rail_target(Target):
     def __init__(self, targetData,screen,picture):
         if isinstance(targetData, list) and len(targetData) >= 9:
+            self.transparentPicture=pygame.image.load("picture/targets/"+picture[:-4]+"_transparent.png")
+            self.transparentPicture = pygame.transform.scale(self.transparentPicture,(2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
             self.screen=screen
             super(Rail_target, self).__init__(targetData,self.screen,picture)
             iterator = 9
@@ -30,5 +32,8 @@ class Rail_target(Target):
             endy=point.y
             if(beginx!=0 and beginy!=0):
                 pygame.draw.line(self.screen,(255,0,0),(beginx+Constants.TARGET_RADIUS,beginy+Constants.TARGET_RADIUS),(endx+Constants.TARGET_RADIUS,endy+Constants.TARGET_RADIUS),10)
-        for point in self.steps:
-            self.screen.blit(self.picture, (point.x, point.y))
+        for i in range(0,len(self.steps)):
+            if i==0:
+                self.screen.blit(self.picture, (self.steps[i].x, self.steps[i].y))
+            else:
+                self.screen.blit(self.transparentPicture, (self.steps[i].x, self.steps[i].y))

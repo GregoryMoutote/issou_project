@@ -16,8 +16,8 @@ class Dynamic_target(Target):
     def updatevalue(self):
         if self.beginTime == 0:
             self.beginTime = time.time()
-        self.value = self.begin_value - (self.begin_value - self.end_value) * (
-                    (time.time() - self.beginTime) / self.duration)
+        self.value =int(self.begin_value - (self.begin_value - self.end_value) * (
+                    (time.time() - self.beginTime) / self.duration))
 
     def showTarget(self):
         self.updatevalue()

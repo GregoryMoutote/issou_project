@@ -147,7 +147,6 @@ class MediaPipeTool :
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.WRIST].y * screen.GetSystemMetrics(1)
                     self.hand_points.append((screen.GetSystemMetrics(0)-hand_x, hand_y))
                     result.extend(self.hand_points)
-                    print(self.hand_points[0][0])
             return result
 
     def closeCamera(self):

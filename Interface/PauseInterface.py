@@ -60,8 +60,6 @@ class PauseInterface(Interface):
 
                 elif self.rightX > self.button[1].x and self.rightX < (self.button[1].x + self.button[1].width) and self.rightY > self.button[1].y and self.rightY < (self.button[1].y + self.button[1].height):
                     self.parent.stage.load()
-                    self.resetCoo()
-                    self.show()
                     continuer=False
 
                 elif self.rightX > self.button[2].x and self.rightX < (self.button[2].x + self.button[2].width) and self.rightY > self.button[2].y and self.rightY < (self.button[2].y + self.button[2].height):
