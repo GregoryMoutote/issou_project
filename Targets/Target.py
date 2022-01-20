@@ -7,6 +7,7 @@ class Target:
     def __init__(self, targetData,screen, picture):
         if isinstance(targetData, list) and len(targetData) >= 9:
             self.screen=screen
+            self.pictureName=picture
             self.picture=pygame.image.load("picture/targets/"+picture)
             self.picture = pygame.transform.scale(self.picture,
                                                   (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
