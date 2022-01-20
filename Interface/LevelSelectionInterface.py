@@ -21,7 +21,7 @@ class LevelSelectionInterface(Interface):
 
         self.levels=[]
         for stage in self.stages:
-            self.levels.append(level(stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,"4:00"))
+            self.levels.append(level(stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,stage.stage_music.duration))
 
         self.randomButton=pictureButton(self.screenWidth * 0.8, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
         self.upButton=pictureButton(self.screenWidth * 0.9, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
@@ -149,7 +149,10 @@ class LevelSelectionInterface(Interface):
             else:
                 self.screen.blit(text, (self.screenHeight / 5, 130, 1000, 100))
 
-        durationText = fontBigArial.render("Durée: "+duration, True, (255, 255, 255))
+        min=str(int(duration/60))
+        sec=str(int(duration%60))
+
+        durationText = fontBigArial.render("Durée: "+min+":"+sec, True, (255, 255, 255))
         self.screen.blit(durationText, (self.screenWidth / 5 * 4.2, self.screenHeight / 10))
         pygame.font.quit()
 
@@ -161,15 +164,15 @@ class LevelSelectionInterface(Interface):
         if(len(self.levels)>5):
             for i in range(0,6):
                 if(i==2):
-                    self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.167 * i, self.screenWidth * 0.40, self.screenHeight * 0.167)
+                    self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.164 * i, self.screenWidth * 0.40, self.screenHeight * 0.167)
                 else:
-                    self.levels[i].show(self.screen,self.screenWidth*0.65,self.screenHeight*0.167*i,self.screenWidth*0.35,self.screenHeight*0.167)
+                    self.levels[i].show(self.screen,self.screenWidth*0.65,self.screenHeight*0.164*i,self.screenWidth*0.35,self.screenHeight*0.167)
         else:
             for i in range(0, len(self.levels)):
                 if (i == 2):
-                    self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.167 * i,self.screenWidth * 0.40, self.screenHeight * 0.167)
+                    self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.164 * i,self.screenWidth * 0.40, self.screenHeight * 0.167)
                 else:
-                    self.levels[i].show(self.screen, self.screenWidth * 0.65, self.screenHeight * 0.167 * i,self.screenWidth * 0.35, self.screenHeight * 0.167)
+                    self.levels[i].show(self.screen, self.screenWidth * 0.65, self.screenHeight * 0.164 * i,self.screenWidth * 0.35, self.screenHeight * 0.167)
 
         if(len(self.levels)>2):
             self.showDescription(self.levels[2].name,self.levels[2].picture,self.levels[2].difficulty,self.levels[2].descritpion,self.levels[2].duration,self.levels[2].marck)
