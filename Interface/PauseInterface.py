@@ -3,7 +3,7 @@ import pygame.draw
 from Buttons.PictureButton import *
 from Interface.InterfaceSettings import *
 
-class pauseInterface(interface):
+class PauseInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings,parent):
         self.parent=parent
@@ -41,7 +41,7 @@ class pauseInterface(interface):
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()

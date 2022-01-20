@@ -4,7 +4,7 @@ from Buttons.ColorButton import *
 from Buttons.MultipleButton import *
 from Interface.InterfaceCalibrage import *
 
-class InterfaceSettings(interface):
+class InterfaceSettings(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
@@ -48,7 +48,7 @@ class InterfaceSettings(interface):
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()

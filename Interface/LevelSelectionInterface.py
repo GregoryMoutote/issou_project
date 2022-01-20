@@ -6,7 +6,7 @@ from random import *
 from Stage import *
 import os
 
-class LevelSelectionInterface(interface):
+class LevelSelectionInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.detection=detection
@@ -17,15 +17,11 @@ class LevelSelectionInterface(interface):
         super().__init__(screenData, screen)
         self.pre_load_all_stages()
 
-        self.background = pygame.image.load("./picture/interface/fond.png")
-        self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
+        self.background = pygame.image.load("./picture/interface/levelSelectionBackground.png")
 
         self.levels=[]
         for stage in self.stages:
             self.levels.append(level(stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,"4:00"))
-
-        self.bannerBottomPicture = pygame.image.load("./picture/interface/bannerBottom.png")
-        self.bannerBottomPicture = pygame.transform.scale(self.bannerBottomPicture,(self.screenWidth, self.screenHeight*0.15))
 
         self.randomButton=pictureButton(self.screenWidth * 0.8, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
         self.upButton=pictureButton(self.screenWidth * 0.9, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
@@ -54,7 +50,7 @@ class LevelSelectionInterface(interface):
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
@@ -67,7 +63,7 @@ class LevelSelectionInterface(interface):
                    continuer=False
 
                 elif self.rightX>self.playButton.x and self.rightX<(self.playButton.x + self.playButton.width) and self.rightY>self.playButton.y and self.rightY<(self.playButton.y + self.playButton.height):
-                    playInterface(self.screenData,self.screen,self.detection,self.settings,self.stages[self.index])
+                    PlayInterface(self.screenData, self.screen, self.detection, self.settings, self.stages[self.index])
                     self.show()
                     self.resetCoo()
 
@@ -177,8 +173,6 @@ class LevelSelectionInterface(interface):
 
         if(len(self.levels)>2):
             self.showDescription(self.levels[2].name,self.levels[2].picture,self.levels[2].difficulty,self.levels[2].descritpion,self.levels[2].duration,self.levels[2].marck)
-
-        self.screen.blit(self.bannerBottomPicture, (0, self.screenHeight * 0.85))
 
         self.upButton.showButton()
         self.downButtun.showButton()

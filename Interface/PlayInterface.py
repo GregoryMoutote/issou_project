@@ -3,7 +3,7 @@ import pygame.draw
 from Interface.InterfaceCalibrage import *
 from Interface.PauseInterface import *
 
-class playInterface(interface):
+class PlayInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings,stage):
         self.stage=stage
@@ -36,12 +36,13 @@ class playInterface(interface):
 
             for x, y in self.detection.mediaPipe.hand_points:
                 self.stage.test_collision(x, y)
+            self.stage.test_collision(self.rightX,self.rightY)
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         self.continuer = False
-                        self.stage.stage_music.pause()
+                        pygame.mixer.music.stop()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
                     self.detection.mediaPipe.isFistClosed = 1
@@ -53,13 +54,13 @@ class playInterface(interface):
                 if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
                     self.stage.pause()
                     self.detection.fullDetection = False
-                    pauseInterface(self.screenData, self.screen, self.detection, self.settings,self)
+                    PauseInterface(self.screenData, self.screen, self.detection, self.settings, self)
                     self.detection.fullDetection = True
                     self.stage.resume()
                     self.resetCoo()
+                    self.detection.mediaPipe.hand_points.clear()
                     self.show()
 
-            self.showHand()
         self.detection.fullDetection = False
 
 
