@@ -362,12 +362,13 @@ class Stage:
         if before:
             self.targets = targets
             self.activeTargets.clear()
-            for target in self.targets:
-                if self.targets.delay < new_pose:
-                    if self.targets.delay + self.targets.duration > new_pose:
-                        self.activeTargets.append(target,
-                                                  time.time() + self.targets.delay + self.targets.duration - new_pose)
-                else:
-                    break
-                self.targets.pop(0)
+        for target in self.targets:
+            if self.targets.delay < new_pose:
+                if self.targets.delay + self.targets.duration > new_pose:
+                    self.activeTargets.append(target,
+                                              time.time() + self.targets.delay + self.targets.duration - new_pose)
+            else:
+                break
+            self.targets.pop(0)
+
         self.stage_music.set_pose(ratio)
