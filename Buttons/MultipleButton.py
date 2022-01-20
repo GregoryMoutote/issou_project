@@ -3,29 +3,29 @@ from Buttons.Button import *
 
 class multipleButton(Button):
 
-    def __init__(self, x, y, width, height, screen,trueColor,falseColor,nbBottun,nbActif):
+    def __init__(self, x, y, width, height, screen,trueColor,falseColor,nbButtun,nbActif):
         super().__init__(x,y,width,height,screen)
-        self.nbButtun = nbBottun
+        self.nbButtun = nbButtun
         self.nbActif = nbActif
         self.trueColor = trueColor
         self.falseColor = falseColor
         self.coche=[]
 
-        for i in range(0, self.nbBottun):
+        for i in range(0, self.nbButtun):
             if i < self.nbActif:
-                self.coche.append(cocheButton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, True))
+                self.coche.append(cocheButton(self.x + i * self.width / (self.nbButtun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, True))
             else:
-                self.coche.append(cocheButton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, False))
+                self.coche.append(cocheButton(self.x + i * self.width / (self.nbButtun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, False))
         self.showButton()
 
     def showButton(self):
-        for i in range(0, self.nbBottun):
+        for i in range(0, self.nbButtun):
              self.coche[i].showButton()
 
     def changeStat(self,nbActif):
         self.nbActif=nbActif
 
-        for i in range(0, self.nbBottun):
+        for i in range(0, self.nbButtun):
             if i < self.nbActif:
                 self.coche[i].actif=True
             else:
