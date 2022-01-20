@@ -33,8 +33,6 @@ class MainMenuInterface(Interface):
 
         self.detection = detection
 
-
-
         self.show()
         self.resetCoo()
         self.detection.start()

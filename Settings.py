@@ -1,3 +1,6 @@
+import pygame
+
+
 class Settings:
 
     def __init__(self):
@@ -17,6 +20,7 @@ class Settings:
 
     def setVolume(self,vol):
         self.volume=vol
+        pygame.mixer.music.set_volume(self.volume*0.1)
 
     def getVolume(self):
         return self.volume
@@ -41,3 +45,4 @@ class Settings:
                 print("erreur chargement du fichier de settings")
                 self.volume=5
                 self.animation=True
+        pygame.mixer.music.set_volume(self.volume*0.1)

@@ -64,10 +64,10 @@ class InterfaceSettings(Interface):
                 elif self.rightX>self.muteButton.x and self.rightX<(self.muteButton.x + self.muteButton.width) and self.rightY>self.muteButton.y and self.rightY<(self.muteButton.y + self.muteButton.height):
                     self.muteButton.changeStat()
                     if(self.muteButton.actif):
-                        self.settings.volume=0
+                        self.settings.setVolume(0)
                         self.volumeButton.changeStat(0)
                     else:
-                        self.settings.volume = 1
+                        self.settings.setVolume(1)
                         self.volumeButton.changeStat(1)
                     self.resetCoo()
 
@@ -83,7 +83,7 @@ class InterfaceSettings(Interface):
                 for i in range(0, self.volumeButton.nbBottun):
                     if self.rightX>self.volumeButton.coche[i].x and self.rightX<(self.volumeButton.coche[i].x + self.volumeButton.coche[i].width) and self.rightY>self.volumeButton.coche[i].y and self.rightY<(self.volumeButton.coche[i].y + self.volumeButton.coche[i].height):
                         self.volumeButton.changeStat(i + 1)
-                        self.settings.volume = i+1
+                        self.settings.setVolume(i+1)
                         if(self.muteButton.actif==True):
                             self.muteButton.changeStat()
 
