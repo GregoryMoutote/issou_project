@@ -31,11 +31,14 @@ class MainMenuInterface(Interface):
         self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.55, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 172, 240), "CREER UN NIVEAU", 50, 300, "Glitch.otf", (255, 255, 255)))
         self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.65, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 112, 192), "QUITTER", 50, 450, "Glitch.otf", (255, 255, 255)))
 
-        self.detection = MediaPipeThread()
+        self.detection = detection
+
+
 
         self.show()
         self.resetCoo()
         self.detection.start()
+
         self.loop()
 
         pygame.quit()

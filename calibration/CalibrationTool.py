@@ -14,10 +14,11 @@ class CalibrationTool:
         self.pts2 = None
         self.M = None
         self.isDone = False
-        self.screen = None
+        self.screenWidth = 0
 
     def setup(self, img:np.ndarray):
-        self.screen = ctypes.windll.user32
+        screen = ctypes.windll.user32
+        self.screenWidth = screen.GetSystemMetrics(0)
         self.image = img
         #print("TENTATIVE DE RECUPERATION DES POINTS...")
         isDone = self.getPoints()
@@ -106,13 +107,8 @@ class CalibrationTool:
     def calibratePoint(self, coord):
         if self.M is not None:
             result_matrix = np.matmul(self.M, np.float32([[coord[0]], [coord[1]], [1]]))
-            return (self.screen.GetSystemMetrics(0)-result_matrix[0][0]) / result_matrix[2][0], \
+            return (self.screenWidth-result_matrix[0][0]) / result_matrix[2][0], \
                    result_matrix[1][0] / result_matrix[2][0]
         else:
             return (coord[0],coord[1])
 
-    def inverseGD(self, coord):
-        if self.M is not None:
-            return((self.screen.GetSystemMetrics(0)-coord[0]),coord[1])
-        else:
-            return (coord[0], coord[1])

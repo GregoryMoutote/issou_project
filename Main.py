@@ -1,7 +1,7 @@
 from Interface.MainMenuInterface import *
-from playerDetection.MediaPipeTool import MediaPipeTool
 from Settings import *
 import pygame
+from playerDetection.MediaPipeThread import MediaPipeThread
 
 detection = MediaPipeThread()
 
