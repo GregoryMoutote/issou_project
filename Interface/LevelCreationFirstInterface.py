@@ -14,7 +14,8 @@ class LevelCreationFirstInterface(Interface):
         super().__init__(screenData, screen)
 
         ##TEXT INPUT
-        self.input_rect = pygame.Rect(self.screenWidth / 2 - 175, self.screenHeight/2-200, 1000, 50)
+        self.defautX = self.screenWidth / 2 - 175
+        self.input_rect = pygame.Rect(self.defautX, self.screenHeight/2-200, 1000, 50)
         self.isInputActive = False
         self.userText = ""
         self.color = (0,0,0)
@@ -114,6 +115,12 @@ class LevelCreationFirstInterface(Interface):
         self.screen.blit(text3, (self.screenWidth / 2 - 105, self.screenHeight/2+75))
         self.screen.blit(text_surface, (self.input_rect.x + 5, self.input_rect.y + 5))
         self.input_rect.w = max(100, text_surface.get_width() + 10)
+
+
+        if len(self.userText) <= 2:
+            self.input_rect.x = (self.screenWidth / 2) - (self.input_rect.w/2)
+        else:
+            self.input_rect.x = self.screenWidth / 2 - text_surface.get_width() / 2
 
 
         for bottun in self.button:
