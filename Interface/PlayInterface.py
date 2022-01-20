@@ -40,7 +40,7 @@ class PlayInterface(Interface):
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         self.continuer = False
                         pygame.mixer.music.stop()
                 if event.type == pygame.MOUSEBUTTONDOWN:

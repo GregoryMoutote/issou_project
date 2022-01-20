@@ -23,24 +23,23 @@ class MainMenuInterface(Interface):
         self.moving_sprites.add(ISSOUlaod)
 
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
-        self.fondLogo= pygame.transform.scale(self.fondLogo, (787, 500))
+        self.fondLogo= pygame.transform.scale(self.fondLogo, (self.screenHeight*0.5*1.57, self.screenHeight*0.5))
 
-        self.bottun=[colorButton(self.screenWidth*0.4, self.screenHeight / 2 - 250, self.screenWidth / 2, 100, self.screen, (0, 112, 192), "JOUER", 50, 450, "Glitch.otf", (255, 255, 255))]
-        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 - 150, self.screenWidth / 2, 100, self.screen, (0, 172, 240), "TUTORIEL", 50, 420, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 - 50, self.screenWidth / 2, 100, self.screen, (0, 112, 192), "PARAMETRE", 50, 380, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 + 50, self.screenWidth / 2, 100, self.screen, (0, 172, 240), "CREER UN NIVEAU", 50, 300, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight / 2 + 150, self.screenWidth / 2, 100, self.screen, (0, 112, 192), "QUITTER", 50, 450, "Glitch.otf", (255, 255, 255)))
+        self.bottun=[colorButton(self.screenWidth*0.4, self.screenHeight*0.25, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 112, 192), "JOUER", 50, 450, "Glitch.otf", (255, 255, 255))]
+        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.35, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 172, 240), "TUTORIEL", 50, 420, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.45, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 112, 192), "PARAMETRE", 50, 380, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.55, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 172, 240), "CREER UN NIVEAU", 50, 300, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.65, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 112, 192), "QUITTER", 50, 450, "Glitch.otf", (255, 255, 255)))
 
         self.detection = MediaPipeThread()
-
 
         self.show()
         self.resetCoo()
         self.detection.start()
         self.loop()
 
-
         pygame.quit()
+
 
     def loop(self):
         continuer=True
@@ -58,7 +57,7 @@ class MainMenuInterface(Interface):
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         continuer = False
                         self.detection.endDetection()
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -88,24 +87,11 @@ class MainMenuInterface(Interface):
                    continuer=False
 
 
-    def toucheCible(left,top,radius,x,y):
-
-        if(x>left-radius and x<left+radius):
-            hypotenuse=(radius)**2
-            adjacent=(left-x)**2
-            if(adjacent<=hypotenuse):
-                axeY=math.sqrt(hypotenuse-adjacent)
-
-                if(y>top-axeY and y<top+axeY):
-                    return True
-        return False
-
-
     def show(self):
         self.screen.blit(self.background, (0, 0))
         for c in self.bottun:
             c.showButton()
-        self.screen.blit(self.fondLogo, (self.screenWidth*0.13, self.screenHeight / 2 - 250))
+        self.screen.blit(self.fondLogo, (self.screenWidth*0.10, self.screenHeight*0.25))
         self.moving_sprites.draw(self.screen)
         self.moving_sprites.update(1)
         self.clock.tick(60)
