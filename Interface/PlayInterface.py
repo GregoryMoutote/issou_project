@@ -48,17 +48,24 @@ class PlayInterface(Interface):
                     self.rightX, self.rightY = pygame.mouse.get_pos()
                     self.detection.mediaPipe.isFistClosed = 1
 
+            self.stage.update_targets()
             self.stage.play()
             self.showHand()
 
+
             if self.stage.is_end():
+                self.detection.fullDetection = False
+                self.stage.save_best_score()
+                pygame.mixer.music.stop()
                 EndInterface(self.screenData, self.screen, self.detection, self.settings, self)
 
             if self.detection.mediaPipe.isFistClosed == 1:
                 if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
                     self.stage.pause()
                     self.detection.fullDetection = False
+                    print("pause")
                     PauseInterface(self.screenData, self.screen, self.detection, self.settings, self)
+                    print("passage après pauseInterfacce")
                     self.detection.fullDetection = True
                     self.stage.resume()
                     self.resetCoo()

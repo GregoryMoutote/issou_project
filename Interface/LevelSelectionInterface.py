@@ -149,8 +149,6 @@ class LevelSelectionInterface(Interface):
             else:
                 self.screen.blit(text, (self.screenHeight / 5, 130, 1000, 100))
 
-        print(duration)
-
         min=str(int(duration/60))
         sec=str(int(duration%60))
 
@@ -195,7 +193,6 @@ class LevelSelectionInterface(Interface):
     def showHand(self):
         self.show()
         if len(self.detection.mediaPipe.leftHand)>0:
-            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
         if len(self.detection.mediaPipe.rightHand)>0:

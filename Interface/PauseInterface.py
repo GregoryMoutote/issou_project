@@ -30,7 +30,6 @@ class PauseInterface(Interface):
 
         while continuer:
 
-
             if len(self.detection.mediaPipe.rightHand) > 0:
                 self.rightX = self.detection.mediaPipe.rightHand[0]
                 self.rightY = self.detection.mediaPipe.rightHand[1]

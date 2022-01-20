@@ -22,3 +22,6 @@ class Moving_target(Target):
                     (time.time() - self.beginTime) / self.duration)
         self.coordinates.y = self.begin_coordinates.y + (self.end_coordinates.y - self.begin_coordinates.y) * (
                     (time.time() - self.beginTime) / self.duration)
+
+        #problème quand on met en pose le time avant donc quand on revient en jeux la différence de entre startTime et time à augmenter donc la cible ce tp en avant
+        #il faut faire comme dans stage et soustraire le temps de pause
