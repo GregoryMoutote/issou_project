@@ -13,6 +13,14 @@ class LevelCreationFirstInterface(Interface):
 
         super().__init__(screenData, screen)
 
+        ##TEXT INPUT
+        self.input_rect = pygame.Rect(self.screenWidth / 2 - 175, self.screenHeight/2-200, 1000, 50)
+        self.isInputActive = False
+        self.userText = ""
+        self.color = (0,0,0)
+        self.activeColor = (100,100,100)
+        self.inactiveColor = (50,50,50)
+
         self.background=pygame.image.load("./picture/interface/levelBuilderBackground.png")
 
         self.button = [pictureButton(self.screenWidth / 2 -200, self.screenHeight / 2-25 , 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255))]
@@ -22,6 +30,8 @@ class LevelCreationFirstInterface(Interface):
         self.show()
         self.resetCoo()
         self.loop()
+
+
 
 
     def loop(self):
@@ -41,25 +51,46 @@ class LevelCreationFirstInterface(Interface):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         continuer = False
+                    if self.isInputActive:
+                        if event.key == pygame.K_BACKSPACE:
+                            self.userText = self.userText[:-1]
+                        else:
+                            self.userText += event.unicode
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
                     self.detection.mediaPipe.isFistClosed=1
 
             self.showHand()
 
+            if self.isInputActive:
+                self.color = self.activeColor
+            else:
+                self.color = self.inactiveColor
+
             if self.detection.mediaPipe.isFistClosed==1:
                 if self.rightX>self.button[0].x and self.rightX<(self.button[0].x+self.button[0].width) and self.rightY>self.button[0].y and self.rightY<(self.button[0].y+self.button[0].height):
                    self.resetCoo()
                    self.show()
+                   self.isInputActive = False
 
                 elif self.rightX>self.button[1].x and self.rightX<(self.button[1].x+self.button[1].width) and self.rightY>self.button[1].y and self.rightY<(self.button[1].y+self.button[1].height):
                     self.resetCoo()
                     self.show()
+                    self.isInputActive = False
 
                 elif self.rightX>self.button[2].x and self.rightX<(self.button[2].x+self.button[2].width) and self.rightY>self.button[2].y and self.rightY<(self.button[2].y+self.button[2].height):
                     LevelCreationSecondInterface(self.screenData, self.screen, self.detection, self.settings)
                     self.resetCoo()
                     self.show()
+                    self.isInputActive = False
+
+                elif self.rightX>self.input_rect.x and self.rightX<(self.input_rect.x+self.input_rect.w) and self.rightY>self.input_rect.y and self.rightY<(self.input_rect.y+self.input_rect.h):
+                    self.isInputActive = True
+                    pass
+                else:
+                    self.isInputActive = False
+
 
 
     def show(self):
@@ -72,12 +103,18 @@ class LevelCreationFirstInterface(Interface):
         text1=littleglitchFont.render("Nom du niveau", True, (255, 255, 255))
         text2 = littleglitchFont.render("Image de fond", True, (255, 255, 255))
         text3 = littleglitchFont.render("Musique", True, (255, 255, 255))
+        pygame.draw.rect(self.screen, self.color , self.input_rect)
+        text_surface = littleglitchFont.render(self.userText, True, (255, 255, 255))
         pygame.font.quit()
+
 
         self.screen.blit(titleText, (self.screenWidth / 2 - 500, 30))
         self.screen.blit(text1, (self.screenWidth / 2 - 175, self.screenHeight/2-250))
         self.screen.blit(text2, (self.screenWidth / 2 - 175, self.screenHeight/2-75))
         self.screen.blit(text3, (self.screenWidth / 2 - 105, self.screenHeight/2+75))
+        self.screen.blit(text_surface, (self.input_rect.x + 5, self.input_rect.y + 5))
+        self.input_rect.w = max(100, text_surface.get_width() + 10)
+
 
         for bottun in self.button:
             bottun.showButton()
