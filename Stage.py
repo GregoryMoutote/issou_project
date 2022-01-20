@@ -212,10 +212,11 @@ class Stage:
     def save_best_score(self):
         if ".issou" not in self.path:
             return
-        best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
-        with open(best_score_path, 'w') as file:
-            file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
-            file.close()
+        if self.best_score < self.score:
+            best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
+            with open(best_score_path, 'w') as file:
+                file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
+                file.close()
 
     def load_targets(self):
         if ".issou" not in self.path:
