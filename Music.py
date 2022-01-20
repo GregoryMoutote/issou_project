@@ -32,6 +32,6 @@ class Music:
         if self.is_music_loaded:
             mixer.music.pause()
 
-    def set_pose(self, ratio):
-        if self.is_music_loaded and isinstance(ratio, float) and 0 >= ratio >= 1:
+    def set_pose(self, ratio: float):
+        if self.is_music_loaded and 0 >= ratio >= 1:
             mixer.music.set_pose(ratio * self.duration)

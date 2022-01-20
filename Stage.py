@@ -351,3 +351,23 @@ class Stage:
                 self.score += self.activeTargets[iterator][0].value
                 del self.activeTargets[iterator]
             iterator += 1
+
+    def set_pose(self, ratio: float, targets: list):
+        if ratio < 0 or ratio > 1:
+            return
+        new_pose = self.stage_music.duration * ratio
+        before = False
+        if mixer.music.get_pose() > new_pose:
+            before = True
+        if before:
+            self.targets = targets
+            self.activeTargets.clear()
+            for target in self.targets:
+                if self.targets.delay < new_pose:
+                    if self.targets.delay + self.targets.duration > new_pose:
+                        self.activeTargets.append(target,
+                                                  time.time() + self.targets.delay + self.targets.duration - new_pose)
+                else:
+                    break
+                self.targets.pop(0)
+        self.stage_music.set_pose(ratio)
