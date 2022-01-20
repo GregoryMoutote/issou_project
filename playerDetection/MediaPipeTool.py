@@ -53,76 +53,7 @@ class MediaPipeTool :
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * screen.GetSystemMetrics(0)
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * screen.GetSystemMetrics(1)
 
-                    numberOfFingersClosed = 0
-
-                    if hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
-                        numberOfFingersClosed += 1
-                    if hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
-                        numberOfFingersClosed += 1
-                    if hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
-                        numberOfFingersClosed += 1
-                    if hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
-                        numberOfFingersClosed += 1
-                    if numberOfFingersClosed >= 3:
-                        self.isFistClosed = 1
-                    else:
-                        self.isFistClosed = 0
+                    self.closed_fist_detection()
 
                     if resultsHand.multi_handedness[num].classification[0].label == "Right":
                         self.rightHand = (hand_x, hand_y)
@@ -150,77 +81,7 @@ class MediaPipeTool :
             if resultsHand.multi_hand_landmarks:
                 for num, hand in enumerate(resultsHand.multi_hand_landmarks):
 
-                    numberOfFingersClosed = 0
-
-                    if hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y\
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y\
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
-                        numberOfFingersClosed += 1
-                    if hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y\
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y\
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
-                        numberOfFingersClosed += 1
-                    if hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y\
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y\
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
-                        numberOfFingersClosed += 1
-                    if hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y\
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].y\
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x <= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
-                            or \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x >= \
-                            hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
-                        numberOfFingersClosed += 1
-
-                    if numberOfFingersClosed >= 3:
-                        self.isFistClosed = 1
-                    else:
-                        self.isFistClosed = 0
+                    self.closed_fist_detection()
 
                     self.hand_points.clear()
 
@@ -246,3 +107,78 @@ class MediaPipeTool :
 
     def closeCamera(self):
         self.cap.release()
+
+    def closed_fist_detection(self):
+        numberOfFingersClosed = 0
+
+    def other_closed_fist_detection(self):
+        numberOfFingersClosed = 0
+
+        if hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y <= \
+                hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y <= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y >= \
+                hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y >= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x <= \
+                hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x <= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x >= \
+                hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x >= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
+            numberOfFingersClosed += 1
+        if hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y <= \
+                hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y <= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y >= \
+                hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y >= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x <= \
+                hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x <= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x >= \
+                hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x >= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
+            numberOfFingersClosed += 1
+        if hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y <= \
+                hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].y <= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y >= \
+                hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].y >= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x <= \
+                hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].x <= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x >= \
+                hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].x >= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
+            numberOfFingersClosed += 1
+        if hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y <= \
+                hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y <= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y >= \
+                hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y >= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x <= \
+                hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x <= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].x \
+                or \
+                hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x >= \
+                hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x >= \
+                hand.landmark[self.mp_hands.HandLandmark.WRIST].x:
+            numberOfFingersClosed += 1
+        if numberOfFingersClosed >= 3:
+            self.isFistClosed = 1
+        else:
+            self.isFistClosed = 0
