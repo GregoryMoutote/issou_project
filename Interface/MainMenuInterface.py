@@ -25,11 +25,11 @@ class MainMenuInterface(Interface):
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
         self.fondLogo= pygame.transform.scale(self.fondLogo, (self.screenHeight*0.5*1.57, self.screenHeight*0.5))
 
-        self.bottun=[colorButton(self.screenWidth*0.4, self.screenHeight*0.25, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 112, 192), "JOUER", 50, 450, "Glitch.otf", (255, 255, 255))]
-        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.35, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 172, 240), "TUTORIEL", 50, 420, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.45, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 112, 192), "PARAMETRE", 50, 380, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.55, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 172, 240), "CREER UN NIVEAU", 50, 300, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(colorButton(self.screenWidth*0.4, self.screenHeight*0.65, self.screenWidth / 2, self.screenHeight*0.1, self.screen, (0, 112, 192), "QUITTER", 50, 450, "Glitch.otf", (255, 255, 255)))
+        self.bottuns=[ColorButton(self.screenWidth * 0.4, self.screenHeight * 0.25, self.screenWidth / 2, self.screenHeight * 0.1, self.screen, (0, 112, 192), "JOUER", 50, 450, "Glitch.otf", (255, 255, 255))]
+        self.bottuns.append(ColorButton(self.screenWidth * 0.4, self.screenHeight * 0.35, self.screenWidth / 2, self.screenHeight * 0.1, self.screen, (0, 172, 240), "TUTORIEL", 50, 420, "Glitch.otf", (255, 255, 255)))
+        self.bottuns.append(ColorButton(self.screenWidth * 0.4, self.screenHeight * 0.45, self.screenWidth / 2, self.screenHeight * 0.1, self.screen, (0, 112, 192), "PARAMETRE", 50, 380, "Glitch.otf", (255, 255, 255)))
+        self.bottuns.append(ColorButton(self.screenWidth * 0.4, self.screenHeight * 0.55, self.screenWidth / 2, self.screenHeight * 0.1, self.screen, (0, 172, 240), "CREER UN NIVEAU", 50, 300, "Glitch.otf", (255, 255, 255)))
+        self.bottuns.append(ColorButton(self.screenWidth * 0.4, self.screenHeight * 0.65, self.screenWidth / 2, self.screenHeight * 0.1, self.screen, (0, 112, 192), "QUITTER", 50, 450, "Glitch.otf", (255, 255, 255)))
 
         self.detection = detection
 
@@ -63,34 +63,34 @@ class MainMenuInterface(Interface):
                         self.detection.endDetection()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
-                    self.detection.isFistClosed=1
+                    self.detection.mediaPipe.isFistClosed=1
 
             self.showHand()
 
             if self.detection.mediaPipe.isFistClosed==1:
-                if self.rightX>self.bottun[0].x and self.rightX<(self.bottun[0].x+self.bottun[0].width) and self.rightY>self.bottun[0].y and self.rightY<(self.bottun[0].y+self.bottun[0].height):
+                if self.rightX>self.bottuns[0].x and self.rightX<(self.bottuns[0].x + self.bottuns[0].width) and self.rightY>self.bottuns[0].y and self.rightY<(self.bottuns[0].y + self.bottuns[0].height):
                    LevelSelectionInterface(self.screenData, self.screen,self.detection,self.settings)
                    self.resetCoo()
                    self.show()
 
-                elif self.rightX>self.bottun[2].x and self.rightX<(self.bottun[2].x+self.bottun[2].width) and self.rightY>self.bottun[2].y and self.rightY<(self.bottun[2].y+self.bottun[2].height):
+                elif self.rightX>self.bottuns[2].x and self.rightX<(self.bottuns[2].x + self.bottuns[2].width) and self.rightY>self.bottuns[2].y and self.rightY<(self.bottuns[2].y + self.bottuns[2].height):
                     SettingsInterface(self.screenData, self.screen, self.detection, self.settings)
                     self.resetCoo()
                     self.show()
 
-                elif self.rightX>self.bottun[3].x and self.rightX<(self.bottun[3].x+self.bottun[3].width) and self.rightY>self.bottun[3].y and self.rightY<(self.bottun[3].y+self.bottun[3].height):
+                elif self.rightX>self.bottuns[3].x and self.rightX<(self.bottuns[3].x + self.bottuns[3].width) and self.rightY>self.bottuns[3].y and self.rightY<(self.bottuns[3].y + self.bottuns[3].height):
                     LevelCreationFirstInterface(self.screenData, self.screen,self.detection,self.settings)
                     self.resetCoo()
                     self.show()
 
-                elif self.rightX>self.bottun[4].x and self.rightX<(self.bottun[4].x+self.bottun[4].width) and self.rightY>self.bottun[4].y and self.rightY<(self.bottun[4].y+self.bottun[4].height):
+                elif self.rightX>self.bottuns[4].x and self.rightX<(self.bottuns[4].x + self.bottuns[4].width) and self.rightY>self.bottuns[4].y and self.rightY<(self.bottuns[4].y + self.bottuns[4].height):
                    self.detection.endDetection()
                    continuer=False
 
 
     def show(self):
         self.screen.blit(self.background, (0, 0))
-        for c in self.bottun:
+        for c in self.bottuns:
             c.showButton()
         self.screen.blit(self.fondLogo, (self.screenWidth*0.10, self.screenHeight*0.25))
         self.moving_sprites.draw(self.screen)

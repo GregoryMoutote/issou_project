@@ -1,7 +1,7 @@
 from Buttons.CocheButton import *
 from Buttons.Button import *
 
-class multipleButton(Button):
+class MultipleButton(Button):
 
     def __init__(self, x, y, width, height, screen,trueColor,falseColor,nbBottun,nbActif):
         super().__init__(x,y,width,height,screen)
@@ -13,9 +13,9 @@ class multipleButton(Button):
 
         for i in range(0, self.nbBottun):
             if i < self.nbActif:
-                self.coche.append(cocheButton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, True))
+                self.coche.append(CocheButton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, True))
             else:
-                self.coche.append(cocheButton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, False))
+                self.coche.append(CocheButton(self.x + i * self.width / (self.nbBottun + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, False))
         self.showButton()
 
     def showButton(self):

@@ -15,18 +15,18 @@ class SettingsInterface(Interface):
         self.background = pygame.image.load("./picture/interface/fond.png")
         self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
 
-        self.button = [(colorButton(100, self.screenHeight / 2 + 120, self.screenWidth * 0.85, 70, self.screen, (0, 172, 240), "Recalibrer", 50, self.screenWidth * 0.5 - 230, "Arial.ttf", (255, 255, 255)))]
-        self.button.append(colorButton(100, self.screenHeight / 2 + 190, self.screenWidth * 0.85, 70, self.screen, (0, 112, 192), "Aide", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
-        self.button.append(colorButton(100, self.screenHeight / 2 + 260, self.screenWidth * 0.85, 70, self.screen, (120, 120, 120), "Quitter", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
+        self.button = [(ColorButton(100, self.screenHeight / 2 + 120, self.screenWidth * 0.85, 70, self.screen, (0, 172, 240), "Recalibrer", 50, self.screenWidth * 0.5 - 230, "Arial.ttf", (255, 255, 255)))]
+        self.button.append(ColorButton(100, self.screenHeight / 2 + 190, self.screenWidth * 0.85, 70, self.screen, (0, 112, 192), "Aide", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
+        self.button.append(ColorButton(100, self.screenHeight / 2 + 260, self.screenWidth * 0.85, 70, self.screen, (120, 120, 120), "Quitter", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
 
-        self.volumeButton = multipleButton(225, self.screenHeight / 2 - 217, 1350, 100, self.screen, "soundOn.png", "soundOff.png", 10, self.settings.volume)
+        self.volumeButton = MultipleButton(225, self.screenHeight / 2 - 217, 1350, 100, self.screen, "soundOn.png", "soundOff.png", 10, self.settings.volume)
 
         if(self.settings.volume==0):
-            self.muteButton = cocheButton(100, self.screenHeight / 2 - 217, 100, 100, self.screen, "SoundMute.png", "SoundActive.png", True)
+            self.muteButton = CocheButton(100, self.screenHeight / 2 - 217, 100, 100, self.screen, "SoundMute.png", "SoundActive.png", True)
         else:
-            self.muteButton = cocheButton(100, self.screenHeight / 2 - 217, 100, 100, self.screen, "SoundMute.png", "SoundActive.png", False)
+            self.muteButton = CocheButton(100, self.screenHeight / 2 - 217, 100, 100, self.screen, "SoundMute.png", "SoundActive.png", False)
 
-        self.animationButton = cocheButton(700, self.screenHeight / 2 - 92, 100, 100, self.screen, "checkedOn.png", "checkedOff.png", self.settings.animation)
+        self.animationButton = CocheButton(700, self.screenHeight / 2 - 92, 100, 100, self.screen, "checkedOn.png", "checkedOff.png", self.settings.animation)
 
         self.resetCoo()
         self.loop()

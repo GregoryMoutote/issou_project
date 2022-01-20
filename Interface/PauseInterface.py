@@ -15,10 +15,10 @@ class PauseInterface(Interface):
         background=pygame.image.load("./picture/interface/parameterBackground.png")
         self.background = pygame.transform.scale(background, (450, 600))
 
-        self.bottun=[pictureButton(self.screenWidth/2-200,self.screenHeight/2-160,400,100,self.screen,"button2.png","REPRENDRE",30,50,"Glitch.otf", (255, 255, 255))]
-        self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 -50, 400, 100, self.screen, "button2.png","REDEMARRER", 30, 50, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 60, 400, 100, self.screen, "button2.png","PARAMETRE", 30, 50, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 170, 400, 100, self.screen, "button2.png","QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.bottun=[PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 - 160, 400, 100, self.screen, "button2.png", "REPRENDRE", 30, 50, "Glitch.otf", (255, 255, 255))]
+        self.bottun.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 - 50, 400, 100, self.screen, "button2.png", "REDEMARRER", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 60, 400, 100, self.screen, "button2.png", "PARAMETRE", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.bottun.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 170, 400, 100, self.screen, "button2.png", "QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
 
         self.show()
         self.resetCoo()

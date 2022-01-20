@@ -16,8 +16,8 @@ class EndInterface(Interface):
         background=pygame.image.load("./picture/interface/parameterBackground.png")
         self.background = pygame.transform.scale(background, (450, 600))
 
-        self.button=[pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 +50, 400, 100, self.screen, "button2.png","REDEMARRER", 30, 50, "Glitch.otf", (255, 255, 255))]
-        self.button.append(pictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 170, 400, 100, self.screen, "button2.png","QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.button=[PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 50, 400, 100, self.screen, "button2.png", "REDEMARRER", 30, 50, "Glitch.otf", (255, 255, 255))]
+        self.button.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 170, 400, 100, self.screen, "button2.png", "QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
 
         self.show()
         self.resetCoo()

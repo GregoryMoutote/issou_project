@@ -1,7 +1,7 @@
 import pygame
 from Buttons.Button import *
 
-class colorButton(Button):
+class ColorButton(Button):
 
     def __init__(self, x, y, width, height, screen,color, text, textSize, textLeftSpace, font,textColor):
         super().__init__(x,y,width,height,screen)

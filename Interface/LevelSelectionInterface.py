@@ -23,11 +23,11 @@ class LevelSelectionInterface(Interface):
         for stage in self.stages:
             self.levels.append(level(stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,stage.stage_music.duration))
 
-        self.randomButton=pictureButton(self.screenWidth * 0.8, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.upButton=pictureButton(self.screenWidth * 0.9, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.downButtun=pictureButton(self.screenWidth * 0.7, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.quitButton=pictureButton(0, self.screenHeight * 0.9, self.screenWidth * 0.25, self.screenHeight * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf", (255, 255, 255))
-        self.playButton=pictureButton(self.screenWidth / 5,self.screenHeight / 2 - 100,200,200,self.screen,"play.png","",0,0,"",(0,0,0))
+        self.randomButton=PictureButton(self.screenWidth * 0.8, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.upButton=PictureButton(self.screenWidth * 0.9, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.downButtun=PictureButton(self.screenWidth * 0.7, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.quitButton=PictureButton(0, self.screenHeight * 0.9, self.screenWidth * 0.25, self.screenHeight * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf", (255, 255, 255))
+        self.playButton=PictureButton(self.screenWidth / 5, self.screenHeight / 2 - 100, 200, 200, self.screen, "play.png", "", 0, 0, "", (0, 0, 0))
 
         self.show()
         self.resetCoo()

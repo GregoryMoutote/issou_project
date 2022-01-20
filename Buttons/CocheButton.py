@@ -2,7 +2,7 @@ import pygame
 from Buttons.Button import *
 import time
 
-class cocheButton(Button):
+class CocheButton(Button):
 
     def __init__(self, x, y, width,height, screen,truePicture,falsePicture,actif):
         super().__init__(x,y,width,height,screen)

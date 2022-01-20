@@ -16,7 +16,7 @@ class PlayInterface(Interface):
         self.stage.load()
         self.background=pygame.image.load("./stages/"+self.stage.name+"/background.png")
         self.background = pygame.transform.scale(self.background, (width, height))
-        self.pauseButton= pictureButton(20,20,100,100,self.screen,"pause.png","",0,0,"",(0,0,0))
+        self.pauseButton= PictureButton(20, 20, 100, 100, self.screen, "pause.png", "", 0, 0, "", (0, 0, 0))
         un=pygame.image.load("./picture/interface/nb_1.png")
         deux = pygame.image.load("./picture/interface/nb_2.png")
         self.trois = pygame.image.load("./picture/interface/nb_3.png")
