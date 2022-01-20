@@ -1,6 +1,5 @@
-from datetime import datetime
+from Interface.LevelCreationSecondInterface import *
 
-now = datetime.now()
-
-current_time = now.strftime("%H:%M:%S")
-print("[", current_time,"]")
+pygame.init()
+screen = pygame.display.set_mode((1920,1080),pygame.FULLSCREEN,pygame.NOFRAME)
+interface = LevelCreationSecondInterface()
