@@ -149,6 +149,8 @@ class LevelSelectionInterface(Interface):
             else:
                 self.screen.blit(text, (self.screenHeight / 5, 130, 1000, 100))
 
+        print(duration)
+
         min=str(int(duration/60))
         sec=str(int(duration%60))
 

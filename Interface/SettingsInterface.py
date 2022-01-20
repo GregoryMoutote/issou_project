@@ -2,9 +2,9 @@ import pygame.draw
 
 from Buttons.ColorButton import *
 from Buttons.MultipleButton import *
-from Interface.InterfaceCalibrage import *
+from Interface.CalibrageInterface import *
 
-class InterfaceSettings(Interface):
+class SettingsInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings

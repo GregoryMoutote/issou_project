@@ -161,6 +161,9 @@ class Stage:
         self.is_stage_usable = False
         self.stage_music.pause()
 
+    def is_end(self):
+        return self.start + self.stage_music.duration < time.time()
+
     def resume(self):
         self.load_stage()
         self.spend = time.time() - self.spend

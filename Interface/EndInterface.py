@@ -2,6 +2,7 @@ import pygame.draw
 
 from Buttons.PictureButton import *
 from Interface.SettingsInterface import *
+from Interface.Interface import *
 
 class EndInterface(Interface):
 

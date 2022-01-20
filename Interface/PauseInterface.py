@@ -1,7 +1,7 @@
 import pygame.draw
 
 from Buttons.PictureButton import *
-from Interface.InterfaceSettings import *
+from Interface.SettingsInterface import *
 
 class PauseInterface(Interface):
 
@@ -64,7 +64,7 @@ class PauseInterface(Interface):
                     continuer=False
 
                 elif self.rightX > self.bottun[2].x and self.rightX < (self.bottun[2].x + self.bottun[2].width) and self.rightY > self.bottun[2].y and self.rightY < (self.bottun[2].y + self.bottun[2].height):
-                    InterfaceSettings(self.screenData,self.screen,self.detection,self.settings)
+                    SettingsInterface(self.screenData, self.screen, self.detection, self.settings)
                     self.resetCoo()
                     self.show()
 

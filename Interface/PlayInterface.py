@@ -1,7 +1,8 @@
 import pygame.draw
 
-from Interface.InterfaceCalibrage import *
+from Interface.CalibrageInterface import *
 from Interface.PauseInterface import *
+from Interface.EndInterface import *
 
 class PlayInterface(Interface):
 
@@ -49,6 +50,9 @@ class PlayInterface(Interface):
 
             self.stage.play()
             self.showHand()
+
+            if self.stage.is_end():
+                EndInterface(self.screenData, self.screen, self.detection, self.settings, self)
 
             if self.detection.mediaPipe.isFistClosed == 1:
                 if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
