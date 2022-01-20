@@ -1,7 +1,4 @@
 import mediapipe as mp
-from math import *
-import cv2
-import numpy as np
 from calibration.CalibrationTool import *
 import ctypes
 

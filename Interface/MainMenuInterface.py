@@ -3,9 +3,8 @@ import pygame.draw
 from Interface.LevelSelectionInterface import *
 from Interface.InterfaceSettings import *
 from Interface.GIF.MainMenuGIF import *
-from playerDetection.MediaPipeThread import *
-from Interface.ResfreshThread import RefreshThread
 import math
+
 
 class MainMenuInterface(interface):
 
@@ -31,16 +30,14 @@ class MainMenuInterface(interface):
         self.bottun.append(colorButton(self.screenWidth / 6 * 3 + 5, self.screenHeight / 2 + 113, self.screenWidth / 2.4, 75, self.screen, (0, 112, 192), "QUITTER", 40, 275, "Glitch.otf", (255, 255, 255)))
 
 
-        self.detection = MediaPipeThread()
+        self.detection = detection
 
 
-        print("THREAD CREE")
 
         self.show()
         self.resetCoo()
         self.detection.start()
 
-        print("THREAD LANCE")
         self.loop()
 
 
