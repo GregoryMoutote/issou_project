@@ -2,6 +2,7 @@ from Targets.Target import Target
 from Coordinates import Coordinates
 from Constants import *
 import time
+import ctypes
 
 class Moving_target(Target):
     def __init__(self, targetData,screen,picture):
@@ -10,7 +11,9 @@ class Moving_target(Target):
             self.screen=screen
             super(Moving_target, self).__init__(targetData,screen,picture)
             self.begin_coordinates = Coordinates(self.coordinates.x, self.coordinates.y)
-            self.end_coordinates = Coordinates(float(targetData[7]), float(targetData[8]))
+            screen = ctypes.windll.user32
+            self.end_coordinates = Coordinates(float(targetData[7] * screen.GetSystemMetrics(1)),
+                                               float(targetData[8] * screen.GetSystemMetrics(1)))
 
     def display(self):
         print(self.coordinates, self.end_coordinates, self.duration, self.delay, self.value)

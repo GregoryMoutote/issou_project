@@ -1,9 +1,10 @@
 from Targets.Target import *
 import time
+import ctypes
 
 class Dynamic_target(Target):
     def __init__(self, targetData,screen,picture):
-        if isinstance(targetData, list) and len(targetData) >= 10:
+        if isinstance(targetData, list) and len(targetData) >= 8:
             self.beginTime=0
             self.screen=screen
             super(Dynamic_target, self).__init__(targetData,self.screen,picture)

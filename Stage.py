@@ -11,7 +11,6 @@ import time
 
 from Constants import Constants
 
-#TODO Add the creation date
 class Stage:
     def __init__(self, file_path,screen):
         self.screen=screen
@@ -260,8 +259,8 @@ class Stage:
                 line = file.readline()
                 if "coo=" not in line or '|' not in line or not line or '\n' not in line:
                     break
-                targetData.append(int(line[4:line.find('|')]))
-                targetData.append(int(line[line.find('|') + 1:-1]))
+                targetData.append(float(line[4:line.find('|')]))
+                targetData.append(float(line[line.find('|') + 1:-1]))
                 line = file.readline()
                 if "dur=" not in line or not line or '\n' not in line:
                     break
@@ -287,8 +286,8 @@ class Stage:
                         break
                     if "coo=" not in line or '|' not in line or not line:
                         break
-                    targetData.append(int(line[8:line.find('|')]))
-                    targetData.append(int(line[line.find('|') + 1:-1]))
+                    targetData.append(float(line[8:line.find('|')]))
+                    targetData.append(float(line[line.find('|') + 1:-1]))
                     line = file.readline()
                 elif targetData[0] == 3:
                     if "end_val=" not in line or not line:
@@ -302,8 +301,8 @@ class Stage:
                     while '§' in line[delimiter + 1: len(line)]:
                         next_delimiter = line.find('§', delimiter + 1)
                         toProcess = line[delimiter + 1: next_delimiter - 1]
-                        targetData.append(int(toProcess[0:toProcess.find('|')]))
-                        targetData.append(int(toProcess[toProcess.find('|') + 1:len(toProcess)]))
+                        targetData.append(float(toProcess[0:toProcess.find('|')]))
+                        targetData.append(float(toProcess[toProcess.find('|') + 1:len(toProcess)]))
                         delimiter = next_delimiter
                     line = file.readline()
                 if targetData[0] == 2:

@@ -3,6 +3,7 @@ import pygame
 from Targets.Target import Target
 from Coordinates import  Coordinates
 from Constants import *
+import ctypes
 
 class Rail_target(Target):
     def __init__(self, targetData,screen,picture):
@@ -13,8 +14,10 @@ class Rail_target(Target):
             super(Rail_target, self).__init__(targetData,self.screen)
             iterator = 7
             self.steps = []
+            screen = ctypes.windll.user32
             while iterator < len(targetData) - 1:
-                self.steps.append(Coordinates(targetData[iterator], targetData[iterator + 1]))
+                self.steps.append(Coordinates(targetData[iterator] * screen.GetSystemMetrics(1),
+                                              targetData[iterator + 1] * screen.GetSystemMetrics(1)))
                 iterator += 2
 
     def display(self):
