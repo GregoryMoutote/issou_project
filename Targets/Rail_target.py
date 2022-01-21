@@ -10,8 +10,8 @@ class Rail_target(Target):
             self.transparentPicture=pygame.image.load("picture/targets/transparent/"+picture[:-4]+"_transparent.png")
             self.transparentPicture = pygame.transform.scale(self.transparentPicture,(2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
             self.screen=screen
-            super(Rail_target, self).__init__(targetData,self.screen,picture)
-            iterator = 9
+            super(Rail_target, self).__init__(targetData,self.screen)
+            iterator = 7
             self.steps = []
             while iterator < len(targetData) - 1:
                 self.steps.append(Coordinates(targetData[iterator], targetData[iterator + 1]))

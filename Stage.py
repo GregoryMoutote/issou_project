@@ -276,13 +276,12 @@ class Stage:
                     break
                 targetData.append(int(line[4:-1]))
                 line = file.readline()
-                if "col=" not in line or not line:
+                if "texture=" not in line or not line:
                     break
-                firstSeparator = line.find('|')
-                secondSeparator = line.find('|', firstSeparator + 1)
-                targetData.append(int(line[4:firstSeparator]))
-                targetData.append(int(line[firstSeparator + 1:secondSeparator]))
-                targetData.append(int(line[secondSeparator + 1:len(line)]))
+                if '\n' in line:
+                    targetData.append(line[8:-1])
+                else:
+                    targetData.append(line[8:len(line)])
                 line = file.readline()
                 if targetData[0] == 2:
                     if "end_coo=" not in line or not line:
@@ -309,13 +308,13 @@ class Stage:
                         delimiter = next_delimiter
                     line = file.readline()
                 if targetData[0] == 2:
-                    self.targets.append(Moving_target(targetData,self.screen,"basic_blue.png"))
+                    self.targets.append(Moving_target(targetData,self.screen))
                 elif targetData[0] == 3:
-                    self.targets.append(Dynamic_target(targetData,self.screen,"basic_blue.png"))
+                    self.targets.append(Dynamic_target(targetData,self.screen))
                 elif targetData[0] == 4:
-                    self.targets.append(Rail_target(targetData,self.screen,"basic_blue.png"))
+                    self.targets.append(Rail_target(targetData,self.screen))
                 else:
-                    self.targets.append(Target(targetData,self.screen,"basic_blue.png"))
+                    self.targets.append(Target(targetData,self.screen))
             file.close()
 
     def display_test(self):
