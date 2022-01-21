@@ -7,11 +7,12 @@ from Targets.Moving_target import Moving_target
 from Targets.Rail_target import Rail_target
 from Date import Date
 from pygame import mixer
+from StageSaver import Stage_Saver
 import time
+import os
 
 from Constants import Constants
 
-#TODO Add the creation date
 class Stage:
     def __init__(self, file_path,screen):
         self.screen=screen
@@ -41,12 +42,20 @@ class Stage:
         self.load_targets()
         self.stage_music.load()
         self.load_stage()
+        """ Stage saver test
+        self.name = "test"
+        Stage_Saver(self)
+        self.name = "test_v2"
+        """
 
 
     def pre_load_stage(self):
         if ".issou" not in self.path:
             return
-        self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".wav")
+        if os.path.isfile(self.path[0:self.path.find(".issou")] + ".mp3"):
+            self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".mp3")
+        else:
+            self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".wav")
         with open(self.path, 'r') as file:
             line = file.readline()
             if "ext=issou" not in line:
@@ -80,7 +89,7 @@ class Stage:
                 file.close()
                 return
             else:
-                self.name = line[6:-1]
+                self.name = line[6:-1].lower()
             line = file.readline()
             if "difficulty=" not in line:
                 file.close()
@@ -202,10 +211,11 @@ class Stage:
     def save_best_score(self):
         if ".issou" not in self.path:
             return
-        best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
-        with open(best_score_path, 'w') as file:
-            file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
-            file.close()
+        if self.best_score < self.score:
+            best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
+            with open(best_score_path, 'w') as file:
+                file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
+                file.close()
 
     def load_targets(self):
         if ".issou" not in self.path:
@@ -262,8 +272,8 @@ class Stage:
                 line = file.readline()
                 if "coo=" not in line or '|' not in line or not line or '\n' not in line:
                     break
-                targetData.append(int(line[4:line.find('|')]))
-                targetData.append(int(line[line.find('|') + 1:-1]))
+                targetData.append(float(line[4:line.find('|')]))
+                targetData.append(float(line[line.find('|') + 1:-1]))
                 line = file.readline()
                 if "dur=" not in line or not line or '\n' not in line:
                     break
@@ -289,8 +299,8 @@ class Stage:
                         break
                     if "coo=" not in line or '|' not in line or not line:
                         break
-                    targetData.append(int(line[8:line.find('|')]))
-                    targetData.append(int(line[line.find('|') + 1:-1]))
+                    targetData.append(float(line[8:line.find('|')]))
+                    targetData.append(float(line[line.find('|') + 1:-1]))
                     line = file.readline()
                 elif targetData[0] == 3:
                     if "end_val=" not in line or not line:
@@ -304,8 +314,8 @@ class Stage:
                     while '§' in line[delimiter + 1: len(line)]:
                         next_delimiter = line.find('§', delimiter + 1)
                         toProcess = line[delimiter + 1: next_delimiter - 1]
-                        targetData.append(int(toProcess[0:toProcess.find('|')]))
-                        targetData.append(int(toProcess[toProcess.find('|') + 1:len(toProcess)]))
+                        targetData.append(float(toProcess[0:toProcess.find('|')]))
+                        targetData.append(float(toProcess[toProcess.find('|') + 1:len(toProcess)]))
                         delimiter = next_delimiter
                     line = file.readline()
                 if targetData[0] == 2:
@@ -331,7 +341,33 @@ class Stage:
     def test_collision(self, x, y):
         iterator = 0
         for target, delay in self.activeTargets:
+            if isinstance(target, Rail_target):
+                target.actualise(Coordinates(x, y))
+                if target.is_achieved:
+                    self.score += self.activeTargets[iterator][0].value
+                    del self.activeTargets[iterator]
             if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
                 self.score += self.activeTargets[iterator][0].value
                 del self.activeTargets[iterator]
             iterator += 1
+
+    def set_pose(self, ratio: float, targets: list):
+        if ratio < 0 or ratio > 1:
+            return
+        new_pose = self.stage_music.duration * ratio
+        before = False
+        if mixer.music.get_pose() > new_pose:
+            before = True
+        if before:
+            self.targets = targets
+            self.activeTargets.clear()
+        for target in self.targets:
+            if self.targets.delay < new_pose:
+                if self.targets.delay + self.targets.duration > new_pose:
+                    self.activeTargets.append(target,
+                                              time.time() + self.targets.delay + self.targets.duration - new_pose)
+            else:
+                break
+            self.targets.pop(0)
+
+        self.stage_music.set_pose(ratio)

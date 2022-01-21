@@ -1,4 +1,5 @@
-
+import ctypes
 
 class Constants:
-    TARGET_RADIUS = 50
+    screen = ctypes.windll.user32
+    TARGET_RADIUS = 0.035 * screen.GetSystemMetrics(0)

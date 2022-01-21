@@ -1,5 +1,6 @@
 from Targets.Target import *
 import time
+import ctypes
 
 class Dynamic_target(Target):
     def __init__(self, targetData,screen,levelName):
@@ -11,7 +12,7 @@ class Dynamic_target(Target):
             self.end_value = int(targetData[7])
 
     def display(self):
-        print(self.coordinates, self.duration, self.delay, self.value, self.end_value, self.color)
+        print(self.coordinates, self.duration, self.delay, self.value, self.end_value)
 
     def showTarget(self):
         if self.beginTime == 0:
