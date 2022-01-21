@@ -80,7 +80,7 @@ class SettingsInterface(Interface):
                     self.settings.saveChange()
                     continuer=False
 
-                for i in range(0, self.volumeButton.nbBottun):
+                for i in range(0, self.volumeButton.nbButton):
                     if self.rightX>self.volumeButton.coche[i].x and self.rightX<(self.volumeButton.coche[i].x + self.volumeButton.coche[i].width) and self.rightY>self.volumeButton.coche[i].y and self.rightY<(self.volumeButton.coche[i].y + self.volumeButton.coche[i].height):
                         self.volumeButton.changeStat(i + 1)
                         self.settings.setVolume(i+1)
