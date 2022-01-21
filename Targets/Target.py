@@ -18,15 +18,16 @@ class Target:
             self.value = int(targetData[5])
             not_found = False
             if isinstance(targetData[6], str):
-                if os.path.isfile("picture/targets/basics/" + targetData[6] + ".png"):
-                    self.picture = pygame.image.load("picture/targets/basics/" + targetData[6] + ".png")
-                    self.picture = pygame.transform.scale(self.picture,
-                                                          (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
+                if os.path.isfile("picture/targets/" + targetData[6] + ".png"):
+                    self.picture = pygame.image.load("picture/targets/" + targetData[6] + ".png")
+                    self.picture = pygame.transform.scale(self.picture, (
+                    2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
                     self.image = targetData[6]
-                elif os.path.isfile("picture/targets/imported/" + targetData[6] + ".png"):
-                    self.picture = pygame.image.load("picture/targets/imported/" + targetData[6] + ".png")
-                    self.picture = pygame.transform.scale(self.picture,
-                                                          (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
+                elif os.path.isfile("stages/" + levelName + "/specialTargets/" + targetData[6] + ".png"):
+                    self.picture = pygame.image.load(
+                        "stages/" + levelName + "/specialTargets/" + targetData[6] + ".png")
+                    self.picture = pygame.transform.scale(self.picture, (
+                    2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
                     self.image = targetData[6]
                 else:
                     not_found = True
