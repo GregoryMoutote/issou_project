@@ -111,48 +111,6 @@ class MediaPipeTool :
     def closed_fist_detection(self, hand):
         numberOfFingersClosed = 0
 
-        wrist_x = hand.landmark[self.mp_hands.HandLandmark.WRIST].x
-        wrist_y = hand.landmark[self.mp_hands.HandLandmark.WRIST].y
-        distanceIndexWrist = sqrt(
-            (wrist_y - hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y) ** 2 +
-            (wrist_x - hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].x) ** 2)
-        distanceMiddleWrist = sqrt(
-            (wrist_y - hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y) ** 2 +
-            (wrist_x - hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x) ** 2)
-        distanceRingWrist = sqrt(
-            (wrist_y - hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].y) ** 2 +
-            (wrist_x - hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_MCP].x) ** 2)
-        distancePinkyWrist = sqrt(
-            (wrist_y - hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].y) ** 2 +
-            (wrist_x - hand.landmark[self.mp_hands.HandLandmark.PINKY_MCP].x) ** 2)
-        distanceIndexExtremities = sqrt(
-            (wrist_y - hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y) ** 2 +
-            (wrist_x - hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].x) ** 2)
-        distanceMiddleExtremities = sqrt(
-            (wrist_y - hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].y) ** 2 +
-            (wrist_x - hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_TIP].x) ** 2)
-        distanceRingExtremities = sqrt(
-            (wrist_y - hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].y) ** 2 +
-            (wrist_x - hand.landmark[self.mp_hands.HandLandmark.RING_FINGER_TIP].x) ** 2)
-        distancePinkyExtremities = sqrt(
-            (wrist_y - hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].y) ** 2 +
-            (wrist_x - hand.landmark[self.mp_hands.HandLandmark.PINKY_TIP].x) ** 2)
-        if distanceIndexExtremities < distanceIndexWrist:
-            numberOfFingersClosed += 1
-        if distanceMiddleExtremities < distanceMiddleWrist:
-            numberOfFingersClosed += 1
-        if distanceRingExtremities < distanceRingWrist:
-            numberOfFingersClosed += 1
-        if distancePinkyExtremities < distancePinkyWrist:
-            numberOfFingersClosed += 1
-        if numberOfFingersClosed >= 3:
-            self.isFistClosed = 1
-        else:
-            self.isFistClosed = 0
-
-    def other_closed_fist_detection(self, hand):
-        numberOfFingersClosed = 0
-
         if hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_MCP].y <= \
                 hand.landmark[self.mp_hands.HandLandmark.INDEX_FINGER_TIP].y <= \
                 hand.landmark[self.mp_hands.HandLandmark.WRIST].y \
