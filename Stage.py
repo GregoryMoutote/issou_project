@@ -42,6 +42,7 @@ class Stage:
         self.stage_music.load()
         self.load_stage()
 
+
     def pre_load_stage(self):
         if ".issou" not in self.path:
             return
@@ -308,13 +309,13 @@ class Stage:
                         delimiter = next_delimiter
                     line = file.readline()
                 if targetData[0] == 2:
-                    self.targets.append(Moving_target(targetData,self.screen))
+                    self.targets.append(Moving_target(targetData,self.screen,self.name))
                 elif targetData[0] == 3:
-                    self.targets.append(Dynamic_target(targetData,self.screen))
+                    self.targets.append(Dynamic_target(targetData,self.screen,self.name))
                 elif targetData[0] == 4:
-                    self.targets.append(Rail_target(targetData,self.screen))
+                    self.targets.append(Rail_target(targetData,self.screen,self.name))
                 else:
-                    self.targets.append(Target(targetData,self.screen))
+                    self.targets.append(Target(targetData,self.screen,self.name))
             file.close()
 
     def display_test(self):

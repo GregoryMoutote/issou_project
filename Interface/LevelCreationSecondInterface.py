@@ -44,12 +44,14 @@ class LevelCreationSecondInterface(Interface):
 
         self.placeTarget=[]
 
-        self.tagetsList=[]
+        self.BasicTargetsList=[]
         i=1;
         for file in os.listdir("picture/targets"):
             if file!="transparent":
-                self.tagetsList.append(MenuLevelCreationButton(self.screenWidth*0.8,self.screenHeight*0.1*i,self.screenWidth*0.2,Constants.TARGET_RADIUS*1.6,self.screen,file,file[:-4],35, 10, "arial.ttf", (255, 255, 255)))
+                self.BasicTargetsList.append(MenuLevelCreationButton(self.screenWidth * 0.8, self.screenHeight * 0.1 * i, self.screenWidth * 0.1, Constants.TARGET_RADIUS * 1.6, self.screen, file, file[6:-4], 35, 10, "arial.ttf", (255, 255, 255)))
                 i+=1
+
+        self.ImportTargetsList=[]
 
         self.show()
         self.resetCoo()
@@ -120,14 +122,15 @@ class LevelCreationSecondInterface(Interface):
                     if self.isSelectedTarget:
                         if(time.time()-self.lastClick>1):
                             self.lastClick=time.time()
-                            self.placeTarget.append(Target([0,self.rightX,self.rightY,10,10,25,255,255,255],self.screen,self.selectedPictureName))
+                            print(self.selectedPictureName[:-4])
+                            self.placeTarget.append(Target([0,self.rightX,self.rightY,10,10,25,self.selectedPictureName[:-4]],self.screen,self.selectedPictureName[:-4]))
                             self.isSelectedTarget = False
                             self.importDeleteButton.actif = False
                             self.resetCoo()
                             self.show()
 
                 #choix d'un nouveau type de cible
-                for target in self.tagetsList:
+                for target in self.BasicTargetsList:
                     if self.rightX > target.x and self.rightX < (target.x + target.width) and self.rightY > target.y and self.rightY < (target.y + target.height):
                         self.selectedPicture = target.picture
                         self.selectedPictureName=target.pictureNane
@@ -145,7 +148,7 @@ class LevelCreationSecondInterface(Interface):
                         if(time.time()-self.lastClick>1):
                             self.lastClick=time.time()
                             self.isSelectedTarget = True
-                            picture = pygame.image.load("picture/targets/" + str(target.pictureName))
+                            picture = pygame.image.load("picture/targets/" + str(target.pictureName)+".png")
                             self.selectedPicture = pygame.transform.scale(picture, (Constants.TARGET_RADIUS*0.8, Constants.TARGET_RADIUS*0.8))
                             self.selectedPictureName = target.pictureName
                             self.placeTarget.remove(target)
@@ -167,7 +170,7 @@ class LevelCreationSecondInterface(Interface):
 
         for button in self.bottuns:
             button.showButton()
-        for target in self.tagetsList:
+        for target in self.BasicTargetsList:
             target.showButton()
         for place in self.placeTarget:
             if place!=None:

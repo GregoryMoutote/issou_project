@@ -5,27 +5,22 @@ import os
 from Constants import Constants
 
 class Target:
-    def __init__(self, targetData,screen):
+    def __init__(self, targetData,screen,levelName):
         if isinstance(targetData, list) and len(targetData) >= 7:
             self.screen=screen
-            self.pictureName=picture
-            self.picture=pygame.image.load("picture/targets/"+picture)
-            self.picture = pygame.transform.scale(self.picture,
-                                                  (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
+            self.pictureName=targetData[6]
             self.coordinates = Coordinates(targetData[1], targetData[2])
             self.duration = float(targetData[3])
             self.delay = float(targetData[4])
             self.value = int(targetData[5])
             not_found = False
             if isinstance(targetData[6], str):
-                if os.path.isfile("picture/targets/basics/" + targetData[6] + ".png"):
-                    self.picture = pygame.image.load("picture/targets/basics/" + targetData[6] + ".png")
-                    self.picture = pygame.transform.scale(self.picture,
-                                                          (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
-                elif os.path.isfile("picture/targets/imported/" + targetData[6] + ".png"):
-                    self.picture = pygame.image.load("picture/targets/imported/" + targetData[6] + ".png")
-                    self.picture = pygame.transform.scale(self.picture,
-                                                          (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
+                if os.path.isfile("picture/targets/" + targetData[6] + ".png"):
+                    self.picture = pygame.image.load("picture/targets/" + targetData[6] + ".png")
+                    self.picture = pygame.transform.scale(self.picture,(2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
+                elif os.path.isfile("stages/"+levelName+"/specialTargets/" + targetData[6] + ".png"):
+                    self.picture = pygame.image.load("stages/"+levelName+"/specialTargets/" + targetData[6] + ".png")
+                    self.picture = pygame.transform.scale(self.picture,(2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
                 else:
                     not_found = True
             else:
