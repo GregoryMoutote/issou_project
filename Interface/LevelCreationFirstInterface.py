@@ -80,7 +80,7 @@ class LevelCreationFirstInterface(Interface):
 
 
                    tmpPath = easygui.fileopenbox(title="Chosir une image",default='*.jpg', filetypes=[['*.png','*.jpg','*.jpeg',"Image File"]], multiple=False)
-                   if self.backgroundPath is not None:
+                   if tmpPath  is not None:
                        tmpExtension = self.getExtension(tmpPath)
                        if tmpExtension=='.jpg' or tmpExtension=='.png' or tmpExtension=='.jpeg':
                             self.backgroundPath = tmpPath
@@ -92,7 +92,7 @@ class LevelCreationFirstInterface(Interface):
                     self.show()
                     self.isInputActive = False
                     tmpPath = easygui.fileopenbox(title="Chosir une musique", default='*.mp3', filetypes=[['*.mp3','*.wav','Music File']])
-                    if self.backgroundPath is not None:
+                    if tmpPath is not None:
                         tmpExtension = self.getExtension(tmpPath)
                         if tmpExtension == '.mp3' or tmpExtension == '.wav':
                             self.musicPath = tmpPath
