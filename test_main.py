@@ -1,6 +1,3 @@
-import easygui
+from Interface.LevelCreationFirstInterface import verifyExtension
 
-
-file = easygui.fileopenbox(title="Chosir un fichier")
-
-print (file)
+verifyExtension("cc.jpg")

@@ -77,15 +77,26 @@ class LevelCreationFirstInterface(Interface):
                    self.resetCoo()
                    self.show()
                    self.isInputActive = False
-                   self.backgroundPath = easygui.fileopenbox(title="Chosir un fichier")
-                   self.button[0].text = "..." +self.backgroundPath[-16:]
+
+
+                   tmpPath = easygui.fileopenbox(title="Chosir une image",default='*.jpg', filetypes=[['*.png','*.jpg','*.jpeg',"Image File"]], multiple=False)
+                   if self.backgroundPath is not None:
+                       tmpExtension = self.getExtension(tmpPath)
+                       if tmpExtension=='.jpg' or tmpExtension=='.png' or tmpExtension=='.jpeg':
+                            self.backgroundPath = tmpPath
+                            self.button[0].text = "..." + self.backgroundPath[-16:]
+
 
                 elif self.rightX>self.button[1].x and self.rightX<(self.button[1].x+self.button[1].width) and self.rightY>self.button[1].y and self.rightY<(self.button[1].y+self.button[1].height):
                     self.resetCoo()
                     self.show()
                     self.isInputActive = False
-                    self.musicPath = easygui.fileopenbox(title="Chosir un fichier")
-                    self.button[1].text = "..." +self.musicPath[-16:]
+                    tmpPath = easygui.fileopenbox(title="Chosir une musique", default='*.mp3', filetypes=[['*.mp3','*.wav','Music File']])
+                    if self.backgroundPath is not None:
+                        tmpExtension = self.getExtension(tmpPath)
+                        if tmpExtension == '.mp3' or tmpExtension == '.wav':
+                            self.musicPath = tmpPath
+                            self.button[1].text = "..." + self.musicPath[-16:]
 
                 elif self.rightX>self.button[2].x and self.rightX<(self.button[2].x+self.button[2].width) and self.rightY>self.button[2].y and self.rightY<(self.button[2].y+self.button[2].height):
                     LevelCreationSecondInterface(self.screenData, self.screen, self.detection, self.settings)
@@ -150,3 +161,8 @@ class LevelCreationFirstInterface(Interface):
         self.rightY=0
         self.leftX=0
         self.leftY=0
+
+
+
+    def getExtension(self, fileName):
+        return fileName[fileName.find('.'):]
