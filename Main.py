@@ -1,17 +1,17 @@
 from Interface.MainMenuInterface import *
-from playerDetection.MediaPipeTool import MediaPipeTool
 from Settings import *
 import pygame
+from playerDetection.MediaPipeThread import MediaPipeThread
 
-detection = MediaPipeTool()
-detection.initHandCapture()
+detection = MediaPipeThread()
+
 
 screenData = ctypes.windll.user32
 
-settings = Settings()
-
 pygame.init()
-screen = pygame.display.set_mode((width,height),pygame.FULLSCREEN,pygame.NOFRAME)
+
+screen = pygame.display.set_mode((screenData.GetSystemMetrics(0),screenData.GetSystemMetrics(1)),pygame.NOFRAME)
+settings = Settings()
 
 InterfaceCalibrage(screenData,screen,detection)
 MainMenuInterface(screenData,screen,detection,settings)

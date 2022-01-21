@@ -6,11 +6,10 @@ from random import *
 from Stage import *
 import os
 
-class LevelSelectionInterface(interface):
+class LevelSelectionInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.detection=detection
-        self.detection.initHandCapture()
         self.settings=settings
         self.stages=[]
         self.index=2;
@@ -18,21 +17,17 @@ class LevelSelectionInterface(interface):
         super().__init__(screenData, screen)
         self.pre_load_all_stages()
 
-        self.background = pygame.image.load("./picture/interface/fond.png")
-        self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
+        self.background = pygame.image.load("./picture/interface/levelSelectionBackground.png")
 
         self.levels=[]
         for stage in self.stages:
-            self.levels.append(level(stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,"4:00"))
+            self.levels.append(level(stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,stage.stage_music.duration))
 
-        self.bannerBottomPicture = pygame.image.load("./picture/interface/bannerBottom.png")
-        self.bannerBottomPicture = pygame.transform.scale(self.bannerBottomPicture,(self.screenWidth, self.screenHeight*0.15))
-
-        self.randomButton=pictureButton(self.screenWidth * 0.8, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.upButton=pictureButton(self.screenWidth * 0.9, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.downButtun=pictureButton(self.screenWidth * 0.7, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.quitButton=pictureButton(0, self.screenHeight * 0.9, self.screenWidth * 0.25, self.screenHeight * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf", (255, 255, 255))
-        self.playButton=pictureButton(self.screenWidth / 5,self.screenHeight / 2 - 100,200,200,self.screen,"play.png","",0,0,"",(0,0,0))
+        self.randomButton=PictureButton(self.screenWidth * 0.8, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.upButton=PictureButton(self.screenWidth * 0.9, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.downButtun=PictureButton(self.screenWidth * 0.7, self.screenHeight * 0.86, self.screenHeight * 0.13, self.screenHeight * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
+        self.quitButton=PictureButton(0, self.screenHeight * 0.9, self.screenWidth * 0.25, self.screenHeight * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf", (255, 255, 255))
+        self.playButton=PictureButton(self.screenWidth / 5, self.screenHeight / 2 - 100, 200, 200, self.screen, "play.png", "", 0, 0, "", (0, 0, 0))
 
         self.show()
         self.resetCoo()
@@ -44,32 +39,31 @@ class LevelSelectionInterface(interface):
 
         while continuer:
 
-            self.detection.hand_detection()
 
-            if len(self.detection.rightHand) > 0:
-                self.rightX = self.screenWidth-self.detection.rightHand[0]
-                self.rightY = self.detection.rightHand[1]
+            if len(self.detection.mediaPipe.rightHand) > 0:
+                self.rightX = self.detection.mediaPipe.rightHand[0]
+                self.rightY = self.detection.mediaPipe.rightHand[1]
 
-            if len(self.detection.leftHand) > 0:
-                self.leftX = self.detection.leftHand[0]
-                self.leftY = self.detection.leftHand[1]
+            if len(self.detection.mediaPipe.leftHand) > 0:
+                self.leftX = self.detection.mediaPipe.leftHand[0]
+                self.leftY = self.detection.mediaPipe.leftHand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
-                    self.detection.isFistClosed = 1
+                    self.detection.mediaPipe.isFistClosed = 1
 
             self.showHand()
 
-            if self.detection.isFistClosed == 1:
+            if self.detection.mediaPipe.isFistClosed == 1:
                 if self.rightX>self.quitButton.x and self.rightX<(self.quitButton.x + self.quitButton.width) and self.rightY>self.quitButton.y and self.rightY<(self.quitButton.y + self.quitButton.height):
                    continuer=False
 
                 elif self.rightX>self.playButton.x and self.rightX<(self.playButton.x + self.playButton.width) and self.rightY>self.playButton.y and self.rightY<(self.playButton.y + self.playButton.height):
-                    playInterface(self.screenData,self.screen,self.detection,self.settings,self.stages[self.index])
+                    PlayInterface(self.screenData, self.screen, self.detection, self.settings, self.stages[self.index])
                     self.show()
                     self.resetCoo()
 
@@ -155,7 +149,10 @@ class LevelSelectionInterface(interface):
             else:
                 self.screen.blit(text, (self.screenHeight / 5, 130, 1000, 100))
 
-        durationText = fontBigArial.render("Durée: "+duration, True, (255, 255, 255))
+        min=str(int(duration/60))
+        sec=str(int(duration%60))
+
+        durationText = fontBigArial.render("Durée: "+min+":"+sec, True, (255, 255, 255))
         self.screen.blit(durationText, (self.screenWidth / 5 * 4.2, self.screenHeight / 10))
         pygame.font.quit()
 
@@ -167,20 +164,18 @@ class LevelSelectionInterface(interface):
         if(len(self.levels)>5):
             for i in range(0,6):
                 if(i==2):
-                    self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.167 * i, self.screenWidth * 0.40, self.screenHeight * 0.167)
+                    self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.164 * i, self.screenWidth * 0.40, self.screenHeight * 0.167)
                 else:
-                    self.levels[i].show(self.screen,self.screenWidth*0.65,self.screenHeight*0.167*i,self.screenWidth*0.35,self.screenHeight*0.167)
+                    self.levels[i].show(self.screen,self.screenWidth*0.65,self.screenHeight*0.164*i,self.screenWidth*0.35,self.screenHeight*0.167)
         else:
             for i in range(0, len(self.levels)):
                 if (i == 2):
-                    self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.167 * i,self.screenWidth * 0.40, self.screenHeight * 0.167)
+                    self.levels[i].show(self.screen, self.screenWidth * 0.60, self.screenHeight * 0.164 * i,self.screenWidth * 0.40, self.screenHeight * 0.167)
                 else:
-                    self.levels[i].show(self.screen, self.screenWidth * 0.65, self.screenHeight * 0.167 * i,self.screenWidth * 0.35, self.screenHeight * 0.167)
+                    self.levels[i].show(self.screen, self.screenWidth * 0.65, self.screenHeight * 0.164 * i,self.screenWidth * 0.35, self.screenHeight * 0.167)
 
         if(len(self.levels)>2):
             self.showDescription(self.levels[2].name,self.levels[2].picture,self.levels[2].difficulty,self.levels[2].descritpion,self.levels[2].duration,self.levels[2].marck)
-
-        self.screen.blit(self.bannerBottomPicture, (0, self.screenHeight * 0.85))
 
         self.upButton.showButton()
         self.downButtun.showButton()
@@ -197,11 +192,10 @@ class LevelSelectionInterface(interface):
 
     def showHand(self):
         self.show()
-        if len(self.detection.leftHand)>0:
-            #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
+        if len(self.detection.mediaPipe.leftHand)>0:
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
-        if len(self.detection.rightHand)>0:
+        if len(self.detection.mediaPipe.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
         pygame.display.update()
 

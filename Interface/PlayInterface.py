@@ -1,25 +1,22 @@
 import pygame.draw
 
-from Interface.InterfaceCalibrage import *
+from Interface.CalibrageInterface import *
 from Interface.PauseInterface import *
+from Interface.EndInterface import *
 
-class playInterface(interface):
+class PlayInterface(Interface):
 
     def __init__(self,screenData,screen,detection,settings,stage):
         self.stage=stage
         self.settings=settings
         self.detection=detection
-        self.detection.initHandCapture()
-
+        self.detection.fullDetection = True
         super().__init__(screenData, screen)
 
         self.stage.load()
         self.background=pygame.image.load("./stages/"+self.stage.name+"/background.png")
         self.background = pygame.transform.scale(self.background, (width, height))
-        self.pauseButton= pictureButton(20,20,100,100,self.screen,"pause.png","",0,0,"",(0,0,0))
-        un=pygame.image.load("./picture/interface/nb_1.png")
-        deux = pygame.image.load("./picture/interface/nb_2.png")
-        self.trois = pygame.image.load("./picture/interface/nb_3.png")
+        self.pauseButton= PictureButton(20, 20, 100, 100, self.screen, "pause.png", "", 0, 0, "", (0, 0, 0))
 
         self.show()
         self.resetCoo()
@@ -31,42 +28,52 @@ class playInterface(interface):
 
         while self.continuer:
 
-            self.detection.complete_hand_detection()
+            if len(self.detection.mediaPipe.hand_points) > 0:
+                self.rightX = int(self.detection.mediaPipe.hand_points[0][0])
+                self.rightY = int(self.detection.mediaPipe.hand_points[0][1])
 
-            if len(self.detection.hand_points) > 0:
-                self.rightX = self.screenWidth-int(self.detection.hand_points[0][0])
-                self.rightY = int(self.detection.hand_points[0][1])
-
-            for x, y in self.detection.hand_points:
+            for x, y in self.detection.mediaPipe.hand_points:
                 self.stage.test_collision(x, y)
+            self.stage.test_collision(self.rightX,self.rightY)
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         self.continuer = False
-                        self.stage.stage_music.pause()
+                        pygame.mixer.music.stop()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
-                    self.detection.isFistClosed = 1
+                    self.detection.mediaPipe.isFistClosed = 1
 
+            self.stage.update_targets()
             self.stage.play()
             self.showHand()
 
-            if self.detection.isFistClosed == 1:
+
+            if self.stage.is_end():
+                self.detection.fullDetection = False
+                self.stage.save_best_score()
+                pygame.mixer.music.stop()
+                EndInterface(self.screenData, self.screen, self.detection, self.settings, self)
+
+            if self.detection.mediaPipe.isFistClosed == 1:
                 if self.rightX > self.pauseButton.x and self.rightX < (self.pauseButton.x + self.pauseButton.width) and self.rightY > self.pauseButton.y and self.rightY < (self.pauseButton.y + self.pauseButton.height):
                     self.stage.pause()
-                    pauseInterface(self.screenData, self.screen, self.detection, self.settings,self)
+                    self.detection.fullDetection = False
+                    PauseInterface(self.screenData, self.screen, self.detection, self.settings, self)
+                    self.detection.fullDetection = True
                     self.stage.resume()
                     self.resetCoo()
+                    self.detection.mediaPipe.hand_points.clear()
                     self.show()
 
-            self.showHand()
+        self.detection.fullDetection = False
 
 
     def showHand(self):
         self.show()
-        if len(self.detection.hand_points)>0:
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.hand_points[0][0]-10, self.detection.hand_points[0][1]-10), 20)
+        if len(self.detection.mediaPipe.hand_points)>0:
+            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.mediaPipe.hand_points[0][0]-10, self.detection.mediaPipe.hand_points[0][1]-10), 20)
         pygame.display.update()
 
 
