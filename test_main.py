@@ -1,5 +1,3 @@
-from Interface.LevelCreationSecondInterface import *
+from Interface.LevelCreationFirstInterface import verifyExtension
 
-pygame.init()
-screen = pygame.display.set_mode((1920,1080),pygame.FULLSCREEN,pygame.NOFRAME)
-interface = LevelCreationSecondInterface()
+verifyExtension("cc.jpg")

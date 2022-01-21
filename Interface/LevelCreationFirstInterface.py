@@ -1,5 +1,5 @@
 import pygame.draw
-
+import easygui
 from Interface.Interface import *
 from Buttons.PictureButton import *
 from Interface.LevelCreationSecondInterface import *
@@ -24,9 +24,12 @@ class LevelCreationFirstInterface(Interface):
 
         self.background=pygame.image.load("./picture/interface/levelBuilderBackground.png")
 
-        self.button = [PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 - 25, 400, 75, self.screen, "button2.png", "Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255))]
-        self.button.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 125, 400, 75, self.screen, "button2.png", "Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255)))
-        self.button.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 250, 400, 75, self.screen, "button3.png", "Valider", 30, 120, "Glitch.otf", (255, 255, 255)))
+        self.backgroundPath = ""
+        self.musicPath = ""
+
+        self.button = [pictureButton(self.screenWidth / 2 -200, self.screenHeight / 2-25 , 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255))]
+        self.button.append(pictureButton(self.screenWidth / 2 -200, self.screenHeight / 2 + 125, 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255)))
+        self.button.append(pictureButton(self.screenWidth / 2 -200, self.screenHeight / 2 + 250, 400, 75, self.screen, "button3.png","Valider", 30, 120, "Glitch.otf", (255, 255, 255)))
 
         self.show()
         self.resetCoo()
@@ -75,10 +78,25 @@ class LevelCreationFirstInterface(Interface):
                    self.show()
                    self.isInputActive = False
 
+
+                   tmpPath = easygui.fileopenbox(title="Chosir une image",default='*.jpg', filetypes=[['*.png','*.jpg','*.jpeg',"Image File"]], multiple=False)
+                   if self.backgroundPath is not None:
+                       tmpExtension = self.getExtension(tmpPath)
+                       if tmpExtension=='.jpg' or tmpExtension=='.png' or tmpExtension=='.jpeg':
+                            self.backgroundPath = tmpPath
+                            self.button[0].text = "..." + self.backgroundPath[-16:]
+
+
                 elif self.rightX>self.button[1].x and self.rightX<(self.button[1].x+self.button[1].width) and self.rightY>self.button[1].y and self.rightY<(self.button[1].y+self.button[1].height):
                     self.resetCoo()
                     self.show()
                     self.isInputActive = False
+                    tmpPath = easygui.fileopenbox(title="Chosir une musique", default='*.mp3', filetypes=[['*.mp3','*.wav','Music File']])
+                    if self.backgroundPath is not None:
+                        tmpExtension = self.getExtension(tmpPath)
+                        if tmpExtension == '.mp3' or tmpExtension == '.wav':
+                            self.musicPath = tmpPath
+                            self.button[1].text = "..." + self.musicPath[-16:]
 
                 elif self.rightX>self.button[2].x and self.rightX<(self.button[2].x+self.button[2].width) and self.rightY>self.button[2].y and self.rightY<(self.button[2].y+self.button[2].height):
                     LevelCreationSecondInterface(self.screenData, self.screen, self.detection, self.settings)
@@ -100,7 +118,7 @@ class LevelCreationFirstInterface(Interface):
         pygame.font.init()
         glitchFont = pygame.font.Font("./font/glitch.otf", 80)
         littleglitchFont=pygame.font.Font("./font/glitch.otf",40)
-        titleText = glitchFont.render("Cre ation de niveau", True, (255, 255, 255))
+        titleText = glitchFont.render("Creation de niveau", True, (255, 255, 255))
         text1=littleglitchFont.render("Nom du niveau", True, (255, 255, 255))
         text2 = littleglitchFont.render("Image de fond", True, (255, 255, 255))
         text3 = littleglitchFont.render("Musique", True, (255, 255, 255))
@@ -135,7 +153,7 @@ class LevelCreationFirstInterface(Interface):
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
         if len(self.detection.mediaPipe.rightHand)>0:
-           pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
+            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
         pygame.display.update()
 
     def resetCoo(self):
@@ -143,3 +161,8 @@ class LevelCreationFirstInterface(Interface):
         self.rightY=0
         self.leftX=0
         self.leftY=0
+
+
+
+    def getExtension(self, fileName):
+        return fileName[fileName.find('.'):]

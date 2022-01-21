@@ -9,7 +9,8 @@ detection = MediaPipeThread()
 screenData = ctypes.windll.user32
 
 pygame.init()
-screen = pygame.display.set_mode((1920,1080),pygame.FULLSCREEN,pygame.NOFRAME)
+
+screen = pygame.display.set_mode((screenData.GetSystemMetrics(0),screenData.GetSystemMetrics(1)),pygame.NOFRAME)
 settings = Settings()
 
 InterfaceCalibrage(screenData,screen,detection)
