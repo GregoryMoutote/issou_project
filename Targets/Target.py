@@ -1,6 +1,7 @@
 from Coordinates import Coordinates
 import pygame
 import os
+import ctypes
 
 from Constants import Constants
 
@@ -8,7 +9,9 @@ class Target:
     def __init__(self, targetData,screen):
         if isinstance(targetData, list) and len(targetData) >= 7:
             self.screen=screen
-            self.coordinates = Coordinates(targetData[1], targetData[2])
+            screen = ctypes.windll.user32
+            self.coordinates = Coordinates(targetData[1] * screen.GetSystemMetrics(0),
+                                           targetData[2] * screen.GetSystemMetrics(1))
             self.duration = float(targetData[3])
             self.delay = float(targetData[4])
             self.value = int(targetData[5])
@@ -37,6 +40,8 @@ class Target:
     def display(self):
         print(self.coordinates, self.duration, self.delay, self.value)
 
+    def update(self):
+        pass
+
     def showTarget(self):
-        self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,
-                                        self.coordinates.y - Constants.TARGET_RADIUS))
+        self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,self.coordinates.y - Constants.TARGET_RADIUS))

@@ -2,14 +2,13 @@ import pygame.draw
 
 from Buttons.ColorButton import *
 from Buttons.MultipleButton import *
-from Interface.CalibrageInterface import *
+from Interface.InterfaceCalibrage import *
 
-class SettingsInterface(Interface):
+class InterfaceSettings(Interface):
 
     def __init__(self,screenData,screen,detection,settings):
         self.settings=settings
         self.detection=detection
-        self.detection.initHandCapture()
 
         super().__init__(screenData, screen)
 
@@ -38,27 +37,26 @@ class SettingsInterface(Interface):
 
         while continuer:
 
-            self.detection.hand_detection()
 
-            if len(self.detection.rightHand) > 0:
-                self.rightX = self.screenWidth-self.detection.rightHand[0]
-                self.rightY = self.detection.rightHand[1]
+            if len(self.detection.mediaPipe.rightHand) > 0:
+                self.rightX = self.detection.mediaPipe.rightHand[0]
+                self.rightY = self.detection.mediaPipe.rightHand[1]
 
-            if len(self.detection.leftHand) > 0:
-                self.leftX = self.detection.leftHand[0]
-                self.leftY = self.detection.leftHand[1]
+            if len(self.detection.mediaPipe.leftHand) > 0:
+                self.leftX = self.detection.mediaPipe.leftHand[0]
+                self.leftY = self.detection.mediaPipe.leftHand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+                    if event.key == pygame.K_ESCAPE:
                         continuer = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.rightX, self.rightY = pygame.mouse.get_pos()
-                    self.detection.isFistClosed = 1
+                    self.detection.mediaPipe.isFistClosed = 1
 
             self.showHand()
 
-            if self.detection.isFistClosed == 1:
+            if self.detection.mediaPipe.isFistClosed == 1:
                 if self.rightX>self.animationButton.x and self.rightX<(self.animationButton.x + self.animationButton.width) and self.rightY>self.animationButton.y and self.rightY<(self.animationButton.y + self.animationButton.height):
                     self.settings.animation=self.animationButton.changeStat()
                     self.resetCoo()
@@ -74,7 +72,7 @@ class SettingsInterface(Interface):
                     self.resetCoo()
 
                 elif self.rightX > self.button[0].x and self.rightX < (self.button[0].x + self.button[0].width) and self.rightY > self.button[0].y and self.rightY < (self.button[0].y + self.button[0].height):
-                    CalibrageInterface(self.screenData, self.screen, self.detection)
+                    InterfaceCalibrage(self.screenData, self.screen,self.detection)
                     self.resetCoo()
                     self.show()
 
@@ -82,7 +80,7 @@ class SettingsInterface(Interface):
                     self.settings.saveChange()
                     continuer=False
 
-                for i in range(0, self.volumeButton.nbButton):
+                for i in range(0, self.volumeButton.nbBottun):
                     if self.rightX>self.volumeButton.coche[i].x and self.rightX<(self.volumeButton.coche[i].x + self.volumeButton.coche[i].width) and self.rightY>self.volumeButton.coche[i].y and self.rightY<(self.volumeButton.coche[i].y + self.volumeButton.coche[i].height):
                         self.volumeButton.changeStat(i + 1)
                         self.settings.volume = i+1
@@ -115,11 +113,11 @@ class SettingsInterface(Interface):
 
     def showHand(self):
         self.show()
-        if len(self.detection.leftHand)>0:
+        if len(self.detection.mediaPipe.leftHand)>0:
             #print("right", self.detection.leftHand[0], "  ", self.detection.leftHand[1])
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
-        if len(self.detection.rightHand)>0:
+        if len(self.detection.mediaPipe.rightHand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
         pygame.display.update()
 

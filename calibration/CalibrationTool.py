@@ -2,6 +2,8 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 from calibration import ShapeDetection
+import ctypes
+
 
 
 class CalibrationTool:
@@ -12,10 +14,13 @@ class CalibrationTool:
         self.pts2 = None
         self.M = None
         self.isDone = False
+        self.screenWidth = 0
 
     def setup(self, img:np.ndarray):
+        screen = ctypes.windll.user32
+        self.screenWidth = screen.GetSystemMetrics(0)
         self.image = img
-        print("TENTATIVE DE RECUPERATION DES POINTS...")
+        #print("TENTATIVE DE RECUPERATION DES POINTS...")
         isDone = self.getPoints()
         if isDone:
             self.calcMatrix()
@@ -24,33 +29,31 @@ class CalibrationTool:
 
     def initCamera(self):
         self.webcam = cv2.VideoCapture(0)
-        print("CAMERA INITIALISATION...")
+        #print("CAMERA INITIALISATION...")
 
 
 
     def closeCamera(self):
         if self.webcam is not None:
             self.webcam.release()
-            print("CAMERA CLOSED...")
+            #print("CAMERA CLOSED...")
 
     def getPoints(self):
         self.shape_util = ShapeDetection.ShapeDetection()
-        print("ANALYSE DE L'IMAGE...")
+        #print("ANALYSE DE L'IMAGE...")
         self.matrix = self.shape_util.detectFromPicture(self.image)
         if self.matrix is not None and len(self.matrix)==4:
             return True
         else:
-            print("ECHEC DE RECUPERATION...")
+            #print("ECHEC DE RECUPERATION...")
             return False
 
 
     def calcMatrix(self):
-        print("CALCUL DE LA MATRICE...")
+        #print("CALCUL DE LA MATRICE...")
         if self.matrix is not None and len(self.matrix)>=4:
             rows, cols, ch = self.image.shape
 
-            self.pts1 = np.float32([[self.matrix[0][0], self.matrix[0][1]], [self.matrix[3][0], self.matrix[3][1]],
-                                    [self.matrix[1][0], self.matrix[1][1]], [self.matrix[2][0], self.matrix[2][1]]])
 
             self.triPoint()
 
@@ -59,12 +62,13 @@ class CalibrationTool:
             self.M = cv2.getPerspectiveTransform(self.pts1, self.pts2)
 
             self.isDone = True
-            print("MATRICE CALCULEE...")
+            #print("MATRICE CALCULEE...")
         else:
-            print("MATRICE PAS DEFINI CORRECTEMENT")
+            #print("MATRICE PAS DEFINI CORRECTEMENT")
+            pass
 
     def triPoint(self):
-        print("TRI DES POINTS...")
+        #print("TRI DES POINTS...")
         tabSum = [self.matrix[0][0] + self.matrix[0][1], self.matrix[1][0] + self.matrix[1][1],
                   self.matrix[2][0] + self.matrix[2][1], self.matrix[3][0] + self.matrix[3][1]]
         pointOrder = []
@@ -88,18 +92,23 @@ class CalibrationTool:
                                 [self.matrix[pointOrder[2]][0], self.matrix[pointOrder[2]][1]],
                                 [self.matrix[pointOrder[3]][0], self.matrix[pointOrder[3]][1]]])
 
-    def calibratePicture(self,  preview: bool):
-        rows, cols, ch = self.image.shape
-        dst = cv2.warpPerspective(self.image, self.M, (cols, rows))
-        if preview:
-            plt.subplot(121), plt.imshow(self.image), plt.title('Input')
-            plt.subplot(122), plt.imshow(dst), plt.title('Output')
-            plt.show()
-        return dst
+    def calibratePicture(self, img,  preview: bool):
+        if self.M is not None:
+            rows, cols, ch = img.shape
+            dst = cv2.warpPerspective(img, self.M, (cols, rows))
+            if preview:
+                plt.subplot(121), plt.imshow(img), plt.title('Input')
+                plt.subplot(122), plt.imshow(dst), plt.title('Output')
+                plt.show()
+            return dst
+        else:
+            return img
 
     def calibratePoint(self, coord):
         if self.M is not None:
             result_matrix = np.matmul(self.M, np.float32([[coord[0]], [coord[1]], [1]]))
-            return result_matrix[0][0] / result_matrix[2][0], result_matrix[1][0] / result_matrix[2][0]
+            return (self.screenWidth-result_matrix[0][0]) / result_matrix[2][0], \
+                   result_matrix[1][0] / result_matrix[2][0]
         else:
-            return coord
+            return (coord[0],coord[1])
+

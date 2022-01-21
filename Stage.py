@@ -13,7 +13,6 @@ import os
 
 from Constants import Constants
 
-#TODO Add the creation date
 class Stage:
     def __init__(self, file_path,screen):
         self.screen=screen
@@ -143,10 +142,7 @@ class Stage:
                     print(self.activeTargets[iterator][1])
                 if self.start <= 0:
                     self.stage_music.play()
-                print()
-                print(self.start)
                 self.start += self.spend
-                print(self.start)
                 self.spend = -1
             elif not mixer.music.get_busy():
                 self.start = time.time()
@@ -165,6 +161,7 @@ class Stage:
 
     def show_targets(self):
         for target,delay in self.activeTargets:
+            target.update()
             target.showTarget()
  
     def pause(self):
