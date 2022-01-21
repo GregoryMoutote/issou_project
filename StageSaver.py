@@ -6,6 +6,7 @@ import mutagen
 import os
 import Stage
 import datetime
+import ctypes
 
 class Stage_Saver:
     def __init__(self, stage: Stage):
@@ -52,6 +53,8 @@ class Stage_Saver:
 
     def save_targets(self):
         with open("stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
+            screen = ctypes.windll.user32
+            width = screen.GetSystemMetrics(0)
             for target in self.stage.targets:
                 if isinstance(target, Rail_target):
                     file.write("type=4\n")
@@ -61,7 +64,8 @@ class Stage_Saver:
                     file.write("type=2\n")
                 else:
                     file.write("type=1\n")
-                file.write("coo=" + str(target.coordinates.x) + '|' + str(target.coordinates.y) + '\n')
+                file.write("coo=" + str(float(width) / float(target.coordinates.x)) +
+                           '|' + str(float(width) - float(target.coordinates.y)) + '\n')
                 file.write("dur=" + str(target.duration) + '\n')
                 file.write("del=" + str(target.delay) + '\n')
                 file.write("val=" + str(target.value) + '\n')
@@ -71,12 +75,14 @@ class Stage_Saver:
                 if isinstance(target, Rail_target):
                     string = "steps=§"
                     for coordinates in target.steps:
-                        string += str(coordinates.x) + '|' + str(coordinates.y) + '§'
+                        string += str(float(width) - float(coordinates.x)) + '|' +\
+                                  str(float(width) - float(coordinates.y)) + '§'
                     file.write(string + '\n')
                 elif isinstance(target, Dynamic_target):
                     file.write("end_val=" + str(target.end_value) + '\n')
                 elif isinstance(target, Moving_target):
-                    file.write("end_coo=" + str(target.end_coordinates.x) + '|' + str(target.end_coordinates.y))
+                    file.write("end_coo=" + str(float(width) - float(target.end_coordinates.x)) + '|' +
+                               str(float(width) - float(target.end_coordinates.y)))
                     file.write('\n')
 
     def create_best_score(self):
