@@ -209,10 +209,11 @@ class Stage:
     def save_best_score(self):
         if ".issou" not in self.path:
             return
-        best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
-        with open(best_score_path, 'w') as file:
-            file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
-            file.close()
+        if self.best_score < self.score:
+            best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
+            with open(best_score_path, 'w') as file:
+                file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
+                file.close()
 
     def load_targets(self):
         if ".issou" not in self.path:
@@ -338,7 +339,33 @@ class Stage:
     def test_collision(self, x, y):
         iterator = 0
         for target, delay in self.activeTargets:
+            if isinstance(target, Rail_target):
+                target.actualise(Coordinates(x, y))
+                if target.is_achieved:
+                    self.score += self.activeTargets[iterator][0].value
+                    del self.activeTargets[iterator]
             if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
                 self.score += self.activeTargets[iterator][0].value
                 del self.activeTargets[iterator]
             iterator += 1
+
+    def set_pose(self, ratio: float, targets: list):
+        if ratio < 0 or ratio > 1:
+            return
+        new_pose = self.stage_music.duration * ratio
+        before = False
+        if mixer.music.get_pose() > new_pose:
+            before = True
+        if before:
+            self.targets = targets
+            self.activeTargets.clear()
+        for target in self.targets:
+            if self.targets.delay < new_pose:
+                if self.targets.delay + self.targets.duration > new_pose:
+                    self.activeTargets.append(target,
+                                              time.time() + self.targets.delay + self.targets.duration - new_pose)
+            else:
+                break
+            self.targets.pop(0)
+
+        self.stage_music.set_pose(ratio)
