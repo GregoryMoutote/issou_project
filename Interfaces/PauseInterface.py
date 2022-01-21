@@ -1,7 +1,7 @@
 import pygame.draw
 
 from Buttons.PictureButton import *
-from Interface.SettingsInterface import *
+from Interfaces.SettingsInterface import *
 
 class PauseInterface(Interface):
 
@@ -12,7 +12,7 @@ class PauseInterface(Interface):
 
         super().__init__(screenData, screen)
 
-        background=pygame.image.load("./picture/interface/parameterBackground.png")
+        background=pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
         self.background = pygame.transform.scale(background, (450, 600))
 
         self.bottun=[PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 - 160, 400, 100, self.screen, "button2.png", "REPRENDRE", 30, 50, "Glitch.otf", (255, 255, 255))]
@@ -76,7 +76,7 @@ class PauseInterface(Interface):
         for c in self.bottun:
             c.showButton()
         pygame.font.init()
-        myfont = pygame.font.Font("./font/lemonmilk.otf", 60)
+        myfont = pygame.font.Font("./Fonts/lemonmilk.otf", 60)
         textsurface = myfont.render("PAUSE", True, (255, 255, 255))
         pygame.font.quit()
         self.screen.blit(textsurface, (self.screenWidth / 2 - 110, self.screenHeight/2-270))

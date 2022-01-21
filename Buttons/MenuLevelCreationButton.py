@@ -5,13 +5,13 @@ class MenuLevelCreationButton(Button):
 
     def __init__(self, x, y, width, height, screen,pictureName, text, textSize, textLeftSpace, font,textColor):
         super().__init__(x,y,width,height,screen)
-        picture = pygame.image.load("picture/targets/" + pictureName)
+        picture = pygame.image.load("Pictures/Targets/" + pictureName)
         self.picture = pygame.transform.scale(picture, (height, height))
         self.pictureNane=pictureName
         self.text = text
         self.textSize = textSize
         self.textLeftSpace = textLeftSpace
-        self.font = "./font/" + font
+        self.font = "./Fonts/" + font
         self.textColor = textColor
         self.showButton()
 

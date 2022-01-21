@@ -1,5 +1,5 @@
 import threading
-from playerDetection.MediaPipeTool import MediaPipeTool
+from PlayerDetection.MediaPipeTool import MediaPipeTool
 
 class MediaPipeThread(threading.Thread):
     def __init__(self):

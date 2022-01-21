@@ -1,8 +1,8 @@
 import pygame.draw
 import easygui
-from Interface.Interface import *
+from Interfaces.Interface import *
 from Buttons.PictureButton import *
-from Interface.LevelCreationSecondInterface import *
+from Interfaces.LevelCreationSecondInterface import *
 
 class LevelCreationFirstInterface(Interface):
 
@@ -22,7 +22,7 @@ class LevelCreationFirstInterface(Interface):
         self.activeColor = (100,100,100)
         self.inactiveColor = (50,50,50)
 
-        self.background=pygame.image.load("./picture/interface/levelBuilderBackground.png")
+        self.background=pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png")
 
         self.backgroundPath = ""
         self.musicPath = ""
@@ -116,8 +116,8 @@ class LevelCreationFirstInterface(Interface):
         self.screen.blit(self.background, (0, 0))
 
         pygame.font.init()
-        glitchFont = pygame.font.Font("./font/glitch.otf", 80)
-        littleglitchFont=pygame.font.Font("./font/glitch.otf",40)
+        glitchFont = pygame.font.Font("./Fonts/glitch.otf", 80)
+        littleglitchFont=pygame.font.Font("./Fonts/glitch.otf",40)
         titleText = glitchFont.render("Creation de niveau", True, (255, 255, 255))
         text1=littleglitchFont.render("Nom du niveau", True, (255, 255, 255))
         text2 = littleglitchFont.render("Image de fond", True, (255, 255, 255))

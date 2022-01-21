@@ -1,7 +1,7 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-from calibration import ShapeDetection
+from Calibration import ShapeDetection
 import ctypes
 
 

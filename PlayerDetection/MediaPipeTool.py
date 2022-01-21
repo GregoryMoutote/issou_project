@@ -1,5 +1,5 @@
 import mediapipe as mp
-from calibration.CalibrationTool import *
+from Calibration.CalibrationTool import *
 import ctypes
 
 class MediaPipeTool :

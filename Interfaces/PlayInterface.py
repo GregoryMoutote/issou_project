@@ -1,8 +1,8 @@
 import pygame.draw
 
-from Interface.CalibrageInterface import *
-from Interface.PauseInterface import *
-from Interface.EndInterface import *
+from Interfaces.CalibrageInterface import *
+from Interfaces.PauseInterface import *
+from Interfaces.EndInterface import *
 
 class PlayInterface(Interface):
 
@@ -14,7 +14,7 @@ class PlayInterface(Interface):
         super().__init__(screenData, screen)
 
         self.stage.load()
-        self.background=pygame.image.load("./stages/"+self.stage.name+"/background.png")
+        self.background=pygame.image.load("./Stages/"+self.stage.name+"/background.png")
         self.background = pygame.transform.scale(self.background, (width, height))
         self.pauseButton= PictureButton(20, 20, 100, 100, self.screen, "pause.png", "", 0, 0, "", (0, 0, 0))
 
@@ -82,7 +82,7 @@ class PlayInterface(Interface):
         self.pauseButton.showButton()
         self.stage.show_targets()
         pygame.font.init()
-        myfont = pygame.font.Font("./font/lemonmilk.otf", 80)
+        myfont = pygame.font.Font("./Fonts/lemonmilk.otf", 80)
         textsurface = myfont.render("score: "+ str(self.stage.score), True, (255,255,255))
         pygame.font.quit()
         self.screen.blit(textsurface, (self.screenWidth/2-200, 30))

@@ -1,9 +1,9 @@
-from Coordinates import Coordinates
+from Model.Stage.Coordinates import Coordinates
 import pygame
 import os
 import ctypes
 
-from Constants import Constants
+from Model.Constants import Constants
 
 class Target:
     def __init__(self, targetData,screen,levelName):
@@ -18,14 +18,14 @@ class Target:
             self.value = int(targetData[5])
             not_found = False
             if isinstance(targetData[6], str):
-                if os.path.isfile("picture/targets/" + targetData[6] + ".png"):
-                    self.picture = pygame.image.load("picture/targets/" + targetData[6] + ".png")
+                if os.path.isfile("Pictures/Targets/" + targetData[6] + ".png"):
+                    self.picture = pygame.image.load("Pictures/Targets/" + targetData[6] + ".png")
                     self.picture = pygame.transform.scale(self.picture, (
                     2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
                     self.image = targetData[6]
-                elif os.path.isfile("stages/" + levelName + "/specialTargets/" + targetData[6] + ".png"):
+                elif os.path.isfile("Stages/" + levelName + "/specialTargets/" + targetData[6] + ".png"):
                     self.picture = pygame.image.load(
-                        "stages/" + levelName + "/specialTargets/" + targetData[6] + ".png")
+                        "Stages/" + levelName + "/specialTargets/" + targetData[6] + ".png")
                     self.picture = pygame.transform.scale(self.picture, (
                     2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
                     self.image = targetData[6]
@@ -34,7 +34,7 @@ class Target:
             else:
                 not_found = True
             if not_found:
-                self.picture = pygame.image.load("picture/targets/basic_blue.png")
+                self.picture = pygame.image.load("Pictures/Targets/basic_blue.png")
                 self.picture = pygame.transform.scale(self.picture,
                                                       (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
                 self.image = "basic_blue"

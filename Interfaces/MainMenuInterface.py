@@ -1,10 +1,10 @@
 import pygame.draw
 
-from Interface.LevelSelectionInterface import *
-from Interface.SettingsInterface import *
-from Interface.GIF.MainMenuGIF import *
-from playerDetection.MediaPipeThread import *
-from Interface.LevelCreationFirstInterface import *
+from Interfaces.LevelSelectionInterface import *
+from Interfaces.SettingsInterface import *
+from Interfaces.GIF.MainMenuGIF import *
+from PlayerDetection.MediaPipeThread import *
+from Interfaces.LevelCreationFirstInterface import *
 import math
 
 class MainMenuInterface(Interface):
@@ -14,7 +14,7 @@ class MainMenuInterface(Interface):
 
         super().__init__(screenData, screen)
 
-        self.background=pygame.image.load("./picture/interface/fond.png")
+        self.background=pygame.image.load("./Pictures/Interfaces/fond.png")
 
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("Sprite Animation")
@@ -22,7 +22,7 @@ class MainMenuInterface(Interface):
         ISSOUlaod = MenuGIF(self.screenWidth*0.17,self.screenHeight/2-75,self.screen)
         self.moving_sprites.add(ISSOUlaod)
 
-        self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
+        self.fondLogo=pygame.image.load("./Pictures/Interfaces/fondLogo.png")
         self.fondLogo= pygame.transform.scale(self.fondLogo, (self.screenHeight*0.5*1.57, self.screenHeight*0.5))
 
         self.bottuns=[ColorButton(self.screenWidth * 0.4, self.screenHeight * 0.25, self.screenWidth / 2, self.screenHeight * 0.1, self.screen, (0, 112, 192), "JOUER", 50, 450, "Glitch.otf", (255, 255, 255))]

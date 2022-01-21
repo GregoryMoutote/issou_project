@@ -5,12 +5,12 @@ class PictureButton(Button):
 
     def __init__(self, x, y, width, height, screen,picture, text, textSize, textLeftSpace, font,textColor):
         super().__init__(x,y,width,height,screen)
-        picture = pygame.image.load("picture/interface/" + picture)
+        picture = pygame.image.load("Pictures/Interfaces/" + picture)
         self.picture = pygame.transform.scale(picture, (width, height))
         self.text = text
         self.textSize = textSize
         self.textLeftSpace = textLeftSpace
-        self.font = "./font/" + font
+        self.font = "./Fonts/" + font
         self.textColor = textColor
         self.showButton()
 

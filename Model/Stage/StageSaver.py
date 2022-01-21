@@ -4,12 +4,12 @@ from Targets.Moving_target import Moving_target
 from Targets.Target import Target
 import mutagen
 import os
-import Stage
+import Model.Stage.Stage
 import datetime
 import ctypes
 
 class Stage_Saver:
-    def __init__(self, stage: Stage):
+    def __init__(self):
         self.stage = stage
         self.save_header()
         self.save_stage_header()
@@ -18,8 +18,8 @@ class Stage_Saver:
         self.create_best_score()
 
     def save_header(self):
-        os.makedirs("stages/" + self.stage.name)
-        with open("stages/" + self.stage.name + "/" + self.stage.name + ".issou", "w") as file:
+        os.makedirs("Stages/" + self.stage.name)
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "w") as file:
             file.write("ext=issou\n")
             file.write("type=stage\n")
             file.write("owner=player\n")
@@ -29,18 +29,18 @@ class Stage_Saver:
             file.close()
 
     def save_stage_header(self):
-        with open("stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
             file.write("title=" + self.stage.name + '\n')
             file.write("difficulty=" + str(self.stage.difficulty) + '\n')
             file.write("$\n")
             file.close()
 
     def save_music_header(self):
-        with open("stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
-            #if os.path.isfile("stages/" + self.stage.name + "/" + self.stage.name + ".mp3"):
-            if os.path.isfile("stages/" + "test_v2" + "/" + "test_v2" + ".mp3"):
-                #audioReader = mutagen.File("stages/" + self.stage.name + "/" + self.stage.name + ".mp3")
-                audioReader = mutagen.File("stages/" + "test_v2" + "/" + "test_v2" + ".mp3")
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
+            #if os.path.isfile("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3"):
+            if os.path.isfile("Stages/" + "test_v2" + "/" + "test_v2" + ".mp3"):
+                #audioReader = mutagen.File("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3")
+                audioReader = mutagen.File("Stages/" + "test_v2" + "/" + "test_v2" + ".mp3")
                 file.write("title=" + str(audioReader["TIT2"]) + '\n')
                 file.write("desc=§" + str(audioReader["COMM::fra"]) + "§\n")
                 file.write("authors=§" + str(audioReader["TPE1"]).replace('/', '\n') + "§\n")
@@ -52,7 +52,7 @@ class Stage_Saver:
             file.close()
 
     def save_targets(self):
-        with open("stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
             screen = ctypes.windll.user32
             width = screen.GetSystemMetrics(0)
             for target in self.stage.targets:
@@ -86,6 +86,6 @@ class Stage_Saver:
                     file.write('\n')
 
     def create_best_score(self):
-        with open("stages/" + self.stage.name + "/" + self.stage.name + "_bs.issou", "w") as file:
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + "_bs.issou", "w") as file:
             file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=0")
             file.close()

@@ -1,13 +1,13 @@
 import pygame.draw
 
 from Buttons import CocheButton
-from Interface.Interface import *
+from Interfaces.Interface import *
 from Buttons.TimelineButton import *
 from Buttons.PictureButton import *
 from Buttons.CocheButton import *
 from Buttons.MenuLevelCreationButton import *
 from Targets.Target import *
-from Constants import *
+from Model.Constants import *
 import time
 import os
 
@@ -24,13 +24,13 @@ class LevelCreationSecondInterface(Interface):
         self.selectedPictureName=None
         self.lastClick=time.time()
 
-        self.background=pygame.image.load("./picture/interface/levelBuilderBackground.png")
+        self.background=pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png")
         self.background=pygame.transform.scale(self.background, (self.screenWidth*0.80+1, self.screenHeight*0.80+1))
 
-        self.rightMenu=pygame.image.load("./picture/interface/menuBackground.png")
+        self.rightMenu=pygame.image.load("./Pictures/Interfaces/menuBackground.png")
         self.rightMenu=pygame.transform.scale(self.rightMenu, (self.screenWidth, self.screenHeight*0.20))
 
-        self.bottomMenu=pygame.image.load("./picture/interface/menuBackground.png")
+        self.bottomMenu=pygame.image.load("./Pictures/Interfaces/menuBackground.png")
         self.bottomMenu=pygame.transform.scale(self.bottomMenu, (self.screenWidth*0.20,self.screenHeight ))
 
         self.playButton=CocheButton(self.screenWidth*0.05, self.screenHeight*0.82, self.screenHeight*0.1, self.screenHeight*0.1, self.screen,"levelCreationPlay.png","levelCreationPause.png",True)
@@ -46,8 +46,8 @@ class LevelCreationSecondInterface(Interface):
 
         self.BasicTargetsList=[]
         i=1;
-        for file in os.listdir("picture/targets"):
-            if file!="transparent":
+        for file in os.listdir("Pictures/Targets"):
+            if file!="Transparent":
                 self.BasicTargetsList.append(MenuLevelCreationButton(self.screenWidth * 0.8, self.screenHeight * 0.1 * i, self.screenWidth * 0.1, Constants.TARGET_RADIUS * 1.6, self.screen, file, file[6:-4], 35, 10, "arial.ttf", (255, 255, 255)))
                 i+=1
 
@@ -148,7 +148,7 @@ class LevelCreationSecondInterface(Interface):
                         if(time.time()-self.lastClick>1):
                             self.lastClick=time.time()
                             self.isSelectedTarget = True
-                            picture = pygame.image.load("picture/targets/" + str(target.pictureName)+".png")
+                            picture = pygame.image.load("Pictures/Targets/" + str(target.pictureName)+".png")
                             self.selectedPicture = pygame.transform.scale(picture, (Constants.TARGET_RADIUS*0.8, Constants.TARGET_RADIUS*0.8))
                             self.selectedPictureName = target.pictureName
                             self.placeTarget.remove(target)
@@ -181,7 +181,7 @@ class LevelCreationSecondInterface(Interface):
 
         self.timeline.showButton()
         pygame.font.init()
-        myfont = pygame.font.Font("./font/arial.ttf", 50)
+        myfont = pygame.font.Font("./Fonts/arial.ttf", 50)
         textsurface = myfont.render("Choix des cibles", True, (255, 255, 255))
         pygame.font.quit()
         self.screen.blit(textsurface,(self.screenWidth*0.82,self.screenHeight*0.02))

@@ -33,7 +33,7 @@ class Settings:
         fichier.close()
 
     def chargeChange(self):
-        with open("data.issou", "r") as filin:
+        with open("Model/Settings/data.issou", "r") as filin:
             line = filin.readline()
             if line=="Data file ISSOU\n":
                 self.volume=int(filin.readline())

@@ -7,9 +7,9 @@ class CocheButton(Button):
     def __init__(self, x, y, width,height, screen,truePicture,falsePicture,actif):
         super().__init__(x,y,width,height,screen)
         self.time=time.time()
-        self.picture = pygame.image.load("picture/interface/" + truePicture)
+        self.picture = pygame.image.load("Pictures/Interfaces/" + truePicture)
         self.truePicture = pygame.transform.scale(self.picture, (self.width, self.height))
-        self.picture2 = pygame.image.load("picture/interface/" + falsePicture)
+        self.picture2 = pygame.image.load("Pictures/Interfaces/" + falsePicture)
         self.falsePicture = pygame.transform.scale(self.picture2, (self.width, self.height))
         self.actif = actif
         self.showButton()

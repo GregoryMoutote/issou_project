@@ -2,7 +2,7 @@ import pygame.draw
 
 from Buttons.ColorButton import *
 from Buttons.MultipleButton import *
-from Interface.CalibrageInterface import *
+from Interfaces.CalibrageInterface import *
 
 class SettingsInterface(Interface):
 
@@ -12,8 +12,8 @@ class SettingsInterface(Interface):
 
         super().__init__(screenData, screen)
 
-        self.background = pygame.image.load("./picture/interface/fond.png")
-        self.fondLogo=pygame.image.load("./picture/interface/fondLogo.png")
+        self.background = pygame.image.load("./Pictures/Interfaces/fond.png")
+        self.fondLogo=pygame.image.load("./Pictures/Interfaces/fondLogo.png")
 
         self.button = [(ColorButton(100, self.screenHeight / 2 + 120, self.screenWidth * 0.85, 70, self.screen, (0, 172, 240), "Recalibrer", 50, self.screenWidth * 0.5 - 230, "Arial.ttf", (255, 255, 255)))]
         self.button.append(ColorButton(100, self.screenHeight / 2 + 190, self.screenWidth * 0.85, 70, self.screen, (0, 112, 192), "Aide", 50, self.screenWidth * 0.5 - 180, "Arial.ttf", (255, 255, 255)))
@@ -89,8 +89,8 @@ class SettingsInterface(Interface):
 
     def show(self):
         pygame.font.init()
-        fontGlitch = pygame.font.Font("./font/Glitch.otf", 100)
-        fontArial = pygame.font.Font("./font/Arial.ttf", 56)
+        fontGlitch = pygame.font.Font("./Fonts/Glitch.otf", 100)
+        fontArial = pygame.font.Font("./Fonts/Arial.ttf", 56)
 
         text = fontGlitch.render("OPTIONS", True, (255, 255, 255))
         text2 = fontArial.render("Activer les animations", True, (255, 255, 255))

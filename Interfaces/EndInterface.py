@@ -1,8 +1,8 @@
 import pygame.draw
 
 from Buttons.PictureButton import *
-from Interface.SettingsInterface import *
-from Interface.Interface import *
+from Interfaces.SettingsInterface import *
+from Interfaces.Interface import *
 
 class EndInterface(Interface):
 
@@ -13,7 +13,7 @@ class EndInterface(Interface):
 
         super().__init__(screenData, screen)
 
-        background=pygame.image.load("./picture/interface/parameterBackground.png")
+        background=pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
         self.background = pygame.transform.scale(background, (450, 600))
 
         self.parent.stage.save_best_score()
@@ -67,10 +67,10 @@ class EndInterface(Interface):
         for c in self.button:
             c.showButton()
         pygame.font.init()
-        myfont = pygame.font.Font("./font/lemonmilk.otf", 100)
-        myfont2 = pygame.font.Font("./font/lemonmilk.otf", 40)
-        myfont3=pygame.font.Font("./font/lemonmilk.otf", 30)
-        myfont4 = pygame.font.Font("./font/lemonmilk.otf", 20)
+        myfont = pygame.font.Font("./Fonts/lemonmilk.otf", 100)
+        myfont2 = pygame.font.Font("./Fonts/lemonmilk.otf", 40)
+        myfont3=pygame.font.Font("./Fonts/lemonmilk.otf", 30)
+        myfont4 = pygame.font.Font("./Fonts/lemonmilk.otf", 20)
         textsurface = myfont2.render("Fin du niveau", True, (255, 255, 255))
         textscore=myfont3.render("Votre score est:", True, (255, 255, 255))
         score = myfont.render(str(self.parent.stage.score), True, (255, 255, 255))

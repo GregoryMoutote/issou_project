@@ -1,17 +1,17 @@
 import pygame.display
 
-from Music import Music
+from Model.Stage.Music import Music
 from Targets.Target import Target
 from Targets.Dynamic_target import Dynamic_target
 from Targets.Moving_target import Moving_target
 from Targets.Rail_target import Rail_target
-from Date import Date
+from Model.Stage.Date import Date
 from pygame import mixer
-from StageSaver import Stage_Saver
+from Model.Stage.StageSaver import Stage_Saver
 import time
 import os
 
-from Constants import Constants
+from Model.Constants import Constants
 
 class Stage:
     def __init__(self, file_path,screen):
@@ -113,12 +113,11 @@ class Stage:
                 delimiter = line.find('§')
                 if delimiter != -1:
                     if delimiter == len(line) - 2:
-                        self.stage_music.description += line[:delimiter - 1]
+                        self.stage_music.description += line[:delimiter]
                     else:
                         self.stage_music.description += line[delimiter + 1:-1]
                 else:
                     self.stage_music.description += line[:]
-                self.stage_music.description += '\n'
             line = "pass"
             while line and line.find('§') != len(line) - 2:
                 line = file.readline()

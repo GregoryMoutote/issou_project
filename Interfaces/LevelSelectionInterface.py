@@ -1,9 +1,9 @@
 import pygame.draw
 
-from Interface.PlayInterface import *
-from Level import *
+from Interfaces.PlayInterface import *
+from Model.Stage.Level import *
 from random import *
-from Stage import *
+from Model.Stage.Stage import *
 import os
 
 class LevelSelectionInterface(Interface):
@@ -17,7 +17,7 @@ class LevelSelectionInterface(Interface):
         super().__init__(screenData, screen)
         self.pre_load_all_stages()
 
-        self.background = pygame.image.load("./picture/interface/levelSelectionBackground.png")
+        self.background = pygame.image.load("./Pictures/Interfaces/levelSelectionBackground.png")
 
         self.levels=[]
         for stage in self.stages:
@@ -101,18 +101,18 @@ class LevelSelectionInterface(Interface):
 
     def showDescription(self,name,picture,difficulty,description,duration,nbStar):
 
-        self.bannerTopPicture = pygame.image.load("./picture/interface/bannerTop.png")
+        self.bannerTopPicture = pygame.image.load("./Pictures/Interfaces/bannerTop.png")
         self.bannerTopPicture = pygame.transform.scale(self.bannerTopPicture,(self.screenWidth, self.screenHeight / 4.5))
         self.screen.blit(self.bannerTopPicture, (0, 0))
 
-        self.musicPicture = pygame.image.load("stages/"+picture+"/"+picture+".png")
+        self.musicPicture = pygame.image.load("Stages/"+picture+"/"+picture+".png")
         self.musicPicture = pygame.transform.scale(self.musicPicture,(self.screenHeight / 5 - 20, self.screenHeight / 5 - 20))
         self.screen.blit(self.musicPicture, (10, 10))
 
-        self.starUnchecked = pygame.image.load("./picture/interface/starUnchecked.png")
+        self.starUnchecked = pygame.image.load("./Pictures/Interfaces/starUnchecked.png")
         self.starUnchecked = pygame.transform.scale(self.starUnchecked,(60, 60))
 
-        self.starChecked = pygame.image.load("./picture/interface/starChecked.png")
+        self.starChecked = pygame.image.load("./Pictures/Interfaces/starChecked.png")
         self.starChecked = pygame.transform.scale(self.starChecked,(60, 60))
 
         for i in range(0,5):
@@ -122,9 +122,9 @@ class LevelSelectionInterface(Interface):
                 self.screen.blit(self.starUnchecked,(self.screenWidth*0.75+70*i, 10))
 
         pygame.font.init()
-        fontGlitch=pygame.font.Font("./font/Glitch.otf",70)
-        fontArial=pygame.font.Font("./font/Arial.ttf",30)
-        fontBigArial = pygame.font.Font("./font/Arial.ttf", 40)
+        fontGlitch=pygame.font.Font("./Fonts/Glitch.otf",70)
+        fontArial=pygame.font.Font("./Fonts/Arial.ttf",30)
+        fontBigArial = pygame.font.Font("./Fonts/Arial.ttf", 40)
 
         if(len(name)>15):
             name=name[0:15]+"..."
@@ -200,6 +200,6 @@ class LevelSelectionInterface(Interface):
         pygame.display.update()
 
     def pre_load_all_stages(self):
-        self.file=os.listdir("stages")
+        self.file=os.listdir("Stages")
         for file in self.file:
-            self.stages.append(Stage("stages/"+file+"/"+file+".issou",self.screen))
+            self.stages.append(Stage("Stages/"+file+"/"+file+".issou",self.screen))

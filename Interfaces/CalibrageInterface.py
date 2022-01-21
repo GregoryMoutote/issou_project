@@ -1,6 +1,6 @@
-from Interface.Interface import *
+from Interfaces.Interface import *
 import ctypes
-from Interface.GIF.CalibrageGIF import *
+from Interfaces.GIF.CalibrageGIF import *
 
 user32 = ctypes.windll.user32
 width = user32.GetSystemMetrics(0)
@@ -38,8 +38,8 @@ class InterfaceCalibrage(Interface):
 
         self.screen.fill((255, 255, 255))
         pygame.font.init()
-        arialFont = pygame.font.Font("./font/lemonmilk.otf", 70)
-        arialFont2 = pygame.font.Font("./font/arial.ttf", 50)
+        arialFont = pygame.font.Font("./Fonts/lemonmilk.otf", 70)
+        arialFont2 = pygame.font.Font("./Fonts/arial.ttf", 50)
         text = arialFont.render("Calibrage en cours...", True, (0, 0, 0))
         text2 = arialFont2.render("Espace pour passer", True, (0, 0, 0))
         pygame.font.quit()

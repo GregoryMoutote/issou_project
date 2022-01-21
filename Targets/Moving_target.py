@@ -1,6 +1,6 @@
 from Targets.Target import Target
-from Coordinates import Coordinates
-from Constants import *
+from Model.Stage.Coordinates import Coordinates
+from Model.Constants import *
 import time
 import ctypes
 
