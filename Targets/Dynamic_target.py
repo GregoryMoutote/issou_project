@@ -8,10 +8,10 @@ class Dynamic_target(Target):
             self.screen=screen
             super(Dynamic_target, self).__init__(targetData,self.screen,picture)
             self.begin_value=self.value
-            self.end_value = int(targetData[9])
+            self.end_value = int(targetData[7])
 
     def display(self):
-        print(self.coordinates, self.duration, self.delay, self.value, self.end_value, self.color)
+        print(self.coordinates, self.duration, self.delay, self.value, self.end_value)
 
     def update(self):
         if self.beginTime == 0:

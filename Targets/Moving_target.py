@@ -5,15 +5,15 @@ import time
 
 class Moving_target(Target):
     def __init__(self, targetData,screen,picture):
-        if isinstance(targetData, list) and len(targetData) >= 11:
+        if isinstance(targetData, list) and len(targetData) >= 9:
             self.beginTime =0
             self.screen=screen
             super(Moving_target, self).__init__(targetData,screen,picture)
             self.begin_coordinates = Coordinates(self.coordinates.x, self.coordinates.y)
-            self.end_coordinates = Coordinates(float(targetData[9]), float(targetData[10]))
+            self.end_coordinates = Coordinates(float(targetData[7]), float(targetData[8]))
 
     def display(self):
-        print(self.coordinates, self.end_coordinates, self.duration, self.delay, self.value, self.color)
+        print(self.coordinates, self.end_coordinates, self.duration, self.delay, self.value)
 
     def update(self):
         if self.beginTime == 0:
