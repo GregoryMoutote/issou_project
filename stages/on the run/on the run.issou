@@ -1,0 +1,42 @@
+ext=issou
+type=stage
+owner=game
+crea_date=15/12/2021
+$
+title=on the run
+difficulty=2
+$
+title=on the run
+desc=§What a wonderful music ! I never listened something like that !
+(What a good joke too ;) !)§
+authors=§Greg
+Guigui
+Dodo§
+$
+type=1
+coo=0.4|0.3
+dur=4.5
+del=5
+val=15
+texture=basic_blue
+type=2
+coo=0.8|0.8
+dur=5
+del=5
+val=13
+texture=basic_blue
+end_coo=0.5|0.1
+type=3
+coo=0.1|0.2
+dur=5
+del=5
+val=13
+texture=basic_blue
+end_val=3
+type=4
+coo=0.3|0.6
+dur=5
+del=5
+val=13
+texture=basic_blue
+step=§0.4|0.5§0.5|0.3§0.2|0.3§
