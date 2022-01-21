@@ -7,7 +7,7 @@ from Constants import *
 class Rail_target(Target):
     def __init__(self, targetData,screen,picture):
         if isinstance(targetData, list) and len(targetData) >= 9:
-            self.transparentPicture=pygame.image.load("picture/targets/"+picture[:-4]+"_transparent.png")
+            self.transparentPicture=pygame.image.load("picture/targets/transparent/"+picture[:-4]+"_transparent.png")
             self.transparentPicture = pygame.transform.scale(self.transparentPicture,(2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
             self.screen=screen
             super(Rail_target, self).__init__(targetData,self.screen,picture)

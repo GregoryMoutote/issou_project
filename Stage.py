@@ -148,7 +148,6 @@ class Stage:
                             self.activeTargets.pop(iterator)
 
     def update_targets(self):
-        print("update")
         for target, delay in self.activeTargets:
             target.update()
 

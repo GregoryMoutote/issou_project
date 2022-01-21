@@ -118,13 +118,15 @@ class LevelCreationSecondInterface(Interface):
                 #placer les cibles
                 elif self.rightX > Constants.TARGET_RADIUS and self.rightX < self.screenWidth*0.8-Constants.TARGET_RADIUS and self.rightY >  Constants.TARGET_RADIUS and self.rightY < self.screenHeight*0.8-Constants.TARGET_RADIUS:
                     if self.isSelectedTarget:
-                        self.placeTarget.append(Target([0,self.rightX,self.rightY,10,10,25,255,255,255],self.screen,self.selectedPictureName))
-                        self.isSelectedTarget = False
-                        self.importDeleteButton.actif = False
-                        self.resetCoo()
-                        self.show()
+                        if(time.time()-self.lastClick>1):
+                            self.lastClick=time.time()
+                            self.placeTarget.append(Target([0,self.rightX,self.rightY,10,10,25,255,255,255],self.screen,self.selectedPictureName))
+                            self.isSelectedTarget = False
+                            self.importDeleteButton.actif = False
+                            self.resetCoo()
+                            self.show()
 
-                #choix d'un nouveau type de ciible
+                #choix d'un nouveau type de cible
                 for target in self.tagetsList:
                     if self.rightX > target.x and self.rightX < (target.x + target.width) and self.rightY > target.y and self.rightY < (target.y + target.height):
                         self.selectedPicture = target.picture
@@ -139,20 +141,20 @@ class LevelCreationSecondInterface(Interface):
 
                 #déplacement de cible
                 for target in self.placeTarget:
-                    i=0
                     if self.rightX > target.coordinates.x and self.rightX < (target.coordinates.x +Constants.TARGET_RADIUS) and self.rightY > target.coordinates.y and self.rightY < (target.coordinates.y +Constants.TARGET_RADIUS   ):
-                        self.isSelectedTarget = True
-                        picture = pygame.image.load("picture/targets/" + str(target.pictureName))
-                        self.selectedPicture = pygame.transform.scale(picture, (Constants.TARGET_RADIUS*0.8, Constants.TARGET_RADIUS*0.8))
-                        self.selectedPictureName = target.pictureName
-                        self.placeTarget.remove(target)
+                        if(time.time()-self.lastClick>1):
+                            self.lastClick=time.time()
+                            self.isSelectedTarget = True
+                            picture = pygame.image.load("picture/targets/" + str(target.pictureName))
+                            self.selectedPicture = pygame.transform.scale(picture, (Constants.TARGET_RADIUS*0.8, Constants.TARGET_RADIUS*0.8))
+                            self.selectedPictureName = target.pictureName
+                            self.placeTarget.remove(target)
 
-                        if self.isSelectedTarget:
-                            self.importDeleteButton.actif = True
-                        else:
-                            self.importDeleteButton.actif = False
-                        self.show()
-                        i+=1
+                            if self.isSelectedTarget:
+                                self.importDeleteButton.actif = True
+                            else:
+                                self.importDeleteButton.actif = False
+                            self.show()
 
 
     def show(self):
