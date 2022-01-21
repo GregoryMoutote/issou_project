@@ -27,9 +27,9 @@ class LevelCreationFirstInterface(Interface):
         self.backgroundPath = ""
         self.musicPath = ""
 
-        self.button = [pictureButton(self.screenWidth / 2 -200, self.screenHeight / 2-25 , 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255))]
-        self.button.append(pictureButton(self.screenWidth / 2 -200, self.screenHeight / 2 + 125, 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255)))
-        self.button.append(pictureButton(self.screenWidth / 2 -200, self.screenHeight / 2 + 250, 400, 75, self.screen, "button3.png","Valider", 30, 120, "Glitch.otf", (255, 255, 255)))
+        self.button = [PictureButton(self.screenWidth / 2 -200, self.screenHeight / 2-25 , 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255))]
+        self.button.append(PictureButton(self.screenWidth / 2 -200, self.screenHeight / 2 + 125, 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255)))
+        self.button.append(PictureButton(self.screenWidth / 2 -200, self.screenHeight / 2 + 250, 400, 75, self.screen, "button3.png","Valider", 30, 120, "Glitch.otf", (255, 255, 255)))
 
         self.show()
         self.resetCoo()
@@ -143,7 +143,6 @@ class LevelCreationFirstInterface(Interface):
 
         for bottun in self.button:
             bottun.showButton()
-
 
 
 
