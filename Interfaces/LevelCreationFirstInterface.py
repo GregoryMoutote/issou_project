@@ -6,109 +6,118 @@ from Interfaces.LevelCreationSecondInterface import *
 
 class LevelCreationFirstInterface(Interface):
 
-    def __init__(self,screenData,screen,detection,settings):
-        self.settings=settings
-        self.detection=detection
+    def __init__(self, screen_data, screen, detection, settings):
+        self.settings = settings
+        self.detection = detection
 
 
-        super().__init__(screenData, screen)
+        super().__init__(screen_data, screen)
 
         ##TEXT INPUT
-        self.defautX = self.screenWidth / 2 - 175
-        self.input_rect = pygame.Rect(self.defautX, self.screenHeight/2-200, 1000, 50)
-        self.isInputActive = False
-        self.userText = ""
+        self.default_x = self.screen_width / 2 - 175
+        self.input_rect = pygame.Rect(self.default_x, self.screen_height / 2 - 200, 1000, 50)
+        self.is_input_active = False
+        self.user_text = ""
         self.color = (0,0,0)
-        self.activeColor = (100,100,100)
-        self.inactiveColor = (50,50,50)
+        self.active_color = (100, 100, 100)
+        self.inactive_color = (50, 50, 50)
 
-        self.background=pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png")
+        self.background = pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png")
 
-        self.backgroundPath = ""
-        self.musicPath = ""
+        self.background_path = ""
+        self.music_path = ""
 
-        self.button = [PictureButton(self.screenWidth / 2 -200, self.screenHeight / 2-25 , 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255))]
-        self.button.append(PictureButton(self.screenWidth / 2 -200, self.screenHeight / 2 + 125, 400, 75, self.screen, "button2.png","Voir mes fichiers", 30, 40, "Glitch.otf", (255, 255, 255)))
-        self.button.append(PictureButton(self.screenWidth / 2 -200, self.screenHeight / 2 + 250, 400, 75, self.screen, "button3.png","Valider", 30, 120, "Glitch.otf", (255, 255, 255)))
+        self.buttons = [PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 25, 400, 75,
+                                      self.screen, "button2.png", "Voir mes fichiers", 30, 40, "Glitch.otf",
+                                      (255, 255, 255))]
+        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 125, 400, 75,
+                                          self.screen, "button2.png", "Voir mes fichiers", 30, 40, "Glitch.otf",
+                                          (255, 255, 255)))
+        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 250, 400, 75,
+                                          self.screen, "button3.png", "Valider", 30, 120, "Glitch.otf",
+                                          (255, 255, 255)))
 
         self.show()
-        self.resetCoo()
+        self.reset_coo()
         self.loop()
 
-
-
-
     def loop(self):
-        continuer=True
+        go_on=True
 
-        while continuer:
+        while go_on:
 
-            if len(self.detection.mediaPipe.rightHand) > 0:
-                self.rightX = self.detection.mediaPipe.rightHand[0]
-                self.rightY = self.detection.mediaPipe.rightHand[1]
+            if len(self.detection.media_pipe.right_hand) > 0:
+                self.right_x = self.detection.media_pipe.right_hand[0]
+                self.right_y = self.detection.media_pipe.right_hand[1]
 
-            if len(self.detection.mediaPipe.leftHand) > 0:
-                self.leftX = self.detection.mediaPipe.leftHand[0]
-                self.leftY = self.detection.mediaPipe.leftHand[1]
+            if len(self.detection.media_pipe.left_hand) > 0:
+                self.left_x = self.detection.media_pipe.left_hand[0]
+                self.left_y = self.detection.media_pipe.left_hand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        continuer = False
-                    if self.isInputActive:
+                        go_on = False
+                    if self.is_input_active:
                         if event.key == pygame.K_BACKSPACE:
-                            self.userText = self.userText[:-1]
+                            self.user_text = self.user_text[:-1]
                         else:
-                            self.userText += event.unicode
+                            self.user_text += event.unicode
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.rightX, self.rightY = pygame.mouse.get_pos()
-                    self.detection.mediaPipe.isFistClosed=1
+                    self.right_x, self.right_y = pygame.mouse.get_pos()
+                    self.detection.media_pipe.is_fist_closed=1
 
-            self.showHand()
+            self.show_hand()
 
-            if self.isInputActive:
-                self.color = self.activeColor
+            if self.is_input_active:
+                self.color = self.active_color
             else:
-                self.color = self.inactiveColor
+                self.color = self.inactive_color
 
-            if self.detection.mediaPipe.isFistClosed==1:
-                if self.rightX>self.button[0].x and self.rightX<(self.button[0].x+self.button[0].width) and self.rightY>self.button[0].y and self.rightY<(self.button[0].y+self.button[0].height):
-                   self.resetCoo()
+            if self.detection.media_pipe.is_fist_closed==1:
+                if self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
+                        self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
+                   self.reset_coo()
                    self.show()
-                   self.isInputActive = False
+                   self.is_input_active = False
 
 
-                   tmpPath = easygui.fileopenbox(title="Chosir une image",default='*.jpg', filetypes=[['*.png','*.jpg','*.jpeg',"Image File"]], multiple=False)
-                   if tmpPath  is not None:
-                       tmpExtension = self.getExtension(tmpPath)
-                       if tmpExtension=='.jpg' or tmpExtension=='.png' or tmpExtension=='.jpeg':
-                            self.backgroundPath = tmpPath
-                            self.button[0].text = "..." + self.backgroundPath[-16:]
+                   tmp_path = easygui.fileopenbox(title="Chosir une image",default='*.jpg',
+                                                 filetypes=[['*.png','*.jpg','*.jpeg',"Image File"]], multiple=False)
+                   if tmp_path  is not None:
+                       tmp_extension = self.get_extension(tmp_path)
+                       if tmp_extension== '.jpg' or tmp_extension== '.png' or tmp_extension== '.jpeg':
+                            self.background_path = tmp_path
+                            self.buttons[0].text = "..." + self.background_path[-16:]
 
 
-                elif self.rightX>self.button[1].x and self.rightX<(self.button[1].x+self.button[1].width) and self.rightY>self.button[1].y and self.rightY<(self.button[1].y+self.button[1].height):
-                    self.resetCoo()
+                elif self.buttons[1].x < self.right_x < (self.buttons[1].x + self.buttons[1].width) and \
+                        self.buttons[1].y < self.right_y < (self.buttons[1].y + self.buttons[1].height):
+                    self.reset_coo()
                     self.show()
-                    self.isInputActive = False
-                    tmpPath = easygui.fileopenbox(title="Chosir une musique", default='*.mp3', filetypes=[['*.mp3','*.wav','Music File']])
-                    if tmpPath is not None:
-                        tmpExtension = self.getExtension(tmpPath)
-                        if tmpExtension == '.mp3' or tmpExtension == '.wav':
-                            self.musicPath = tmpPath
-                            self.button[1].text = "..." + self.musicPath[-16:]
+                    self.is_input_active = False
+                    tmp_path = easygui.fileopenbox(title="Chosir une musique",
+                                                   default='*.mp3', filetypes=[['*.mp3','*.wav','Music File']])
+                    if tmp_path is not None:
+                        tmp_extension = self.get_extension(tmp_path)
+                        if tmp_extension == '.mp3' or tmp_extension == '.wav':
+                            self.music_path = tmp_path
+                            self.buttons[1].text = "..." + self.music_path[-16:]
 
-                elif self.rightX>self.button[2].x and self.rightX<(self.button[2].x+self.button[2].width) and self.rightY>self.button[2].y and self.rightY<(self.button[2].y+self.button[2].height):
-                    LevelCreationSecondInterface(self.screenData, self.screen, self.detection, self.settings)
-                    self.resetCoo()
+                elif self.buttons[2].x < self.right_x < (self.buttons[2].x + self.buttons[2].width) and \
+                        self.buttons[2].y < self.right_y < (self.buttons[2].y + self.buttons[2].height):
+                    LevelCreationSecondInterface(self.screen_data, self.screen, self.detection, self.settings)
+                    self.reset_coo()
                     self.show()
-                    self.isInputActive = False
+                    self.is_input_active = False
 
-                elif self.rightX>self.input_rect.x and self.rightX<(self.input_rect.x+self.input_rect.w) and self.rightY>self.input_rect.y and self.rightY<(self.input_rect.y+self.input_rect.h):
-                    self.isInputActive = True
+                elif self.input_rect.x < self.right_x < (self.input_rect.x + self.input_rect.w) and \
+                        self.input_rect.y < self.right_y < (self.input_rect.y + self.input_rect.h):
+                    self.is_input_active = True
                     pass
                 else:
-                    self.isInputActive = False
+                    self.is_input_active = False
 
 
 
@@ -116,52 +125,52 @@ class LevelCreationFirstInterface(Interface):
         self.screen.blit(self.background, (0, 0))
 
         pygame.font.init()
-        glitchFont = pygame.font.Font("./Fonts/glitch.otf", 80)
-        littleglitchFont=pygame.font.Font("./Fonts/glitch.otf",40)
-        titleText = glitchFont.render("Creation de niveau", True, (255, 255, 255))
-        text1=littleglitchFont.render("Nom du niveau", True, (255, 255, 255))
-        text2 = littleglitchFont.render("Image de fond", True, (255, 255, 255))
-        text3 = littleglitchFont.render("Musique", True, (255, 255, 255))
+        glitch_font = pygame.font.Font("./Fonts/glitch.otf", 80)
+        littleglitch_font = pygame.font.Font("./Fonts/glitch.otf",40)
+        title_text = glitch_font.render("Creation de niveau", True, (255, 255, 255))
+        text1 = littleglitch_font.render("Nom du niveau", True, (255, 255, 255))
+        text2 = littleglitch_font.render("Image de fond", True, (255, 255, 255))
+        text3 = littleglitch_font.render("Musique", True, (255, 255, 255))
         pygame.draw.rect(self.screen, self.color , self.input_rect)
-        text_surface = littleglitchFont.render(self.userText, True, (255, 255, 255))
+        text_surface = littleglitch_font.render(self.user_text, True, (255, 255, 255))
         pygame.font.quit()
 
 
-        self.screen.blit(titleText, (self.screenWidth / 2 - 500, 30))
-        self.screen.blit(text1, (self.screenWidth / 2 - 175, self.screenHeight/2-250))
-        self.screen.blit(text2, (self.screenWidth / 2 - 175, self.screenHeight/2-75))
-        self.screen.blit(text3, (self.screenWidth / 2 - 105, self.screenHeight/2+75))
+        self.screen.blit(title_text, (self.screen_width / 2 - 500, 30))
+        self.screen.blit(text1, (self.screen_width / 2 - 175, self.screen_height / 2 - 250))
+        self.screen.blit(text2, (self.screen_width / 2 - 175, self.screen_height / 2 - 75))
+        self.screen.blit(text3, (self.screen_width / 2 - 105, self.screen_height / 2 + 75))
         self.screen.blit(text_surface, (self.input_rect.x + 5, self.input_rect.y + 5))
         self.input_rect.w = max(100, text_surface.get_width() + 10)
 
 
-        if len(self.userText) <= 2:
-            self.input_rect.x = (self.screenWidth / 2) - (self.input_rect.w/2)
+        if len(self.user_text) <= 2:
+            self.input_rect.x = (self.screen_width / 2) - (self.input_rect.w / 2)
         else:
-            self.input_rect.x = self.screenWidth / 2 - text_surface.get_width() / 2
+            self.input_rect.x = self.screen_width / 2 - text_surface.get_width() / 2
 
 
-        for bottun in self.button:
-            bottun.showButton()
+        for button in self.buttons:
+            button.show_button()
 
 
 
-    def showHand(self):
+    def show_hand(self):
         self.show()
-        if len(self.detection.mediaPipe.leftHand)>0:
-            pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
+        if len(self.detection.media_pipe.left_hand)>0:
+            pygame.draw.circle(self.screen, (255, 0, 0), (self.left_x - 5, self.left_y - 5), 10)
 
-        if len(self.detection.mediaPipe.rightHand)>0:
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
+        if len(self.detection.media_pipe.right_hand)>0:
+            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def resetCoo(self):
-        self.rightX=0
-        self.rightY=0
-        self.leftX=0
-        self.leftY=0
+    def reset_coo(self):
+        self.right_x = 0
+        self.right_y = 0
+        self.left_x = 0
+        self.left_y = 0
 
 
 
-    def getExtension(self, fileName):
-        return fileName[fileName.find('.'):]
+    def get_extension(self, file_name):
+        return file_name[file_name.find('.'):]

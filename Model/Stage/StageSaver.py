@@ -1,6 +1,6 @@
-from Targets.Rail_target import Rail_target
-from Targets.Dynamic_target import Dynamic_target
-from Targets.Moving_target import Moving_target
+from Targets.RailTarget import RailTarget
+from Targets.DynamicTarget import DynamicTarget
+from Targets.MovingTarget import MovingTarget
 from Targets.Target import Target
 import mutagen
 import os
@@ -8,7 +8,7 @@ import Model.Stage.Stage
 import datetime
 import ctypes
 
-class Stage_Saver:
+class StageSaver:
     def __init__(self):
         self.stage = stage
         self.save_header()
@@ -39,11 +39,11 @@ class Stage_Saver:
         with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
             #if os.path.isfile("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3"):
             if os.path.isfile("Stages/" + "test_v2" + "/" + "test_v2" + ".mp3"):
-                #audioReader = mutagen.File("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3")
-                audioReader = mutagen.File("Stages/" + "test_v2" + "/" + "test_v2" + ".mp3")
-                file.write("title=" + str(audioReader["TIT2"]) + '\n')
-                file.write("desc=§" + str(audioReader["COMM::fra"]) + "§\n")
-                file.write("authors=§" + str(audioReader["TPE1"]).replace('/', '\n') + "§\n")
+                #audio_reader = mutagen.File("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3")
+                audio_reader = mutagen.File("Stages/" + "test_v2" + "/" + "test_v2" + ".mp3")
+                file.write("title=" + str(audio_reader["TIT2"]) + '\n')
+                file.write("desc=§" + str(audio_reader["COMM::fra"]) + "§\n")
+                file.write("authors=§" + str(audio_reader["TPE1"]).replace('/', '\n') + "§\n")
             else:
                 file.write("title=" + self.stage.stage_music.name + '\n' )
                 file.write("desc=" + "No description\n")
@@ -56,11 +56,11 @@ class Stage_Saver:
             screen = ctypes.windll.user32
             width = screen.GetSystemMetrics(0)
             for target in self.stage.targets:
-                if isinstance(target, Rail_target):
+                if isinstance(target, RailTarget):
                     file.write("type=4\n")
-                elif isinstance(target, Dynamic_target):
+                elif isinstance(target, DynamicTarget):
                     file.write("type=3\n")
-                elif isinstance(target, Moving_target):
+                elif isinstance(target, MovingTarget):
                     file.write("type=2\n")
                 else:
                     file.write("type=1\n")
@@ -72,15 +72,15 @@ class Stage_Saver:
 
                 file.write("texture=" + target.image + '\n')
 
-                if isinstance(target, Rail_target):
+                if isinstance(target, RailTarget):
                     string = "steps=§"
                     for coordinates in target.steps:
                         string += str(float(width) - float(coordinates.x)) + '|' +\
                                   str(float(width) - float(coordinates.y)) + '§'
                     file.write(string + '\n')
-                elif isinstance(target, Dynamic_target):
+                elif isinstance(target, DynamicTarget):
                     file.write("end_val=" + str(target.end_value) + '\n')
-                elif isinstance(target, Moving_target):
+                elif isinstance(target, MovingTarget):
                     file.write("end_coo=" + str(float(width) - float(target.end_coordinates.x)) + '|' +
                                str(float(width) - float(target.end_coordinates.y)))
                     file.write('\n')

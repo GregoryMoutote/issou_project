@@ -5,95 +5,100 @@ from Interfaces.SettingsInterface import *
 
 class PauseInterface(Interface):
 
-    def __init__(self,screenData,screen,detection,settings,parent):
-        self.parent=parent
-        self.settings=settings
-        self.detection=detection
+    def __init__(self, screen_data, screen, detection, settings, parent):
+        self.parent = parent
+        self.settings = settings
+        self.detection = detection
 
-        super().__init__(screenData, screen)
+        super().__init__(screen_data, screen)
 
         background=pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
         self.background = pygame.transform.scale(background, (450, 600))
 
-        self.bottun=[PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 - 160, 400, 100, self.screen, "button2.png", "REPRENDRE", 30, 50, "Glitch.otf", (255, 255, 255))]
-        self.bottun.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 - 50, 400, 100, self.screen, "button2.png", "REDEMARRER", 30, 50, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 60, 400, 100, self.screen, "button2.png", "PARAMETRE", 30, 50, "Glitch.otf", (255, 255, 255)))
-        self.bottun.append(PictureButton(self.screenWidth / 2 - 200, self.screenHeight / 2 + 170, 400, 100, self.screen, "button2.png", "QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.buttons = [PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 160, 400, 100, self.screen, "button2.png", "REPRENDRE", 30, 50, "Glitch.otf", (255, 255, 255))]
+        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 50, 400, 100, self.screen, "button2.png", "REDEMARRER", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 60, 400, 100, self.screen, "button2.png", "PARAMETRE", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 170, 400, 100, self.screen, "button2.png", "QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
 
         self.show()
-        self.resetCoo()
+        self.reset_coo()
         self.loop()
 
 
     def loop(self):
-        continuer=True
+        go_on = True
 
-        while continuer:
+        while go_on:
 
-            if len(self.detection.mediaPipe.rightHand) > 0:
-                self.rightX = self.detection.mediaPipe.rightHand[0]
-                self.rightY = self.detection.mediaPipe.rightHand[1]
+            if len(self.detection.media_pipe.right_hand) > 0:
+                self.right_x = self.detection.media_pipe.right_hand[0]
+                self.right_y = self.detection.media_pipe.right_hand[1]
 
-            if len(self.detection.mediaPipe.leftHand) > 0:
-                self.leftX = self.detection.mediaPipe.leftHand[0]
-                self.leftY = self.detection.mediaPipe.leftHand[1]
+            if len(self.detection.media_pipe.left_hand) > 0:
+                self.left_x = self.detection.media_pipe.left_hand[0]
+                self.left_y = self.detection.media_pipe.left_hand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        continuer = False
+                        go_on = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.rightX, self.rightY = pygame.mouse.get_pos()
-                    self.detection.mediaPipe.isFistClosed = 1
+                    self.right_x, self.right_y = pygame.mouse.get_pos()
+                    self.detection.media_pipe.is_fist_closed = 1
 
-            self.showHand()
+            self.show_hand()
 
-            if self.detection.mediaPipe.isFistClosed == 1:
+            if self.detection.media_pipe.is_fist_closed == 1:
 
-                if self.rightX < self.screenWidth/2-225 and self.rightX >self.screenWidth/2+225 and self.rightY < self.screenHeight/2-300 and self.rightY > self.screenHeight/2+300:
-                    continuer=False
+                if self.screen_width/2-225 > self.right_x > self.screen_width/2+225 and \
+                        self.screen_height / 2 - 300 > self.right_y > self.screen_height / 2 + 300:
+                    go_on = False
 
-                elif self.rightX > self.bottun[0].x and self.rightX < (self.bottun[0].x + self.bottun[0].width) and self.rightY > self.bottun[0].y and self.rightY < (self.bottun[0].y + self.bottun[0].height):
-                    continuer=False
+                elif self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
+                        self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
+                    go_on = False
 
-                elif self.rightX > self.bottun[1].x and self.rightX < (self.bottun[1].x + self.bottun[1].width) and self.rightY > self.bottun[1].y and self.rightY < (self.bottun[1].y + self.bottun[1].height):
+                elif self.buttons[1].x < self.right_x < (self.buttons[1].x + self.buttons[1].width) and \
+                        self.buttons[1].y < self.right_y < (self.buttons[1].y + self.buttons[1].height):
                     self.parent.stage.load()
-                    self.resetCoo()
+                    self.reset_coo()
                     self.show()
-                    continuer=False
+                    go_on = False
 
-                elif self.rightX > self.bottun[2].x and self.rightX < (self.bottun[2].x + self.bottun[2].width) and self.rightY > self.bottun[2].y and self.rightY < (self.bottun[2].y + self.bottun[2].height):
-                    SettingsInterface(self.screenData, self.screen, self.detection, self.settings)
-                    self.resetCoo()
+                elif self.buttons[2].x < self.right_x < (self.buttons[2].x + self.buttons[2].width) and \
+                        self.buttons[2].y < self.right_y < (self.buttons[2].y + self.buttons[2].height):
+                    SettingsInterface(self.screen_data, self.screen, self.detection, self.settings)
+                    self.reset_coo()
                     self.show()
 
-                elif self.rightX > self.bottun[3].x and self.rightX < (self.bottun[3].x + self.bottun[3].width) and self.rightY > self.bottun[3].y and self.rightY < (self.bottun[3].y + self.bottun[3].height):
-                    self.parent.continuer=False
-                    continuer=False
+                elif self.buttons[3].x < self.right_x < (self.buttons[3].x + self.buttons[3].width) and \
+                        self.buttons[3].y < self.right_y < (self.buttons[3].y + self.buttons[3].height):
+                    self.parent.go_on = False
+                    go_on = False
 
     def show(self):
-        self.screen.blit(self.background, (self.screenWidth/2-225,self.screenHeight/2-300))
-        for c in self.bottun:
-            c.showButton()
+        self.screen.blit(self.background, (self.screen_width / 2 - 225, self.screen_height / 2 - 300))
+        for button in self.buttons:
+            button.show_button()
         pygame.font.init()
-        myfont = pygame.font.Font("./Fonts/lemonmilk.otf", 60)
-        textsurface = myfont.render("PAUSE", True, (255, 255, 255))
+        my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 60)
+        text_surface = my_font.render("PAUSE", True, (255, 255, 255))
         pygame.font.quit()
-        self.screen.blit(textsurface, (self.screenWidth / 2 - 110, self.screenHeight/2-270))
+        self.screen.blit(text_surface, (self.screen_width / 2 - 110, self.screen_height / 2 - 270))
 
 
-    def showHand(self):
+    def show_hand(self):
         self.parent.show()
         self.show()
-        if len(self.detection.mediaPipe.leftHand)>0:
-            pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
+        if len(self.detection.media_pipe.left_hand)>0:
+            pygame.draw.circle(self.screen, (255, 0, 0), (self.left_x - 5, self.left_y - 5), 10)
 
-        if len(self.detection.mediaPipe.rightHand)>0:
-           pygame.draw.circle(self.screen, (255, 255, 255), (self.rightX-5, self.rightY-5), 10)
+        if len(self.detection.media_pipe.right_hand)>0:
+           pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def resetCoo(self):
-        self.rightX=0
-        self.rightY=0
-        self.leftX=0
-        self.leftY=0
+    def reset_coo(self):
+        self.right_x = 0
+        self.right_y = 0
+        self.left_x = 0
+        self.left_y = 0

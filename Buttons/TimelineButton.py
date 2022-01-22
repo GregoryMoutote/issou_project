@@ -4,24 +4,25 @@ import time
 
 class TimelineButton(Button):
 
-    def __init__(self, x, y, width,height,screen,backPicture,frontPicture):
-        super().__init__(x,y,width,height,screen)
-        self.time=time.time()
-        self.backPicture = pygame.image.load("Pictures/Interfaces/" + backPicture)
-        self.backPicture = pygame.transform.scale(self.backPicture, (self.width, self.height))
-        self.frontPicture = pygame.image.load("Pictures/Interfaces/" + frontPicture)
-        self.frontScalePicture = pygame.transform.scale(self.frontPicture, (0, self.height))
-        self.percent=0
-        self.showButton()
+    def __init__(self, x, y, width, height, screen, back_picture, front_picture):
+        super().__init__(x, y, width, height, screen)
+        self.time = time.time()
+        self.back_picture = pygame.image.load("Pictures/Interfaces/" + back_picture)
+        self.back_picture = pygame.transform.scale(self.back_picture, (self.width, self.height))
+        self.front_picture = pygame.image.load("Pictures/Interfaces/" + front_picture)
+        self.front_scale_picture = pygame.transform.scale(self.front_picture, (0, self.height))
+        self.percent = 0
+        self.show_button()
 
 
-    def showButton(self):
-        self.screen.blit(self.backPicture, (self.x, self.y))
-        self.screen.blit(self.frontScalePicture, (self.x, self.y))
+    def show_button(self):
+        self.screen.blit(self.back_picture, (self.x, self.y))
+        self.screen.blit(self.front_scale_picture, (self.x, self.y))
 
 
-    def changeStat(self,percent):
-        if percent<=100:
-            self.percent=percent
-            self.frontScalePicture=pygame.transform.scale(self.frontPicture, (self.width*percent/100, self.height))
-            self.showButton()
+    def change_stat(self, percent):
+        if percent <= 100:
+            self.percent = percent
+            self.front_scale_picture = pygame.transform.scale(self.front_picture,
+                                                              (self.width * percent / 100, self.height))
+            self.show_button()

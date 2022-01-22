@@ -1,17 +1,17 @@
 from Interfaces.MainMenuInterface import *
 from Model.Settings.Settings import *
 import pygame
-from PlayerDetection.MediaPipeThread import MediaPipeThread
+from PlayerDetection.MediapipeThread import MediapipeThread
 
-detection = MediaPipeThread()
+detection = MediapipeThread()
 
 
-screenData = ctypes.windll.user32
+screen_data = ctypes.windll.user32
 
 pygame.init()
 
-screen = pygame.display.set_mode((screenData.GetSystemMetrics(0),screenData.GetSystemMetrics(1)),pygame.NOFRAME)
+screen = pygame.display.set_mode((screen_data.GetSystemMetrics(0), screen_data.GetSystemMetrics(1)), pygame.NOFRAME)
 settings = Settings()
 
-InterfaceCalibrage(screenData,screen,detection)
-MainMenuInterface(screenData,screen,detection,settings)
+CalibrationInterface(screen_data, screen, detection)
+MainMenuInterface(screen_data, screen, detection, settings)

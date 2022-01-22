@@ -2,12 +2,12 @@ import pygame.display
 
 from Model.Stage.Music import Music
 from Targets.Target import Target
-from Targets.Dynamic_target import Dynamic_target
-from Targets.Moving_target import Moving_target
-from Targets.Rail_target import Rail_target
+from Targets.DynamicTarget import DynamicTarget
+from Targets.MovingTarget import MovingTarget
+from Targets.RailTarget import RailTarget
 from Model.Stage.Date import Date
 from pygame import mixer
-from Model.Stage.StageSaver import Stage_Saver
+from Model.Stage.StageSaver import StageSaver
 import time
 import os
 
@@ -22,7 +22,7 @@ class Stage:
         self.difficulty = 0
         self.name = ""
         self.best_score = 0
-        self.activeTargets = []
+        self.active_targets = []
         self.stage_music = None
         self.date = None
         self.is_stage_usable = False
@@ -34,7 +34,7 @@ class Stage:
     def load(self):
         self.score = 0
         self.targets.clear()
-        self.activeTargets.clear()
+        self.active_targets.clear()
         self.is_stage_usable = False
         self.spend = -1
         self.start = -1
@@ -75,10 +75,10 @@ class Stage:
                 return
             else:
                 first_delimiter = line.find('/')
-                day = line[10:first_delimiter]
+                day = line[10 : first_delimiter]
                 second_delimiter = line.find('/', first_delimiter + 1)
-                month = line[first_delimiter + 1: second_delimiter]
-                year = line[second_delimiter + 1: -1]
+                month = line[first_delimiter + 1:second_delimiter]
+                year = line[second_delimiter + 1:-1]
                 self.date = Date(day, month, year)
             line = file.readline()
             if "$" not in line:
@@ -89,7 +89,7 @@ class Stage:
                 file.close()
                 return
             else:
-                self.name = line[6:-1].lower()
+                self.name = line[6 : -1].lower()
             line = file.readline()
             if "difficulty=" not in line:
                 file.close()
@@ -135,9 +135,8 @@ class Stage:
     def play(self):
         if self.is_stage_usable:
             if self.spend > 0:
-                print("Delay application")
-                for iterator in range (0, len(self.activeTargets)):
-                    self.activeTargets[iterator][1] += self.spend
+                for iterator in range (0, len(self.active_targets)):
+                    self.active_targets[iterator][1] += self.spend
                 if self.start <= 0:
                     self.stage_music.play()
                 self.start += self.spend
@@ -149,20 +148,20 @@ class Stage:
                 if len(self.targets) > 0:
                     self.next_action = self.start + self.targets[0].delay
                     if self.next_action <= time.time():
-                        self.activeTargets.append([self.targets[0], time.time() + self.targets[0].duration])
+                        self.active_targets.append([self.targets[0], time.time() + self.targets[0].duration])
                         self.targets.pop(0)
-                if len(self.activeTargets) > 0:
-                    for iterator in range(len(self.activeTargets) - 1, -1, -1):
-                        if self.activeTargets[iterator][1] <= time.time():
-                            self.activeTargets.pop(iterator)
+                if len(self.active_targets) > 0:
+                    for iterator in range(len(self.active_targets) - 1, -1, -1):
+                        if self.active_targets[iterator][1] <= time.time():
+                            self.active_targets.pop(iterator)
 
     def update_targets(self):
-        for target, delay in self.activeTargets:
+        for target, delay in self.active_targets:
             target.update()
 
     def show_targets(self):
-        for target,delay in self.activeTargets:
-            target.showTarget()
+        for target,delay in self.active_targets:
+            target.show_target()
  
     def pause(self):
         self.spend = time.time()
@@ -264,67 +263,67 @@ class Stage:
                 return
             line = file.readline()
             while line:
-                targetData = []
+                target_data = []
                 if "type=" not in line or not line or '\n' not in line:
                     break
-                targetData.append(int(line[5:-1]))
+                target_data.append(int(line[5:-1]))
                 line = file.readline()
                 if "coo=" not in line or '|' not in line or not line or '\n' not in line:
                     break
-                targetData.append(float(line[4:line.find('|')]))
-                targetData.append(float(line[line.find('|') + 1:-1]))
+                target_data.append(float(line[4:line.find('|')]))
+                target_data.append(float(line[line.find('|') + 1:-1]))
                 line = file.readline()
                 if "dur=" not in line or not line or '\n' not in line:
                     break
-                targetData.append(float(line[4:-1]))
+                target_data.append(float(line[4:-1]))
                 line = file.readline()
                 if "del=" not in line or not line or '\n' not in line:
                     break
-                targetData.append(float(line[4:-1]))
+                target_data.append(float(line[4:-1]))
                 line = file.readline()
                 if "val=" not in line or not line or '\n' not in line:
                     break
-                targetData.append(int(line[4:-1]))
+                target_data.append(int(line[4:-1]))
                 line = file.readline()
                 if "texture=" not in line or not line:
                     break
                 if '\n' in line:
-                    targetData.append(line[8:-1])
+                    target_data.append(line[8:-1])
                 else:
-                    targetData.append(line[8:len(line)])
+                    target_data.append(line[8:len(line)])
                 line = file.readline()
-                if targetData[0] == 2:
+                if target_data[0] == 2:
                     if "end_coo=" not in line or not line:
                         break
                     if "coo=" not in line or '|' not in line or not line:
                         break
-                    targetData.append(float(line[8:line.find('|')]))
-                    targetData.append(float(line[line.find('|') + 1:-1]))
+                    target_data.append(float(line[8:line.find('|')]))
+                    target_data.append(float(line[line.find('|') + 1:-1]))
                     line = file.readline()
-                elif targetData[0] == 3:
+                elif target_data[0] == 3:
                     if "end_val=" not in line or not line:
                         break
-                    targetData.append(int(line[8:-1]))
+                    target_data.append(int(line[8:-1]))
                     line = file.readline()
-                elif targetData[0] == 4:
+                elif target_data[0] == 4:
                     if "step=" not in line or not line:
                         break
                     delimiter = line.find('§')
                     while '§' in line[delimiter + 1: len(line)]:
                         next_delimiter = line.find('§', delimiter + 1)
-                        toProcess = line[delimiter + 1: next_delimiter - 1]
-                        targetData.append(float(toProcess[0:toProcess.find('|')]))
-                        targetData.append(float(toProcess[toProcess.find('|') + 1:len(toProcess)]))
+                        to_process = line[delimiter + 1: next_delimiter - 1]
+                        target_data.append(float(to_process[0:to_process.find('|')]))
+                        target_data.append(float(to_process[to_process.find('|') + 1:len(to_process)]))
                         delimiter = next_delimiter
                     line = file.readline()
-                if targetData[0] == 2:
-                    self.targets.append(Moving_target(targetData,self.screen,self.name))
-                elif targetData[0] == 3:
-                    self.targets.append(Dynamic_target(targetData,self.screen,self.name))
-                elif targetData[0] == 4:
-                    self.targets.append(Rail_target(targetData,self.screen,self.name))
+                if target_data[0] == 2:
+                    self.targets.append(MovingTarget(target_data, self.screen, self.name))
+                elif target_data[0] == 3:
+                    self.targets.append(DynamicTarget(target_data, self.screen, self.name))
+                elif target_data[0] == 4:
+                    self.targets.append(RailTarget(target_data, self.screen, self.name))
                 else:
-                    self.targets.append(Target(targetData,self.screen,self.name))
+                    self.targets.append(Target(target_data,self.screen,self.name))
             file.close()
 
     def display_test(self):
@@ -339,15 +338,15 @@ class Stage:
 
     def test_collision(self, x, y):
         iterator = 0
-        for target, delay in self.activeTargets:
-            if isinstance(target, Rail_target):
+        for target, delay in self.active_targets:
+            if isinstance(target, RailTarget):
                 target.actualise(Coordinates(x, y))
                 if target.is_achieved:
-                    self.score += self.activeTargets[iterator][0].value
-                    del self.activeTargets[iterator]
+                    self.score += self.active_targets[iterator][0].value
+                    del self.active_targets[iterator]
             if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
-                self.score += self.activeTargets[iterator][0].value
-                del self.activeTargets[iterator]
+                self.score += self.active_targets[iterator][0].value
+                del self.active_targets[iterator]
             iterator += 1
 
     def set_pose(self, ratio: float, targets: list):
@@ -359,12 +358,12 @@ class Stage:
             before = True
         if before:
             self.targets = targets
-            self.activeTargets.clear()
+            self.active_targets.clear()
         for target in self.targets:
             if self.targets.delay < new_pose:
                 if self.targets.delay + self.targets.duration > new_pose:
-                    self.activeTargets.append(target,
-                                              time.time() + self.targets.delay + self.targets.duration - new_pose)
+                    self.active_targets.append(target,
+                                               time.time() + self.targets.delay + self.targets.duration - new_pose)
             else:
                 break
             self.targets.pop(0)

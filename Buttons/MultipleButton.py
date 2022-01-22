@@ -1,36 +1,36 @@
-from Buttons.CocheButton import *
+from Buttons.CheckButton import *
 from Buttons.Button import *
 
 class MultipleButton(Button):
 
-    def __init__(self, x, y, width, height, screen,trueColor,falseColor,nbButton,nbActif):
+    def __init__(self, x, y, width, height, screen, true_color, false_color, nb_button, nb_active):
         super().__init__(x,y,width,height,screen)
-        self.nbButton = nbButton
-        self.nbActif = nbActif
-        self.trueColor = trueColor
-        self.falseColor = falseColor
-        self.coche=[]
+        self.nb_button = nb_button
+        self.nb_active = nb_active
+        self.true_color = true_color
+        self.false_color = false_color
+        self.check = []
 
-        for i in range(0, self.nbButton):
-            if i < self.nbActif:
-                self.coche.append(CocheButton(self.x + i * self.width / (self.nbButton + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, True))
+        for i in range(0, self.nb_button):
+            if i < self.nb_active:
+                self.check.append(CheckButton(self.x + i * self.width / (self.nb_button + 1), self.y, self.height, self.height, self.screen, self.true_color, self.false_color, True))
             else:
-                self.coche.append(CocheButton(self.x + i * self.width / (self.nbButton + 1), self.y, self.height, self.height, self.screen, self.trueColor, self.falseColor, False))
-        self.showButton()
+                self.check.append(CheckButton(self.x + i * self.width / (self.nb_button + 1), self.y, self.height, self.height, self.screen, self.true_color, self.false_color, False))
+        self.show_button()
 
-    def showButton(self):
-        for i in range(0, self.nbButton):
-             self.coche[i].showButton()
+    def show_button(self):
+        for i in range(0, self.nb_button):
+             self.check[i].show_button()
 
-    def changeStat(self,nbActif):
-        self.nbActif=nbActif
+    def change_stat(self, nb_active):
+        self.nb_active = nb_active
 
-        for i in range(0, self.nbButton):
-            if i < self.nbActif:
-                self.coche[i].actif=True
+        for i in range(0, self.nb_button):
+            if i < self.nb_active:
+                self.check[i].active = True
             else:
-                self.coche[i].actif=False
-        self.showButton()
+                self.check[i].active = False
+        self.show_button()
 
     def __del__(self):
-        self.coche.clear()
+        self.check.clear()

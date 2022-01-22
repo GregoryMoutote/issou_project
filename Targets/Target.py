@@ -6,29 +6,29 @@ import ctypes
 from Model.Constants import Constants
 
 class Target:
-    def __init__(self, targetData,screen,levelName):
-        if isinstance(targetData, list) and len(targetData) >= 7:
-            self.screen=screen
-            self.pictureName=targetData[6]
+    def __init__(self, target_data, screen, level_name):
+        if isinstance(target_data, list) and len(target_data) >= 7:
+            self.screen = screen
+            self.pictureName = target_data[6]
             screen = ctypes.windll.user32
-            self.coordinates = Coordinates(targetData[1] * screen.GetSystemMetrics(0),
-                                           targetData[2] * screen.GetSystemMetrics(1))
-            self.duration = float(targetData[3])
-            self.delay = float(targetData[4])
-            self.value = int(targetData[5])
+            self.coordinates = Coordinates(target_data[1] * screen.GetSystemMetrics(0),
+                                           target_data[2] * screen.GetSystemMetrics(1))
+            self.duration = float(target_data[3])
+            self.delay = float(target_data[4])
+            self.value = int(target_data[5])
             not_found = False
-            if isinstance(targetData[6], str):
-                if os.path.isfile("Pictures/Targets/" + targetData[6] + ".png"):
-                    self.picture = pygame.image.load("Pictures/Targets/" + targetData[6] + ".png")
+            if isinstance(target_data[6], str):
+                if os.path.isfile("Pictures/Targets/" + target_data[6] + ".png"):
+                    self.picture = pygame.image.load("Pictures/Targets/" + target_data[6] + ".png")
                     self.picture = pygame.transform.scale(self.picture, (
                     2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
-                    self.image = targetData[6]
-                elif os.path.isfile("Stages/" + levelName + "/specialTargets/" + targetData[6] + ".png"):
+                    self.image = target_data[6]
+                elif os.path.isfile("Stages/" + level_name + "/specialTargets/" + target_data[6] + ".png"):
                     self.picture = pygame.image.load(
-                        "Stages/" + levelName + "/specialTargets/" + targetData[6] + ".png")
+                        "Stages/" + level_name + "/specialTargets/" + target_data[6] + ".png")
                     self.picture = pygame.transform.scale(self.picture, (
                     2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
-                    self.image = targetData[6]
+                    self.image = target_data[6]
                 else:
                     not_found = True
             else:
@@ -45,5 +45,5 @@ class Target:
     def update(self):
         pass
 
-    def showTarget(self):
+    def show_target(self):
         self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,self.coordinates.y - Constants.TARGET_RADIUS))
