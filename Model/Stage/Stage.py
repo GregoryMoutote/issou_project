@@ -114,11 +114,16 @@ class Stage:
                 delimiter = line.find('§')
                 if delimiter != -1:
                     if delimiter == len(line) - 2:
-                        self.stage_music.description += line[:delimiter]
+                        if 'Â' in line:#line.find('Â') - 1
+                            self.stage_music.description += line[:delimiter - 1]
+                        else:
+                            self.stage_music.description += line[:delimiter]
                     else:
-                        self.stage_music.description += line[delimiter + 1:-1]
+                        self.stage_music.description += line[delimiter + 1:len(line)]
                 else:
-                    self.stage_music.description += line[:]
+                    self.stage_music.description += line[:len(line)]
+            while '\n' in self.stage_music.description:
+                self.stage_music.description = self.stage_music.description.replace('\n',' ')
             line = "pass"
             while line and line.find('§') != len(line) - 2:
                 line = file.readline()
