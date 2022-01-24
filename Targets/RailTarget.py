@@ -50,8 +50,8 @@ class RailTarget(Target):
         if actual_coordinates == None:
             return
         self.coordinates = actual_coordinates
-        if int(self.coordinates.x - self.steps[0][0]) ** 2 + \
-            int(self.coordinates.y - self.steps[0][1]) ** 2 <= (Constants.TARGET_RADIUS * 2) ** 2:
+        if int(self.coordinates.x - self.steps[0].x) ** 2 + \
+            int(self.coordinates.y - self.steps[0].y) ** 2 <= (Constants.TARGET_RADIUS * 2) ** 2:
             self.steps.pop(0)
         if len(self.steps) == 0:
             self.is_achieved = True

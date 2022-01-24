@@ -8,6 +8,7 @@ from Targets.RailTarget import RailTarget
 from Model.Stage.Date import Date
 from pygame import mixer
 from Model.Stage.StageSaver import StageSaver
+from Model.Stage.Coordinates import Coordinates
 import time
 import os
 
@@ -306,7 +307,7 @@ class Stage:
                     target_data.append(int(line[8:-1]))
                     line = file.readline()
                 elif target_data[0] == 4:
-                    if "step=" not in line or not line:
+                    if "steps=" not in line or not line:
                         break
                     delimiter = line.find('§')
                     while '§' in line[delimiter + 1: len(line)]:
