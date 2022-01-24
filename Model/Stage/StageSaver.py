@@ -42,7 +42,7 @@ class StageSaver:
                 #audio_reader = mutagen.File("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3")
                 audio_reader = mutagen.File("Stages/" + "test_v2" + "/" + "test_v2" + ".mp3")
                 file.write("title=" + str(audio_reader["TIT2"]) + '\n')
-                file.write("desc=§" + str(audio_reader["COMM::fra"]) + "§\n")
+                file.write("desc=§" + str(audio_reader["COMM::fra"]) + "\n§\n")
                 file.write("authors=§" + str(audio_reader["TPE1"]).replace('/', '\n') + "§\n")
             else:
                 file.write("title=" + self.stage.stage_music.name + '\n' )
