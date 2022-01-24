@@ -16,7 +16,7 @@ class RailTarget(Target):
             self.steps = []
             screen = ctypes.windll.user32
             while iterator < len(target_data) - 1:
-                self.steps.append(Coordinates(target_data[iterator] * screen.GetSystemMetrics(1),
+                self.steps.append(Coordinates(target_data[iterator] * screen.GetSystemMetrics(0),
                                               target_data[iterator + 1] * screen.GetSystemMetrics(1)))
                 iterator += 2
             self.is_achieved = False
