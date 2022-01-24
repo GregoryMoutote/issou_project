@@ -40,7 +40,7 @@ class LevelCreationSecondInterface(Interface):
                                        self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
                                        "levelCreationPlay.png", "levelCreationPause.png", True)
         self.fullscreen_button = CheckButton(self.screen_width * 0.26, self.screen_height * 0.82,
-                                             elf.screen_height * 0.1, self.screen_height * 0.1, self.screen,
+                                             self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
                                              "maximiser.png", "minimiser.png", True)
         self.import_delete_button = CheckButton(self.screen_width * 0.8, self.screen_height * 0.8,
                                                 self.screen_width * 0.2, self.screen_height * 0.1, self.screen,
