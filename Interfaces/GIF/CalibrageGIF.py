@@ -17,7 +17,7 @@ class load_gif(pygame.sprite.Sprite):
 		self.image = self.sprites[self.current_sprite]
 
 		self.rect = self.image.get_rect()
-		self.rect.top_left = [pos_x, pos_y]
+		self.rect.topleft = [pos_x, pos_y]
 
 	def update(self,speed):
 		self.current_sprite += speed
