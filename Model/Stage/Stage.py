@@ -149,8 +149,6 @@ class Stage:
                 if len(self.targets) > 0:
                     self.next_action = self.start + self.targets[0].delay
                     if self.next_action <= time.time():
-                        if isinstance(self.targets[0],DynamicTarget):
-                            print("dynamique")
                         self.active_targets.append([self.targets[0], time.time() + self.targets[0].duration])
                         self.targets.pop(0)
                 if len(self.active_targets) > 0:
@@ -314,7 +312,7 @@ class Stage:
                     delimiter = line.find('§')
                     while '§' in line[delimiter + 1: len(line)]:
                         next_delimiter = line.find('§', delimiter + 1)
-                        to_process = line[delimiter + 1: next_delimiter - 1]
+                        to_process = line[delimiter + 1: next_delimiter]
                         target_data.append(float(to_process[0:to_process.find('|')]))
                         target_data.append(float(to_process[to_process.find('|') + 1:len(to_process)]))
                         delimiter = next_delimiter
@@ -349,7 +347,6 @@ class Stage:
                     del self.active_targets[iterator]
             elif int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
                 self.score += self.active_targets[iterator][0].value
-                print(isinstance(target,DynamicTarget))
                 del self.active_targets[iterator]
             iterator += 1
 

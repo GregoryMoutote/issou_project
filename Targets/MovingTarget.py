@@ -19,6 +19,9 @@ class MovingTarget(Target):
     def display(self):
         print(self.coordinates, self.end_coordinates, self.duration, self.delay, self.value)
 
+    def show_target(self):
+        self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,self.coordinates.y - Constants.TARGET_RADIUS))
+
     def update(self):
         if self.begin_time == 0:
             self.begin_time = time.time()
