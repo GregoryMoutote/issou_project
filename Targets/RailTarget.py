@@ -68,10 +68,8 @@ class RailTarget(Target):
                 pygame.draw.line(self.screen,(0, 255, 0),(actual_coordinates.x,self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x -0.5*Constants.TARGET_RADIUS) * math.tan(angle)-Constants.TARGET_RADIUS),(actual_coordinates.x,self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle)+2.5*Constants.TARGET_RADIUS),10)
                 pygame.display.update()
 
-                print(actual_coordinates.y,"       >",self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle),"     <",self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle)+2*Constants.TARGET_RADIUS)
                 if (actual_coordinates.y<self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle)-Constants.TARGET_RADIUS) or \
                  (actual_coordinates.y>self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle)+3*Constants.TARGET_RADIUS):
-                    print("stop")
                     self.step_active=0
                     self.is_active=False
 
