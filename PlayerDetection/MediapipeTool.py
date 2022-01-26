@@ -56,6 +56,7 @@ class MediapipeTool :
 
                     if results_hand.multi_handedness[num].classification[0].label == "Right":
                         self.right_hand = self.calibration_util.calibrate_point((hand_x, hand_y))
+
                     if results_hand.multi_handedness[num].classification[0].label == "Left":
                         self.left_hand = self.calibration_util.calibrate_point((hand_x, hand_y))
 
@@ -104,6 +105,9 @@ class MediapipeTool :
 
     def close_camera(self):
         self.cap.release()
+
+    def reopen_camera(self):
+        self.cap = cv2.VideoCapture(0)
 
     def closed_fist_detection(self, hand):
         number_of_fingers_closed = 0

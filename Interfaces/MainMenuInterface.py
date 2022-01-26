@@ -6,6 +6,7 @@ from Interfaces.GIF.MainMenuGIF import *
 from PlayerDetection.MediapipeThread import *
 from Interfaces.LevelCreationFirstInterface import *
 import math
+from Interfaces.RefreshThread import *
 
 class MainMenuInterface(Interface):
 
@@ -45,7 +46,8 @@ class MainMenuInterface(Interface):
 
         self.show()
         self.reset_coo()
-        self.detection.start()
+        self.detection.init_hand_capture()
+
 
         self.loop()
 
@@ -56,31 +58,32 @@ class MainMenuInterface(Interface):
         go_on = True
 
         while go_on:
+            self.detection.hand_detection()
 
-            if len(self.detection.media_pipe.right_hand) > 0:
-                self.right_x = self.detection.media_pipe.right_hand[0]
-                self.right_y = self.detection.media_pipe.right_hand[1]
+            if len(self.detection.right_hand) > 0:
+                self.right_x = self.detection.right_hand[0]
+                self.right_y = self.detection.right_hand[1]
 
-            if len(self.detection.media_pipe.left_hand) > 0:
-                self.left_x = self.detection.media_pipe.left_hand[0]
-                self.left_y = self.detection.media_pipe.left_hand[1]
+            if len(self.detection.left_hand) > 0:
+                self.left_x = self.detection.left_hand[0]
+                self.left_y = self.detection.left_hand[1]
 
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         go_on = False
-                        self.detection.end_detection()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.right_x, self.right_y = pygame.mouse.get_pos()
-                    self.detection.media_pipe.is_fist_closed=1
+                    self.detection.is_fist_closed=1
 
             self.show_hand()
 
-            if self.detection.media_pipe.is_fist_closed == 1:
+            if self.detection.is_fist_closed == 1:
                 if self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
                         self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
-                   LevelSelectionInterface(self.screen_data, self.screen, self.detection, self.settings)
+                   Level_Selection_Interface(self.screen_data, self.screen, self.detection, self.settings)
+
                    self.reset_coo()
                    self.show()
 
@@ -98,7 +101,6 @@ class MainMenuInterface(Interface):
 
                 elif self.buttons[4].x < self.right_x < (self.buttons[4].x + self.buttons[4].width) and \
                         self.buttons[4].y < self.right_y < (self.buttons[4].y + self.buttons[4].height):
-                   self.detection.end_detection()
                    go_on = False
 
 
@@ -114,10 +116,10 @@ class MainMenuInterface(Interface):
 
     def show_hand(self):
         self.show()
-        if len(self.detection.media_pipe.left_hand)>0:
+        if len(self.detection.left_hand)>0:
             pygame.draw.circle(self.screen, (255, 0, 0), (self.left_x - 5, self.left_y - 5), 10)
 
-        if len(self.detection.media_pipe.right_hand)>0:
+        if len(self.detection.right_hand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
