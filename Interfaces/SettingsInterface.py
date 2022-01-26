@@ -15,27 +15,27 @@ class SettingsInterface(Interface):
         self.background = pygame.image.load("./Pictures/Interfaces/fond.png")
         self.background_logo = pygame.image.load("./Pictures/Interfaces/fondLogo.png")
 
-        self.buttons = [(ColorButton(100, self.screen_height / 2 + 120, self.screen_width * 0.85, 70, self.screen,
-                                     (14, 70, 140), "Recalibrer", 50, self.screen_width * 0.5 - 230,
+        self.buttons = [(ColorButton(self.screen_width*0.1, self.screen_height *0.6, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
+                                     (14, 70, 140), "Recalibrer", 50, self.screen_width * 0.5-300,
                                     "Arial.ttf", (255, 255, 255)))]
-        self.buttons.append(ColorButton(100, self.screen_height / 2 + 190, self.screen_width * 0.85, 70, self.screen,
-                                        (20, 40, 80), "Aide", 50, self.screen_width * 0.5 - 180,
+        self.buttons.append(ColorButton(self.screen_width*0.1, self.screen_height *0.7, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
+                                        (20, 40, 80), "Aide", 50, self.screen_width * 0.5-230,
                                        "Arial.ttf", (255, 255, 255)))
-        self.buttons.append(ColorButton(100, self.screen_height / 2 + 260, self.screen_width * 0.85, 70, self.screen,
-                                        (50, 50, 50), "Quitter", 50, self.screen_width * 0.5 - 180,
+        self.buttons.append(ColorButton(self.screen_width*0.1, self.screen_height *0.8, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
+                                        (50, 50, 50), "Quitter", 50, self.screen_width * 0.5-250,
                                        "Arial.ttf", (255, 255, 255)))
 
-        self.volume_button = MultipleButton(225, self.screen_height / 2 - 217, 1350, 100, self.screen,
+        self.volume_button = MultipleButton(self.screen_width*0.2, self.screen_height *0.3,self.screen_width*0.7, 100, self.screen,
                                            "soundOn.png", "soundOff.png", 10, self.settings.volume)
 
         if self.settings.volume == 0:
-            self.mute_button = CheckButton(100, self.screen_height / 2 - 217, 100, 100, self.screen,
+            self.mute_button = CheckButton(self.screen_width*0.1, self.screen_height *0.3, 100, 100, self.screen,
                                           "SoundMute.png", "SoundActive.png", True)
         else:
-            self.mute_button = CheckButton(100, self.screen_height / 2 - 217, 100, 100, self.screen,
+            self.mute_button = CheckButton(self.screen_width*0.1, self.screen_height *0.3, 100, 100, self.screen,
                                           "SoundMute.png", "SoundActive.png", False)
 
-        self.animation_button = CheckButton(700, self.screen_height / 2 - 92, 100, 100, self.screen,
+        self.animation_button = CheckButton(self.screen_width*0.4, self.screen_height *0.45, 100, 100, self.screen,
                                            "checkedOn.png", "checkedOff.png", self.settings.animation)
 
         self.reset_coo()
@@ -75,7 +75,6 @@ class SettingsInterface(Interface):
                 elif self.mute_button.x < self.right_x < (self.mute_button.x + self.mute_button.width) and \
                         self.mute_button.y < self.right_y < (self.mute_button.y + self.mute_button.height):
                     self.mute_button.change_stat()
-
                     if self.mute_button.active :
                         self.settings.set_volume(0)
                         self.volume_button.change_stat(0)
@@ -116,11 +115,8 @@ class SettingsInterface(Interface):
         for button in self.buttons:
             button.show_button()
 
-        self.screen.blit(text, (self.screen_width / 2 - 250, self.screen_height / 2 - 350))
-        self.screen.blit(text2, (100, self.screen_height / 2 - 75))
-
-        # text = font_arial.render("Volume", True, (255, 255, 255))
-        # self.screen.blit(text, (100, self.screenHeight / 2 - 200))
+        self.screen.blit(text, (self.screen_width *0.5-250, self.screen_height *0.1))
+        self.screen.blit(text2, (self.screen_width*0.1, self.screen_height*0.47))
 
         self.volume_button.show_button()
         self.mute_button.show_button()

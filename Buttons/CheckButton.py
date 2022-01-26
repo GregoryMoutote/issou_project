@@ -16,10 +16,8 @@ class CheckButton(Button):
 
     def show_button(self):
         if self.active:
-            #pygame.draw.circle(self.screen, self.trueColor, (self.x,self.y), self.radius)
             self.screen.blit(self.true_picture, (self.x, self.y))
         else:
-            #pygame.draw.circle(self.screen, self.falseColor, (self.x,self.y), self.radius)
             self.screen.blit(self.false_picture, (self.x, self.y))
 
 
