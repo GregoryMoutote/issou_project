@@ -25,7 +25,7 @@ class Settings:
         return self.volume
 
     def save_change(self):
-        file = open("data.issou", "w")
+        file = open("Model/Settings/data.issou", "w")
         file.write("Data file ISSOU\n")
         file.write(str(self.volume) + "\n")
         file.write(str(self.animation) + "\n")

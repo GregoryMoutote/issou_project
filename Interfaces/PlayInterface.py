@@ -10,7 +10,6 @@ class PlayInterface(Interface):
         self.stage = stage
         self.settings = settings
         self.detection = detection
-        self.detection.full_detection = True
         super().__init__(screen_data, screen)
 
         self.stage.load()
@@ -28,13 +27,13 @@ class PlayInterface(Interface):
 
         while self.go_on:
 
-            if len(self.detection.media_pipe.hand_points) > 0:
-                self.right_x = int(self.detection.media_pipe.hand_points[0][0])
-                self.right_y = int(self.detection.media_pipe.hand_points[0][1])
+            if len(self.detection.media_pipe.right_hand) > 0:
+                self.right_x = self.detection.media_pipe.right_hand[0]
+                self.right_y = self.detection.media_pipe.right_hand[1]
 
-            for x, y in self.detection.media_pipe.hand_points:
-                self.stage.test_collision(x, y)
-            self.stage.test_collision(self.right_x, self.right_y)
+            if len(self.detection.media_pipe.left_hand) > 0:
+                self.left_x = self.detection.media_pipe.left_hand[0]
+                self.left_y = self.detection.media_pipe.left_hand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -45,13 +44,14 @@ class PlayInterface(Interface):
                     self.right_x, self.right_y = pygame.mouse.get_pos()
                     self.detection.media_pipe.is_fist_closed = 1
 
+            self.stage.test_collision(self.right_x, self.right_y)
+
             self.stage.update_targets()
             self.stage.play()
             self.show_hand()
 
 
             if self.stage.is_end():
-                self.detection.full_detection = False
                 self.stage.save_best_score()
                 pygame.mixer.music.stop()
                 EndInterface(self.screen_data, self.screen, self.detection, self.settings, self)
@@ -60,22 +60,19 @@ class PlayInterface(Interface):
                 if self.pause_button.x < self.right_x < (self.pause_button.x + self.pause_button.width) and \
                         self.pause_button.y < self.right_y < (self.pause_button.y + self.pause_button.height):
                     self.stage.pause()
-                    self.detection.full_detection = False
                     PauseInterface(self.screen_data, self.screen, self.detection, self.settings, self)
-                    self.detection.full_detection = True
                     self.stage.resume()
                     self.reset_coo()
-                    self.detection.media_pipe.hand_points.clear()
                     self.show()
-
-        self.detection.full_detection = False
 
 
     def show_hand(self):
         self.show()
-        if len(self.detection.media_pipe.hand_points) > 0:
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.media_pipe.hand_points[0][0] - 10,
-                                                              self.detection.media_pipe.hand_points[0][1] - 10), 20)
+        #if len(self.detection.media_pipe.left_hand) > 0:
+            #pygame.draw.circle(self.screen, (255, 0, 0), (self.left_x - 10, self.left_y - 10), 20)
+
+        if len(self.detection.media_pipe.right_hand) > 0:
+            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 10, self.right_y - 10), 20)
         pygame.display.update()
 
 

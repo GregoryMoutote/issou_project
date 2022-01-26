@@ -11,10 +11,7 @@ class MediapipeThread(threading.Thread):
     def run(self):
         self.media_pipe.init_hand_capture()
         while self.go_on:
-            if self.full_detection:
-                self.media_pipe.complete_hand_detection()
-            else:
-                self.media_pipe.hand_detection()
+           self.media_pipe.hand_detection()
 
 
 
