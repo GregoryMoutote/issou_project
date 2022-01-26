@@ -16,13 +16,13 @@ class SettingsInterface(Interface):
         self.background_logo = pygame.image.load("./Pictures/Interfaces/fondLogo.png")
 
         self.buttons = [(ColorButton(100, self.screen_height / 2 + 120, self.screen_width * 0.85, 70, self.screen,
-                                     (0, 172, 240), "Recalibrer", 50, self.screen_width * 0.5 - 230,
+                                     (14, 70, 140), "Recalibrer", 50, self.screen_width * 0.5 - 230,
                                     "Arial.ttf", (255, 255, 255)))]
         self.buttons.append(ColorButton(100, self.screen_height / 2 + 190, self.screen_width * 0.85, 70, self.screen,
-                                        (0, 112, 192), "Aide", 50, self.screen_width * 0.5 - 180,
+                                        (20, 40, 80), "Aide", 50, self.screen_width * 0.5 - 180,
                                        "Arial.ttf", (255, 255, 255)))
         self.buttons.append(ColorButton(100, self.screen_height / 2 + 260, self.screen_width * 0.85, 70, self.screen,
-                                        (120, 120, 120), "Quitter", 50, self.screen_width * 0.5 - 180,
+                                        (50, 50, 50), "Quitter", 50, self.screen_width * 0.5 - 180,
                                        "Arial.ttf", (255, 255, 255)))
 
         self.volume_button = MultipleButton(225, self.screen_height / 2 - 217, 1350, 100, self.screen,

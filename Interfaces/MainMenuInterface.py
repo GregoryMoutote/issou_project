@@ -26,19 +26,19 @@ class MainMenuInterface(Interface):
         self.fond_logo = pygame.transform.scale(self.fond_logo, (self.screen_height * 0.5 * 1.57, self.screen_height * 0.5))
 
         self.buttons = [ColorButton(self.screen_width * 0.4, self.screen_height * 0.25, self.screen_width / 2,
-                                    self.screen_height * 0.1, self.screen, (0, 112, 192), "JOUER", 50, 450,
+                                    self.screen_height * 0.1, self.screen, (20, 40, 80), "JOUER", 50, 450,
                                     "Glitch.otf", (255, 255, 255))]
         self.buttons.append(ColorButton(self.screen_width * 0.4, self.screen_height * 0.35, self.screen_width / 2,
-                                        self.screen_height * 0.1, self.screen, (0, 172, 240), "TUTORIEL", 50, 420,
+                                        self.screen_height * 0.1, self.screen, (14, 70, 140), "TUTORIEL", 50, 420,
                                         "Glitch.otf", (255, 255, 255)))
         self.buttons.append(ColorButton(self.screen_width * 0.4, self.screen_height * 0.45, self.screen_width / 2,
-                                        self.screen_height * 0.1, self.screen, (0, 112, 192), "PARAMETRE", 50, 380,
+                                        self.screen_height * 0.1, self.screen, (20, 40, 80), "PARAMETRE", 50, 380,
                                         "Glitch.otf", (255, 255, 255)))
         self.buttons.append(ColorButton(self.screen_width * 0.4, self.screen_height * 0.55, self.screen_width / 2,
-                                        self.screen_height * 0.1, self.screen, (0, 172, 240), "CREER UN NIVEAU",
+                                        self.screen_height * 0.1, self.screen, (14, 70, 140), "CREER UN NIVEAU",
                                         50, 300, "Glitch.otf", (255, 255, 255)))
         self.buttons.append(ColorButton(self.screen_width * 0.4, self.screen_height * 0.65, self.screen_width / 2,
-                                        self.screen_height * 0.1, self.screen, (0, 112, 192), "QUITTER", 50, 450,
+                                        self.screen_height * 0.1, self.screen, (20, 40, 80), "QUITTER", 50, 450,
                                         "Glitch.otf", (255, 255, 255)))
 
         self.detection = detection
