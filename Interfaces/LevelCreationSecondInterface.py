@@ -148,15 +148,12 @@ class LevelCreationSecondInterface(Interface):
                     if self.is_selected_target:
                         if time.time() - self.last_click > 1:
                             self.last_click=time.time()
-                            print(self.selected_picture_name[:-4])
-                            self.placed_target.append(Target([0, self.right_x, self.right_y, 10, 10, 25,
-                                                            self.selected_picture_name[:-4]], self.screen,
-                                                           self.selected_picture_name[:-4]))
+                            self.placed_target.append(Target([0, ((self.right_x)/(self.screen_width*0.8))*0.8, ((self.right_y)/(self.screen_height*0.8))*0.8, 10, 10, 25,
+                                                            self.selected_picture_name], self.screen,self.selected_picture_name[:-4]))
                             self.is_selected_target = False
                             self.import_delete_button.active = False
                             self.reset_coo()
                             self.show()
-                            print(len(self.placed_target))
 
                 #choix d'un nouveau type de cible
                 for target in self.basic_targets_list:
@@ -179,7 +176,7 @@ class LevelCreationSecondInterface(Interface):
                         if(time.time()-self.last_click>1):
                             self.last_click=time.time()
                             self.is_selected_target = True
-                            picture = pygame.image.load("Pictures/Targets/" + str(target.pictureName) + ".png")
+                            picture = pygame.image.load("Pictures/Targets/" + str(target.pictureName))
                             self.selected_picture = pygame.transform.scale(picture, (Constants.TARGET_RADIUS * 0.8,
                                                                                      Constants.TARGET_RADIUS * 0.8))
                             self.selected_picture_name = target.pictureName

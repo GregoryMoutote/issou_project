@@ -18,6 +18,8 @@ class Target:
             self.value = int(target_data[5])
             not_found = False
             if isinstance(target_data[6], str):
+                if target_data[6].find("."):
+                    target_data[6]=target_data[6][:target_data[6].find(".")]
                 if os.path.isfile("Pictures/Targets/" + target_data[6] + ".png"):
                     self.picture = pygame.image.load("Pictures/Targets/" + target_data[6] + ".png")
                     self.picture = pygame.transform.scale(self.picture, (
