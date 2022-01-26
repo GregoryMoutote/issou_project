@@ -38,7 +38,7 @@ class LevelSelectionInterface(Interface):
         self.randomButton=PictureButton(self.screen_width * 0.8, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
         self.upButton=PictureButton(self.screen_width * 0.9, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
         self.downButtun=PictureButton(self.screen_width * 0.7, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.quitButton=PictureButton(0, self.screen_width * 0.9, self.screen_height * 0.25, self.screen_height * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf", (255, 255, 255))
+        self.quitButton=PictureButton(0, self.screen_height * 0.9, self.screen_width * 0.2, self.screen_height * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf", (255, 255, 255))
         self.playButton=PictureButton(self.screen_width / 5, self.screen_height / 2 - 100, 200, 200, self.screen, "play.png", "", 0, 0, "", (0, 0, 0))
 
         self.show()

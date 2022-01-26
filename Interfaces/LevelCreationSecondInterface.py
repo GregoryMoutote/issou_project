@@ -156,6 +156,7 @@ class LevelCreationSecondInterface(Interface):
                             self.import_delete_button.active = False
                             self.reset_coo()
                             self.show()
+                            print(len(self.placed_target))
 
                 #choix d'un nouveau type de cible
                 for target in self.basic_targets_list:
