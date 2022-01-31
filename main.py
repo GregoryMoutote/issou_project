@@ -2,8 +2,9 @@ from Interfaces.MainMenuInterface import *
 from Model.Settings.Settings import *
 import pygame
 from PlayerDetection.MediapipeThread import MediapipeThread
+from PlayerDetection.MediapipeTool import *
 
-detection = MediapipeThread()
+detection = MediapipeTool()
 
 
 screen_data = ctypes.windll.user32

@@ -1,4 +1,5 @@
 import threading
+from threading import Lock
 from PlayerDetection.MediapipeTool import MediapipeTool
 
 class MediapipeThread(threading.Thread):
@@ -6,7 +7,7 @@ class MediapipeThread(threading.Thread):
         threading.Thread.__init__(self)
         self.media_pipe = MediapipeTool()
         self.go_on = True
-        self.full_detection = False
+        self.my_turn = False
 
     def run(self):
         self.media_pipe.init_hand_capture()

@@ -26,7 +26,7 @@ class CalibrationInterface(Interface):
         result = False
 
         while result == False:
-            result = self.detection.media_pipe.set_up_calibration()
+            result = self.detection.set_up_calibration()
             self.show()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:

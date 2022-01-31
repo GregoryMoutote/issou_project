@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from Calibration import ShapeDetection
 import ctypes
-
+from datetime import datetime
 
 
 class CalibrationTool:
@@ -52,8 +52,6 @@ class CalibrationTool:
             self.M = cv2.getPerspectiveTransform(self.pts1, self.pts2)
 
             self.is_done = True
-        else:
-            pass
 
     def sort_points(self):
         tab_sum = [self.matrix[0][0] + self.matrix[0][1], self.matrix[1][0] + self.matrix[1][1],
@@ -92,10 +90,16 @@ class CalibrationTool:
             return img
 
     def calibrate_point(self, coord):
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+
         if self.M is not None:
-            result_matrix = np.matmul(self.M, np.float32([[coord[0]], [coord[1]], [1]]))
-            return (self.screen_width - result_matrix[0][0]) / result_matrix[2][0], \
-                   result_matrix[1][0] / result_matrix[2][0]
+            result_matrix = np.matmul(self.M, np.float32([coord[0],coord[1],1]))
+            return self.screen_width - (result_matrix[0]/result_matrix[2])+650,result_matrix[1]/result_matrix[2]
         else:
-            return (coord[0], coord[1])
+            #print("[", str(current_time),"]", str((coord[0], coord[1])))
+            return coord[0], coord[1]
+
+
+
 

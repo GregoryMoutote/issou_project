@@ -3,6 +3,7 @@ import pygame.draw
 from Buttons.ColorButton import *
 from Buttons.MultipleButton import *
 from Interfaces.CalibrationInterface import *
+from Interfaces.PreviewInterface import *
 
 class SettingsInterface(Interface):
 
@@ -18,8 +19,8 @@ class SettingsInterface(Interface):
         self.buttons = [(ColorButton(self.screen_width*0.1, self.screen_height *0.6, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
                                      (14, 70, 140), "Recalibrer", 50, self.screen_width * 0.5-300,
                                     "Arial.ttf", (255, 255, 255)))]
-        self.buttons.append(ColorButton(self.screen_width*0.1, self.screen_height *0.7, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
-                                        (20, 40, 80), "Aide", 50, self.screen_width * 0.5-230,
+        self.buttons.append(ColorButton(100, self.screen_height / 2 + 190, self.screen_width * 0.85, 70, self.screen,
+                                        (0, 112, 192), "Apercu Calibrage", 50, self.screen_width * 0.5 - 230,
                                        "Arial.ttf", (255, 255, 255)))
         self.buttons.append(ColorButton(self.screen_width*0.1, self.screen_height *0.8, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
                                         (50, 50, 50), "Quitter", 50, self.screen_width * 0.5-250,
@@ -47,14 +48,15 @@ class SettingsInterface(Interface):
 
         while go_on:
 
+            self.detection.hand_detection()
 
-            if len(self.detection.media_pipe.right_hand) > 0:
-                self.right_x = self.detection.media_pipe.right_hand[0]
-                self.right_y = self.detection.media_pipe.right_hand[1]
+            if len(self.detection.right_hand) > 0:
+                self.right_x = self.detection.right_hand[0]
+                self.right_y = self.detection.right_hand[1]
 
-            if len(self.detection.media_pipe.left_hand) > 0:
-                self.leftX = self.detection.media_pipe.left_hand[0]
-                self.leftY = self.detection.media_pipe.left_hand[1]
+            if len(self.detection.left_hand) > 0:
+                self.leftX = self.detection.left_hand[0]
+                self.leftY = self.detection.left_hand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -62,11 +64,11 @@ class SettingsInterface(Interface):
                         go_on = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.right_x, self.right_y = pygame.mouse.get_pos()
-                    self.detection.media_pipe.is_fist_closed = 1
+                    self.detection.is_fist_closed = 1
 
             self.show_hand()
 
-            if self.detection.media_pipe.is_fist_closed == 1:
+            if self.detection.is_fist_closed == 1:
                 if self.animation_button.x < self.right_x < (self.animation_button.x + self.animation_button.width) and \
                         self.animation_button.y < self.right_y < (self.animation_button.y + self.animation_button.height):
                     self.settings.animation = self.animation_button.change_stat()
@@ -86,6 +88,13 @@ class SettingsInterface(Interface):
                 elif self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
                         self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
                     CalibrationInterface(self.screen_data, self.screen, self.detection)
+                    self.reset_coo()
+                    self.show()
+
+                elif self.buttons[1].x < self.right_x < (self.buttons[1].x + self.buttons[1].width) and \
+                        self.buttons[1].y < self.right_y < (self.buttons[1].y + self.buttons[1].height):
+                    print("CLICK")
+                    PreviewInterface(self.screen_data,self.screen, self.detection)
                     self.reset_coo()
                     self.show()
 
@@ -125,10 +134,10 @@ class SettingsInterface(Interface):
 
     def show_hand(self):
         self.show()
-        if len(self.detection.media_pipe.left_hand)>0:
+        if len(self.detection.left_hand)>0:
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX-5, self.leftY-5), 10)
 
-        if len(self.detection.media_pipe.right_hand)>0:
+        if len(self.detection.right_hand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 

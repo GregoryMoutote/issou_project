@@ -32,14 +32,15 @@ class EndInterface(Interface):
         go_on = True
 
         while go_on:
+            self.detection.hand_detection()
 
-            if len(self.detection.media_pipe.right_hand) > 0:
-                self.right_x = self.detection.media_pipe.right_hand[0]
-                self.right_y = self.detection.media_pipe.right_hand[1]
+            if len(self.detection.right_hand) > 0:
+                self.right_x = self.detection.right_hand[0]
+                self.right_y = self.detection.right_hand[1]
 
-            if len(self.detection.media_pipe.left_hand) > 0:
-                self.leftX = self.detection.media_pipe.left_hand[0]
-                self.leftY = self.detection.media_pipe.left_hand[1]
+            if len(self.detection.left_hand) > 0:
+                self.leftX = self.detection.left_hand[0]
+                self.leftY = self.detection.left_hand[1]
 
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -48,11 +49,11 @@ class EndInterface(Interface):
                         go_on = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.right_x, self.right_y = pygame.mouse.get_pos()
-                    self.detection.media_pipe.is_fist_closed = 1
+                    self.detection.is_fist_closed = 1
 
             self.show_hand()
 
-            if self.detection.media_pipe.is_fist_closed == 1:
+            if self.detection.is_fist_closed == 1:
                 if self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
                         self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
                     self.parent.stage.load()
@@ -91,10 +92,10 @@ class EndInterface(Interface):
     def show_hand(self):
         self.parent.show()
         self.show()
-        if len(self.detection.media_pipe.left_hand) > 0:
+        if len(self.detection.left_hand) > 0:
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX - 5, self.leftY - 5), 10)
 
-        if len(self.detection.media_pipe.right_hand) > 0:
+        if len(self.detection.right_hand) > 0:
             pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 

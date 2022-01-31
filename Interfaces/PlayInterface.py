@@ -26,6 +26,7 @@ class PlayInterface(Interface):
         self.go_on = True
 
         while self.go_on:
+            self.detection.hand_detection()
 
             if len(self.detection.media_pipe.right_hand) > 0:
                 self.right_x = self.detection.media_pipe.right_hand[0]
@@ -42,7 +43,7 @@ class PlayInterface(Interface):
                         pygame.mixer.music.stop()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.right_x, self.right_y = pygame.mouse.get_pos()
-                    self.detection.media_pipe.is_fist_closed = 1
+                    self.detection.is_fist_closed = 1
 
             self.stage.test_collision(self.right_x, self.right_y)
 
@@ -56,23 +57,23 @@ class PlayInterface(Interface):
                 pygame.mixer.music.stop()
                 EndInterface(self.screen_data, self.screen, self.detection, self.settings, self)
 
-            if self.detection.media_pipe.is_fist_closed == 1:
+            if self.detection.is_fist_closed == 1:
                 if self.pause_button.x < self.right_x < (self.pause_button.x + self.pause_button.width) and \
                         self.pause_button.y < self.right_y < (self.pause_button.y + self.pause_button.height):
                     self.stage.pause()
                     PauseInterface(self.screen_data, self.screen, self.detection, self.settings, self)
                     self.stage.resume()
                     self.reset_coo()
+                    self.detection.hand_points.clear()
                     self.show()
+
 
 
     def show_hand(self):
         self.show()
-        #if len(self.detection.media_pipe.left_hand) > 0:
-            #pygame.draw.circle(self.screen, (255, 0, 0), (self.left_x - 10, self.left_y - 10), 20)
-
-        if len(self.detection.media_pipe.right_hand) > 0:
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 10, self.right_y - 10), 20)
+        if len(self.detection.right_hand) > 0:
+            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.right_hand[0]- 10,
+                                                              self.detection.right_hand[1] - 10), 20)
         pygame.display.update()
 
 
