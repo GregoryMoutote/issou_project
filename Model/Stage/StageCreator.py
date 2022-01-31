@@ -5,6 +5,8 @@ from Targets.Target import Target
 import os
 import shutil
 import re
+from Targets import *
+from Model.Constants import Constants
 
 class StageCreator:
     def __init__(self,screen, stage_name: str="",  illustration_path: str="", background_path: str="", music_path: str=""):
@@ -61,8 +63,15 @@ class StageCreator:
         self.targets.append(target)
 
     def rewind(self, ratio: float):
-        self.stage(ratio, self.targets)
+        self.stage.set_pose(ratio, self.targets)
 
     def save(self):
-        self.stage_saver = StageSaver(self.stage)
         self.stage_saver = None
+        self.stage_saver = StageSaver(self.stage)
+
+    def get_target_to_modify(self, x, y):
+        for target, delay in self.stage.active_targets:
+            if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
+                return target
+        return target
+
