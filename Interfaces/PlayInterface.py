@@ -1,5 +1,7 @@
 import pygame.draw
-
+####################
+import time
+####################
 from Interfaces.CalibrationInterface import *
 from Interfaces.PauseInterface import *
 from Interfaces.EndInterface import *
@@ -7,12 +9,19 @@ from Interfaces.EndInterface import *
 class PlayInterface(Interface):
 
     def __init__(self, screen_data, screen, detection, settings, stage):
+        ########################
+        self.beginning = time.time()
+        ########################
         self.stage = stage
         self.settings = settings
         self.detection = detection
         super().__init__(screen_data, screen)
 
         self.stage.load()
+        ########################
+        self.targets = []
+        self.targets.extend(self.stage.targets)
+        ########################
         self.background = pygame.image.load("./Stages/" + self.stage.name + "/background.png")
         self.background = pygame.transform.scale(self.background, (width, height))
         self.pause_button = PictureButton(20, 20, 100, 100, self.screen, "pause.png", "", 0, 0, "", (0, 0, 0))
@@ -24,7 +33,6 @@ class PlayInterface(Interface):
 
     def loop(self):
         self.go_on = True
-
         while self.go_on:
             self.detection.hand_detection()
 
