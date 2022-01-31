@@ -51,10 +51,16 @@ class StageCreator:
             self.is_usable = False
             return
 
-        self.stage.save_best_score()
         os.makedirs("Stages/" + self.stage.name + "/specialTargets")
 
         self.targets = []
 
     def add_target(self, target: Target):
-        pass
+        self.targets.append(target)
+
+    def rewind(self, ratio: float):
+        self.stage(ratio, self.targets)
+
+    def save(self):
+        self.stage_saver = StageSaver(self.stage)
+        self.stage_saver = None

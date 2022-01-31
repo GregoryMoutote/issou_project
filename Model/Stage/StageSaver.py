@@ -2,6 +2,7 @@ from Targets.RailTarget import RailTarget
 from Targets.DynamicTarget import DynamicTarget
 from Targets.MovingTarget import MovingTarget
 from Targets.Target import Target
+from Model.Stage.Stage import Stage
 import mutagen
 import os
 import Model.Stage.Stage
@@ -9,7 +10,7 @@ import datetime
 import ctypes
 
 class StageSaver:
-    def __init__(self):
+    def __init__(self, stage: Stage):
         self.stage = stage
         self.save_header()
         self.save_stage_header()
@@ -18,7 +19,6 @@ class StageSaver:
         self.create_best_score()
 
     def save_header(self):
-        os.makedirs("Stages/" + self.stage.name)
         with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "w") as file:
             file.write("ext=issou\n")
             file.write("type=stage\n")

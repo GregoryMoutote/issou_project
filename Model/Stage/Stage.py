@@ -15,8 +15,8 @@ import os
 from Model.Constants import Constants
 
 class Stage:
-    def __init__(self, file_path,screen):
-        self.screen=screen
+    def __init__(self, file_path, screen):
+        self.screen = screen
         self.path = file_path
         self.score = 0
         self.targets = []
