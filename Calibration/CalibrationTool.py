@@ -95,7 +95,7 @@ class CalibrationTool:
 
         if self.M is not None:
             result_matrix = np.matmul(self.M, np.float32([coord[0],coord[1],1]))
-            return self.screen_width - (result_matrix[0]/result_matrix[2])+650,result_matrix[1]/result_matrix[2]
+            return self.screen_width - (result_matrix[0]/result_matrix[2]),result_matrix[1]/result_matrix[2]
         else:
             #print("[", str(current_time),"]", str((coord[0], coord[1])))
             return coord[0], coord[1]
