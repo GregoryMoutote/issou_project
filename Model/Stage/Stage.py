@@ -32,6 +32,22 @@ class Stage:
         self.start = -1
         self.next_action = -1
 
+    def __init__(self, file_path, screen,isCreation):
+        self.screen = screen
+        self.path = file_path
+        self.score = 0
+        self.targets = []
+        self.difficulty = 0
+        self.name = ""
+        self.best_score = 0
+        self.active_targets = []
+        self.stage_music = None
+        self.date = None
+        self.is_stage_usable = False
+        self.spend = -1
+        self.start = -1
+        self.next_action = -1
+
     def load(self):
         self.score = 0
         self.targets.clear()
