@@ -17,17 +17,38 @@ class Level_Selection_Interface(Interface):
         super().__init__(screen_data, screen)
         self.pre_load_all_stages()
 
-        self.background = pygame.image.load("./Pictures/Interfaces/levelSelectionBackground.png")
+        self.background = pygame.image.load("./Pictures/Interfaces/fond.png")
 
         self.levels = []
         for stage in self.stages:
-            self.levels.append(Level(self.screen_width*0.35+self.screen_height*0.1,self.screen_height*0.17,stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,stage.stage_music.duration))
+            self.levels.append(Level(self.screen_width*0.35,self.screen_height*0.17,stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,stage.stage_music.duration))
 
-        self.randomButton=PictureButton(self.screen_width * 0.8, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.upButton=PictureButton(self.screen_width * 0.9, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.downButtun=PictureButton(self.screen_width * 0.7, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (255, 255, 255))
-        self.quitButton=PictureButton(0, self.screen_height * 0.9, self.screen_width * 0.2, self.screen_height * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf", (255, 255, 255))
-        self.playButton=PictureButton(self.screen_width / 5, self.screen_height / 2 - 100, 200, 200, self.screen, "play.png", "", 0, 0, "", (0, 0, 0))
+        self.random_button=PictureButton(self.screen_width * 0.8, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (175,175,175))
+        self.up_button=PictureButton(self.screen_width * 0.9, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (175,175,175))
+        self.down_button=PictureButton(self.screen_width * 0.7, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (175,175,175))
+        self.quit_button=PictureButton(0, self.screen_height * 0.9, self.screen_width * 0.2, self.screen_height * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf",(255,255,255))
+        self.play_button=PictureButton(self.screen_width / 5, self.screen_height / 2 - 100, 200, 200, self.screen, "play.png", "", 0, 0, "", (0, 0, 0))
+
+        self.banner_top_picture = pygame.image.load("./Pictures/Interfaces/bannerTop.png")
+        self.banner_top_picture = pygame.transform.scale(self.banner_top_picture, (self.screen_width, self.screen_height*0.2))
+
+        self.banner_bottom_picture = pygame.image.load("./Pictures/Interfaces/bannerBottom.png")
+        self.banner_bottom_picture = pygame.transform.scale(self.banner_bottom_picture, (self.screen_width, self.screen_height*0.15))
+
+        self.star_1 = pygame.image.load("./Pictures/Interfaces/star1.png")
+        self.star_1 = pygame.transform.scale(self.star_1, (60, 60))
+
+        self.star_2 = pygame.image.load("./Pictures/Interfaces/star2.png")
+        self.star_2 = pygame.transform.scale(self.star_2, (60, 60))
+
+        self.star_3 = pygame.image.load("./Pictures/Interfaces/star3.png")
+        self.star_3 = pygame.transform.scale(self.star_3, (60, 60))
+
+        self.star_4 = pygame.image.load("./Pictures/Interfaces/star4.png")
+        self.star_4 = pygame.transform.scale(self.star_4, (60, 60))
+
+        self.star_5 = pygame.image.load("./Pictures/Interfaces/star5.png")
+        self.star_5 = pygame.transform.scale(self.star_5, (60, 60))
 
         self.show()
         self.reset_coo()
@@ -105,27 +126,14 @@ class Level_Selection_Interface(Interface):
                     self.show()
 
 
-    def show_description(self, name, picture, difficulty, description, duration, nbStars):
+    def show_description(self, name, picture, difficulty, description, duration):
 
-        self.banner_top_picture = pygame.image.load("./Pictures/Interfaces/bannerTop.png")
-        self.banner_top_picture = pygame.transform.scale(self.banner_top_picture, (self.screen_width, self.screen_height / 4.5))
+
         self.screen.blit(self.banner_top_picture, (0, 0))
 
         self.music_picture = pygame.image.load("Stages/" + picture + "/" + picture + ".png")
         self.music_picture = pygame.transform.scale(self.music_picture, (self.screen_height / 5 - 20, self.screen_height / 5 - 20))
         self.screen.blit(self.music_picture, (10, 10))
-
-        self.star_unchecked = pygame.image.load("./Pictures/Interfaces/starUnchecked.png")
-        self.star_unchecked = pygame.transform.scale(self.star_unchecked, (60, 60))
-
-        self.star_checked = pygame.image.load("./Pictures/Interfaces/starChecked.png")
-        self.star_checked = pygame.transform.scale(self.star_checked, (60, 60))
-
-        for i in range(0,5):
-            if i < nbStars :
-                self.screen.blit(self.star_checked, (self.screen_width * 0.75 + 70 * i, 10))
-            else:
-                self.screen.blit(self.star_unchecked, (self.screen_width * 0.75 + 70 * i, 10))
 
         pygame.font.init()
         font_glitch=pygame.font.Font("./Fonts/Glitch.otf",70)
@@ -138,12 +146,19 @@ class Level_Selection_Interface(Interface):
         self.title = font_glitch.render(name, True, (255, 255, 255))
         self.screen.blit(self.title, (self.screen_height / 5, 10))
 
-        if difficulty == 0:
+        if difficulty >= 0:
             self.difficulty = font_big_arial.render("EASY", True, (0, 255, 0))
-        elif difficulty == 1:
+            self.screen.blit(self.star_1, (self.screen_width * 0.75, 10))
+        if difficulty >= 1:
+            self.screen.blit(self.star_2, (self.screen_width * 0.75 + 70, 10))
+        if difficulty >= 2:
             self.difficulty = font_big_arial.render("MEDIUM", True, (255, 128, 0))
-        else:
+            self.screen.blit(self.star_3, (self.screen_width * 0.75 + 140, 10))
+        if difficulty >= 3:
+            self.screen.blit(self.star_4, (self.screen_width * 0.75 + 210, 10))
+        if difficulty >= 4:
             self.difficulty = font_big_arial.render("HARD", True, (255, 0, 0))
+            self.screen.blit(self.star_5, (self.screen_width * 0.75 + 280, 10))
         self.screen.blit(self.difficulty, (self.screen_width * 0.64, 25))
 
         for i in range(0, len(description), 80):
@@ -167,27 +182,24 @@ class Level_Selection_Interface(Interface):
         self.screen.blit(self.background, (0, 0))
         self.play_button.show_button()
 
-        if len(self.levels) > 5 :
-            for i in range(0, 6):
+        if len(self.levels) > 4 :
+            for i in range(0, 5):
                 if i == 2:
-                    self.levels[i].show(self.screen,
-                                        self.screen_width * 0.40, self.screen_height * 0.167)
+                    self.levels[i].show(self.screen,self.screen_width*0.65, self.screen_height*0.085+self.screen_height * 0.167*i)
                 else:
-                    self.levels[i].show(self.screen,
-                                        self.screen_width * 0.35, self.screen_height * 0.167)
+                    self.levels[i].show(self.screen,self.screen_width*0.7, self.screen_height*0.085+self.screen_height * 0.167*i)
         else:
             for i in range(0, len(self.levels)):
                 if i == 2:
-                    self.levels[i].show(self.screen,
-                                        self.screen_width * 0.40, self.screen_height * 0.167)
+                    self.levels[i].show(self.screen,self.screen_width * 0.65, self.screen_height*0.085+self.screen_height * 0.167*i)
                 else:
-                    self.levels[i].show(self.screen,
-                                        self.screen_width * 0.35, self.screen_height * 0.167)
+                    self.levels[i].show(self.screen,self.screen_width * 0.7, self.screen_height*0.085+self.screen_height * 0.167*i)
 
         if len(self.levels) > 2:
             self.show_description(self.levels[2].name, self.levels[2].picture, self.levels[2].difficulty,
-                                  self.levels[2].description, self.levels[2].duration, self.levels[2].mark)
+                                  self.levels[2].description, self.levels[2].duration)
 
+        self.screen.blit(self.banner_bottom_picture, (0, self.screen_height*0.85))
         self.up_button.show_button()
         self.down_button.show_button()
         self.quit_button.show_button()

@@ -18,13 +18,13 @@ class SettingsInterface(Interface):
 
         self.buttons = [(ColorButton(self.screen_width*0.1, self.screen_height *0.6, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
                                      (14, 70, 140), "Recalibrer", 50, self.screen_width * 0.5-300,
-                                    "Arial.ttf", (255, 255, 255)))]
-        self.buttons.append(ColorButton(100, self.screen_height / 2 + 190, self.screen_width * 0.85, 70, self.screen,
-                                        (0, 112, 192), "Apercu Calibrage", 50, self.screen_width * 0.5 - 230,
-                                       "Arial.ttf", (255, 255, 255)))
+                                    "Arial.ttf", (65,105,225)))]
+        self.buttons.append(ColorButton(self.screen_width*0.1, self.screen_height *0.7, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
+                                     (20, 40, 80), "Aperçu calibrage", 50, self.screen_width * 0.5-350,
+                                    "Arial.ttf", (65,105,225)))
         self.buttons.append(ColorButton(self.screen_width*0.1, self.screen_height *0.8, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
                                         (50, 50, 50), "Quitter", 50, self.screen_width * 0.5-250,
-                                       "Arial.ttf", (255, 255, 255)))
+                                       "Arial.ttf", (65,105,225)))
 
         self.volume_button = MultipleButton(self.screen_width*0.2, self.screen_height *0.3,self.screen_width*0.7, 100, self.screen,
                                            "soundOn.png", "soundOff.png", 10, self.settings.volume)

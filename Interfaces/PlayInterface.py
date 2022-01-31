@@ -28,11 +28,11 @@ class PlayInterface(Interface):
         while self.go_on:
             self.detection.hand_detection()
 
-            if len(self.detection.media_pipe.right_hand) > 0:
+            if len(self.detection.right_hand) > 0:
                 self.right_x = self.detection.media_pipe.right_hand[0]
                 self.right_y = self.detection.media_pipe.right_hand[1]
 
-            if len(self.detection.media_pipe.left_hand) > 0:
+            if len(self.detection.left_hand) > 0:
                 self.left_x = self.detection.media_pipe.left_hand[0]
                 self.left_y = self.detection.media_pipe.left_hand[1]
 
