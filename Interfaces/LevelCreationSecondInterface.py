@@ -60,7 +60,7 @@ class LevelCreationSecondInterface(Interface):
         self.placed_target = []
 
         self.basic_targets_list = []
-        i = 1;
+        i = 1
         for file in os.listdir("Pictures/Targets"):
             if file != "Transparent":
                 self.basic_targets_list.append(MenuLevelCreationButton(self.screen_width * 0.8,
@@ -156,6 +156,8 @@ class LevelCreationSecondInterface(Interface):
                             self.reset_coo()
                             self.show()
 
+                elif self.screen_width * 0.05<self.right_x<self.screen_width*0.95 and self.screen_height*0.95<self.right_y<self.screen_height*0.97:
+
                 #choix d'un nouveau type de cible
                 for target in self.basic_targets_list:
                     if target.x < self.right_x < (target.x + target.width) and \
@@ -188,6 +190,8 @@ class LevelCreationSecondInterface(Interface):
                             else:
                                 self.import_delete_button.active = False
                             self.show()
+
+
 
 
     def show(self):
