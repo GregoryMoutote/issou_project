@@ -8,12 +8,13 @@ from Buttons.CheckButton import *
 from Buttons.MenuLevelCreationButton import *
 from Targets.Target import *
 from Model.Constants import *
+from Model.Stage.StageCreator import StageCreator
 import time
 import os
 
 class LevelCreationSecondInterface(Interface):
 
-    def __init__(self, screen_data, screen, detection, settings):
+    def __init__(self,screen_data,screen, detection, settings, stage_name, illustration_path, background_path, music_path):
         self.settings = settings
         self.detection = detection
 
@@ -24,7 +25,12 @@ class LevelCreationSecondInterface(Interface):
         self.selected_picture_name=None
         self.last_click=time.time()
 
-        self.background = pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png")
+        self.stage=StageCreator(self.screen,stage_name, illustration_path, background_path, music_path)
+
+        while background_path.find(".") != -1:
+            background_path = background_path[background_path.find(".")+1:]
+
+        self.background = pygame.image.load("./Stages/"+stage_name+"/background."+background_path)
         self.background = pygame.transform.scale(self.background, (self.screen_width * 0.80 + 1,
                                                                    self.screen_height * 0.80 + 1))
 
@@ -157,6 +163,8 @@ class LevelCreationSecondInterface(Interface):
                             self.show()
 
                 elif self.screen_width * 0.05<self.right_x<self.screen_width*0.95 and self.screen_height*0.95<self.right_y<self.screen_height*0.97:
+                    self.timeline.change_stat((self.right_x-self.screen_width * 0.05)/(self.screen_width*0.9))
+                    self.reset_coo()
 
                 #choix d'un nouveau type de cible
                 for target in self.basic_targets_list:

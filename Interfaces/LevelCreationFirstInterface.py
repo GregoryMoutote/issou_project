@@ -109,7 +109,7 @@ class LevelCreationFirstInterface(Interface):
 
                 elif self.buttons[2].x < self.right_x < (self.buttons[2].x + self.buttons[2].width) and \
                         self.buttons[2].y < self.right_y < (self.buttons[2].y + self.buttons[2].height):
-                    LevelCreationSecondInterface(self.screen_data, self.screen, self.detection, self.settings)
+                    LevelCreationSecondInterface(self.screen_data, self.screen, self.detection, self.settings,self.user_text,"./Pictures/Interfaces/testPicture.jpg",self.background_path,self.music_path)
                     self.reset_coo()
                     self.show()
                     self.is_input_active = False

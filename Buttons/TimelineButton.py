@@ -21,8 +21,8 @@ class TimelineButton(Button):
 
 
     def change_stat(self, percent):
-        if percent <= 100:
+        print(percent)
+        if percent <= 1:
             self.percent = percent
-            self.front_scale_picture = pygame.transform.scale(self.front_picture,
-                                                              (self.width * percent / 100, self.height))
+            self.front_scale_picture = pygame.transform.scale(self.front_picture,(self.width * percent, self.height))
             self.show_button()
