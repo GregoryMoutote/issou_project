@@ -11,10 +11,10 @@ from Model.Constants import Constants
 class StageCreator:
     def __init__(self,screen, stage_name: str="",  illustration_path: str="", background_path: str="", music_path: str=""):
         self.is_usable = True
-        #if re.search("\w+", stage_name):
-          #  print("passage2")
-          #  self.is_usable = False
-          #  return
+        if re.search("(\w| )+", stage_name):
+            print("passage2")
+            self.is_usable = False
+            return
         os.makedirs("Stages/" + stage_name)
         stage_path = "Stages/" + stage_name.lower() + '/' + stage_name.lower() + ".issou"
         self.stage = Stage(stage_path, screen,True)
@@ -60,7 +60,8 @@ class StageCreator:
         self.targets = []
 
     def add_target(self, target: Target):
-        self.targets.append(target)
+        if self.is_usable:
+            self.targets.append(target)
 
     def rewind(self, ratio: float):
         self.stage.set_pose(ratio, self.targets)
@@ -71,7 +72,7 @@ class StageCreator:
 
     def get_target_to_modify(self, x, y):
         for target, delay in self.stage.active_targets:
-            if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
+            if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS ** 2:
                 return target
         return target
 
