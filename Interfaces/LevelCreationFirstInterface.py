@@ -1,7 +1,4 @@
 import pygame.draw
-import easygui
-from Interfaces.Interface import *
-from Buttons.PictureButton import *
 from Interfaces.LevelCreationSecondInterface import *
 
 class LevelCreationFirstInterface(Interface):

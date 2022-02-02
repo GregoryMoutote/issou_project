@@ -17,6 +17,7 @@ class Target:
             self.delay = float(target_data[4])
             self.value = int(target_data[5])
             not_found = False
+
             if isinstance(target_data[6], str):
                 if target_data[6].find(".")!=-1:
                     target_data[6]=target_data[6][:target_data[6].find(".")]

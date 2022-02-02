@@ -11,6 +11,7 @@ from Model.Constants import *
 from Model.Stage.StageCreator import StageCreator
 import time
 import os
+import easygui
 
 class LevelCreationSecondInterface(Interface):
 
@@ -45,16 +46,19 @@ class LevelCreationSecondInterface(Interface):
         self.play_button = CheckButton(self.screen_width * 0.05, self.screen_height * 0.82,
                                        self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
                                        "levelCreationPlay.png", "levelCreationPause.png", True)
+
         self.fullscreen_button = CheckButton(self.screen_width * 0.26, self.screen_height * 0.82,
                                              self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
                                              "maximiser.png", "minimiser.png", True)
+
         self.import_delete_button = CheckButton(self.screen_width * 0.8, self.screen_height * 0.8,
                                                 self.screen_width * 0.2, self.screen_height * 0.1, self.screen,
-                                                "deleteButton.png", "importButton.png", False)
+                                                "importButton.png", "deleteButton.png", True)
 
         self.buttons = [PictureButton(self.screen_width * 0.12, self.screen_height * 0.82,
                                       self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
                                        "minusTen.png", "", 0, 0, "", (255, 255, 255))]
+
         self.buttons.append(PictureButton(self.screen_width * 0.19, self.screen_height * 0.82,
                                           self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
                                            "plusTen.png", "", 0, 0, "", (255, 255, 255)))
@@ -64,8 +68,9 @@ class LevelCreationSecondInterface(Interface):
                                        self.screen, "timelineGray.png", "timelineRed.png")
 
         self.placed_target = []
-
         self.basic_targets_list = []
+        self.import_targets_list = []
+
         i = 1
         for file in os.listdir("Pictures/Targets"):
             if file != "Transparent":
@@ -74,10 +79,8 @@ class LevelCreationSecondInterface(Interface):
                                                                        self.screen_width * 0.1,
                                                                        Constants.TARGET_RADIUS * 1.6,
                                                                        self.screen, file, file[6:-4], 35, 10,
-                                                                       "arial.ttf", (255, 255, 255)))
+                                                                       "arial.ttf", (255, 255, 255),""))
                 i += 1
-
-        self.import_targets_list=[]
 
         self.show()
         self.reset_coo()
@@ -146,21 +149,40 @@ class LevelCreationSecondInterface(Interface):
                         self.delete()
                     else:
                         self.import_delete_button.active = False
+                        target= easygui.fileopenbox(title="Chosir une cible",default='*.png')
+                        if target is not None:
+                            self.stage.add_special_target(target)
+                            while target.find("\\") != -1:
+                                target = target[target.find("\\") + 1:]
+                            if(len(self.import_targets_list)==0):
+                                self.import_targets_list.append(MenuLevelCreationButton(self.screen_width * 0.9,
+                                                                    self.screen_height * 0.1,
+                                                                    self.screen_width * 0.1,
+                                                                    Constants.TARGET_RADIUS * 1.6,
+                                                                    self.screen, target, target[:-4], 35, 10,
+                                                                    "arial.ttf", (255, 255, 255),self.stage.stage_name))
+                            else:
+                                self.import_targets_list.append(MenuLevelCreationButton(self.screen_width * 0.9,
+                                                                                       self.screen_height * 0.1 *(len(self.import_targets_list)+1),
+                                                                                       self.screen_width * 0.1,
+                                                                                       Constants.TARGET_RADIUS * 1.6,
+                                                                                       self.screen, target,target[:-4], 35, 10,
+                                                                                       "arial.ttf",
+                                                                                       (255, 255, 255),self.stage.stage_name))
                     self.reset_coo()
                     self.show()
 
                 #placer les cibles
                 elif Constants.TARGET_RADIUS < self.right_x < self.screen_width*0.8-Constants.TARGET_RADIUS and \
                         Constants.TARGET_RADIUS < self.right_y < self.screen_height * 0.8 - Constants.TARGET_RADIUS:
-                    if self.is_selected_target:
-                        if time.time() - self.last_click > 1:
-                            self.last_click=time.time()
-                            self.placed_target.append(Target([0, ((self.right_x)/(self.screen_width*0.8))*0.8, ((self.right_y)/(self.screen_height*0.8))*0.8, 10, 10, 25,
-                                                            self.selected_picture_name], self.screen,self.selected_picture_name[:-4]))
-                            self.is_selected_target = False
-                            self.import_delete_button.active = False
-                            self.reset_coo()
-                            self.show()
+                    if self.is_selected_target and time.time() - self.last_click > 1:
+                        self.last_click=time.time()
+                        self.placed_target.append(Target([0, ((self.right_x)/(self.screen_width*0.8))*0.8, ((self.right_y)/(self.screen_height*0.8))*0.8, 10, 10, 25,
+                                                        self.selected_picture_name], self.screen,self.stage.stage_name))
+                        self.is_selected_target = False
+                        self.import_delete_button.active = True
+                        self.reset_coo()
+                        self.show()
 
                 elif self.screen_width * 0.05<self.right_x<self.screen_width*0.95 and self.screen_height*0.95<self.right_y<self.screen_height*0.97:
                     self.timeline.change_stat((self.right_x-self.screen_width * 0.05)/(self.screen_width*0.9))
@@ -173,12 +195,18 @@ class LevelCreationSecondInterface(Interface):
                         self.selected_picture = target.picture
                         self.selected_picture_name=target.picture_name
                         self.is_selected_target = True
+                        self.import_delete_button.active = False
+                self.show()
 
-                        if self.is_selected_target:
-                            self.import_delete_button.active = True
-                        else:
-                            self.import_delete_button.active = False
-                        self.show()
+                #choix d'un nouveau type de cible importé
+                for target in self.import_targets_list:
+                    if target.x < self.right_x < (target.x + target.width) and \
+                            target.y < self.right_y < (target.y + target.height):
+                        self.selected_picture = target.picture
+                        self.selected_picture_name=target.picture_name
+                        self.is_selected_target = True
+                        self.import_delete_button.active = False
+                self.show()
 
                 #déplacement de cible
                 for target in self.placed_target:
@@ -187,16 +215,19 @@ class LevelCreationSecondInterface(Interface):
                         if(time.time()-self.last_click>1):
                             self.last_click=time.time()
                             self.is_selected_target = True
-                            picture = pygame.image.load("Pictures/Targets/" + str(target.pictureName))
+
+                            if os.path.isfile("Pictures/Targets/" + str(target.pictureName)):
+                                picture = pygame.image.load("Pictures/Targets/" + str(target.pictureName))
+                            elif os.path.isfile("Stages/" + self.stage.stage_name + "/specialTargets/" + target.pictureName):
+                                picture = pygame.image.load("Stages/" + self.stage.stage_name + "/specialTargets/" + target.pictureName)
+
                             self.selected_picture = pygame.transform.scale(picture, (Constants.TARGET_RADIUS * 0.8,
                                                                                      Constants.TARGET_RADIUS * 0.8))
                             self.selected_picture_name = target.pictureName
                             self.placed_target.remove(target)
 
-                            if self.is_selected_target:
-                                self.import_delete_button.active = True
-                            else:
-                                self.import_delete_button.active = False
+                            self.import_delete_button.active =not self.is_selected_target
+
                             self.show()
 
 
@@ -214,6 +245,8 @@ class LevelCreationSecondInterface(Interface):
             button.show_button()
         for target in self.basic_targets_list:
             target.show_button()
+        for target in self.import_targets_list:
+            target.show_button()
         for placed in self.placed_target:
             if placed != None:
                 placed.show_target()
@@ -227,7 +260,7 @@ class LevelCreationSecondInterface(Interface):
         my_font = pygame.font.Font("./Fonts/arial.ttf", 50)
         text_surface = my_font.render("Choix des cibles", True, (255, 255, 255))
         pygame.font.quit()
-        self.screen.blit(text_surface, (self.screen_width * 0.82, self.screen_height * 0.02))
+        self.screen.blit(text_surface, (self.screen_width * 0.80, self.screen_height * 0.02))
 
 
     def show_hand(self):

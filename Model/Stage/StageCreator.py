@@ -17,7 +17,7 @@ class StageCreator:
         os.makedirs("Stages/" + stage_name)
         stage_path = "Stages/" + stage_name.lower() + '/' + stage_name.lower() + ".issou"
         self.stage = Stage(stage_path, screen,True)
-        self.stage.name = stage_name
+        self.stage_name = stage_name
 
         if ".mp3" not in music_path:
             self.is_usable = False
@@ -54,13 +54,29 @@ class StageCreator:
             self.is_usable = False
             return
 
-        os.makedirs("Stages/" + self.stage.name + "/specialTargets")
+        os.makedirs("Stages/" + self.stage_name + "/specialTargets")
 
         self.targets = []
 
     def add_target(self, target: Target):
         if self.is_usable:
             self.targets.append(target)
+
+    def add_special_target(self,target):
+        if ".png" not in target:
+            self.is_usable = False
+            return
+        if os.path.isfile(target):
+            name=target
+            while name.find("\\") != -1:
+                name = name[name.find("\\") + 1:]
+            target_path = "Stages/" + self.stage_name.lower() + "/specialTargets/" +name
+
+            shutil.copy2(target, target_path)
+
+        else:
+            self.is_usable = False
+            return
 
     def rewind(self, ratio: float):
         self.stage.set_pose(ratio, self.targets)
