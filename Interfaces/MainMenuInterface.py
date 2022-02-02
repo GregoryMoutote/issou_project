@@ -44,6 +44,7 @@ class MainMenuInterface(Interface):
 
         self.detection = detection
 
+        self.newScreen()
         self.show()
         self.reset_coo()
         self.detection.init_hand_capture()
@@ -105,10 +106,7 @@ class MainMenuInterface(Interface):
 
 
     def show(self):
-        self.screen.blit(self.background, (0, 0))
-        for button in self.buttons:
-            button.show_button()
-        self.screen.blit(self.fond_logo, (self.screen_width * 0.10, self.screen_height * 0.25))
+        self.screen.blit(self.background,(0,0))
         self.moving_sprites.draw(self.screen)
         self.moving_sprites.update(1)
         self.clock.tick(60)
@@ -122,6 +120,15 @@ class MainMenuInterface(Interface):
         if len(self.detection.right_hand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
+
+    def newScreen(self):
+        self.screen.blit(self.background, (0, 0))
+        for button in self.buttons:
+            button.show_button()
+        self.screen.blit(self.fond_logo, (self.screen_width * 0.10, self.screen_height * 0.25))
+        print("screen")
+        pygame.image.save(self.screen,"background.jpg")
+        self.background=pygame.image.load("background.jpg")
 
     def reset_coo(self):
         self.right_x = 0
