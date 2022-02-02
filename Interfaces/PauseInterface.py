@@ -49,7 +49,7 @@ class PauseInterface(Interface):
 
             self.show_hand()
 
-            if self.detection.media_pipe.is_fist_closed == 1:
+            if self.detection.is_fist_closed == 1:
 
                 if self.screen_width/2-225 > self.right_x > self.screen_width/2+225 and \
                         self.screen_height / 2 - 300 > self.right_y > self.screen_height / 2 + 300:
