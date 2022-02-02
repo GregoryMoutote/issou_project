@@ -15,7 +15,7 @@ import os
 from Model.Constants import Constants
 
 class Stage:
-    def __init__(self, file_path, screen):
+    def __init__(self, file_path, screen, is_creation):
         self.screen = screen
         self.path = file_path
         self.score = 0
@@ -27,23 +27,8 @@ class Stage:
         self.stage_music = None
         self.date = None
         self.is_stage_usable = False
-        self.pre_load_stage()
-        self.spend = -1
-        self.start = -1
-        self.next_action = -1
-
-    def __init__(self, file_path, screen,isCreation):
-        self.screen = screen
-        self.path = file_path
-        self.score = 0
-        self.targets = []
-        self.difficulty = 0
-        self.name = ""
-        self.best_score = 0
-        self.active_targets = []
-        self.stage_music = None
-        self.date = None
-        self.is_stage_usable = False
+        if not is_creation:
+            self.pre_load_stage()
         self.spend = -1
         self.start = -1
         self.next_action = -1
@@ -234,8 +219,9 @@ class Stage:
         if self.best_score < self.score:
             best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
             with open(best_score_path, 'w') as file:
-                file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.best_score))
+                file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.score))
                 file.close()
+                self.best_score = self.score
 
     def load_targets(self):
         if ".issou" not in self.path:
