@@ -91,3 +91,17 @@ class StageCreator:
                 return target
         return target
 
+    def target_texture_import(self, texture_path: str):
+        if not self.is_usable:
+            return
+        if ".png" not in background_path and ".jpg" not in background_path and ".jpeg" not in background_path:
+            self.is_usable = False
+            return
+        if os.path.isfile(texture_path):
+            delimiter = texture_path.find("\\")
+            while "\\" in texture_path[texture_path.find("\\", delimiter + 1):]:
+                delimiter = texture_path.find("\\", delimiter + 1)
+
+            target_texture_path = "Stages/" + self.stage.name + "/" + texture_path[delimiter:]
+            shutil.copy2(texture_path, target_texture_path)
+
