@@ -1,12 +1,9 @@
 import pygame.draw
 
-from Interfaces.Level_Selection_Interface import *
+from Interfaces.LevelSelectionInterface import *
 from Interfaces.SettingsInterface import *
 from Interfaces.GIF.MainMenuGIF import *
-from PlayerDetection.MediapipeThread import *
 from Interfaces.LevelCreationFirstInterface import *
-import math
-from Interfaces.RefreshThread import *
 
 class MainMenuInterface(Interface):
 
@@ -83,7 +80,7 @@ class MainMenuInterface(Interface):
             if self.detection.is_fist_closed == 1:
                 if self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
                         self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
-                   Level_Selection_Interface(self.screen_data, self.screen, self.detection, self.settings)
+                   LevelSelectionInterface(self.screen_data, self.screen, self.detection, self.settings)
 
                    self.reset_coo()
                    self.show()
