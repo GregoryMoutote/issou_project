@@ -18,7 +18,7 @@ class MainMenuInterface(Interface):
         self.background = pygame.image.load("./Pictures/Interfaces/fond.png")
 
         self.clock = pygame.time.Clock()
-        pygame.display.set_caption("Sprite Animation")
+        pygame.display.set_caption("ISSOU")
         self.moving_sprites = pygame.sprite.Group()
         ISSOU_laod = MenuGIF(self.screen_width * 0.17, self.screen_height / 2 - 75, self.screen)
         self.moving_sprites.add(ISSOU_laod)

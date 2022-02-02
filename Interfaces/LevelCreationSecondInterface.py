@@ -9,6 +9,7 @@ from Buttons.MenuLevelCreationButton import *
 from Targets.Target import *
 from Model.Constants import *
 from Model.Stage.StageCreator import StageCreator
+from Buttons.InputCreationLevelButton import *
 import time
 import os
 import easygui
@@ -27,6 +28,9 @@ class LevelCreationSecondInterface(Interface):
         self.last_click=time.time()
 
         self.stage=StageCreator(self.screen,stage_name, illustration_path, background_path, music_path)
+
+        if not self.stage.is_usable:
+            return
 
         while background_path.find(".") != -1:
             background_path = background_path[background_path.find(".")+1:]
@@ -66,6 +70,14 @@ class LevelCreationSecondInterface(Interface):
         self.timeline = TimelineButton(self.screen_width * 0.05, self.screen_height * 0.95,
                                        self.screen_width * 0.9, self.screen_height * 0.02,
                                        self.screen, "timelineGray.png", "timelineRed.png")
+
+        self.inputValueTarget= InputCreationLevelButton(self.screen_width * 0.6, self.screen_height * 0.81,
+                                                self.screen_width * 0.18, self.screen_height * 0.1, self.screen,
+                                                 15,"Arial.ttf",(255,255,255),"Valeur",20)
+
+        self.inputDurationTarget= InputCreationLevelButton(self.screen_width * 0.4, self.screen_height * 0.81,
+                                                self.screen_width * 0.18, self.screen_height * 0.1, self.screen,
+                                                 5,"Arial.ttf",(255,255,255),"Durée d'apparition",20)
 
         self.placed_target = []
         self.basic_targets_list = []
@@ -138,6 +150,13 @@ class LevelCreationSecondInterface(Interface):
                 elif self.fullscreen_button.x < self.right_x < (self.fullscreen_button.x + self.fullscreen_button.width) and \
                         self.fullscreen_button.y < self.right_y < (self.fullscreen_button.y + self.fullscreen_button.height):
                     self.fullscreen_button.change_stat()
+                    self.reset_coo()
+                    self.show()
+
+                # bouton input
+                if self.inputValueTarget.x < self.right_x < (self.inputValueTarget.x + self.inputValueTarget.width) and \
+                        self.inputValueTarget.y < self.right_y < (self.inputValueTarget.y + self.inputValueTarget.height):
+                    self.inputValueTarget.click(self.right_x)
                     self.reset_coo()
                     self.show()
 
@@ -240,6 +259,8 @@ class LevelCreationSecondInterface(Interface):
         self.play_button.show_button()
         self.fullscreen_button.show_button()
         self.import_delete_button.show_button()
+        self.inputValueTarget.show_button()
+        self.inputDurationTarget.show_button()
 
         for button in self.buttons:
             button.show_button()
