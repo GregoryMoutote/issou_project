@@ -32,21 +32,6 @@ class LevelCreationSecondInterface(Interface):
         if not self.stage.is_usable:
             return
 
-        while background_path.find(".") != -1:
-            background_path = background_path[background_path.find(".")+1:]
-
-        self.background = pygame.image.load("./Stages/"+stage_name+"/background."+background_path)
-        self.background = pygame.transform.scale(self.background, (self.screen_width * 0.80 + 1,
-                                                                   self.screen_height * 0.80 + 1))
-
-        self.right_menu = pygame.image.load("./Pictures/Interfaces/menuBackground.png")
-        self.right_menu = pygame.transform.scale(self.right_menu, (self.screen_width,
-                                                                   self.screen_height * 0.20))
-
-        self.bottom_menu = pygame.image.load("./Pictures/Interfaces/menuBackground.png")
-        self.bottom_menu = pygame.transform.scale(self.bottom_menu, (self.screen_width * 0.20,
-                                                                     self.screen_height))
-
         self.play_button = CheckButton(self.screen_width * 0.05, self.screen_height * 0.82,
                                        self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
                                        "levelCreationPlay.png", "levelCreationPause.png", True)
@@ -94,7 +79,7 @@ class LevelCreationSecondInterface(Interface):
                                                                        "arial.ttf", (255, 255, 255),""))
                 i += 1
 
-        self.show()
+        self.newScreen()
         self.reset_coo()
         self.loop()
 
@@ -144,7 +129,7 @@ class LevelCreationSecondInterface(Interface):
                         self.play_button.y < self.right_y < (self.play_button.y + self.play_button.height):
                     self.play_button.change_stat()
                     self.reset_coo()
-                    self.show()
+                    self.newScreen()
 
                 #bouton pleine écran
                 elif self.fullscreen_button.x < self.right_x < (self.fullscreen_button.x + self.fullscreen_button.width) and \
@@ -153,7 +138,7 @@ class LevelCreationSecondInterface(Interface):
                     self.reset_coo()
                     self.show()
 
-                # bouton input
+                #bouton input
                 if self.inputValueTarget.x < self.right_x < (self.inputValueTarget.x + self.inputValueTarget.width) and \
                         self.inputValueTarget.y < self.right_y < (self.inputValueTarget.y + self.inputValueTarget.height):
                     self.inputValueTarget.click(self.right_x)
@@ -188,6 +173,7 @@ class LevelCreationSecondInterface(Interface):
                                                                                        self.screen, target,target[:-4], 35, 10,
                                                                                        "arial.ttf",
                                                                                        (255, 255, 255),self.stage.stage_name))
+                        self.newScreen()
                     self.reset_coo()
                     self.show()
 
@@ -215,7 +201,6 @@ class LevelCreationSecondInterface(Interface):
                         self.selected_picture_name=target.picture_name
                         self.is_selected_target = True
                         self.import_delete_button.active = False
-                self.show()
 
                 #choix d'un nouveau type de cible importé
                 for target in self.import_targets_list:
@@ -225,7 +210,6 @@ class LevelCreationSecondInterface(Interface):
                         self.selected_picture_name=target.picture_name
                         self.is_selected_target = True
                         self.import_delete_button.active = False
-                self.show()
 
                 #déplacement de cible
                 for target in self.placed_target:
@@ -250,24 +234,8 @@ class LevelCreationSecondInterface(Interface):
                             self.show()
 
 
-
-
     def show(self):
         self.screen.blit(self.background, (0, 0))
-        self.screen.blit(self.bottom_menu, (self.screen_width * 0.8, 0))
-        self.screen.blit(self.right_menu, (0, self.screen_height * 0.8))
-        self.play_button.show_button()
-        self.fullscreen_button.show_button()
-        self.import_delete_button.show_button()
-        self.inputValueTarget.show_button()
-        self.inputDurationTarget.show_button()
-
-        for button in self.buttons:
-            button.show_button()
-        for target in self.basic_targets_list:
-            target.show_button()
-        for target in self.import_targets_list:
-            target.show_button()
         for placed in self.placed_target:
             if placed != None:
                 placed.show_target()
@@ -275,13 +243,10 @@ class LevelCreationSecondInterface(Interface):
         if self.is_selected_target:
             self.screen.blit(self.selected_picture, (self.right_x - Constants.TARGET_RADIUS * 0.8,
                                                      self.right_y - Constants.TARGET_RADIUS * 0.8))
-
+        self.inputValueTarget.show_value()
+        self.inputDurationTarget.show_value()
+        self.import_delete_button.show_button()
         self.timeline.show_button()
-        pygame.font.init()
-        my_font = pygame.font.Font("./Fonts/arial.ttf", 50)
-        text_surface = my_font.render("Choix des cibles", True, (255, 255, 255))
-        pygame.font.quit()
-        self.screen.blit(text_surface, (self.screen_width * 0.80, self.screen_height * 0.02))
 
 
     def show_hand(self):
@@ -292,6 +257,41 @@ class LevelCreationSecondInterface(Interface):
         if len(self.detection.right_hand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
+
+    def newScreen(self):
+        background = pygame.image.load("./Stages/"+self.stage.stage_name+"/background."+self.stage.background_path)
+        background = pygame.transform.scale(background, (self.screen_width * 0.80 + 1,self.screen_height * 0.80 + 1))
+        self.screen.blit(background, (0, 0))
+
+        bottom_menu = pygame.image.load("./Pictures/Interfaces/menuBackground.png")
+        bottom_menu = pygame.transform.scale(bottom_menu, (self.screen_width * 0.20, self.screen_height))
+        self.screen.blit(bottom_menu, (self.screen_width * 0.8, 0))
+
+        right_menu = pygame.image.load("./Pictures/Interfaces/menuBackground.png")
+        right_menu = pygame.transform.scale(right_menu, (self.screen_width,self.screen_height * 0.20))
+        self.screen.blit(right_menu, (0, self.screen_height * 0.8))
+
+        self.play_button.show_button()
+        self.fullscreen_button.show_button()
+        self.inputValueTarget.show_button()
+        self.inputDurationTarget.show_button()
+
+        for button in self.buttons:
+            button.show_button()
+        for target in self.basic_targets_list:
+            target.show_button()
+        for target in self.import_targets_list:
+            target.show_button()
+
+        pygame.font.init()
+        my_font = pygame.font.Font("./Fonts/arial.ttf", 50)
+        text_surface = my_font.render("Choix des cibles", True, (255, 255, 255))
+        pygame.font.quit()
+        self.screen.blit(text_surface, (self.screen_width * 0.80, self.screen_height * 0.02))
+
+        pygame.image.save(self.screen,"background.jpg")
+        self.background=pygame.image.load("background.jpg")
+        self.show()
 
     def reset_coo(self):
         self.right_x = 0

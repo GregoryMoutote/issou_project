@@ -9,19 +9,15 @@ class MainMenuInterface(Interface):
 
     def __init__(self, screen_data, screen, detection, settings):
         self.settings = settings
+        self.detection = detection
 
         super().__init__(screen_data, screen)
-
-        self.background = pygame.image.load("./Pictures/Interfaces/fond.png")
 
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("ISSOU")
         self.moving_sprites = pygame.sprite.Group()
         ISSOU_laod = MenuGIF(self.screen_width * 0.17, self.screen_height / 2 - 75, self.screen)
         self.moving_sprites.add(ISSOU_laod)
-
-        self.fond_logo = pygame.image.load("./Pictures/Interfaces/fondLogo.png")
-        self.fond_logo = pygame.transform.scale(self.fond_logo, (self.screen_height * 0.5 * 1.57, self.screen_height * 0.5))
 
         self.buttons = [ColorButton(self.screen_width * 0.4, self.screen_height * 0.25, self.screen_width / 2,
                                     self.screen_height * 0.1, self.screen, (20, 40, 80), "JOUER", 50, 450,
@@ -39,16 +35,10 @@ class MainMenuInterface(Interface):
                                         self.screen_height * 0.1, self.screen, (20, 40, 80), "QUITTER", 50, 450,
                                         "Glitch.otf",(65,105,225)))
 
-        self.detection = detection
-
         self.newScreen()
-        self.show()
         self.reset_coo()
         self.detection.init_hand_capture()
-
-
         self.loop()
-
         pygame.quit()
 
 
@@ -119,13 +109,15 @@ class MainMenuInterface(Interface):
         pygame.display.update()
 
     def newScreen(self):
-        self.screen.blit(self.background, (0, 0))
+        self.screen.blit(pygame.image.load("./Pictures/Interfaces/fond.png"), (0, 0))
         for button in self.buttons:
             button.show_button()
-        self.screen.blit(self.fond_logo, (self.screen_width * 0.10, self.screen_height * 0.25))
-        print("screen")
+        fond_logo = pygame.image.load("./Pictures/Interfaces/fondLogo.png")
+        fond_logo = pygame.transform.scale(fond_logo, (self.screen_height * 0.5 * 1.57, self.screen_height * 0.5))
+        self.screen.blit(fond_logo, (self.screen_width * 0.10, self.screen_height * 0.25))
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
+        self.show()
 
     def reset_coo(self):
         self.right_x = 0

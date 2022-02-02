@@ -18,6 +18,8 @@ class InputCreationLevelButton(Button):
 
     def show_button(self):
         self.screen.blit(self.picture, (self.x, self.y))
+
+    def show_value(self):
         pygame.font.init()
         my_font = pygame.font.Font(self.font, self.nb_size)
         if self.value < 10:

@@ -17,8 +17,6 @@ class LevelSelectionInterface(Interface):
         super().__init__(screen_data, screen)
         self.pre_load_all_stages()
 
-        self.background = pygame.image.load("./Pictures/Interfaces/fond.png")
-
         self.levels = []
         for stage in self.stages:
             self.levels.append(Level(self.screen_width*0.35,self.screen_height*0.17,stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,stage.stage_music.duration))
@@ -50,7 +48,7 @@ class LevelSelectionInterface(Interface):
         self.star_5 = pygame.image.load("./Pictures/Interfaces/star5.png")
         self.star_5 = pygame.transform.scale(self.star_5, (60, 60))
 
-        self.show()
+        self.newScreen()
         self.reset_coo()
         self.loop()
 
@@ -101,6 +99,7 @@ class LevelSelectionInterface(Interface):
                         self.index = 0
                     else:
                         self.index += 1
+                    self.newScreen()
 
                 elif self.up_button.x < self.right_x < (self.up_button.x + self.up_button.width) and \
                         self.up_button.y < self.right_y < (self.up_button.y + self.up_button.height):
@@ -112,6 +111,7 @@ class LevelSelectionInterface(Interface):
                         self.index = len(self.levels) - 1
                     else:
                         self.index -= 1
+                    self.newScreen()
 
                 elif self.random_button.x < self.right_x < (self.random_button.x + self.random_button.width) and \
                         self.random_button.y < self.right_y < (self.random_button.y + self.random_button.height):
@@ -122,13 +122,12 @@ class LevelSelectionInterface(Interface):
                             self.index = 0
                         else:
                             self.index += 1
+                        self.newScreen()
                     self.reset_coo()
                     self.show()
 
 
     def show_description(self, name, picture, difficulty, description, duration):
-
-
         self.screen.blit(self.banner_top_picture, (0, 0))
 
         self.music_picture = pygame.image.load("Stages/" + picture + "/" + picture + ".png")
@@ -179,31 +178,7 @@ class LevelSelectionInterface(Interface):
 
 
     def show(self):
-        self.screen.blit(self.background, (0, 0))
-        self.play_button.show_button()
-
-        if len(self.levels) > 4 :
-            for i in range(0, 5):
-                if i == 2:
-                    self.levels[i].show(self.screen,self.screen_width*0.65, self.screen_height*0.085+self.screen_height * 0.167*i)
-                else:
-                    self.levels[i].show(self.screen,self.screen_width*0.7, self.screen_height*0.085+self.screen_height * 0.167*i)
-        else:
-            for i in range(0, len(self.levels)):
-                if i == 2:
-                    self.levels[i].show(self.screen,self.screen_width * 0.65, self.screen_height*0.085+self.screen_height * 0.167*i)
-                else:
-                    self.levels[i].show(self.screen,self.screen_width * 0.7, self.screen_height*0.085+self.screen_height * 0.167*i)
-
-        if len(self.levels) > 2:
-            self.show_description(self.levels[2].name, self.levels[2].picture, self.levels[2].difficulty,
-                                  self.levels[2].description, self.levels[2].duration)
-
-        self.screen.blit(self.banner_bottom_picture, (0, self.screen_height*0.85))
-        self.up_button.show_button()
-        self.down_button.show_button()
-        self.quit_button.show_button()
-        self.random_button.show_button()
+        self.screen.blit(self.background,(0,0))
 
 
     def reset_coo(self):
@@ -221,6 +196,40 @@ class LevelSelectionInterface(Interface):
         if len(self.detection.right_hand) > 0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
+
+    def newScreen(self):
+        self.screen.blit(pygame.image.load("./Pictures/Interfaces/fond.png"), (0, 0))
+        self.play_button.show_button()
+
+        if len(self.levels) > 4:
+            for i in range(0, 5):
+                if i == 2:
+                    self.levels[i].show(self.screen, self.screen_width * 0.65,
+                                        self.screen_height * 0.085 + self.screen_height * 0.167 * i)
+                else:
+                    self.levels[i].show(self.screen, self.screen_width * 0.7,
+                                        self.screen_height * 0.085 + self.screen_height * 0.167 * i)
+        else:
+            for i in range(0, len(self.levels)):
+                if i == 2:
+                    self.levels[i].show(self.screen, self.screen_width * 0.65,
+                                        self.screen_height * 0.085 + self.screen_height * 0.167 * i)
+                else:
+                    self.levels[i].show(self.screen, self.screen_width * 0.7,
+                                        self.screen_height * 0.085 + self.screen_height * 0.167 * i)
+
+        if len(self.levels) > 2:
+            self.show_description(self.levels[2].name, self.levels[2].picture, self.levels[2].difficulty,
+                                  self.levels[2].description, self.levels[2].duration)
+
+        self.screen.blit(self.banner_bottom_picture, (0, self.screen_height * 0.85))
+        self.up_button.show_button()
+        self.down_button.show_button()
+        self.quit_button.show_button()
+        self.random_button.show_button()
+        pygame.image.save(self.screen,"background.jpg")
+        self.background=pygame.image.load("background.jpg")
+        self.show()
 
     def pre_load_all_stages(self):
         self.file = os.listdir("Stages")

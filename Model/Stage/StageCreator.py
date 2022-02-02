@@ -18,6 +18,10 @@ class StageCreator:
         stage_path = "Stages/" + stage_name.lower() + '/' + stage_name.lower() + ".issou"
         self.stage = Stage(stage_path, screen,True)
         self.stage_name = stage_name
+        self.background_path=background_path
+
+        while self.background_path.find(".") != -1:
+            self.background_path = self.background_path[self.background_path.find(".")+1:]
 
         if ".mp3" not in music_path:
             self.is_usable = False

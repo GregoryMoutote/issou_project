@@ -19,8 +19,6 @@ class LevelCreationFirstInterface(Interface):
         self.active_color = (100, 100, 100)
         self.inactive_color = (50, 50, 50)
 
-        self.background = pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png")
-
         self.background_path = ""
         self.music_path = ""
 
@@ -34,7 +32,7 @@ class LevelCreationFirstInterface(Interface):
                                           self.screen, "button3.png", "Valider", 30, 120, "Glitch.otf",
                                           (255, 255, 255)))
 
-        self.show()
+        self.newScreen()
         self.reset_coo()
         self.loop()
 
@@ -89,6 +87,7 @@ class LevelCreationFirstInterface(Interface):
                        if tmp_extension== '.jpg' or tmp_extension== '.png' or tmp_extension== '.jpeg':
                             self.background_path = tmp_path
                             self.buttons[0].text = "..." + self.background_path[-16:]
+                            self.newScreen()
 
 
                 elif self.buttons[1].x < self.right_x < (self.buttons[1].x + self.buttons[1].width) and \
@@ -103,6 +102,7 @@ class LevelCreationFirstInterface(Interface):
                         if tmp_extension == '.mp3' or tmp_extension == '.wav':
                             self.music_path = tmp_path
                             self.buttons[1].text = "..." + self.music_path[-16:]
+                            self.newScreen()
 
                 elif self.buttons[2].x < self.right_x < (self.buttons[2].x + self.buttons[2].width) and \
                         self.buttons[2].y < self.right_y < (self.buttons[2].y + self.buttons[2].height):
@@ -118,39 +118,21 @@ class LevelCreationFirstInterface(Interface):
                 else:
                     self.is_input_active = False
 
-
-
     def show(self):
         self.screen.blit(self.background, (0, 0))
-
         pygame.font.init()
-        glitch_font = pygame.font.Font("./Fonts/glitch.otf", 80)
-        littleglitch_font = pygame.font.Font("./Fonts/glitch.otf",40)
-        title_text = glitch_font.render("Creation de niveau", True, (255, 255, 255))
-        text1 = littleglitch_font.render("Nom du niveau", True, (255, 255, 255))
-        text2 = littleglitch_font.render("Image de fond", True, (255, 255, 255))
-        text3 = littleglitch_font.render("Musique", True, (255, 255, 255))
-        pygame.draw.rect(self.screen, self.color , self.input_rect)
+        littleglitch_font = pygame.font.Font("./Fonts/glitch.otf", 40)
         text_surface = littleglitch_font.render(self.user_text, True, (255, 255, 255))
         pygame.font.quit()
 
-
-        self.screen.blit(title_text, (self.screen_width / 2 - 500, 30))
-        self.screen.blit(text1, (self.screen_width / 2 - 175, self.screen_height / 2 - 250))
-        self.screen.blit(text2, (self.screen_width / 2 - 175, self.screen_height / 2 - 75))
-        self.screen.blit(text3, (self.screen_width / 2 - 105, self.screen_height / 2 + 75))
-        self.screen.blit(text_surface, (self.input_rect.x + 5, self.input_rect.y + 5))
         self.input_rect.w = max(100, text_surface.get_width() + 10)
-
-
         if len(self.user_text) <= 2:
             self.input_rect.x = (self.screen_width / 2) - (self.input_rect.w / 2)
         else:
             self.input_rect.x = self.screen_width / 2 - text_surface.get_width() / 2
 
-
-        for button in self.buttons:
-            button.show_button()
+        pygame.draw.rect(self.screen, self.color, self.input_rect)
+        self.screen.blit(text_surface, (self.input_rect.x + 5, self.input_rect.y + 5))
 
 
 
@@ -169,6 +151,29 @@ class LevelCreationFirstInterface(Interface):
         self.left_x = 0
         self.left_y = 0
 
+    def newScreen(self):
+        self.screen.blit(pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png"), (0, 0))
+
+        pygame.font.init()
+        glitch_font = pygame.font.Font("./Fonts/glitch.otf", 80)
+        littleglitch_font = pygame.font.Font("./Fonts/glitch.otf", 40)
+        title_text = glitch_font.render("Creation de niveau", True, (255, 255, 255))
+        text1 = littleglitch_font.render("Nom du niveau", True, (255, 255, 255))
+        text2 = littleglitch_font.render("Image de fond", True, (255, 255, 255))
+        text3 = littleglitch_font.render("Musique", True, (255, 255, 255))
+
+        pygame.font.quit()
+
+        self.screen.blit(title_text, (self.screen_width / 2 - 500, 30))
+        self.screen.blit(text1, (self.screen_width / 2 - 175, self.screen_height / 2 - 250))
+        self.screen.blit(text2, (self.screen_width / 2 - 175, self.screen_height / 2 - 75))
+        self.screen.blit(text3, (self.screen_width / 2 - 105, self.screen_height / 2 + 75))
+
+        for button in self.buttons:
+            button.show_button()
+        pygame.image.save(self.screen,"background.jpg")
+        self.background=pygame.image.load("background.jpg")
+        self.show()
 
 
     def get_extension(self, file_name):

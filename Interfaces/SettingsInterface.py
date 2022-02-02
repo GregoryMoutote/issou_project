@@ -13,9 +13,6 @@ class SettingsInterface(Interface):
 
         super().__init__(screen_data, screen)
 
-        self.background = pygame.image.load("./Pictures/Interfaces/fond.png")
-        self.background_logo = pygame.image.load("./Pictures/Interfaces/fondLogo.png")
-
         self.buttons = [(ColorButton(self.screen_width*0.1, self.screen_height *0.6, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
                                      (14, 70, 140), "Recalibrer", 50, self.screen_width * 0.5-300,
                                     "Arial.ttf", (65,105,225)))]
@@ -39,6 +36,7 @@ class SettingsInterface(Interface):
         self.animation_button = CheckButton(self.screen_width*0.4, self.screen_height *0.45, 100, 100, self.screen,
                                            "checkedOn.png", "checkedOff.png", self.settings.animation)
 
+        self.newScreen()
         self.reset_coo()
         self.loop()
 
@@ -73,6 +71,7 @@ class SettingsInterface(Interface):
                         self.animation_button.y < self.right_y < (self.animation_button.y + self.animation_button.height):
                     self.settings.animation = self.animation_button.change_stat()
                     self.reset_coo()
+                    self.newScreen()
 
                 elif self.mute_button.x < self.right_x < (self.mute_button.x + self.mute_button.width) and \
                         self.mute_button.y < self.right_y < (self.mute_button.y + self.mute_button.height):
@@ -84,6 +83,7 @@ class SettingsInterface(Interface):
                         self.settings.set_volume(1)
                         self.volume_button.change_stat(1)
                     self.reset_coo()
+                    self.newScreen()
 
                 elif self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
                         self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
@@ -110,26 +110,10 @@ class SettingsInterface(Interface):
                         self.settings.set_volume(i + 1)
                         if(self.mute_button.active == True):
                             self.mute_button.change_stat()
+                        self.newScreen()
 
     def show(self):
-        pygame.font.init()
-        font_glitch = pygame.font.Font("./Fonts/Glitch.otf", 100)
-        font_arial = pygame.font.Font("./Fonts/Arial.ttf", 56)
-
-        text = font_glitch.render("OPTIONS", True, (255, 255, 255))
-        text2 = font_arial.render("Activer les animations", True, (255, 255, 255))
-        pygame.font.quit()
-
         self.screen.blit(self.background, (0, 0))
-        for button in self.buttons:
-            button.show_button()
-
-        self.screen.blit(text, (self.screen_width *0.5-250, self.screen_height *0.1))
-        self.screen.blit(text2, (self.screen_width*0.1, self.screen_height*0.47))
-
-        self.volume_button.show_button()
-        self.mute_button.show_button()
-        self.animation_button.show_button()
 
 
     def show_hand(self):
@@ -140,6 +124,29 @@ class SettingsInterface(Interface):
         if len(self.detection.right_hand)>0:
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
+
+    def newScreen(self):
+        pygame.font.init()
+        font_glitch = pygame.font.Font("./Fonts/Glitch.otf", 100)
+        font_arial = pygame.font.Font("./Fonts/Arial.ttf", 56)
+
+        text = font_glitch.render("OPTIONS", True, (255, 255, 255))
+        text2 = font_arial.render("Activer les animations", True, (255, 255, 255))
+        pygame.font.quit()
+
+        self.screen.blit(pygame.image.load("./Pictures/Interfaces/fond.png"), (0, 0))
+        for button in self.buttons:
+            button.show_button()
+
+        self.screen.blit(text, (self.screen_width * 0.5 - 250, self.screen_height * 0.1))
+        self.screen.blit(text2, (self.screen_width * 0.1, self.screen_height * 0.47))
+
+        self.volume_button.show_button()
+        self.mute_button.show_button()
+        self.animation_button.show_button()
+        pygame.image.save(self.screen,"background.jpg")
+        self.background=pygame.image.load("background.jpg")
+        self.show()
 
 
     def reset_coo(self):

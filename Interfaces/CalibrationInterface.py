@@ -19,6 +19,7 @@ class CalibrationInterface(Interface):
         ISSOU_laod_gif = load_gif(self.screen_width / 2 - 299, self.screen_height / 2 - 88, self.screen)
         self.moving_sprites.add(ISSOU_laod_gif)
 
+        self.newScreen()
         self.loop()
 
 
@@ -35,7 +36,13 @@ class CalibrationInterface(Interface):
 
 
     def show(self):
+        self.screen.blit(self.background, (0, 0))
+        self.moving_sprites.draw(self.screen)
+        self.moving_sprites.update(0.25)
+        self.clock.tick(60)
+        pygame.display.update()
 
+    def newScreen(self):
         self.screen.fill((255, 255, 255))
         pygame.font.init()
         arial_font = pygame.font.Font("./Fonts/lemonmilk.otf", 70)
@@ -47,7 +54,5 @@ class CalibrationInterface(Interface):
         self.screen.blit(text, (self.screen_width / 2 - 500, self.screen_height * 0.3))
         self.screen.blit(text2, (self.screen_width / 2 - 250, self.screen_height * 0.8))
 
-        self.moving_sprites.draw(self.screen)
-        self.moving_sprites.update(0.25)
-        self.clock.tick(60)
-        pygame.display.update()
+        pygame.image.save(self.screen,"background.jpg")
+        self.background=pygame.image.load("background.jpg")

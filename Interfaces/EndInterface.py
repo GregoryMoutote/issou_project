@@ -13,9 +13,6 @@ class EndInterface(Interface):
 
         super().__init__(screen_data, screen)
 
-        background = pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
-        self.background = pygame.transform.scale(background, (450, 600))
-
         self.parent.stage.save_best_score()
 
         self.buttons=[PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 50, 400, 100,
@@ -23,7 +20,7 @@ class EndInterface(Interface):
         self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 170, 400, 100,
                                           self.screen, "button2.png", "QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
 
-        self.show()
+        self.newScreen()
         self.reset_coo()
         self.loop()
 
@@ -68,7 +65,22 @@ class EndInterface(Interface):
                     go_on = False
 
     def show(self):
-        self.screen.blit(self.background, (self.screen_width / 2 - 225, self.screen_height / 2 - 300))
+        self.screen.blit(self.background, (0, 0))
+
+    def show_hand(self):
+        self.parent.show()
+        self.show()
+        if len(self.detection.left_hand) > 0:
+            pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX - 5, self.leftY - 5), 10)
+
+        if len(self.detection.right_hand) > 0:
+            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
+        pygame.display.update()
+
+    def newScreen(self):
+        background = pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
+        background = pygame.transform.scale(background, (450, 600))
+        self.screen.blit(background, (self.screen_width / 2 - 225, self.screen_height / 2 - 300))
         for button in self.buttons:
             button.show_button()
         pygame.font.init()
@@ -87,17 +99,9 @@ class EndInterface(Interface):
         self.screen.blit(score, (self.screen_width / 2 - 100, self.screen_height / 2 - 175))
         self.screen.blit(text_best_score, (self.screen_width / 2 - 200, self.screen_height / 2))
         self.screen.blit(best_score, (self.screen_width / 2 + 150, self.screen_height / 2 - 5))
-
-
-    def show_hand(self):
-        self.parent.show()
+        pygame.image.save(self.screen,"background.jpg")
+        self.background=pygame.image.load("background.jpg")
         self.show()
-        if len(self.detection.left_hand) > 0:
-            pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX - 5, self.leftY - 5), 10)
-
-        if len(self.detection.right_hand) > 0:
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
-        pygame.display.update()
 
     def reset_coo(self):
         self.right_x = 0
