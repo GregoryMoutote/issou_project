@@ -11,8 +11,7 @@ from Model.Constants import Constants
 class StageCreator:
     def __init__(self,screen, stage_name: str="",  illustration_path: str="", background_path: str="", music_path: str=""):
         self.is_usable = True
-        if re.search("(\w| )+", stage_name):
-            print("passage2")
+        if not re.search("\w+", stage_name):
             self.is_usable = False
             return
         os.makedirs("Stages/" + stage_name)
