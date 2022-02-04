@@ -20,19 +20,19 @@ class MainMenuInterface(Interface):
         self.moving_sprites.add(ISSOU_laod)
 
         self.buttons = [ColorButton(self.screen_width * 0.4, self.screen_height * 0.25, self.screen_width / 2,
-                                    self.screen_height * 0.1, self.screen, (20, 40, 80), "JOUER", 50, 450,
+                                    self.screen_height * 0.1, self.screen, (20, 40, 80), "JOUER", 0.7,
                                     "Glitch.otf", (65,105,225))]
         self.buttons.append(ColorButton(self.screen_width * 0.4, self.screen_height * 0.35, self.screen_width / 2,
-                                        self.screen_height * 0.1, self.screen, (14, 70, 140), "TUTORIEL", 50, 420,
+                                        self.screen_height * 0.1, self.screen, (14, 70, 140), "TUTORIEL", 0.7,
                                         "Glitch.otf", (65,105,225)))
         self.buttons.append(ColorButton(self.screen_width * 0.4, self.screen_height * 0.45, self.screen_width / 2,
-                                        self.screen_height * 0.1, self.screen, (20, 40, 80), "PARAMETRE", 50, 380,
+                                        self.screen_height * 0.1, self.screen, (20, 40, 80), "PARAMETRE", 0.7,
                                         "Glitch.otf", (65,105,225)))
         self.buttons.append(ColorButton(self.screen_width * 0.4, self.screen_height * 0.55, self.screen_width / 2,
                                         self.screen_height * 0.1, self.screen, (14, 70, 140), "CREER UN NIVEAU",
-                                        50, 300, "Glitch.otf", (65,105,225)))
+                                        0.7, "Glitch.otf", (65,105,225)))
         self.buttons.append(ColorButton(self.screen_width * 0.4, self.screen_height * 0.65, self.screen_width / 2,
-                                        self.screen_height * 0.1, self.screen, (20, 40, 80), "QUITTER", 50, 450,
+                                        self.screen_height * 0.1, self.screen, (20, 40, 80), "QUITTER", 0.7,
                                         "Glitch.otf",(65,105,225)))
 
         self.newScreen()
@@ -109,7 +109,9 @@ class MainMenuInterface(Interface):
         pygame.display.update()
 
     def newScreen(self):
-        self.screen.blit(pygame.image.load("./Pictures/Interfaces/fond.png"), (0, 0))
+        background=pygame.image.load("./Pictures/Interfaces/background.jpg")
+        background=pygame.transform.scale(background, (self.screen_width, self.screen_height))
+        self.screen.blit(background, (0, 0))
         for button in self.buttons:
             button.show_button()
         fond_logo = pygame.image.load("./Pictures/Interfaces/fondLogo.png")

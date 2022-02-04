@@ -14,7 +14,7 @@ class PlayInterface(Interface):
 
         self.stage.load()
 
-        self.pause_button = PictureButton(20, 20, 100, 100, self.screen, "pause.png", "", 0, 0, "", (0, 0, 0))
+        self.pause_button = PictureButton(20, 20, self.screen_height*0.1, self.screen_height*0.1, self.screen, "pause.png", "",0, "", (0, 0, 0))
 
         self.newScreen()
         self.reset_coo()

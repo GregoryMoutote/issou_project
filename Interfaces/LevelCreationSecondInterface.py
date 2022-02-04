@@ -46,11 +46,11 @@ class LevelCreationSecondInterface(Interface):
 
         self.buttons = [PictureButton(self.screen_width * 0.12, self.screen_height * 0.82,
                                       self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
-                                       "minusTen.png", "", 0, 0, "", (255, 255, 255))]
+                                       "minusTen.png", "", 0, "", (255, 255, 255))]
 
         self.buttons.append(PictureButton(self.screen_width * 0.19, self.screen_height * 0.82,
                                           self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
-                                           "plusTen.png", "", 0, 0, "", (255, 255, 255)))
+                                           "plusTen.png", "",0, "", (255, 255, 255)))
 
         self.timeline = TimelineButton(self.screen_width * 0.05, self.screen_height * 0.95,
                                        self.screen_width * 0.9, self.screen_height * 0.02,

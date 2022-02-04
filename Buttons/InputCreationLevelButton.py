@@ -29,8 +29,7 @@ class InputCreationLevelButton(Button):
         self.screen.blit(text_surface,(self.x + self.width / 2 - self.nb_size/2, self.y + (self.height - self.nb_size) / 2))
         my_font = pygame.font.Font(self.font, self.text_size)
         text_surface = my_font.render(self.text, True, self.text_color)
-        self.screen.blit(text_surface,
-                         (self.x + self.width / 2 - (len(self.text)*self.text_size) /5 , self.y +self.height+ 5))
+        self.screen.blit(text_surface,(self.x + self.width / 2 - (len(self.text)*self.text_size) /5 , self.y +self.height+ 5))
         pygame.font.quit()
 
     def click(self,x):

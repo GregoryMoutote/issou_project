@@ -21,11 +21,11 @@ class LevelSelectionInterface(Interface):
         for stage in self.stages:
             self.levels.append(Level(self.screen_width*0.35,self.screen_height*0.17,stage.name,3,stage.name,stage.stage_music.description,stage.difficulty,stage.stage_music.duration))
 
-        self.random_button=PictureButton(self.screen_width * 0.8, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "dice.png", "", 50, 50, "Arial.ttf", (175,175,175))
-        self.up_button=PictureButton(self.screen_width * 0.9, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowUp.png", "", 50, 50, "Arial.ttf", (175,175,175))
-        self.down_button=PictureButton(self.screen_width * 0.7, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowDown.png", "", 50, 50, "Arial.ttf", (175,175,175))
-        self.quit_button=PictureButton(0, self.screen_height * 0.9, self.screen_width * 0.2, self.screen_height * 0.08, self.screen, "button1.png", "retour", 50, 50, "Glitch.otf",(255,255,255))
-        self.play_button=PictureButton(self.screen_width / 5, self.screen_height / 2 - 100, 200, 200, self.screen, "play.png", "", 0, 0, "", (0, 0, 0))
+        self.random_button=PictureButton(self.screen_width * 0.8, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "dice.png", "", 0, "Arial.ttf", (175,175,175))
+        self.up_button=PictureButton(self.screen_width * 0.9, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowUp.png", "", 0, "Arial.ttf", (175,175,175))
+        self.down_button=PictureButton(self.screen_width * 0.7, self.screen_height * 0.86, self.screen_height * 0.13, self.screen_height * 0.13, self.screen, "arrowDown.png", "", 0, "Arial.ttf", (175,175,175))
+        self.quit_button=PictureButton(0, self.screen_height * 0.9, self.screen_width * 0.2, self.screen_height * 0.08, self.screen, "button1.png", "retour", 0.5, "Glitch.otf",(255,255,255))
+        self.play_button=PictureButton(self.screen_width *0.2, self.screen_height*0.5-self.screen_width*0.08, self.screen_width*0.16, self.screen_width*0.16, self.screen, "play.png", "", 0, "", (0, 0, 0))
 
         self.banner_top_picture = pygame.image.load("./Pictures/Interfaces/bannerTop.png")
         self.banner_top_picture = pygame.transform.scale(self.banner_top_picture, (self.screen_width, self.screen_height*0.2))
@@ -198,7 +198,9 @@ class LevelSelectionInterface(Interface):
         pygame.display.update()
 
     def newScreen(self):
-        self.screen.blit(pygame.image.load("./Pictures/Interfaces/fond.png"), (0, 0))
+        background = pygame.image.load("./Pictures/Interfaces/background.jpg")
+        background = pygame.transform.scale(background, (self.screen_width, self.screen_height))
+        self.screen.blit(background, (0, 0))
         self.play_button.show_button()
 
         if len(self.levels) > 4:

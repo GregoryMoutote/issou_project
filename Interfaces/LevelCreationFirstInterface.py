@@ -23,13 +23,13 @@ class LevelCreationFirstInterface(Interface):
         self.music_path = ""
 
         self.buttons = [PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 25, 400, 75,
-                                      self.screen, "button2.png", "Voir mes fichiers", 30, 40, "Glitch.otf",
+                                      self.screen, "button2.png", "Voir mes fichiers", 0.5, "Glitch.otf",
                                       (255, 255, 255))]
         self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 125, 400, 75,
-                                          self.screen, "button2.png", "Voir mes fichiers", 30, 40, "Glitch.otf",
+                                          self.screen, "button2.png", "Voir mes fichiers", 0.5, "Glitch.otf",
                                           (255, 255, 255)))
         self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 250, 400, 75,
-                                          self.screen, "button3.png", "Valider", 30, 120, "Glitch.otf",
+                                          self.screen, "button3.png", "Valider", 0.5, "Glitch.otf",
                                           (255, 255, 255)))
 
         self.newScreen()

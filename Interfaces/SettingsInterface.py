@@ -14,26 +14,23 @@ class SettingsInterface(Interface):
         super().__init__(screen_data, screen)
 
         self.buttons = [(ColorButton(self.screen_width*0.1, self.screen_height *0.6, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
-                                     (14, 70, 140), "Recalibrer", 50, self.screen_width * 0.5-300,
-                                    "Arial.ttf", (65,105,225)))]
+                                     (14, 70, 140), "Recalibrer", 0.5,"Arial.ttf", (65,105,225)))]
         self.buttons.append(ColorButton(self.screen_width*0.1, self.screen_height *0.7, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
-                                     (20, 40, 80), "Aperçu calibrage", 50, self.screen_width * 0.5-350,
-                                    "Arial.ttf", (65,105,225)))
+                                     (20, 40, 80), "Aperçu calibrage", 0.5,"Arial.ttf", (65,105,225)))
         self.buttons.append(ColorButton(self.screen_width*0.1, self.screen_height *0.8, self.screen_width * 0.80, self.screen_height*0.1, self.screen,
-                                        (50, 50, 50), "Quitter", 50, self.screen_width * 0.5-250,
-                                       "Arial.ttf", (65,105,225)))
+                                        (50, 50, 50), "Quitter", 0.5,"Arial.ttf", (65,105,225)))
 
-        self.volume_button = MultipleButton(self.screen_width*0.2, self.screen_height *0.3,self.screen_width*0.7, 100, self.screen,
+        self.volume_button = MultipleButton(self.screen_width*0.175, self.screen_height *0.3,self.screen_width*0.8, self.screen_height*0.11, self.screen,
                                            "soundOn.png", "soundOff.png", 10, self.settings.volume)
 
         if self.settings.volume == 0:
-            self.mute_button = CheckButton(self.screen_width*0.1, self.screen_height *0.3, 100, 100, self.screen,
+            self.mute_button = CheckButton(self.screen_width*0.1, self.screen_height *0.3, self.screen_height*0.11, self.screen_height*0.11, self.screen,
                                           "SoundMute.png", "SoundActive.png", True)
         else:
-            self.mute_button = CheckButton(self.screen_width*0.1, self.screen_height *0.3, 100, 100, self.screen,
+            self.mute_button = CheckButton(self.screen_width*0.1, self.screen_height *0.3, self.screen_height*0.11, self.screen_height*0.11, self.screen,
                                           "SoundMute.png", "SoundActive.png", False)
 
-        self.animation_button = CheckButton(self.screen_width*0.4, self.screen_height *0.45, 100, 100, self.screen,
+        self.animation_button = CheckButton(self.screen_width*0.4, self.screen_height *0.45, self.screen_height*0.11, self.screen_height*0.11, self.screen,
                                            "checkedOn.png", "checkedOff.png", self.settings.animation)
 
         self.newScreen()
@@ -134,7 +131,9 @@ class SettingsInterface(Interface):
         text2 = font_arial.render("Activer les animations", True, (255, 255, 255))
         pygame.font.quit()
 
-        self.screen.blit(pygame.image.load("./Pictures/Interfaces/fond.png"), (0, 0))
+        background = pygame.image.load("./Pictures/Interfaces/background.jpg")
+        background = pygame.transform.scale(background, (self.screen_width, self.screen_height))
+        self.screen.blit(background, (0, 0))
         for button in self.buttons:
             button.show_button()
 

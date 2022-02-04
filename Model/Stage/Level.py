@@ -10,6 +10,7 @@ class Level:
         self.difficulty = difficulty
         self.duration = duration
         self.logo_dimension = height
+        self.text_size=int(height*0.25)
         self.background = pygame.image.load("Pictures/Interfaces/levelBackground.png")
         self.background = pygame.transform.scale(self.background, (width, height))
 
@@ -22,7 +23,7 @@ class Level:
 
         pygame.font.init()
 
-        fontGlitch = pygame.font.Font("Fonts/Glitch.otf", 30)
+        fontGlitch = pygame.font.Font("Fonts/Glitch.otf",self.text_size)
 
         if (len(self.name) > 18):
             textsurface = fontGlitch.render(self.name[0:18] + "..", True, (255, 255, 255))
