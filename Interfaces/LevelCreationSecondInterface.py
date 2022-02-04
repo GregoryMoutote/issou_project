@@ -3,7 +3,6 @@ import pygame.draw
 from Buttons import CheckButton
 from Interfaces.Interface import *
 from Buttons.TimelineButton import *
-from Buttons.PictureButton import *
 from Buttons.CheckButton import *
 from Buttons.MenuLevelCreationButton import *
 from Targets.Target import *
@@ -36,21 +35,9 @@ class LevelCreationSecondInterface(Interface):
                                        self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
                                        "levelCreationPlay.png", "levelCreationPause.png", True)
 
-        self.fullscreen_button = CheckButton(self.screen_width * 0.26, self.screen_height * 0.82,
-                                             self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
-                                             "maximiser.png", "minimiser.png", True)
-
         self.import_delete_button = CheckButton(self.screen_width * 0.8, self.screen_height * 0.8,
                                                 self.screen_width * 0.2, self.screen_height * 0.1, self.screen,
                                                 "importButton.png", "deleteButton.png", True)
-
-        self.buttons = [PictureButton(self.screen_width * 0.12, self.screen_height * 0.82,
-                                      self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
-                                       "minusTen.png", "", 0, "", (255, 255, 255))]
-
-        self.buttons.append(PictureButton(self.screen_width * 0.19, self.screen_height * 0.82,
-                                          self.screen_height * 0.1, self.screen_height * 0.1, self.screen,
-                                           "plusTen.png", "",0, "", (255, 255, 255)))
 
         self.timeline = TimelineButton(self.screen_width * 0.05, self.screen_height * 0.95,
                                        self.screen_width * 0.9, self.screen_height * 0.02,
@@ -112,31 +99,12 @@ class LevelCreationSecondInterface(Interface):
             self.show_hand()
 
             if self.detection.is_fist_closed == 1:
-                #bouton -10 sec
-                if self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
-                        self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
-                    self.reset_coo()
-                    self.show()
-
-                # bouton +10 sec
-                elif self.buttons[1].x < self.right_x < (self.buttons[1].x + self.buttons[1].width) and \
-                        self.buttons[1].y < self.right_y < (self.buttons[1].y + self.buttons[1].height):
-                    self.reset_coo()
-                    self.show()
-
                 #bouton play
-                elif self.play_button.x < self.right_x < (self.play_button.x + self.play_button.width) and \
+                if self.play_button.x < self.right_x < (self.play_button.x + self.play_button.width) and \
                         self.play_button.y < self.right_y < (self.play_button.y + self.play_button.height):
                     self.play_button.change_stat()
                     self.reset_coo()
                     self.newScreen()
-
-                #bouton pleine écran
-                elif self.fullscreen_button.x < self.right_x < (self.fullscreen_button.x + self.fullscreen_button.width) and \
-                        self.fullscreen_button.y < self.right_y < (self.fullscreen_button.y + self.fullscreen_button.height):
-                    self.fullscreen_button.change_stat()
-                    self.reset_coo()
-                    self.show()
 
                 #bouton input
                 if self.inputValueTarget.x < self.right_x < (self.inputValueTarget.x + self.inputValueTarget.width) and \
@@ -272,19 +240,16 @@ class LevelCreationSecondInterface(Interface):
         self.screen.blit(right_menu, (0, self.screen_height * 0.8))
 
         self.play_button.show_button()
-        self.fullscreen_button.show_button()
         self.inputValueTarget.show_button()
         self.inputDurationTarget.show_button()
 
-        for button in self.buttons:
-            button.show_button()
         for target in self.basic_targets_list:
             target.show_button()
         for target in self.import_targets_list:
             target.show_button()
 
         pygame.font.init()
-        my_font = pygame.font.Font("./Fonts/arial.ttf", 50)
+        my_font = pygame.font.Font("./Fonts/arial.ttf", 40)
         text_surface = my_font.render("Choix des cibles", True, (255, 255, 255))
         pygame.font.quit()
         self.screen.blit(text_surface, (self.screen_width * 0.80, self.screen_height * 0.02))

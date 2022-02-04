@@ -1,5 +1,6 @@
 import pygame.draw
 from Interfaces.LevelCreationSecondInterface import *
+from Buttons.PictureButton import *
 
 class LevelCreationFirstInterface(Interface):
 

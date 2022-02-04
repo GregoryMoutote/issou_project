@@ -11,7 +11,7 @@ class Level:
         self.duration = duration
         self.logo_dimension = height
         self.text_size=int(height*0.25)
-        self.background = pygame.image.load("Pictures/Interfaces/levelBackground.png")
+        self.background = pygame.image.load("Pictures/Interfaces/button2.png")
         self.background = pygame.transform.scale(self.background, (width, height))
 
     def show(self, screen, x, y):

@@ -39,7 +39,7 @@ class RailTarget(Target):
             beginy = endy
             endx = self.steps[i].x
             endy = self.steps[i].y
-            pygame.draw.line(self.screen, (255, 0, 0), (beginx+ Constants.TARGET_RADIUS,
+            pygame.draw.line(self.screen, (100, 0, 0), (beginx+ Constants.TARGET_RADIUS,
                                                             beginy+ Constants.TARGET_RADIUS),
                                                             (endx + Constants.TARGET_RADIUS,
                                                             endy+Constants.TARGET_RADIUS), 10)

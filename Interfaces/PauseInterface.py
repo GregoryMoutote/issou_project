@@ -12,10 +12,10 @@ class PauseInterface(Interface):
 
         super().__init__(screen_data, screen)
 
-        self.buttons = [PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 160, 400, 100, self.screen, "button2.png", "REPRENDRE", 30, 50, "Glitch.otf", (65,105,225))]
-        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 50, 400, 100, self.screen, "button2.png", "REDEMARRER", 30, 50, "Glitch.otf", (65,105,225)))
-        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 60, 400, 100, self.screen, "button2.png", "PARAMETRE", 30, 50, "Glitch.otf", (65,105,225)))
-        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 170, 400, 100, self.screen, "button2.png", "QUITTER", 30, 50, "Glitch.otf", (65,105,225)))
+        self.buttons = [PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 160, 400, 100, self.screen, "button2.png", "REPRENDRE", 0.5, "Glitch.otf", (65,105,225))]
+        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 50, 400, 100, self.screen, "button2.png", "REDEMARRER", 0.5, "Glitch.otf", (65,105,225)))
+        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 60, 400, 100, self.screen, "button2.png", "PARAMETRE", 0.5, "Glitch.otf", (65,105,225)))
+        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 170, 400, 100, self.screen, "button2.png", "QUITTER", 0.5, "Glitch.otf", (65,105,225)))
 
         self.newScreen()
         self.reset_coo()
