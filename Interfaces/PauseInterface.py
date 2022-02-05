@@ -12,10 +12,10 @@ class PauseInterface(Interface):
 
         super().__init__(screen_data, screen)
 
-        self.buttons = [PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 160, 400, 100, self.screen, "button2.png", "REPRENDRE", 0.5, "Glitch.otf", (65,105,225))]
-        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 - 50, 400, 100, self.screen, "button2.png", "REDEMARRER", 0.5, "Glitch.otf", (65,105,225)))
-        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 60, 400, 100, self.screen, "button2.png", "PARAMETRE", 0.5, "Glitch.otf", (65,105,225)))
-        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 170, 400, 100, self.screen, "button2.png", "QUITTER", 0.5, "Glitch.otf", (65,105,225)))
+        self.buttons = [PictureButton(self.screen_width*0.375, self.screen_height*0.35, self.screen_width*0.25, self.screen_height*0.09, self.screen, "button2.png", "REPRENDRE", 0.5, "Glitch.otf", (225,225,225))]
+        self.buttons.append(PictureButton(self.screen_width*0.375, self.screen_height*0.45, self.screen_width*0.25, self.screen_height*0.09, self.screen, "button2.png", "REDEMARRER", 0.5, "Glitch.otf", (225,225,225)))
+        self.buttons.append(PictureButton(self.screen_width*0.375, self.screen_height*0.55, self.screen_width*0.25, self.screen_height*0.09, self.screen, "button2.png", "PARAMETRE", 0.5, "Glitch.otf", (225,225,225)))
+        self.buttons.append(PictureButton(self.screen_width*0.375, self.screen_height*0.65, self.screen_width*0.25, self.screen_height*0.09, self.screen, "button2.png", "QUITTER", 0.5, "Glitch.otf", (225,225,225)))
 
         self.newScreen()
         self.reset_coo()
@@ -89,15 +89,15 @@ class PauseInterface(Interface):
 
     def newScreen(self):
         background=pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
-        background = pygame.transform.scale(background, (450, 600))
-        self.screen.blit(background, (self.screen_width / 2 - 225, self.screen_height / 2 - 300))
+        background = pygame.transform.scale(background, (self.screen_width*0.30, self.screen_height*0.55))
+        self.screen.blit(background, (self.screen_width*0.35, self.screen_height*0.225))
         for button in self.buttons:
             button.show_button()
         pygame.font.init()
         my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 60)
         text_surface = my_font.render("PAUSE", True, (255, 255, 255))
         pygame.font.quit()
-        self.screen.blit(text_surface, (self.screen_width / 2 - 110, self.screen_height / 2 - 270))
+        self.screen.blit(text_surface, ((self.screen_width-text_surface.get_width())*0.5, self.screen_height / 2 - 270))
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
         self.show()

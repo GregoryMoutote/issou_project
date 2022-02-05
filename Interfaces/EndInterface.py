@@ -15,10 +15,10 @@ class EndInterface(Interface):
 
         self.parent.stage.save_best_score()
 
-        self.buttons=[PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 50, 400, 100,
-                                    self.screen, "button2.png", "REDEMARRER", 30, 50, "Glitch.otf", (255, 255, 255))]
-        self.buttons.append(PictureButton(self.screen_width / 2 - 200, self.screen_height / 2 + 170, 400, 100,
-                                          self.screen, "button2.png", "QUITTER", 30, 50, "Glitch.otf", (255, 255, 255)))
+        self.buttons=[PictureButton(self.screen_width*0.375, self.screen_height*0.55, self.screen_width*0.25, self.screen_height*0.09,
+                                    self.screen, "button2.png", "REDEMARRER", 0.5, "Glitch.otf", (255, 255, 255))]
+        self.buttons.append(PictureButton(self.screen_width*0.375, self.screen_height*0.65, self.screen_width*0.25, self.screen_height*0.09,
+                                          self.screen, "button2.png", "QUITTER", 0.5, "Glitch.otf", (255, 255, 255)))
 
         self.newScreen()
         self.reset_coo()
@@ -79,26 +79,24 @@ class EndInterface(Interface):
 
     def newScreen(self):
         background = pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
-        background = pygame.transform.scale(background, (450, 600))
-        self.screen.blit(background, (self.screen_width / 2 - 225, self.screen_height / 2 - 300))
+        background = pygame.transform.scale(background, (self.screen_width*0.30, self.screen_height*0.55))
+        self.screen.blit(background, (self.screen_width*0.35, self.screen_height*0.225))
         for button in self.buttons:
             button.show_button()
         pygame.font.init()
-        my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 100)
-        my_font2 = pygame.font.Font("./Fonts/lemonmilk.otf", 40)
-        my_font3=pygame.font.Font("./Fonts/lemonmilk.otf", 30)
-        my_font4 = pygame.font.Font("./Fonts/lemonmilk.otf", 20)
+        my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 120)
+        my_font2 = pygame.font.Font("./Fonts/lemonmilk.otf", 50)
+        my_font3=pygame.font.Font("./Fonts/lemonmilk.otf", 40)
+        my_font4 = pygame.font.Font("./Fonts/lemonmilk.otf", 30)
         text_surface = my_font2.render("Fin du niveau", True, (255, 255, 255))
         text_score=my_font3.render("Votre score est:", True, (255, 255, 255))
         score = my_font.render(str(self.parent.stage.score), True, (255, 255, 255))
-        text_best_score = my_font4.render("Votre meilleur score est:", True, (255, 255, 255))
-        best_score = my_font3.render(str(self.parent.stage.best_score), True, (255, 255, 255))
+        text_best_score = my_font4.render("Votre meilleur score est: "+str(self.parent.stage.best_score), True, (255, 255, 255))
         pygame.font.quit()
-        self.screen.blit(text_surface, (self.screen_width / 2 - 150, self.screen_height / 2 - 270))
-        self.screen.blit(text_score, (self.screen_width / 2 - 160, self.screen_height / 2 - 200))
-        self.screen.blit(score, (self.screen_width / 2 - 100, self.screen_height / 2 - 175))
-        self.screen.blit(text_best_score, (self.screen_width / 2 - 200, self.screen_height / 2))
-        self.screen.blit(best_score, (self.screen_width / 2 + 150, self.screen_height / 2 - 5))
+        self.screen.blit(text_surface, ((self.screen_width-text_surface.get_width())*0.5, self.screen_height / 2 - 270))
+        self.screen.blit(text_score, ((self.screen_width-text_score.get_width())*0.5, self.screen_height / 2 - 200))
+        self.screen.blit(score, ((self.screen_width-score.get_width())*0.5, self.screen_height / 2 - 175))
+        self.screen.blit(text_best_score, ((self.screen_width-text_best_score.get_width())*0.5, self.screen_height / 2))
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
         self.show()

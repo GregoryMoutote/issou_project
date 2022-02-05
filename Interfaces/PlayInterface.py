@@ -82,7 +82,7 @@ class PlayInterface(Interface):
         my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 80)
         text_surface = my_font.render("score: " + str(self.stage.score), True, (255, 255, 255))
         pygame.font.quit()
-        self.screen.blit(text_surface, (self.screen_width / 2 - 200, 30))
+        self.screen.blit(text_surface, ((self.screen_width-text_surface.get_width())*0.5, 30))
 
     def newScreen(self):
         background = pygame.image.load("./Stages/" + self.stage.name + "/background.png")
