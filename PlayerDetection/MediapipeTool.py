@@ -34,7 +34,9 @@ class MediapipeTool :
 
     def hand_detection(self):
         if self.cap.isOpened():
+
             ret, frame = self.cap.read()
+            frame = self.calibration_util.calibrate_picture(frame, False)
 
             image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             image = cv2.flip(image, 1)
@@ -55,10 +57,19 @@ class MediapipeTool :
                     self.closed_fist_detection(hand)
 
                     if results_hand.multi_handedness[num].classification[0].label == "Right":
-                        self.right_hand = self.calibration_util.calibrate_point((hand_x, hand_y))
+                        #self.right_hand = self.calibration_util.calibrate_point((hand_x, hand_y))
+                        if self.calibration_util.is_done:
+                            self.right_hand = (self.screen.GetSystemMetrics(0)-hand_x, hand_y)
+                        else:
+                            self.right_hand = (hand_x, hand_y)
 
                     if results_hand.multi_handedness[num].classification[0].label == "Left":
-                        self.left_hand = self.calibration_util.calibrate_point((hand_x, hand_y))
+                        #self.left_hand = self.calibration_util.calibrate_point((hand_x, hand_y))
+                        if self.calibration_util.is_done:
+                            self.left_hand = (self.screen.GetSystemMetrics(0)-hand_x, hand_y)
+                        else:
+                            self.left_hand = (hand_x, hand_y)
+
 
     def complete_hand_detection(self):
         if self.cap.isOpened():
