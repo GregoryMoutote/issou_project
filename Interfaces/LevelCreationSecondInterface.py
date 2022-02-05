@@ -12,6 +12,7 @@ from Buttons.InputCreationLevelButton import *
 import time
 import os
 import easygui
+import shutil
 
 class LevelCreationSecondInterface(Interface):
 
@@ -91,6 +92,7 @@ class LevelCreationSecondInterface(Interface):
                     if event.key == pygame.K_SPACE:
                         self.timeline.change_stat(self.timeline.percent + 1)
                     if event.key == pygame.K_ESCAPE:
+                        shutil.rmtree("Stages/"+self.stage.stage_name)
                         go_on = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.right_x, self.right_y = pygame.mouse.get_pos()
