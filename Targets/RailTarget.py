@@ -61,9 +61,10 @@ class RailTarget(Target):
 
         elif self.is_active:
             if self.step_active<len(self.steps)-1:
-                angle = math.atan((self.steps[self.step_active + 1].y - self.steps[self.step_active].y) / ( self.steps[self.step_active + 1].x - self.steps[self.step_active].x))
-                self.actual_coordinates = Coordinates(actual_coordinates.x - Constants.TARGET_RADIUS
-                                        ,self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle))
+                if ( self.steps[self.step_active + 1].x - self.steps[self.step_active].x)!=0:
+                    angle = math.atan((self.steps[self.step_active + 1].y - self.steps[self.step_active].y) / ( self.steps[self.step_active + 1].x - self.steps[self.step_active].x))
+                    self.actual_coordinates = Coordinates(actual_coordinates.x - Constants.TARGET_RADIUS, self.steps[self.step_active].y +
+                                (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle))
 
                 if self.steps[self.step_active+1].x+Constants.TARGET_RADIUS/8<actual_coordinates.x and actual_coordinates.x<(self.steps[self.step_active+1].x+Constants.TARGET_RADIUS*2)-Constants.TARGET_RADIUS/8 \
                         and self.steps[self.step_active+1].y+Constants.TARGET_RADIUS/8<actual_coordinates.y and actual_coordinates.y<(self.steps[self.step_active+1].y+Constants.TARGET_RADIUS*2)+Constants.TARGET_RADIUS/8:
