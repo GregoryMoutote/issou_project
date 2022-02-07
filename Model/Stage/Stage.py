@@ -7,7 +7,6 @@ from Targets.MovingTarget import MovingTarget
 from Targets.RailTarget import RailTarget
 from Model.Stage.Date import Date
 from pygame import mixer
-from Model.Stage.StageSaver import StageSaver
 from Model.Stage.Coordinates import Coordinates
 import time
 import os
@@ -354,9 +353,11 @@ class Stage:
                 target.actualise(Coordinates(x, y))
                 if target.is_achieved:
                     self.score += self.active_targets[iterator][0].value
+                    target.delete()
                     del self.active_targets[iterator]
             elif int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
                 self.score += self.active_targets[iterator][0].value
+                target.delete()
                 del self.active_targets[iterator]
             iterator += 1
 
