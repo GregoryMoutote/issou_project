@@ -236,4 +236,4 @@ class LevelSelectionInterface(Interface):
     def pre_load_all_stages(self):
         self.file = os.listdir("Stages")
         for file in self.file:
-            self.stages.append(Stage("Stages/" + file + "/" + file + ".issou", self.screen, False))
+            self.stages.append(Stage("Stages/" + file + "/" + file + ".issou", self.screen, False,self.settings))

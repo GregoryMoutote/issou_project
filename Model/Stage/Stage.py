@@ -15,8 +15,9 @@ import os
 from Model.Constants import Constants
 
 class Stage:
-    def __init__(self, file_path, screen, is_creation):
+    def __init__(self, file_path, screen, is_creation,settings):
         self.screen = screen
+        self.settings=settings
         self.path = file_path
         self.score = 0
         self.targets = []
@@ -354,12 +355,14 @@ class Stage:
                 target.actualise(Coordinates(x, y))
                 if target.is_achieved:
                     self.score += self.active_targets[iterator][0].value
-                    self.animation = Animation(self.screen,Coordinates(self.active_targets[iterator][0].coordinates.x - 100,
-                                               self.active_targets[iterator][0].coordinates.y - 100), "explosion_v2")
+                    if self.settings.animation:
+                        self.animation = Animation(self.screen,Coordinates(self.active_targets[iterator][0].steps[len(self.active_targets[iterator][0].steps)-1].x +Constants.TARGET_RADIUS- 100,
+                                               self.active_targets[iterator][0].steps[len(self.active_targets[iterator][0].steps)-1].y+Constants.TARGET_RADIUS - 100), "explosion_v2")
                     del self.active_targets[iterator]
             elif int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
                 self.score += self.active_targets[iterator][0].value
-                self.animation = Animation(self.screen, Coordinates(self.active_targets[iterator][0].coordinates.x - 100,
+                if self.settings.animation:
+                    self.animation = Animation(self.screen, Coordinates(self.active_targets[iterator][0].coordinates.x - 100,
                                            self.active_targets[iterator][0].coordinates.y - 100), "explosion_v2")
                 del self.active_targets[iterator]
             iterator += 1
