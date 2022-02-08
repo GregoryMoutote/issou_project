@@ -16,6 +16,7 @@ class AnimationThread(pygame.sprite.Sprite,threading.Thread):
 		self.screen=screen
 		self.sprites = []
 		self.coordonne=coordonate
+
 		for path in os.listdir("Pictures/Animations/"+name):
 				self.sprites.append(pygame.transform.scale(pygame.image.load("Pictures/Animations/"+name+"/"+path),(200,200)))
 		self.current_sprite = 0
