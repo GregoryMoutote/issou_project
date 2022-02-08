@@ -1,5 +1,6 @@
 import pygame.display
 
+from Animation import *
 from Model.Stage.Music import Music
 from Targets.Target import Target
 from Targets.DynamicTarget import DynamicTarget
@@ -353,11 +354,13 @@ class Stage:
                 target.actualise(Coordinates(x, y))
                 if target.is_achieved:
                     self.score += self.active_targets[iterator][0].value
-                    target.delete()
+                    self.animation = Animation(self.screen,Coordinates(self.active_targets[iterator][0].coordinates.x - 100,
+                                               self.active_targets[iterator][0].coordinates.y - 100), "explosion_v2")
                     del self.active_targets[iterator]
             elif int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
                 self.score += self.active_targets[iterator][0].value
-                target.delete()
+                self.animation = Animation(self.screen, Coordinates(self.active_targets[iterator][0].coordinates.x - 100,
+                                           self.active_targets[iterator][0].coordinates.y - 100), "explosion_v2")
                 del self.active_targets[iterator]
             iterator += 1
 

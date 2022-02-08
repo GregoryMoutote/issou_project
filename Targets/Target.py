@@ -1,5 +1,5 @@
 from Model.Stage.Coordinates import Coordinates
-from Animation import *
+
 import pygame
 import os
 import ctypes
@@ -8,9 +8,8 @@ import ctypes
 from Model.Constants import Constants
 
 class Target:
-    def __init__(self, target_data, screen, level_name,animation=""):
+    def __init__(self, target_data, screen, level_name):
         if isinstance(target_data, list) and len(target_data) >= 7:
-            self.animation=animation
             self.screen = screen
             self.pictureName = target_data[6]
             screen = ctypes.windll.user32
@@ -55,7 +54,8 @@ class Target:
         self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,self.coordinates.y - Constants.TARGET_RADIUS))
 
     def delete(self):
-        self.animation = Animation(self.screen,
-                                   self.coordinates.x + Constants.TARGET_RADIUS / 2 - 250,
-                                   self.coordinates.y + Constants.TARGET_RADIUS / 2 - 237,
-                                   "explosion_v2")
+        pass
+        #self.animation = Animation(self.screen,
+         #                          self.coordinates.x + Constants.TARGET_RADIUS / 2 - 100,
+          #                         self.coordinates.y + Constants.TARGET_RADIUS / 2 - 100,
+#                                   "explosion_v2")

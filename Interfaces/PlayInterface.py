@@ -66,7 +66,6 @@ class PlayInterface(Interface):
                     self.show()
 
 
-
     def show_hand(self):
         self.show()
         if len(self.detection.right_hand) > 0:
@@ -83,6 +82,7 @@ class PlayInterface(Interface):
         text_surface = my_font.render("score: " + str(self.stage.score), True, (255, 255, 255))
         pygame.font.quit()
         self.screen.blit(text_surface, ((self.screen_width-text_surface.get_width())*0.5, 30))
+
 
     def newScreen(self):
         background = pygame.image.load("./Stages/" + self.stage.name + "/background.png")

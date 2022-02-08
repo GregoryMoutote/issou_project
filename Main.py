@@ -3,6 +3,7 @@ from Model.Settings.Settings import *
 import pygame
 from PlayerDetection.MediapipeTool import *
 
+
 detection = MediapipeTool()
 
 
