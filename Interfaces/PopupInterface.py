@@ -13,13 +13,44 @@ class PopupInterface(Interface):
 
         super().__init__(screen_data, screen)
 
+        #COLORS
+        self.DARK_BLUE = (12, 7, 99)
+        self.LIGHT_GRAY = (113, 113, 113)
+        self.WHITE = (255, 255, 255)
+        self.BLACK = (0,0,0)
 
+
+        #TEXT
         pygame.font.init()
         my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 60)
+
+        # Buttons
+
+
         self.text_surface = my_font.render(self.err_message, True, (0,0,0))
+
         pygame.font.quit()
 
-        self.popup_area = pygame.Rect(self.screen_width / 2 - 250, self.screen_height / 2 - 250, self.text_surface.get_width()*2, 500)
+
+        #POPUP ATTRIBUTE
+        self.popup_width = self.text_surface.get_width() * 2
+        self.popup_height = self.text_surface.get_height()*3
+        self.popup_ratio = 0.6
+        self.popup_ratio = self.text_surface.get_height()/self.popup_height
+        self.popup_x = (self.screen_width - self.popup_width) /2
+        self.popup_y = (self.screen_height - self.popup_height) /2
+
+
+
+        self.upper_popup = pygame.Rect(self.popup_x, self.popup_y, self.popup_width,
+                                       self.popup_height*self.popup_ratio)
+        self.lower_popup = pygame.Rect(self.popup_x,self.popup_y-1+(self.popup_height*(self.popup_ratio)),
+                                       self.popup_width, self.popup_height*(1-self.popup_ratio))
+
+        self.button = ColorButton(self.popup_x + 50, self.popup_y + 60, self.popup_width / 3, 70, self.screen,
+                                  self.WHITE, "OK", 100, "lemonmilk.otf", self.BLACK)
+
+
 
         self.show()
         self.reset_coo()
@@ -57,9 +88,10 @@ class PopupInterface(Interface):
                     go_on = False
 
     def show(self):
-        pygame.draw.rect(self.screen, (255, 255, 255), self.popup_area)
-        pygame.draw.rect(self.screen,(255,255,255),self.popup_area,2,3)
-        self.screen.blit(self.text_surface, (self.screen_width / 2 - 110, self.screen_height / 2 - 270))
+        pygame.draw.rect(self.screen, self.DARK_BLUE, self.upper_popup)
+        pygame.draw.rect(self.screen, self.LIGHT_GRAY, self.lower_popup)
+        self.screen.blit(self.text_surface, (self.popup_x+(self.text_surface.get_width()/2), self.popup_y))
+        self.button.show_button()
 
 
     def show_hand(self):
