@@ -95,7 +95,7 @@ class StageCreator:
         for target, delay in self.stage.active_targets:
             if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS ** 2:
                 return target
-        return target
+        return None
 
     def target_texture_import(self, texture_path: str):
         if not self.is_usable:
