@@ -148,7 +148,7 @@ class Stage:
                     if isinstance(self.active_targets[iterator][0], MovingTarget) or \
                             isinstance(self.active_targets[iterator][0], DynamicTarget):
                         self.active_targets[iterator][0].begin_time += self.spend
-                if self.start <= 0:
+                if self.start > 0:
                     self.stage_music.play()
                 self.start += self.spend
                 self.spend = -1
