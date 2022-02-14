@@ -29,7 +29,6 @@ class PlayInterface(Interface):
         self.go_on = True
         while self.go_on:
             self.detection.hand_detection()
-            print("passage loop")
 
             if len(self.detection.right_hand) > 0:
                 self.right_x = self.detection.right_hand[0]
@@ -110,7 +109,6 @@ class PlayInterfaceThread(Interface,threading.Thread):
 
     def run(self):
         while (self.continuer):
-            print("passage ")
             self.screen.blit(self.background, (0, 0))
             self.stage.show_targets()
             text_surface = self.my_font.render("score: " + str(self.stage.score), True, (255, 255, 255))

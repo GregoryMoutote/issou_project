@@ -8,7 +8,6 @@ class LevelCreationFirstInterface(Interface):
         self.settings = settings
         self.detection = detection
 
-
         super().__init__(screen_data, screen)
 
         ##TEXT INPUT

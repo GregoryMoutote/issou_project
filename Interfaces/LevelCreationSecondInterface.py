@@ -27,7 +27,7 @@ class LevelCreationSecondInterface(Interface):
         self.selected_picture_name=None
         self.last_click=time.time()
 
-        self.stage=StageCreator(self.screen,stage_name, illustration_path, background_path, music_path)
+        self.stage=StageCreator(self.screen,stage_name, illustration_path, background_path, music_path,settings)
 
         if not self.stage.is_usable:
             return
@@ -52,7 +52,6 @@ class LevelCreationSecondInterface(Interface):
                                                 self.screen_width * 0.18, self.screen_height * 0.1, self.screen,
                                                  5,"Arial.ttf",(255,255,255),"Durée d'apparition",20)
 
-        self.placed_target = []
         self.basic_targets_list = []
         self.import_targets_list = []
 
@@ -115,11 +114,18 @@ class LevelCreationSecondInterface(Interface):
                     self.reset_coo()
                     self.show()
 
+                if self.inputDurationTarget.x < self.right_x < (self.inputDurationTarget.x + self.inputDurationTarget.width) and \
+                        self.inputDurationTarget.y < self.right_y < (self.inputDurationTarget.y + self.inputDurationTarget.height):
+                    self.inputDurationTarget.click(self.right_x)
+                    self.reset_coo()
+                    self.show()
+
                 #gestion du bouton d'import et de suppréssion
                 elif self.import_delete_button.x < self.right_x < (self.import_delete_button.x + self.import_delete_button.width) and \
                         self.import_delete_button.y < self.right_y < (self.import_delete_button.y + self.import_delete_button.height):
                     if self.is_selected_target:
                         self.import_delete_button.active=True
+                        self.stage.remove_traget()
                         self.delete()
                     else:
                         self.import_delete_button.active = False
@@ -150,14 +156,24 @@ class LevelCreationSecondInterface(Interface):
                 #placer les cibles
                 elif Constants.TARGET_RADIUS < self.right_x < self.screen_width*0.8-Constants.TARGET_RADIUS and \
                         Constants.TARGET_RADIUS < self.right_y < self.screen_height * 0.8 - Constants.TARGET_RADIUS:
+
                     if self.is_selected_target and time.time() - self.last_click > 1:
-                        self.last_click=time.time()
-                        self.placed_target.append(Target([0, ((self.right_x)/(self.screen_width*0.8))*0.8, ((self.right_y)/(self.screen_height*0.8))*0.8, 10, 10, 25,
-                                                        self.selected_picture_name], self.screen,self.stage.stage_name))
-                        self.is_selected_target = False
-                        self.import_delete_button.active = True
-                        self.reset_coo()
-                        self.show()
+                        if self.stage.active_target_index!=-1:
+                            self.stage.targets[self.stage.targets_index].x = self.right_x
+                            self.stage.targets[self.stage.targets_index].y = self.right_y
+
+                        else:
+                            self.stage.add_target(Target([0, ((self.right_x) / (self.screen_width * 0.8)) * 0.8,
+                                                          ((self.right_y) / (self.screen_height * 0.8)) * 0.8, 10,
+                                                          self.timeline.percent * self.stage.stage.stage_music.duration, 25,
+                                                         self.selected_picture_name], self.screen, self.stage.stage_name))
+                    self.last_click = time.time()
+                    self.is_selected_target = False
+                    self.import_delete_button.active = True
+                    self.reset_coo()
+                    self.show()
+                    self.stage.stage.play()
+
 
                 elif self.screen_width * 0.05<self.right_x<self.screen_width*0.95 and self.screen_height*0.95<self.right_y<self.screen_height*0.97:
                     self.timeline.change_stat((self.right_x-self.screen_width * 0.05)/(self.screen_width*0.9))
@@ -182,40 +198,43 @@ class LevelCreationSecondInterface(Interface):
                         self.import_delete_button.active = False
 
                 #déplacement de cible
-                for target in self.placed_target:
-                    if target.coordinates.x < self.right_x < (target.coordinates.x + Constants.TARGET_RADIUS) and \
-                            target.coordinates.y < self.right_y < (target.coordinates.y + Constants.TARGET_RADIUS):
+                for target in self.stage.stage.active_targets:
+                    print("test:"+str(target[0].coordinates)+ "  "+str(self.right_x)+"   "+str(self.right_y))
+                    if target[0].coordinates.x < self.right_x < (target[0].coordinates.x + Constants.TARGET_RADIUS*2) and \
+                            target[0].coordinates.y < self.right_y < (target[0].coordinates.y + Constants.TARGET_RADIUS*2):
+
                         if(time.time()-self.last_click>1):
                             self.last_click=time.time()
                             self.is_selected_target = True
 
                             if os.path.isfile("Pictures/Targets/" + str(target.pictureName)):
                                 picture = pygame.image.load("Pictures/Targets/" + str(target.pictureName))
+
                             elif os.path.isfile("Stages/" + self.stage.stage_name + "/specialTargets/" + target.pictureName):
                                 picture = pygame.image.load("Stages/" + self.stage.stage_name + "/specialTargets/" + target.pictureName)
 
                             self.selected_picture = pygame.transform.scale(picture, (Constants.TARGET_RADIUS * 0.8,
-                                                                                     Constants.TARGET_RADIUS * 0.8))
+                                                                                  Constants.TARGET_RADIUS * 0.8))
                             self.selected_picture_name = target.pictureName
-                            self.placed_target.remove(target)
-
+                            self.stage.set_target_to_modify(self.right_x,self.right_y)
                             self.import_delete_button.active =not self.is_selected_target
-
                             self.show()
+                            print("déplacer")
 
 
     def show(self):
         self.screen.blit(self.background, (0, 0))
-        for placed in self.placed_target:
-            if placed != None:
-                placed.show_target()
+        self.import_delete_button.show_button()
+
+        for target,delay in self.stage.stage.active_targets:
+            if (target != None and len(self.stage.stage.active_targets)>self.stage.active_target_index>=0 and target!=self.stage.stage.active_targets[self.stage.active_target_index][0]) or self.stage.active_target_index==-1:
+                target.show_target()
 
         if self.is_selected_target:
             self.screen.blit(self.selected_picture, (self.right_x - Constants.TARGET_RADIUS * 0.8,
                                                      self.right_y - Constants.TARGET_RADIUS * 0.8))
         self.inputValueTarget.show_value()
         self.inputDurationTarget.show_value()
-        self.import_delete_button.show_button()
         self.timeline.show_button()
 
 

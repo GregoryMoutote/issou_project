@@ -9,14 +9,15 @@ from Targets import *
 from Model.Constants import Constants
 
 class StageCreator:
-    def __init__(self,screen, stage_name: str="",  illustration_path: str="", background_path: str="", music_path: str=""):
+    def __init__(self,screen, stage_name: str="",  illustration_path: str="", background_path: str="", music_path: str="",settings: str=""):
         self.is_usable = True
         if not re.search("\w+", stage_name):
             self.is_usable = False
             return
         os.makedirs("Stages/" + stage_name)
         stage_path = "Stages/" + stage_name.lower() + '/' + stage_name.lower() + ".issou"
-        self.stage = Stage(stage_path, screen,True)
+        self.stage = Stage(stage_path, screen,True,settings)
+        self.stage.is_stage_usable=True
         self.stage_name = stage_name
         self.background_path=background_path
 
@@ -61,10 +62,20 @@ class StageCreator:
         os.makedirs("Stages/" + self.stage_name + "/specialTargets")
 
         self.targets = []
+        self.targets_index=-1
+        self.active_target_index=-1
 
     def add_target(self, target: Target):
         if self.is_usable:
+            self.targets_index=len(self.targets)
             self.targets.append(target)
+            self.stage.targets.append(target)
+
+    def remove_traget(self):
+        self.targets.pop(self.targets_index)
+        self.stage.active_targets.pop(self.active_target_index)
+        self.targets_index=-1
+        self.active_target_index=-1
 
     def add_special_target(self,target):
         if ".png" not in target:
@@ -89,11 +100,20 @@ class StageCreator:
         self.stage_saver = None
         self.stage_saver = StageSaver(self.stage)
 
-    def get_target_to_modify(self, x, y):
+    def set_target_to_modify(self, x, y):
+        found_target = None
+        self.active_target_index=0
         for target, delay in self.stage.active_targets:
             if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS ** 2:
-                return target
-        return target
+                found_target = target
+                break
+            self.active_target_index+=1
+        if found_target != None:
+            self.targets_index = 0
+            for target in self.targets:
+                if found_target == target:
+                    return
+                self.targets_index += 1
 
     def target_texture_import(self, texture_path: str):
         if not self.is_usable:
