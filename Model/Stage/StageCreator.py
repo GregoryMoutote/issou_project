@@ -62,6 +62,8 @@ class StageCreator:
 
         self.targets = []
 
+        self.temporary_target = None
+
     def add_target(self, target: Target):
         if self.is_usable:
             self.targets.append(target)
@@ -109,3 +111,12 @@ class StageCreator:
             target_texture_path = "Stages/" + self.stage.name + "/" + texture_path[delimiter:]
             shutil.copy2(texture_path, target_texture_path)
 
+    def add_temporary_target(self, target: Target):
+        self.temporary_target = target
+
+    def remove_temporary_target(self):
+        self.temporary_target = None
+
+    def confirm_temporary_target(self):
+        self.targets.append(self.temporary_target)
+        self.temporary_target = None
