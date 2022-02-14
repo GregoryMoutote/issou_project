@@ -67,6 +67,7 @@ class StageCreator:
     def add_target(self, target: Target):
         if self.is_usable:
             self.targets.append(target)
+            self.stage.targets.append(target)
 
     def add_special_target(self,target):
         if ".png" not in target:
@@ -91,11 +92,17 @@ class StageCreator:
         self.stage_saver = None
         self.stage_saver = StageSaver(self.stage)
 
-    def get_target_to_modify(self, x, y):
+    def set_target_to_modify(self, x, y):
+        found_target = None
         for target, delay in self.stage.active_targets:
             if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS ** 2:
-                return target
-        return None
+                found_target = target
+        if found_target != None:
+            index = 0
+            for target, delay in self.targets:
+                if found_target == target:
+                    return
+                index += 1
 
     def target_texture_import(self, texture_path: str):
         if not self.is_usable:
@@ -114,6 +121,3 @@ class StageCreator:
     def get_currently_modified_target(self):
         if 0 <= self.currently_modified_target_index < self.targets.len:
             return self.targets[self.currently_modified_target_index]
-
-    def add_target_to_list(self, target: Target):
-        self.targets.append(target)
