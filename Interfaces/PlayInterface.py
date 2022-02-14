@@ -1,4 +1,4 @@
-import pygame.draw
+import pygame.draw,threading
 
 from Interfaces.PauseInterface import *
 from Interfaces.EndInterface import *
@@ -18,6 +18,10 @@ class PlayInterface(Interface):
 
         self.newScreen()
         self.reset_coo()
+
+        self.thread = PlayInterfaceThread(screen,stage,detection,self)  # crée le thread
+        self.thread.start()
+
         self.loop()
 
 
@@ -25,6 +29,7 @@ class PlayInterface(Interface):
         self.go_on = True
         while self.go_on:
             self.detection.hand_detection()
+            print("passage loop")
 
             if len(self.detection.right_hand) > 0:
                 self.right_x = self.detection.right_hand[0]
@@ -38,6 +43,7 @@ class PlayInterface(Interface):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self.go_on = False
+                        self.thread.continuer=False
                         pygame.mixer.music.stop()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.right_x, self.right_y = pygame.mouse.get_pos()
@@ -47,7 +53,6 @@ class PlayInterface(Interface):
 
             self.stage.update_targets()
             self.stage.play()
-            self.show_hand()
 
 
             if self.stage.is_end():
@@ -58,30 +63,16 @@ class PlayInterface(Interface):
             if self.detection.is_fist_closed == 1:
                 if self.pause_button.x < self.right_x < (self.pause_button.x + self.pause_button.width) and \
                         self.pause_button.y < self.right_y < (self.pause_button.y + self.pause_button.height):
+                    self.thread.end()
                     self.stage.pause()
                     PauseInterface(self.screen_data, self.screen, self.detection, self.settings, self)
                     self.stage.resume()
-                    self.reset_coo()
+                    if(self.go_on):
+                        self.newScreen()
+                        self.thread = PlayInterfaceThread(self.screen,self.stage,self.detection,self)
+                        self.thread.start()
                     self.detection.hand_points.clear()
-                    self.show()
-
-
-    def show_hand(self):
-        self.show()
-        if len(self.detection.right_hand) > 0:
-            pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.right_hand[0]- 10,
-                                                              self.detection.right_hand[1] - 10), 20)
-        pygame.display.update()
-
-
-    def show(self):
-        self.screen.blit(self.background, (0, 0))
-        self.stage.show_targets()
-        pygame.font.init()
-        my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 80)
-        text_surface = my_font.render("score: " + str(self.stage.score), True, (255, 255, 255))
-        pygame.font.quit()
-        self.screen.blit(text_surface, ((self.screen_width-text_surface.get_width())*0.5, 30))
+                    self.reset_coo()
 
 
     def newScreen(self):
@@ -91,10 +82,42 @@ class PlayInterface(Interface):
         self.pause_button.show_button()
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
-        self.show()
+
 
     def reset_coo(self):
         self.right_x = 0
         self.right_y = 0
         self.leftX = 0
         self.leftY = 0
+
+
+
+class PlayInterfaceThread(Interface,threading.Thread):
+
+    def __init__(self,screen,stage,detection,interface):
+        threading.Thread.__init__(self)
+        self.background = pygame.image.load("background.jpg")
+        pygame.font.init()
+        self.my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 80)
+        self.screen=screen
+        self.stage=stage
+        self.detection=detection
+        self.interface=interface
+        self.continuer=True
+
+    def end(self):
+        self.continuer = False
+
+    def run(self):
+        while (self.continuer):
+            print("passage ")
+            self.screen.blit(self.background, (0, 0))
+            self.stage.show_targets()
+            text_surface = self.my_font.render("score: " + str(self.stage.score), True, (255, 255, 255))
+            self.screen.blit(text_surface, ((self.interface.screen_width - text_surface.get_width()) * 0.5, 30))
+            if len(self.detection.right_hand) > 0:
+                pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.right_hand[0] - 10,
+                                                                  self.detection.right_hand[1] - 10), 20)
+            pygame.display.update()
+        del self.my_font
+        pygame.font.quit()

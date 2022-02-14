@@ -16,3 +16,4 @@ settings = Settings()
 
 CalibrationInterface(screen_data, screen, detection)
 MainMenuInterface(screen_data, screen, detection, settings)
+pygame.quit()
