@@ -36,7 +36,7 @@ class LevelCreationFirstInterface(Interface):
 
         self.newScreen()
         self.reset_coo()
-        PopupInterface(self.screen_data, self.screen, self.detection, self.settings, self, "ERREUR")
+        PopupInterface(self.screen_data, self.screen, self.detection, self.settings, self, "ERREUR", "MESSAGE D'ERREUR")
         self.loop()
 
     def loop(self):
