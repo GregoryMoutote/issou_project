@@ -68,7 +68,7 @@ class EndInterface(Interface):
         self.screen.blit(self.background, (0, 0))
 
     def show_hand(self):
-        self.parent.show()
+        #self.parent.show()
         self.show()
         if len(self.detection.left_hand) > 0:
             pygame.draw.circle(self.screen, (255, 0, 0), (self.leftX - 5, self.leftY - 5), 10)

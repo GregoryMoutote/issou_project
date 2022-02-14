@@ -59,7 +59,6 @@ class LevelSelectionInterface(Interface):
         while go_on:
             self.detection.hand_detection()
 
-
             if len(self.detection.right_hand) > 0:
                 self.right_x = self.detection.right_hand[0]
                 self.right_y = self.detection.right_hand[1]
