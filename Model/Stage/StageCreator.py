@@ -65,6 +65,8 @@ class StageCreator:
         self.targets_index=-1
         self.active_target_index=-1
 
+        self.currently_modified_target_index = -1
+
     def add_target(self, target: Target):
         if self.is_usable:
             self.targets_index=len(self.targets)
@@ -129,3 +131,6 @@ class StageCreator:
             target_texture_path = "Stages/" + self.stage.name + "/" + texture_path[delimiter:]
             shutil.copy2(texture_path, target_texture_path)
 
+    def get_currently_modified_target(self):
+        if 0 <= self.currently_modified_target_index < self.targets.len:
+            return self.targets[self.currently_modified_target_index]
