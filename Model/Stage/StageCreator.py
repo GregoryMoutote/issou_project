@@ -74,6 +74,7 @@ class StageCreator:
             self.stage.targets.append(target)
 
     def remove_traget(self):
+        print("remove target")
         self.targets.pop(self.targets_index)
         self.stage.active_targets.pop(self.active_target_index)
         self.targets_index=-1

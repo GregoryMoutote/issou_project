@@ -28,7 +28,6 @@ class LevelCreationSecondInterface(Interface):
         self.last_click=time.time()
 
         self.stage=StageCreator(self.screen,stage_name, illustration_path, background_path, music_path,settings)
-
         if not self.stage.is_usable:
             return
 
@@ -51,6 +50,7 @@ class LevelCreationSecondInterface(Interface):
         self.inputDurationTarget= InputCreationLevelButton(self.screen_width * 0.4, self.screen_height * 0.81,
                                                 self.screen_width * 0.18, self.screen_height * 0.1, self.screen,
                                                  5,"Arial.ttf",(255,255,255),"Durée d'apparition",20)
+
 
         self.basic_targets_list = []
         self.import_targets_list = []
@@ -98,6 +98,7 @@ class LevelCreationSecondInterface(Interface):
                     self.detection.is_fist_closed = 1
 
             self.show_hand()
+            print(len(self.stage.stage.active_targets))
 
             if self.detection.is_fist_closed == 1:
                 #bouton play
@@ -120,14 +121,16 @@ class LevelCreationSecondInterface(Interface):
                     self.reset_coo()
                     self.show()
 
-                #gestion du bouton d'import et de suppréssion
+                #gestion du bouton d'import et de suppression
                 elif self.import_delete_button.x < self.right_x < (self.import_delete_button.x + self.import_delete_button.width) and \
                         self.import_delete_button.y < self.right_y < (self.import_delete_button.y + self.import_delete_button.height):
-                    if self.is_selected_target:
+                    if self.is_selected_target:#suppression
                         self.import_delete_button.active=True
                         self.stage.remove_traget()
                         self.delete()
-                    else:
+                        self.inputDurationTarget.show_input_value=False
+                        self.inputValueTarget.show_input_value=False
+                    else:#import
                         self.import_delete_button.active = False
                         target= easygui.fileopenbox(title="Chosir une cible",default='*.png')
                         if target is not None:
@@ -156,6 +159,9 @@ class LevelCreationSecondInterface(Interface):
                 #placer les cibles
                 elif Constants.TARGET_RADIUS < self.right_x < self.screen_width*0.8-Constants.TARGET_RADIUS and \
                         Constants.TARGET_RADIUS < self.right_y < self.screen_height * 0.8 - Constants.TARGET_RADIUS:
+
+                    self.inputDurationTarget.show_input_value = True
+                    self.inputValueTarget.show_input_value = True
 
                     if self.is_selected_target and time.time() - self.last_click > 1:
                         if self.stage.active_target_index!=-1:
@@ -199,9 +205,9 @@ class LevelCreationSecondInterface(Interface):
 
                 #déplacement de cible
                 for target in self.stage.stage.active_targets:
-                    print("test:"+str(target[0].coordinates)+ "  "+str(self.right_x)+"   "+str(self.right_y))
                     if target[0].coordinates.x < self.right_x < (target[0].coordinates.x + Constants.TARGET_RADIUS*2) and \
-                            target[0].coordinates.y < self.right_y < (target[0].coordinates.y + Constants.TARGET_RADIUS*2):
+                       target[0].coordinates.y < self.right_y < (target[0].coordinates.y + Constants.TARGET_RADIUS*2):
+                        print("test:" + str(target[0].coordinates) + "  " + str(self.right_x) + "   " + str(self.right_y))
 
                         if(time.time()-self.last_click>1):
                             self.last_click=time.time()
