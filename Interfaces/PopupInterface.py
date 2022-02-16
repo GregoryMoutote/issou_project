@@ -65,6 +65,8 @@ class PopupInterface(Interface):
 
         pygame.font.quit()
 
+        self.buttons = []
+
         try:
             self.background = pygame.image.load("./Pictures/Interfaces/popup_background.png")
             self.popup_width = 549
@@ -76,9 +78,24 @@ class PopupInterface(Interface):
 
             self.text_surfaces = split_lines(self.popup_width-140,150,subtext,my_smaller_font)
 
-
-            self.popup_button = PictureButton(250, 252, 450, 30, self.screen, "popup_button.png", "OK", 0.5,"lemonmilk.otf",(255,255,255) )
             pygame.font.quit()
+
+            self.popup_x = (self.screen_width - self.popup_width) / 2
+            self.popup_y = (self.screen_height - self.popup_height) / 2
+
+            self.button_width = self.popup_width - 100
+
+            self.popup_button = PictureButton(self.popup_x+(self.popup_width-self.button_width)/2,
+                                              self.popup_y+self.popup_height-60*1.5,
+                                              self.button_width, 60,
+                                              self.screen, "popup_button.png", "OK", 0.5,"lemonmilk.otf",
+                                              (255,255,255) )
+
+            self.buttons.append(self.popup_button)
+
+            self.add_button("TEST")
+
+
 
 
 
@@ -102,9 +119,10 @@ class PopupInterface(Interface):
             self.is_image_loaded = False
 
         self.button = PopupButton(self.screen, "OK")
-
         self.popup_x = (self.screen_width - self.popup_width) / 2
         self.popup_y = (self.screen_height - self.popup_height) / 2
+
+
 
 
         self.show()
@@ -154,7 +172,8 @@ class PopupInterface(Interface):
                 self.screen.blit(i, (self.popup_x+30, coordinate_y))
                 coordinate_y += i.get_height()
 
-            self.popup_button.show_button()
+            for button in self.buttons:
+                button.show_button()
 
 
 
@@ -180,4 +199,17 @@ class PopupInterface(Interface):
         self.right_y = 0
         self.left_x = 0
         self.left_y = 0
+
+    def add_button(self, text):
+        nb_button = len(self.buttons)
+        new_width = (self.popup_width - 100)/(nb_button+1)
+        for button in self.buttons:
+            button.width = new_width
+        added_popup_button = PictureButton(self.popup_x + (self.popup_width - new_width) / (2*nb_button),
+                                          self.popup_y + self.popup_height - 60 * 1.5,
+                                          new_width, 60,
+                                          self.screen, "popup_button.png", text, 0.5, "lemonmilk.otf",
+                                          (255, 255, 255))
+        self.buttons.append(added_popup_button)
+
 
