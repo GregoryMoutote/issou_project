@@ -1,5 +1,3 @@
-import pygame.display
-
 from Animation import *
 from Model.Stage.Music import Music
 from Targets.Target import Target
@@ -161,6 +159,7 @@ class Stage:
                     for iterator in range(len(self.active_targets) - 1, -1, -1):
                         if self.active_targets[iterator][1] <= time.time():
                             self.active_targets.pop(iterator)
+                            print("stage vire une cible dans le play")
 
     def actualise_active_targets(self):
         if len(self.targets) > 0:
