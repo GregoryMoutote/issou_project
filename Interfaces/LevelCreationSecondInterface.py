@@ -172,7 +172,7 @@ class LevelCreationSecondInterface(Interface):
                     self.import_delete_button.active = True
                     self.reset_coo()
                     self.show()
-                    self.stage.stage.play()
+                    self.stage.stage.actualise_active_targets()
 
 
                 elif self.screen_width * 0.05<self.right_x<self.screen_width*0.95 and self.screen_height*0.95<self.right_y<self.screen_height*0.97:

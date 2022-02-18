@@ -156,15 +156,18 @@ class Stage:
                 self.start = time.time()
                 self.stage_music.play()
             if self.is_stage_usable:
-                if len(self.targets) > 0:
-                    self.next_action = self.start + self.targets[0].delay
-                    if self.next_action <= time.time():
-                        self.active_targets.append([self.targets[0], time.time() + self.targets[0].duration])
-                        self.targets.pop(0)
+                self.actualise_active_targets()
                 if len(self.active_targets) > 0:
                     for iterator in range(len(self.active_targets) - 1, -1, -1):
                         if self.active_targets[iterator][1] <= time.time():
                             self.active_targets.pop(iterator)
+
+    def actualise_active_targets(self):
+        if len(self.targets) > 0:
+            self.next_action = self.start + self.targets[0].delay
+            if self.next_action <= time.time():
+                self.active_targets.append([self.targets[0], time.time() + self.targets[0].duration])
+                self.targets.pop(0)
 
     def update_targets(self):
         for target, delay in self.active_targets:
