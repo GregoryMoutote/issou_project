@@ -117,6 +117,7 @@ class StageCreator:
                 if found_target == target:
                     return
                 self.targets_index += 1
+        print("cible selectionné "+str(self.active_target_index))
 
     def target_texture_import(self, texture_path: str):
         if not self.is_usable:
