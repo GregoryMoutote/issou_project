@@ -124,7 +124,6 @@ class LevelCreationSecondInterface(Interface):
                     self.reset_coo()
                     self.show()
 
-
                 elif self.screen_width * 0.05<self.right_x<self.screen_width*0.95 and self.screen_height*0.95<self.right_y<self.screen_height*0.97:
                     self.timeline.change_stat((self.right_x-self.screen_width * 0.05)/(self.screen_width*0.9))
                     self.reset_coo()
@@ -152,7 +151,7 @@ class LevelCreationSecondInterface(Interface):
 
                 #print("actvie target selected "+str(self.stage.active_target_index))
                 #print("target selected " + str(self.stage.targets_index))
-
+                print(len(self.stage.stage.active_targets))
                 # déplacement de cible
                 self.move_target()
 
@@ -273,10 +272,11 @@ class LevelCreationSecondInterface(Interface):
 
             if self.stage.active_target_index != -1:
                 print("placé après le déplacement ------------")
-                self.stage.targets[self.stage.targets_index].x = self.right_x
-                self.stage.targets[self.stage.targets_index].y = self.right_y
-                self.stage.stage.active_targets[self.stage.active_target_index][0].x = self.right_x
-                self.stage.stage.active_targets[self.stage.active_target_index][0].y = self.right_y
+                self.stage.targets[self.stage.targets_index].coordinates.x = self.right_x
+                self.stage.targets[self.stage.targets_index].coordinates.y = self.right_y
+                self.stage.stage.active_targets[self.stage.active_target_index][0].coordinates.x = self.right_x
+                self.stage.stage.active_targets[self.stage.active_target_index][0].coordinates.y = self.right_y
+                self.stage.active_target_index=-1
                 self.stage.stage.actualise_active_targets()
                 #self.stage.stage.play()
 
