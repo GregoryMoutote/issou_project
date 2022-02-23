@@ -28,7 +28,7 @@ class Stage:
         self.is_stage_usable = False
         if not is_creation:
             self.pre_load_stage()
-        self.spend = -1
+        self.spent = -1
         self.start = -1
         self.next_action = -1
 
@@ -37,7 +37,7 @@ class Stage:
         self.targets.clear()
         self.active_targets.clear()
         self.is_stage_usable = False
-        self.spend = -1
+        self.spent = -1
         self.start = -1
         self.next_action = -1
         self.load_targets()
@@ -140,16 +140,16 @@ class Stage:
 
     def play(self):
         if self.is_stage_usable:
-            if self.spend > 0:
+            if self.spent > 0:
                 for iterator in range (0, len(self.active_targets)):
-                    self.active_targets[iterator][1] += self.spend
+                    self.active_targets[iterator][1] += self.spent
                     if isinstance(self.active_targets[iterator][0], MovingTarget) or \
                             isinstance(self.active_targets[iterator][0], DynamicTarget):
-                        self.active_targets[iterator][0].begin_time += self.spend
+                        self.active_targets[iterator][0].begin_time += self.spent
                 if self.start > 0:
                     self.stage_music.play()
-                self.start += self.spend
-                self.spend = -1
+                self.start += self.spent
+                self.spent = -1
             elif not mixer.music.get_busy():
                 self.start = time.time()
                 self.stage_music.play()
@@ -159,7 +159,6 @@ class Stage:
                     for iterator in range(len(self.active_targets) - 1, -1, -1):
                         if self.active_targets[iterator][1] <= time.time():
                             self.active_targets.pop(iterator)
-                            print("stage vire une cible dans le play")
 
     def actualise_active_targets(self):
         if len(self.targets) > 0:
@@ -177,7 +176,7 @@ class Stage:
             target.show_target()
  
     def pause(self):
-        self.spend = time.time()
+        self.spent = time.time()
         self.is_stage_usable = False
         self.stage_music.pause()
 
@@ -186,7 +185,7 @@ class Stage:
 
     def resume(self):
         self.load_stage()
-        self.spend = time.time() - self.spend
+        self.spent = time.time() - self.spent
 
     def load_stage(self):
         if self.stage_music and self.targets:
@@ -370,7 +369,7 @@ class Stage:
             iterator += 1
 
     def set_pose(self, ratio: float, targets: list):
-        self.spend = -1
+        self.spent = -1
         self.start = time.time() - (float(self.stage_music.duration) * ratio) / 1000
 
         if ratio < 0 or ratio > 1:
