@@ -1,11 +1,8 @@
 from Model.Stage.Coordinates import Coordinates
-
+from Model.Constants import Constants
 import pygame
 import os
 import ctypes
-
-
-from Model.Constants import Constants
 
 class Target:
     def __init__(self, target_data, screen, level_name):

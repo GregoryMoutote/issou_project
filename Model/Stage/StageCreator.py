@@ -5,7 +5,6 @@ from Targets.Target import Target
 import os
 import shutil
 import re
-from Targets import *
 from Model.Constants import Constants
 
 class StageCreator:
@@ -64,6 +63,7 @@ class StageCreator:
         self.targets = []
         self.targets_index=-1
         self.active_target_index=-1
+        self.moving_target_index=-1
 
         self.currently_modified_target_index = -1
 
@@ -74,11 +74,12 @@ class StageCreator:
             self.stage.targets.append(target)
 
     def remove_traget(self):
-        print("remove target")
+        print("remove target // active target index",self.active_target_index,"               target index",self.targets_index)
         self.targets.pop(self.targets_index)
         self.stage.active_targets.pop(self.active_target_index)
         self.targets_index=-1
-        self.active_target_index=-1
+        self.active_target_index = -1
+        self.moving_target_index=-1
 
     def add_special_target(self,target):
         if ".png" not in target:
@@ -111,13 +112,15 @@ class StageCreator:
                 found_target = target
                 break
             self.active_target_index+=1
+
         if found_target != None:
             self.targets_index = 0
             for target in self.targets:
                 if found_target == target:
                     return
                 self.targets_index += 1
-        print("cible selectionné "+str(self.active_target_index))
+        print("active target index",self.active_target_index,"               target index",self.targets_index)
+
 
     def target_texture_import(self, texture_path: str):
         if not self.is_usable:
