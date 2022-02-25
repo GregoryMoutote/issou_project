@@ -52,7 +52,7 @@ class LevelCreationSecondInterface(Interface):
                                                 self.screen_width * 0.18, self.screen_height * 0.1, self.screen,
                                                  5,"Arial.ttf",(255,255,255),"Durée d'apparition",20)
 
-        self.move_button=PictureButton(self.screen_width*0.35,self.screen_height*0.81,self.screen_height * 0.12, self.screen_height * 0.12,self.screen,"move.png","",0,"Arial.ttf",(255,255,255))
+        self.move_button=PictureButton(self.screen_width*0.32,self.screen_height*0.81,self.screen_height * 0.1, self.screen_height * 0.1,self.screen,"move.png","",0,"Arial.ttf",(255,255,255))
 
 
         self.basic_targets_list = []
@@ -109,29 +109,27 @@ class LevelCreationSecondInterface(Interface):
                         self.play_button.y < self.right_y < (self.play_button.y + self.play_button.height):
                     print("press play button")
                     self.play_button.change_stat()
-                    self.reset_coo()
                     self.newScreen()
 
                 #bouton input
                 if self.inputValueTarget.x < self.right_x < (self.inputValueTarget.x + self.inputValueTarget.width) and \
                         self.inputValueTarget.y < self.right_y < (self.inputValueTarget.y + self.inputValueTarget.height):
                     print("press input value target")
-                    self.inputValueTarget.click(self.right_x)
-                    self.stage.stage.active_targets[self.stage.active_target_index][0].value=self.inputValueTarget.value
-                    self.reset_coo()
+                    if self.stage.active_target_index != -1:
+                        self.inputValueTarget.click(self.right_x)
+                        self.stage.stage.active_targets[self.stage.active_target_index][0].value=self.inputValueTarget.value
                     self.show()
 
                 elif self.inputDurationTarget.x < self.right_x < (self.inputDurationTarget.x + self.inputDurationTarget.width) and \
                         self.inputDurationTarget.y < self.right_y < (self.inputDurationTarget.y + self.inputDurationTarget.height):
                     print("press input duration target")
-                    self.inputDurationTarget.click(self.right_x)
-                    self.stage.stage.active_targets[self.stage.active_target_index][0].duration=self.inputDurationTarget.value
-                    self.reset_coo()
+                    if self.stage.active_target_index!=-1:
+                        self.inputDurationTarget.click(self.right_x)
+                        self.stage.stage.active_targets[self.stage.active_target_index][0].duration=self.inputDurationTarget.value
                     self.show()
 
                 elif self.screen_width * 0.05<self.right_x<self.screen_width*0.95 and self.screen_height*0.95<self.right_y<self.screen_height*0.97:
                     self.timeline.change_stat((self.right_x-self.screen_width * 0.05)/(self.screen_width*0.9))
-                    self.reset_coo()
 
                 #déplacement
                 elif self.move_button.x < self.right_x < (self.move_button.x + self.move_button.width) and \
@@ -171,6 +169,7 @@ class LevelCreationSecondInterface(Interface):
 
                 #placer les cibles
                 self.place_target()
+                self.reset_coo()
 
     def show(self):
         self.screen.blit(self.background, (0, 0))
@@ -184,7 +183,6 @@ class LevelCreationSecondInterface(Interface):
             self.screen.blit(self.selected_picture, (self.right_x - Constants.TARGET_RADIUS * 0.8,
                                                      self.right_y - Constants.TARGET_RADIUS * 0.8))
 
-        self.move_button.show_button()
         self.inputValueTarget.show_value()
         self.inputDurationTarget.show_value()
         self.timeline.show_button()
@@ -212,6 +210,7 @@ class LevelCreationSecondInterface(Interface):
         right_menu = pygame.transform.scale(right_menu, (self.screen_width,self.screen_height * 0.20))
         self.screen.blit(right_menu, (0, self.screen_height * 0.8))
 
+        self.move_button.show_button()
         self.play_button.show_button()
         self.inputValueTarget.show_button()
         self.inputDurationTarget.show_button()
@@ -260,23 +259,25 @@ class LevelCreationSecondInterface(Interface):
         #     self.stage.active_target_index=-1
         #     self.stage.targets_index=-1
 
-        self.inputDurationTarget.show_input_value = False
-        self.inputValueTarget.show_input_value = False
-        self.import_delete_button.active = True
+        if self.right_x < self.screen_width * 0.8 and self.right_y < self.screen_height * 0.8:
+            print(self.right_y, "<", self.screen_height * 0.8)
+            self.inputDurationTarget.show_input_value = False
+            self.inputValueTarget.show_input_value = False
+            self.import_delete_button.active = True
 
 
     def move_target(self):
         # print("press deplacement de cible")
-        self.is_selected_target = True
-        self.stage.moving_target_index=self.stage.active_target_index
-        self.selected_picture_name = self.stage.stage.active_targets[self.stage.moving_target_index][0].pictureName
-        self.selected_picture = self.stage.stage.active_targets[self.stage.moving_target_index][0].picture
+        if self.stage.active_target_index != -1:
+            self.is_selected_target = True
+            self.stage.moving_target_index=self.stage.active_target_index
+            self.selected_picture_name = self.stage.stage.active_targets[self.stage.moving_target_index][0].pictureName
+            self.selected_picture = self.stage.stage.active_targets[self.stage.moving_target_index][0].picture
 
-        self.selected_picture = pygame.transform.scale(self.selected_picture,
-                                                       (Constants.TARGET_RADIUS * 0.8,
-                                                        Constants.TARGET_RADIUS * 0.8))
-
-        self.show()
+            self.selected_picture = pygame.transform.scale(self.selected_picture,
+                                                           (Constants.TARGET_RADIUS * 0.8,
+                                                            Constants.TARGET_RADIUS * 0.8))
+            self.show()
 
 
     def place_target(self):
@@ -311,7 +312,6 @@ class LevelCreationSecondInterface(Interface):
             #print("active_target",self.stage.active_target_index)
             self.inputValueTarget.value=int(self.stage.stage.active_targets[self.stage.active_target_index][0].value)
             self.inputDurationTarget.value=int(self.stage.stage.active_targets[self.stage.active_target_index][0].duration)
-            self.reset_coo()
             self.show()
             self.stage.stage.play()
 
@@ -355,5 +355,4 @@ class LevelCreationSecondInterface(Interface):
                                                                                     "arial.ttf",
                                                                                     (255, 255, 255), self.stage.stage_name))
                     self.newScreen()
-            self.reset_coo()
             self.show()
