@@ -63,7 +63,6 @@ class PopupInterface(Interface):
 
         self.sub_text = my_smaller_font.render("Texte explicatif", True, (255,255,255))
 
-        pygame.font.quit()
 
         self.buttons = []
 
@@ -73,7 +72,6 @@ class PopupInterface(Interface):
             self.popup_height = 544
             self.background = pygame.transform.scale(self.background,(self.popup_width, self.popup_height))
 
-            pygame.font.init()
             my_smaller_font = pygame.font.Font("./Fonts/lemonmilk.otf", 20)
 
             self.text_surfaces = split_lines(self.popup_width-140,150,subtext,my_smaller_font)

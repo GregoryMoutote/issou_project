@@ -86,7 +86,7 @@ class PlayInterfaceThread(Interface,threading.Thread):
         self.interface=interface
         self.continuer=True
 
-        self.messages = ["", "Passez votre main au dessus de la cible", "", "Cette fois ci la cible bouge !", "",
+        self.messages = ["", "Passez votre main au dessus de la cible", "", "Cette fois-ci la cible bouge !", "",
                          "Celle ci vous demande de la réactivité si vous voulez un maximum de point !", "",
                          "Pour celle-ce il faut suivre la route", "", ""]
 
@@ -97,7 +97,8 @@ class PlayInterfaceThread(Interface,threading.Thread):
 
     def run(self):
         pygame.font.init()
-        self.my_font = pygame.font.Font("./Fonts/lemonmilk.otf", 80)
+        self.my_score_font = pygame.font.Font("./Fonts/lemonmilk.otf", 80)
+        self.my_font = pygame.font.Font("./Fonts/Arial.ttf", 50)
         while (self.continuer):
             self.screen.blit(self.background, (0, 0))
             self.stage.show_targets()
@@ -106,11 +107,11 @@ class PlayInterfaceThread(Interface,threading.Thread):
                 self.number_of_active_targets = len(self.stage.active_targets)
                 self.messages.pop(0)
 
-            text_surface = self.my_font.render("score: " + str(self.stage.score), True, (255, 255, 255))
+            text_surface = self.my_score_font.render("score: " + str(self.stage.score), True, (255, 255, 255))
             message_surface = self.my_font.render(self.messages[0], True, (255, 255, 255))
 
             self.screen.blit(text_surface, ((self.interface.screen_width - text_surface.get_width()) * 0.5, 30))
-            self.screen.blit(message_surface, ((self.interface.screen_width - message_surface.get_width()) * 0.5, 100))
+            self.screen.blit(message_surface, ((self.interface.screen_width - message_surface.get_width()) * 0.5, 150))
 
             if len(self.detection.right_hand) > 0:
                 pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.right_hand[0] - 10,
