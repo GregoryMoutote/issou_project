@@ -4,6 +4,7 @@ from Interfaces.LevelSelectionInterface import *
 from Interfaces.SettingsInterface import *
 from Interfaces.GIF.MainMenuGIF import *
 from Interfaces.LevelCreationFirstInterface import *
+from Interfaces.TutorialPlayInterface import *
 
 class MainMenuInterface(Interface):
 
@@ -74,6 +75,12 @@ class MainMenuInterface(Interface):
 
                    self.reset_coo()
                    self.show()
+
+                elif self.buttons[1].x < self.right_x < (self.buttons[1].x + self.buttons[1].width) and \
+                        self.buttons[1].y < self.right_y < (self.buttons[1].y + self.buttons[1].height):
+                    TutorialPlayInterface(self.screen_data, self.screen, self.detection, self.settings)
+                    self.reset_coo()
+                    self.show()
 
                 elif self.buttons[2].x < self.right_x < (self.buttons[2].x + self.buttons[2].width) and \
                         self.buttons[2].y < self.right_y < (self.buttons[2].y + self.buttons[2].height):

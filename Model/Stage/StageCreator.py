@@ -109,10 +109,10 @@ class StageCreator:
         self.active_target_index=0
         for target, delay in self.stage.active_targets:
             if int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS ** 2:
+                print("Found a target")
                 found_target = target
                 break
             self.active_target_index+=1
-
         if found_target != None:
             self.targets_index = 0
             for target in self.targets:
