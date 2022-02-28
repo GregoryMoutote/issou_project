@@ -260,7 +260,6 @@ class LevelCreationSecondInterface(Interface):
         #     self.stage.targets_index=-1
 
         if self.right_x < self.screen_width * 0.8 and self.right_y < self.screen_height * 0.8:
-            print(self.right_y, "<", self.screen_height * 0.8)
             self.inputDurationTarget.show_input_value = False
             self.inputValueTarget.show_input_value = False
             self.import_delete_button.active = True
