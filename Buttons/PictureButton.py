@@ -22,6 +22,9 @@ class PictureButton(Button):
             my_font = pygame.font.Font(self.font, self.text_size)
             text_surface = my_font.render(self.text, True, self.text_color)
             pygame.font.quit()
-            self.screen.blit(text_surface,(self.x + (self.width-text_surface.get_width())*0.5+self.width*0.5*(self.porcent-0.5) , self.y+(self.height-text_surface.get_height())*0.5))
+            self.screen.blit(text_surface,(self.x + (self.width-text_surface.get_width())*0.5+self.width*0.5*
+                                           (self.porcent-0.5) , self.y+(self.height-text_surface.get_height())*0.5))
 
-
+    def set_width(self, new_width):
+        self.picture = pygame.transform.scale(self.picture, (new_width, self.picture.get_height()))
+        self.width = new_width

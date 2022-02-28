@@ -92,17 +92,6 @@ class PopupInterface(Interface):
                                               (255,255,255) )
 
             self.buttons.append(self.popup_button)
-
-            self.add_button("TEST")
-
-
-
-
-
-
-
-
-
             self.is_image_loaded = True
         except Exception:
             print(traceback.format_exc())
@@ -155,10 +144,11 @@ class PopupInterface(Interface):
             self.show_hand()
 
             if self.detection.is_fist_closed == 1:
+                for button in self.buttons:
+                    if button.x < self.right_x and (button.x+button.width) > self.right_x and \
+                        button.y < self.right_y and (button.y+button.height) >self.right_y:
+                        go_on = False
 
-                if self.screen_width/2-225 > self.right_x > self.screen_width/2+225 and \
-                        self.screen_height / 2 - 300 > self.right_y > self.screen_height / 2 + 300:
-                    go_on = False
 
     def show(self):
         if self.is_image_loaded:
@@ -203,13 +193,16 @@ class PopupInterface(Interface):
     def add_button(self, text):
         nb_button = len(self.buttons)
         new_width = (self.popup_width - 100)/(nb_button+1)
-        for button in self.buttons:
-            button.width = new_width
-        added_popup_button = PictureButton(self.popup_x + (self.popup_width - new_width) / (2*nb_button),
+        for i in range (len(self.buttons)):
+            self.buttons[i].set_width(new_width)
+            self.buttons[i].x = self.popup_x + (i*new_width) + (self.popup_width*0.1)
+        added_popup_button = PictureButton(self.popup_x + (nb_button*new_width)+ (self.popup_width*0.1),
                                           self.popup_y + self.popup_height - 60 * 1.5,
                                           new_width, 60,
                                           self.screen, "popup_button.png", text, 0.5, "lemonmilk.otf",
                                           (255, 255, 255))
         self.buttons.append(added_popup_button)
+
+
 
 
