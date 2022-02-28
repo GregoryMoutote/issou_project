@@ -1,7 +1,7 @@
 import pygame.draw
 
 from Interfaces.PlayInterface import *
-from Model.Stage.Level import *
+from Interfaces.Level import *
 from random import *
 from Model.Stage.Stage import *
 import os

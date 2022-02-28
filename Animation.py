@@ -3,17 +3,14 @@ import pygame,threading,os,time
 from Model.Stage.Coordinates import *
 
 class Animation(pygame.sprite.Sprite):
-	def __init__(self, screen,coordonate,name=""):
+	def __init__(self, screen,coordonate,sprites):
 		super().__init__()
 		#thread = AnimationThread(screen, coordonate,name)  # crée le thread
 		#thread.start()
 		self.screen = screen
 		self.sprites = []
 		self.coordonne = coordonate
-
-		for path in os.listdir("Pictures/Animations/" + name):
-			self.sprites.append(
-				pygame.transform.scale(pygame.image.load("Pictures/Animations/" + name + "/" + path), (200, 200)))
+		self.sprites=sprites
 		self.current_sprite = 0
 		self.image = self.sprites[self.current_sprite]
 		self.rect = self.image.get_rect()

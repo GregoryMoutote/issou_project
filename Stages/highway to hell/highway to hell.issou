@@ -1,0 +1,41 @@
+ext=issou
+type=stage
+owner=player
+crea_date=19/1/2022
+$
+title=highway to hell
+difficulty=5
+$
+title=highway to hell
+desc=§A description
+§
+authors=§Sickick
+Other§
+$
+type=1
+coo=0.5|0.55
+dur=4.5
+del=1
+val=15
+texture=basic_blue
+type=2
+coo=0.18|0.12
+dur=5.0
+del=2
+val=13
+texture=basic_blue
+end_coo=0.05|0.12
+type=3
+coo=0.40|0.30
+dur=5.0
+del=3
+val=20
+texture=basic_red
+end_val=3
+type=4
+coo=0.10|0.60
+dur=6
+del=4
+val=30
+texture=basic_blue
+steps=§0.2|0.65§0.3|0.7§0.4|0.6§0.5|0.5§0.6|0.3§

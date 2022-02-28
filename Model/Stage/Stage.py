@@ -32,6 +32,9 @@ class Stage:
         self.start = -1
         self.next_action = -1
         self.animationList=[]
+        self.sprites=[]
+        for path in os.listdir("Pictures/Animations/explosion_v2"):
+            self.sprites.append(pygame.transform.scale(pygame.image.load("Pictures/Animations/explosion_v2/" + path), (200, 200)))
 
     def load(self):
         self.score = 0
@@ -362,15 +365,18 @@ class Stage:
                     self.score += self.active_targets[iterator][0].value
                     if self.settings.animation:
                         self.animationList.append(
-                            Animation(self.screen, Coordinates(self.active_targets[iterator][0].coordinates.x - 100,
-                                                               self.active_targets[iterator][0].coordinates.y - 100),
-                                      "explosion_v3"))
+                            Animation(self.screen, Coordinates(self.active_targets[iterator][0].steps[len(
+                                self.active_targets[iterator][0].steps) - 1].x + Constants.TARGET_RADIUS - 100,
+                                                               self.active_targets[iterator][0].steps[len(
+                                                                   self.active_targets[iterator][
+                                                                       0].steps) - 1].y + Constants.TARGET_RADIUS - 100),
+                                      self.sprites))
                     del self.active_targets[iterator]
             elif int(target.coordinates.x - x) ** 2 + int(target.coordinates.y - y) ** 2 <= Constants.TARGET_RADIUS**2:
                 self.score += self.active_targets[iterator][0].value
                 if self.settings.animation:
                     self.animationList.append(Animation(self.screen, Coordinates(self.active_targets[iterator][0].coordinates.x - 100,
-                                           self.active_targets[iterator][0].coordinates.y - 100), "explosion_v3"))
+                                           self.active_targets[iterator][0].coordinates.y - 100),self.sprites))
                 del self.active_targets[iterator]
             iterator += 1
 
