@@ -178,9 +178,10 @@ class Stage:
     def show_targets(self):
         for target, delay in self.active_targets:
             target.show_target()
-        for animation in self.animationList:
-            if animation.show():
-                self.animationList.remove(animation)
+        if self.settings.animation:
+            for animation in self.animationList:
+                if animation.show():
+                    self.animationList.remove(animation)
  
     def pause(self):
         self.spent = time.time()

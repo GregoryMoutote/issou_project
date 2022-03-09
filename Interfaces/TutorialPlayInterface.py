@@ -1,27 +1,37 @@
 import pygame.draw,threading
 
 from Interfaces.EndInterface import *
-from Model.Stage.Stage import Stage
-import time
+from Model.Constants import Constants
+from Targets.DynamicTarget import DynamicTarget
+from Targets.MovingTarget import MovingTarget
+from Targets.RailTarget import RailTarget
+from Targets.Target import Target
+
 
 class TutorialPlayInterface(Interface):
 
     def __init__(self, screen_data, screen, detection, settings):
 
-        self.stage = Stage("TutorialStage/tutorial/tutorial.issou", screen, False, settings)
         self.settings = settings
         self.detection = detection
         super().__init__(screen_data, screen)
 
-        self.stage.pre_load_stage()
-        self.stage.load()
+
+        self.target_index=0
+
+        self.targets=[Target([1,0.5, 0.5, 0, 0, 0, "basic_red"], self.screen, "")]
+        self.targets.append(MovingTarget([2,0.1, 0.5, 10, 10, 10, "basic_green", 0.9, 0.5], self.screen, ""))
+        self.targets.append(DynamicTarget([3,0.5, 0.5, 10, 0, 100, "basic_green", 0], self.screen, ""))
+        self.targets.append(RailTarget([4,0.2, 0.2, 0, 0, 100, "basic_green", 0.5, 0.2, 0.7, 0.4, 0.8, 0.6], self.screen, ""))
+
+        self.active_target=self.targets[self.target_index]
 
         self.newScreen()
-        self.reset_coo()
 
-        self.thread = PlayInterfaceThread(screen,self.stage,detection,self)  # crée le thread
+        self.thread = PlayInterfaceThread(screen,self.active_target,detection)  # crée le thread
         self.thread.start()
 
+        self.reset_coo()
         self.loop()
 
 
@@ -48,21 +58,25 @@ class TutorialPlayInterface(Interface):
                     self.right_x, self.right_y = pygame.mouse.get_pos()
                     self.detection.is_fist_closed = 1
 
-            self.stage.test_collision(self.right_x, self.right_y)
-
-            self.stage.update_targets()
-            self.stage.play()
-
-
-            if self.stage.is_end():
-                self.stage.save_best_score()
-                pygame.mixer.music.stop()
+            if self.target_index>4:
                 EndInterface(self.screen_data, self.screen, self.detection, self.settings, self)
 
+            elif(self.active_target.coordinates.x-Constants.TARGET_RADIUS<self.right_x<self.active_target.coordinates.x+Constants.TARGET_RADIUS and
+                self.active_target.coordinates.y-Constants.TARGET_RADIUS<self.right_y<self.active_target.coordinates.y+Constants.TARGET_RADIUS):
+                self.target_index+=1
+                if self.target_index > 4:
+                    self.thread.newTarget(self.targets[self.target_index])
+                else:
+                    EndInterface(self.screen_data, self.screen, self.detection, self.settings, self)
+                self.newScreen()
+                self.thread.newScreen()
+
+
     def newScreen(self):
-        background = pygame.image.load("./TutorialStage/" + self.stage.name + "/background.png")
-        background = pygame.transform.scale(background, (width, height))
-        self.screen.blit(background, (0, 0))
+        print("./TutorialStage/tutorial/tuto"+str(self.target_index+1)+".jpg")
+        backGround = pygame.image.load("./TutorialStage/tutorial/tuto"+str(self.target_index+1)+".jpg")
+        backGround = pygame.transform.scale(backGround, (self.screen_width, self.screen_height))
+        self.screen.blit(backGround, (0, 0))
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
 
@@ -77,45 +91,32 @@ class TutorialPlayInterface(Interface):
 
 class PlayInterfaceThread(Interface,threading.Thread):
 
-    def __init__(self,screen,stage,detection,interface):
+    def __init__(self,screen,target,detection):
         threading.Thread.__init__(self)
         self.background = pygame.image.load("background.jpg")
         self.screen=screen
-        self.stage=stage
+        self.target=target
         self.detection=detection
-        self.interface=interface
         self.continuer=True
 
-        self.messages = ["", "Passez votre main au dessus de la cible", "", "Cette fois-ci la cible bouge !", "",
-                         "Celle ci vous demande de la réactivité si vous voulez un maximum de point !", "",
-                         "Pour celle-ce il faut suivre la route", "", ""]
-
         self.number_of_active_targets = 0
+
+    def newScreen(self):
+        self.background=pygame.image.load("background.jpg")
 
     def end(self):
         self.continuer = False
 
+    def newTarget(self,target):
+        self.target=target
+
     def run(self):
-        pygame.font.init()
-        self.my_score_font = pygame.font.Font("./Fonts/lemonmilk.otf", 80)
-        self.my_font = pygame.font.Font("./Fonts/Arial.ttf", 50)
         while (self.continuer):
+            self.target.update()
             self.screen.blit(self.background, (0, 0))
-            self.stage.show_targets()
-
-            if len(self.stage.active_targets) != self.number_of_active_targets :
-                self.number_of_active_targets = len(self.stage.active_targets)
-                self.messages.pop(0)
-
-            text_surface = self.my_score_font.render("score: " + str(self.stage.score), True, (255, 255, 255))
-            message_surface = self.my_font.render(self.messages[0], True, (255, 255, 255))
-
-            self.screen.blit(text_surface, ((self.interface.screen_width - text_surface.get_width()) * 0.5, 30))
-            self.screen.blit(message_surface, ((self.interface.screen_width - message_surface.get_width()) * 0.5, 150))
+            self.target.show_target()
 
             if len(self.detection.right_hand) > 0:
                 pygame.draw.circle(self.screen, (255, 255, 255), (self.detection.right_hand[0] - 10,
                                                                   self.detection.right_hand[1] - 10), 20)
             pygame.display.update()
-        del self.my_font
-        pygame.font.quit()

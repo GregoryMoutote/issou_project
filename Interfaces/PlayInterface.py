@@ -50,7 +50,6 @@ class PlayInterface(Interface):
 
             self.stage.test_collision(self.right_x, self.right_y)
 
-            self.stage.update_targets()
             self.stage.play()
 
 
@@ -76,7 +75,7 @@ class PlayInterface(Interface):
 
     def newScreen(self):
         background = pygame.image.load("./Stages/" + self.stage.name + "/background.png")
-        background = pygame.transform.scale(background, (width, height))
+        background = pygame.transform.scale(background, (self.screen_width, self.screen_height))
         self.screen.blit(background, (0, 0))
         self.pause_button.show_button()
         pygame.image.save(self.screen,"background.jpg")
@@ -109,6 +108,7 @@ class PlayInterfaceThread(Interface,threading.Thread):
 
     def run(self):
         while (self.continuer):
+            self.stage.update_targets()
             self.screen.blit(self.background, (0, 0))
             self.stage.show_targets()
             text_surface = self.my_font.render("score: " + str(self.stage.score), True, (255, 255, 255))
