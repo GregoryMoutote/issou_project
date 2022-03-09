@@ -45,9 +45,13 @@ class PopupInterface(Interface):
         self.BLACK = (0,0,0)
         self.RED = (255,0,0)
 
+
+        #TECHNIC PARAM
         self.parent = parent
         self.settings = settings
         self.detection = detection
+
+
         self.err_message = error_message
 
         super().__init__(screen_data, screen)
@@ -66,6 +70,8 @@ class PopupInterface(Interface):
         pygame.font.quit()
 
         self.buttons = []
+        self.return_values = []
+
 
         try:
             self.background = pygame.image.load("./Pictures/Interfaces/popup_background.png")
@@ -92,6 +98,7 @@ class PopupInterface(Interface):
                                               (255,255,255) )
 
             self.buttons.append(self.popup_button)
+            self.return_values.append(0)
             self.is_image_loaded = True
         except Exception:
             print(traceback.format_exc())
@@ -108,15 +115,14 @@ class PopupInterface(Interface):
             self.is_image_loaded = False
 
         self.button = PopupButton(self.screen, "OK")
+
+
         self.popup_x = (self.screen_width - self.popup_width) / 2
         self.popup_y = (self.screen_height - self.popup_height) / 2
 
 
 
 
-        self.show()
-        self.reset_coo()
-        self.loop()
 
 
     def loop(self):
@@ -144,10 +150,11 @@ class PopupInterface(Interface):
             self.show_hand()
 
             if self.detection.is_fist_closed == 1:
-                for button in self.buttons:
-                    if button.x < self.right_x and (button.x+button.width) > self.right_x and \
-                        button.y < self.right_y and (button.y+button.height) >self.right_y:
+                for i in range (len(self.buttons)):
+                    if self.buttons[i].x < self.right_x and (self.buttons[i].x+self.buttons[i].width) > self.right_x and \
+                        self.buttons[i].y < self.right_y and (self.buttons[i].y+self.buttons[i].height) >self.right_y:
                         go_on = False
+                        return self.return_values[i]
 
 
     def show(self):
@@ -190,7 +197,7 @@ class PopupInterface(Interface):
         self.left_x = 0
         self.left_y = 0
 
-    def add_button(self, text):
+    def add_button(self, text, return_value=0):
         nb_button = len(self.buttons)
         new_width = (self.popup_width - 100)/(nb_button+1)
         for i in range (len(self.buttons)):
@@ -201,7 +208,23 @@ class PopupInterface(Interface):
                                           new_width, 60,
                                           self.screen, "popup_button.png", text, 0.5, "lemonmilk.otf",
                                           (255, 255, 255))
+        self.return_values.append(return_value)
         self.buttons.append(added_popup_button)
+
+
+    def start(self):
+        self.show()
+        self.reset_coo()
+        return self.loop()
+
+    def set_return(self,index, value):
+        if len(self.return_values)>index:
+            self.return_values[index] = value
+
+    def set_button_text(self, index, text):
+        if len(self.buttons)>index:
+            self.buttons[index].text = text
+
 
 
 

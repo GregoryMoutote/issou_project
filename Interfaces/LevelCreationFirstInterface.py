@@ -141,7 +141,7 @@ class LevelCreationFirstInterface(Interface):
                             self.is_input_active = False
                         else :
                             PopupInterface(self.screen_data, self.screen, self.detection, self.settings, self, "INFORMATION",
-                                           "Certains champs sont vides")
+                                           "Certains champs sont vides").start()
                             self.detection.is_fist_closed=0
 
                     elif self.input_rect.x < self.right_x < (self.input_rect.x + self.input_rect.w) and \
@@ -152,7 +152,7 @@ class LevelCreationFirstInterface(Interface):
                         self.is_input_active = False
         except Exception:
             PopupInterface(self.screen_data, self.screen, self.detection, self.settings, self, "ERREUR",
-                           traceback.format_exc())
+                           traceback.format_exc()).start()
 
     def show(self):
         self.screen.blit(self.background, (0, 0))
