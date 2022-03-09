@@ -1,7 +1,9 @@
 import pygame.draw,threading
 
 from Interfaces.EndInterface import *
+from Interfaces.PauseInterface import PauseInterface
 from Model.Constants import Constants
+from Model.Stage.Coordinates import Coordinates
 from Targets.DynamicTarget import DynamicTarget
 from Targets.MovingTarget import MovingTarget
 from Targets.RailTarget import RailTarget
@@ -16,13 +18,14 @@ class TutorialPlayInterface(Interface):
         self.detection = detection
         super().__init__(screen_data, screen)
 
+        self.quit=PictureButton(20, 20, self.screen_height*0.1, self.screen_height*0.1, self.screen, "quit.png", "",0, "", (0, 0, 0))
 
         self.target_index=0
 
         self.targets=[Target([1,0.5, 0.5, 0, 0, 0, "basic_red"], self.screen, "")]
         self.targets.append(MovingTarget([2,0.1, 0.5, 10, 10, 10, "basic_green", 0.9, 0.5], self.screen, ""))
         self.targets.append(DynamicTarget([3,0.5, 0.5, 10, 0, 100, "basic_green", 0], self.screen, ""))
-        self.targets.append(RailTarget([4,0.2, 0.2, 0, 0, 100, "basic_green", 0.5, 0.2, 0.7, 0.4, 0.8, 0.6], self.screen, ""))
+        self.targets.append(RailTarget([4,0.2, 0.3, 0, 0, 100, "basic_green", 0.4, 0.6, 0.7, 0.8], self.screen, ""))
 
         self.active_target=self.targets[self.target_index]
 
@@ -58,18 +61,27 @@ class TutorialPlayInterface(Interface):
                     self.right_x, self.right_y = pygame.mouse.get_pos()
                     self.detection.is_fist_closed = 1
 
-            if self.target_index>4:
-                EndInterface(self.screen_data, self.screen, self.detection, self.settings, self)
+            if self.target_index==3:
+                self.active_target.actualise(Coordinates(self.right_x,self.right_y))
+                if self.active_target.is_achieved:
+                    self.go_on = False
+                    self.thread.end()
 
             elif(self.active_target.coordinates.x-Constants.TARGET_RADIUS<self.right_x<self.active_target.coordinates.x+Constants.TARGET_RADIUS and
                 self.active_target.coordinates.y-Constants.TARGET_RADIUS<self.right_y<self.active_target.coordinates.y+Constants.TARGET_RADIUS):
                 self.target_index+=1
                 if self.target_index < 4:
                     self.thread.newTarget(self.targets[self.target_index])
-                else:
-                    EndInterface(self.screen_data, self.screen, self.detection, self.settings, self)
-                self.newScreen()
-                self.thread.newScreen()
+                    self.active_target=self.targets[self.target_index]
+                    self.newScreen()
+                    self.thread.newScreen()
+
+            elif self.detection.is_fist_closed == 1:
+                if self.quit.x < self.right_x < (self.quit.x + self.quit.width) and \
+                        self.quit.y < self.right_y < (self.quit.y + self.quit.height):
+                            self.go_on = False
+                            self.thread.continuer = False
+
 
             print(self.target_index)
 
@@ -79,6 +91,7 @@ class TutorialPlayInterface(Interface):
         backGround = pygame.image.load("./TutorialStage/tutorial/tuto"+str(self.target_index+1)+".jpg")
         backGround = pygame.transform.scale(backGround, (self.screen_width, self.screen_height))
         self.screen.blit(backGround, (0, 0))
+        self.quit.show_button()
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
 
@@ -88,7 +101,6 @@ class TutorialPlayInterface(Interface):
         self.right_y = 0
         self.leftX = 0
         self.leftY = 0
-
 
 
 class PlayInterfaceThread(Interface,threading.Thread):

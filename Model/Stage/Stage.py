@@ -361,7 +361,7 @@ class Stage:
         iterator = 0
         for target, delay in self.active_targets:
             if isinstance(target, RailTarget):
-                target.actualise(Coordinates(x, y))
+                target.update(Coordinates(x, y))
                 if target.is_achieved:
                     self.score += self.active_targets[iterator][0].value
                     if self.settings.animation:

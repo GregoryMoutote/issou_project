@@ -52,7 +52,6 @@ class PlayInterface(Interface):
 
             self.stage.play()
 
-
             if self.stage.is_end():
                 self.stage.save_best_score()
                 pygame.mixer.music.stop()
