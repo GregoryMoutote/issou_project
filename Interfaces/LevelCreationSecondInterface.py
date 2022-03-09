@@ -104,6 +104,7 @@ class LevelCreationSecondInterface(Interface):
             #print(len(self.stage.stage.active_targets))
 
             if self.detection.is_fist_closed == 1:
+                print("--------------------"+str(len(self.stage.targets)))
                 #bouton play
                 if self.play_button.x < self.right_x < (self.play_button.x + self.play_button.width) and \
                         self.play_button.y < self.right_y < (self.play_button.y + self.play_button.height):
@@ -130,6 +131,9 @@ class LevelCreationSecondInterface(Interface):
 
                 elif self.screen_width * 0.05<self.right_x<self.screen_width*0.95 and self.screen_height*0.95<self.right_y<self.screen_height*0.97:
                     self.timeline.change_stat((self.right_x-self.screen_width * 0.05)/(self.screen_width*0.9))
+                    self.stage.stage.set_pos(self.timeline.percent,self.stage.targets)
+                    print("-------" + str(len(self.stage.stage.active_targets)))
+                    self.stage.active_target_index=0
 
                 #déplacement
                 elif self.move_button.x < self.right_x < (self.move_button.x + self.move_button.width) and \
@@ -298,10 +302,10 @@ class LevelCreationSecondInterface(Interface):
 
             else:
                 self.stage.add_target(Target([0, ((self.right_x) / (self.screen_width * 0.8)) * 0.8,
-                                              ((self.right_y) / (self.screen_height * 0.8)) * 0.8, 99,
+                                              ((self.right_y) / (self.screen_height * 0.8)) * 0.8, 5,
                                               self.timeline.percent * self.stage.stage.stage_music.duration, 25,
                                               self.selected_picture_name], self.screen, self.stage.stage_name))
-                self.stage.stage.play()
+                self.stage.stage.actualise_active_targets()
                 self.stage.active_target_index=len(self.stage.stage.active_targets)-1
                 self.stage.targets_index=len(self.stage.targets)-1
 
@@ -309,10 +313,11 @@ class LevelCreationSecondInterface(Interface):
             self.is_selected_target = False
             self.import_delete_button.active = True
             #print("active_target",self.stage.active_target_index)
-            self.inputValueTarget.value=int(self.stage.stage.active_targets[self.stage.active_target_index][0].value)
-            self.inputDurationTarget.value=int(self.stage.stage.active_targets[self.stage.active_target_index][0].duration)
+            if len(self.stage.stage.active_targets)>0:
+                self.inputValueTarget.value=int(self.stage.stage.active_targets[self.stage.active_target_index][0].value)
+                self.inputDurationTarget.value=int(self.stage.stage.active_targets[self.stage.active_target_index][0].duration)
             self.show()
-            self.stage.stage.play()
+            self.stage.stage.actualise_active_targets()
 
 
 

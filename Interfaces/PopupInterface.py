@@ -75,6 +75,7 @@ class PopupInterface(Interface):
             my_smaller_font = pygame.font.Font("./Fonts/lemonmilk.otf", 20)
 
             self.text_surfaces = split_lines(self.popup_width-140,150,subtext,my_smaller_font)
+            print(subtext)
 
             pygame.font.quit()
 

@@ -64,12 +64,14 @@ class TutorialPlayInterface(Interface):
             elif(self.active_target.coordinates.x-Constants.TARGET_RADIUS<self.right_x<self.active_target.coordinates.x+Constants.TARGET_RADIUS and
                 self.active_target.coordinates.y-Constants.TARGET_RADIUS<self.right_y<self.active_target.coordinates.y+Constants.TARGET_RADIUS):
                 self.target_index+=1
-                if self.target_index > 4:
+                if self.target_index < 4:
                     self.thread.newTarget(self.targets[self.target_index])
                 else:
                     EndInterface(self.screen_data, self.screen, self.detection, self.settings, self)
                 self.newScreen()
                 self.thread.newScreen()
+
+            print(self.target_index)
 
 
     def newScreen(self):

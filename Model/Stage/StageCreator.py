@@ -30,6 +30,8 @@ class StageCreator:
             stage_music_path = stage_path[0:stage_path.find(".issou")] + ".mp3"
             shutil.copy2(music_path, stage_music_path)
             self.stage.stage_music = Music(music_path)
+            self.stage.stage_music.load()
+            self.stage.stage_music.pause()
         else:
             self.is_usable = False
             return

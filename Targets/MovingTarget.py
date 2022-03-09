@@ -9,7 +9,6 @@ class MovingTarget(Target):
         if isinstance(target_data, list) and len(target_data) >= 9:
             self.begin_time = 0
             self.screen=screen
-            #super(target_data, screen, level_name)
             super(MovingTarget, self).__init__(target_data, screen, level_name)
             self.begin_coordinates = Coordinates(self.coordinates.x, self.coordinates.y)
             screen = ctypes.windll.user32

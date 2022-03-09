@@ -381,21 +381,27 @@ class Stage:
                 del self.active_targets[iterator]
             iterator += 1
 
-    def set_pose(self, ratio: float, targets: list):
+    def set_pos(self, ratio: float, targets: list):
         self.spent = -1
         self.start = time.time() - (float(self.stage_music.duration) * ratio) / 1000
 
         if ratio < 0 or ratio > 1:
+            print("return ratio")
             return
         new_pos = self.stage_music.duration * ratio
         before = False
         if mixer.music.get_pos() > new_pos:
             before = True
+        self.targets = targets
         if before:
             self.active_targets.clear()
-            self.load_targets()
-            self.next_action = self.start + self.targets[0].delay
+
+            self.next_action = -1
+            if len(self.targets)>0:
+                self.next_action=self.start + self.targets[0].delay
+        print("target len:"+str(len(self.targets))+"before:"+str(before))
         for target in self.targets:
+            print("delay: "+str(target.delay))
             if target.delay < new_pos:
                 if target.delay + target.duration > new_pos:
                     self.active_targets.append((target,
@@ -403,6 +409,7 @@ class Stage:
                 self.targets.pop(0)
             else:
                 break
-
+        mixer.music.play()
         mixer.music.rewind()
-        mixer.music.set_pos(int(ratio * float(self.stage_music.duration)))
+        mixer.music.set_pos(float(ratio * float(self.stage_music.duration)))
+        mixer.music.pause()
