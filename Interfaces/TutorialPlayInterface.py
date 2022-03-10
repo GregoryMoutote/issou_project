@@ -76,7 +76,7 @@ class TutorialPlayInterface(Interface):
                     self.newScreen()
                     self.thread.newScreen()
 
-            elif self.detection.is_fist_closed == 1:
+            if self.detection.is_fist_closed == 1:
                 if self.quit.x < self.right_x < (self.quit.x + self.quit.width) and \
                         self.quit.y < self.right_y < (self.quit.y + self.quit.height):
                             self.go_on = False
