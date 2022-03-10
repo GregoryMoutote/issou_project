@@ -99,7 +99,7 @@ class MainMenuInterface(Interface):
                     popup = PopupInterface(self.screen_data,self.screen,self.detection,self.settings,self,"Information","Voulez vous quitter ?")
                     popup.set_return(0,False)
                     popup.set_button_text(0,"Oui")
-                    popup.add_button("Non",False)
+                    popup.add_button("Non",True)
 
                     go_on = popup.start()
                     self.reset_coo()
