@@ -96,7 +96,14 @@ class MainMenuInterface(Interface):
 
                 elif self.buttons[4].x < self.right_x < (self.buttons[4].x + self.buttons[4].width) and \
                         self.buttons[4].y < self.right_y < (self.buttons[4].y + self.buttons[4].height):
-                   go_on = False
+                    popup = PopupInterface(self.screen_data,self.screen,self.detection,self.settings,self,"Information","Voulez vous quitter ?")
+                    popup.set_return(0,False)
+                    popup.set_button_text(0,"Oui")
+                    popup.add_button("Non",False)
+
+                    go_on = popup.start()
+                    self.reset_coo()
+                    self.show()
 
 
     def show(self):
