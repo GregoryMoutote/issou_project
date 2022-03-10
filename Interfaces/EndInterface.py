@@ -54,6 +54,7 @@ class EndInterface(Interface):
                 if self.buttons[0].x < self.right_x < (self.buttons[0].x + self.buttons[0].width) and \
                         self.buttons[0].y < self.right_y < (self.buttons[0].y + self.buttons[0].height):
                     self.parent.stage.load()
+                    self.parent.thread = self.parent.PlayInterfaceThread(self.screen, self.parent.stage, self.detection, self.parent)
                     self.reset_coo()
                     self.show()
                     go_on = False

@@ -55,6 +55,7 @@ class PlayInterface(Interface):
             if self.stage.is_end():
                 self.stage.save_best_score()
                 pygame.mixer.music.stop()
+                self.thread.end()
                 EndInterface(self.screen_data, self.screen, self.detection, self.settings, self)
 
             if self.detection.is_fist_closed == 1:
@@ -86,6 +87,7 @@ class PlayInterface(Interface):
         self.right_y = 0
         self.leftX = 0
         self.leftY = 0
+
 
 
 

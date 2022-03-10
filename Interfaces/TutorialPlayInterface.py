@@ -66,6 +66,7 @@ class TutorialPlayInterface(Interface):
                 if self.active_target.is_achieved:
                     self.go_on = False
                     self.thread.end()
+                    self.thread = PlayInterfaceThread(self.screen,self.stage,self.detection,self)
 
             elif(self.active_target.coordinates.x-Constants.TARGET_RADIUS<self.right_x<self.active_target.coordinates.x+Constants.TARGET_RADIUS and
                 self.active_target.coordinates.y-Constants.TARGET_RADIUS<self.right_y<self.active_target.coordinates.y+Constants.TARGET_RADIUS):
