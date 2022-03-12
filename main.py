@@ -2,7 +2,7 @@ from Interfaces.MainMenuInterface import *
 from Model.Settings.Settings import *
 import pygame
 from PlayerDetection.MediapipeTool import *
-from Model.ScreenData import *
+from Model.ScreenData import ScreenData
 
 
 detection = MediapipeTool()
