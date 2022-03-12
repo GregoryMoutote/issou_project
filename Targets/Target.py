@@ -2,16 +2,16 @@ from Model.Stage.Coordinates import Coordinates
 from Model.Constants import Constants
 import pygame
 import os
-import ctypes
+from Model.ScreenData import ScreenData
 
 class Target:
     def __init__(self, target_data, screen, level_name):
         if isinstance(target_data, list) and len(target_data) >= 7:
             self.screen = screen
             self.pictureName = target_data[6]
-            screen = ctypes.windll.user32
-            self.coordinates = Coordinates(target_data[1] * screen.GetSystemMetrics(0),
-                                           target_data[2] * screen.GetSystemMetrics(1))
+            screen = ScreenData()
+            self.coordinates = Coordinates(target_data[1] * screen.width,
+                                           target_data[2] * screen.height)
             self.duration = float(target_data[3])
             self.delay = float(target_data[4])
             self.value = int(target_data[5])

@@ -1,6 +1,6 @@
 import mediapipe as mp
 from Calibration.CalibrationTool import *
-import ctypes
+from Model.ScreenData import ScreenData
 
 class MediapipeTool :
     def __init__(self):
@@ -19,7 +19,7 @@ class MediapipeTool :
         self.is_fist_closed = 0
         self.hand_points = []
 
-        self.screen = ctypes.windll.user32
+        self.screen = ScreenData()
 
 
     def set_up_calibration(self):
@@ -51,22 +51,22 @@ class MediapipeTool :
             if results_hand.multi_hand_landmarks:
                 for num, hand in enumerate(results_hand.multi_hand_landmarks):
 
-                    hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * self.screen.GetSystemMetrics(0)
-                    hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * self.screen.GetSystemMetrics(1)
+                    hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * self.screen.width
+                    hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * self.screen.height
 
                     self.closed_fist_detection(hand)
 
                     if results_hand.multi_handedness[num].classification[0].label == "Right":
                         #self.right_hand = self.calibration_util.calibrate_point((hand_x, hand_y))
                         if self.calibration_util.is_done:
-                            self.right_hand = (self.screen.GetSystemMetrics(0)-hand_x, hand_y)
+                            self.right_hand = (self.screen.width-hand_x, hand_y)
                         else:
                             self.right_hand = (hand_x, hand_y)
 
                     if results_hand.multi_handedness[num].classification[0].label == "Left":
                         #self.left_hand = self.calibration_util.calibrate_point((hand_x, hand_y))
                         if self.calibration_util.is_done:
-                            self.left_hand = (self.screen.GetSystemMetrics(0)-hand_x, hand_y)
+                            self.left_hand = (self.screen.width-hand_x, hand_y)
                         else:
                             self.left_hand = (hand_x, hand_y)
 
@@ -93,8 +93,8 @@ class MediapipeTool :
 
                     self.hand_points.clear()
 
-                    screen_width = self.screen.GetSystemMetrics(0)
-                    screen_height = self.screen.GetSystemMetrics(1)
+                    screen_width = self.screen.width
+                    screen_height = self.screen.height
 
                     hand_x = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].x * screen_width
                     hand_y = hand.landmark[self.mp_hands.HandLandmark.MIDDLE_FINGER_MCP].y * screen_height
