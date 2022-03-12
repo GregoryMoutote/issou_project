@@ -88,6 +88,10 @@ class PlayInterface(Interface):
         self.leftX = 0
         self.leftY = 0
 
+    def restart(self):
+        self.newScreen()
+        self.thread = PlayInterfaceThread(self.screen, self.stage, self.detection, self)
+        self.thread.start()
 
 
 
