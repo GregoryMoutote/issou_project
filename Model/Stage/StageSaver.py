@@ -17,7 +17,7 @@ class StageSaver:
         self.create_best_score()
 
     def save_header(self):
-        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "w") as file:
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "w",encoding="ISO-8859-1") as file:
             file.write("ext=issou\n")
             file.write("type=stage\n")
             file.write("owner=player\n")
@@ -27,14 +27,14 @@ class StageSaver:
             file.close()
 
     def save_stage_header(self):
-        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a",encoding="ISO-8859-1") as file:
             file.write("title=" + self.stage.name + '\n')
             file.write("difficulty=" + str(self.stage.difficulty) + '\n')
             file.write("$\n")
             file.close()
 
     def save_music_header(self):
-        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a",encoding="ISO-8859-1") as file:
             #if os.path.isfile("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3"):
             if os.path.isfile("Stages/" + "test_v2" + "/" + "test_v2" + ".mp3"):
                 #audio_reader = mutagen.File("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3")
@@ -50,7 +50,7 @@ class StageSaver:
             file.close()
 
     def save_targets(self):
-        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a",encoding="ISO-8859-1") as file:
             screen = ctypes.windll.user32
             width = screen.GetSystemMetrics(0)
             for target in self.stage.targets:
@@ -84,6 +84,6 @@ class StageSaver:
                     file.write('\n')
 
     def create_best_score(self):
-        with open("Stages/" + self.stage.name + "/" + self.stage.name + "_bs.issou", "w") as file:
+        with open("Stages/" + self.stage.name + "/" + self.stage.name + "_bs.issou", "w",encoding="ISO-8859-1") as file:
             file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=0")
             file.close()

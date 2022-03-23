@@ -42,7 +42,7 @@ class CalibrationInterface(Interface):
         self.screen.fill((255, 255, 255))
         pygame.font.init()
         arial_font = pygame.font.Font("./Fonts/lemonmilk.otf", int(self.screen_height*0.07))
-        arial_font2 = pygame.font.Font("./Fonts/arial.ttf", int(self.screen_height*0.05))
+        arial_font2 = pygame.font.Font("./Fonts/Arial.ttf", int(self.screen_height*0.05))
         text = arial_font.render("Calibrage en cours...", True, (0, 0, 0))
         text2 = arial_font2.render("Espace pour passer", True, (0, 0, 0))
         pygame.font.quit()

@@ -17,7 +17,7 @@ class Level:
     def show(self, screen, x, y):
         screen.blit(self.background, (x, y))
 
-        image = pygame.image.load("stages/" + self.picture + "/" + self.picture + ".png")
+        image = pygame.image.load("Stages/" + self.picture + "/" + self.picture + ".png")
         image = pygame.transform.scale(image, (self.logo_dimension - 15, self.logo_dimension - 10))
         screen.blit(image, (x + 10, y + 5))
 
