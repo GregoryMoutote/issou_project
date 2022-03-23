@@ -41,18 +41,14 @@ class Target:
                                                       (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
                 self.image = "basic_blue"
 
-    def display(self):
-        print(self.coordinates, self.duration, self.delay, self.value)
-
     def update(self):
         pass
 
+    """
+    Affiche la cible
+    """
     def show_target(self):
         self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,self.coordinates.y - Constants.TARGET_RADIUS))
 
     def delete(self):
         pass
-        #self.animation = Animation(self.screen,
-         #                          self.coordinates.x + Constants.TARGET_RADIUS / 2 - 100,
-          #                         self.coordinates.y + Constants.TARGET_RADIUS / 2 - 100,
-#                                   "explosion_v2")

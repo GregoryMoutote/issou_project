@@ -36,6 +36,10 @@ class Stage:
         for path in os.listdir("Pictures/Animations/explosion_v2"):
             self.sprites.append(pygame.transform.scale(pygame.image.load("Pictures/Animations/explosion_v2/" + path), (200, 200)))
 
+    """
+    Charge un niveau complètement pour le rendre utilisable
+    Chargement des cibles et de la musique ainsi qu'initialisation des variables utiles
+    """
     def load(self):
         self.score = 0
         self.targets.clear()
@@ -47,13 +51,11 @@ class Stage:
         self.load_targets()
         self.stage_music.load()
         self.load_stage()
-        """ Stage saver test
-        self.name = "test"
-        Stage_Saver(self)
-        self.name = "test_v2"
-        """
 
-
+    """
+    Charge l'en tête d'un fichier pour le rendre affichable dans la liste des niveaux jouables
+    Chargement de l'en tête de la musique comprise
+    """
     def pre_load_stage(self):
         if ".issou" not in self.path:
             return
@@ -61,7 +63,7 @@ class Stage:
             self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".mp3")
         else:
             self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".wav")
-        with open(self.path, 'r') as file:
+        with open(self.path, 'r', encoding="ISO-8859-1") as file:
             line = file.readline()
             if "ext=issou" not in line:
                 file.close()
@@ -80,7 +82,7 @@ class Stage:
                 return
             else:
                 first_delimiter = line.find('/')
-                day = line[10 : first_delimiter]
+                day = line[10: first_delimiter]
                 second_delimiter = line.find('/', first_delimiter + 1)
                 month = line[first_delimiter + 1:second_delimiter]
                 year = line[second_delimiter + 1:-1]
@@ -94,7 +96,7 @@ class Stage:
                 file.close()
                 return
             else:
-                self.name = line[6 : -1].lower()
+                self.name = line[6: -1].lower()
             line = file.readline()
             if "difficulty=" not in line:
                 file.close()
@@ -118,7 +120,7 @@ class Stage:
                 delimiter = line.find('§')
                 if delimiter != -1:
                     if delimiter == len(line) - 2:
-                        if 'Â' in line:#line.find('Â') - 1
+                        if 'Â' in line:  # line.find('Â') - 1
                             self.stage_music.description += line[:delimiter - 1]
                         else:
                             self.stage_music.description += line[:delimiter]
@@ -127,7 +129,7 @@ class Stage:
                 else:
                     self.stage_music.description += line[:len(line)]
             while '\n' in self.stage_music.description:
-                self.stage_music.description = self.stage_music.description.replace('\n',' ')
+                self.stage_music.description = self.stage_music.description.replace('\n', ' ')
             line = "pass"
             while line and line.find('§') != len(line) - 2:
                 line = file.readline()
@@ -142,6 +144,9 @@ class Stage:
             file.close()
             self.load_best_score()
 
+    """
+    Execute un cycle en jeu en gérant la pause et les cibles à afficher et faire disparaître
+    """
     def play(self):
         if self.is_stage_usable:
             if self.spent > 0:
@@ -164,6 +169,9 @@ class Stage:
                         if self.active_targets[iterator][1] <= time.time():
                             self.active_targets.pop(iterator)
 
+    """
+    Ajoute les cibles à afficher à l'écran et les retires des cibles qui n'ont pas été affichées
+    """
     def actualise_active_targets(self):
         if len(self.targets) > 0:
             self.next_action = self.start + self.targets[0].delay
@@ -171,10 +179,17 @@ class Stage:
                 self.active_targets.append([self.targets[0], time.time() + self.targets[0].duration])
                 self.targets.pop(0)
 
+    """
+    Fait s'actualiser les cibles actuellement affichées
+    Destiné aux cibles avec des changements dans le temps
+    """
     def update_targets(self):
         for target, delay in self.active_targets:
             target.update()
 
+    """
+    S'occupe d'afficher les cibles qui sont dans le tableaux des cibles actives en gérant les animations
+    """
     def show_targets(self):
         for target, delay in self.active_targets:
             target.show_target()
@@ -182,28 +197,43 @@ class Stage:
             for animation in self.animationList:
                 if animation.show():
                     self.animationList.remove(animation)
- 
+
+    """
+    Met en pause le niveau ainsi que la musique
+    """
     def pause(self):
         self.spent = time.time()
         self.is_stage_usable = False
         self.stage_music.pause()
 
-    def is_end(self):
+    """
+    Permet de savoir si un niveau est terminé
+    """
+    def is_ended(self):
         return self.start + self.stage_music.duration < time.time()
 
+    """
+    Permet de reprendre un niveau au moment où la pause a été activée
+    """
     def resume(self):
         self.load_stage()
         self.spent = time.time() - self.spent
 
+    """
+    Permet de valider le chargement d'un niveau
+    """
     def load_stage(self):
         if self.stage_music and self.targets:
             self.is_stage_usable = self.stage_music.is_music_loaded
 
+    """
+    Charge le niveau de meilleur score pour en récuperer le score contenu
+    """
     def load_best_score(self):
         if ".issou" not in self.path:
             return
         best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
-        with open(best_score_path, 'r') as file:
+        with open(best_score_path, 'r', encoding="ISO-8859-1") as file:
             line = file.readline()
             if "ext=issou" not in line:
                 file.close()
@@ -226,20 +256,26 @@ class Stage:
                 return
             self.best_score = int(line[line.find('=') + 1:len(line)])
 
+    """
+    Permet de sauvegarder le score obtenu s'il est meilleur que le celui actuellement stocké
+    """
     def save_best_score(self):
         if ".issou" not in self.path:
             return
         if self.best_score < self.score:
             best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
-            with open(best_score_path, 'w') as file:
+            with open(best_score_path, 'w', encoding="ISO-8859-1") as file:
                 file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.score))
                 file.close()
                 self.best_score = self.score
 
+    """
+    Charge les cibles d'un niveau depuis le fichier les contenant et les ajoute aux tableaux du niveau
+    """
     def load_targets(self):
         if ".issou" not in self.path:
             return
-        with open(self.path, 'r') as file:
+        with open(self.path, 'r', encoding="ISO-8859-1") as file:
             line = file.readline()
             if "ext=issou" not in line:
                 file.close()
@@ -347,16 +383,14 @@ class Stage:
                     self.targets.append(Target(target_data,self.screen,self.name))
             file.close()
 
-    def display_test(self):
-        print(self.name, self.difficulty, self.stage_music.name)
-        print(self.best_score, self.date)
-        print(self.stage_music.description, self.stage_music.authors)
-
     def __del__(self):
         if self.targets != None:
             self.targets.clear()
         self.stage_music = None
 
+    """
+    Teste si des cibles sont touchées par le joueur et les retire du tableau si besoin
+    """
     def test_collision(self, x, y):
         iterator = 0
         for target, delay in self.active_targets:
@@ -381,6 +415,9 @@ class Stage:
                 del self.active_targets[iterator]
             iterator += 1
 
+    """
+    Permet de rembobiner ou de débobiner un niveau en actualisant les cibles et la musique
+    """
     def set_pos(self, ratio: float, targets: list):
         self.spent = -1
         self.start = time.time() - (float(self.stage_music.duration) * ratio) / 1000

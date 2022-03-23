@@ -16,6 +16,9 @@ class StageSaver:
         self.save_targets()
         self.create_best_score()
 
+    """
+    Sauvegarde de l'en tête d'un fichier
+    """
     def save_header(self):
         with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "w") as file:
             file.write("ext=issou\n")
@@ -26,6 +29,9 @@ class StageSaver:
             file.write("$\n")
             file.close()
 
+    """
+    Sauvegarde de l'en tête d'un niveau
+    """
     def save_stage_header(self):
         with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
             file.write("title=" + self.stage.name + '\n')
@@ -33,6 +39,9 @@ class StageSaver:
             file.write("$\n")
             file.close()
 
+    """
+    Sauvegarde de l'en tête d'un niveau
+    """
     def save_music_header(self):
         with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
             #if os.path.isfile("Stages/" + self.stage.name + "/" + self.stage.name + ".mp3"):
@@ -49,6 +58,9 @@ class StageSaver:
             file.write("$\n")
             file.close()
 
+    """
+    Sauvegarde les cibles d'un niveau
+    """
     def save_targets(self):
         with open("Stages/" + self.stage.name + "/" + self.stage.name + ".issou", "a") as file:
             screen = ctypes.windll.user32
@@ -83,6 +95,9 @@ class StageSaver:
                                str(float(width) - float(target.end_coordinates.y)))
                     file.write('\n')
 
+    """
+    Créer le fichier de meilleur score
+    """
     def create_best_score(self):
         with open("Stages/" + self.stage.name + "/" + self.stage.name + "_bs.issou", "w") as file:
             file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=0")

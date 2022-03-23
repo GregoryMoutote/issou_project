@@ -330,7 +330,7 @@ class LevelCreationSecondInterface(Interface):
                 if not self.import_delete_button.active:  # suppression
                     print("supréssion")
                     self.import_delete_button.active = True
-                    self.stage.remove_traget()
+                    self.stage.remove_target()
                     self.delete()
                     self.inputDurationTarget.show_input_value = False
                     self.inputValueTarget.show_input_value = False

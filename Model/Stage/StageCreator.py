@@ -69,20 +69,28 @@ class StageCreator:
 
         self.currently_modified_target_index = -1
 
+    """
+    Ajoute une cible au tableau des cibles non affichées et le tableau de toutes les cibles
+    """
     def add_target(self, target: Target):
         if self.is_usable:
             self.targets_index=len(self.targets)
             self.targets.append(target)
             self.stage.targets.append(target)
 
-    def remove_traget(self):
-        print("remove target // active target index",self.active_target_index,"               target index",self.targets_index)
+    """
+    Retire une cible du tableau
+    """
+    def remove_target(self):
         self.targets.pop(self.targets_index)
         self.stage.active_targets.pop(self.active_target_index)
         self.targets_index=-1
         self.active_target_index = -1
         self.moving_target_index=-1
 
+    """
+    Ajoute une texture de cible spéciale dans le niveau
+    """
     def add_special_target(self,target):
         if ".png" not in target:
             self.is_usable = False
@@ -99,13 +107,21 @@ class StageCreator:
             self.is_usable = False
             return
 
+    """
+    Rembobine ou déroule un niveau en fonction d'un ratio entre 0 et 1
+    """
     def rewind(self, ratio: float):
         self.stage.set_pose(ratio, self.targets)
 
+    """
+    Permet de sauvegarder un niveau en cours de création
+    """
     def save(self):
-        self.stage_saver = None
         self.stage_saver = StageSaver(self.stage)
 
+    """
+    Permet de tester si un cible à été touché pour la selectionner
+    """
     def set_target_to_modify(self, x, y):
         found_target = None
         self.active_target_index=0
@@ -123,7 +139,9 @@ class StageCreator:
                 self.targets_index += 1
         print("active target index",self.active_target_index,"               target index",self.targets_index)
 
-
+    """
+    Permet l'import des textures du niveau
+    """
     def target_texture_import(self, texture_path: str):
         if not self.is_usable:
             return
@@ -138,6 +156,9 @@ class StageCreator:
             target_texture_path = "Stages/" + self.stage.name + "/" + texture_path[delimiter:]
             shutil.copy2(texture_path, target_texture_path)
 
+    """
+    Retourne la cible actuellement selectionnée pour la modifier
+    """
     def get_currently_modified_target(self):
         if 0 <= self.currently_modified_target_index < self.targets.len:
             return self.targets[self.currently_modified_target_index]

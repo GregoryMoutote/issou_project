@@ -15,12 +15,16 @@ class MovingTarget(Target):
             self.end_coordinates = Coordinates(float(target_data[7] * screen.GetSystemMetrics(1)),
                                                float(target_data[8] * screen.GetSystemMetrics(1)))
 
-    def display(self):
-        print(self.coordinates, self.end_coordinates, self.duration, self.delay, self.value)
 
+    """
+    Affiche la cible à l'écran
+    """
     def show_target(self):
         self.screen.blit(self.picture, (self.coordinates.x - Constants.TARGET_RADIUS ,self.coordinates.y - Constants.TARGET_RADIUS))
 
+    """
+    Met à jour la position de la cible en fonction du temps
+    """
     def update(self):
         if self.begin_time == 0:
             self.begin_time = time.time()
@@ -28,6 +32,3 @@ class MovingTarget(Target):
                 (time.time() - self.begin_time) / self.duration)
         self.coordinates.y = self.begin_coordinates.y + (self.end_coordinates.y - self.begin_coordinates.y) * (
                 (time.time() - self.begin_time) / self.duration)
-
-        #problème quand on met en pose le time avant donc quand on revient en jeux la différence de entre startTime et time à augmenter donc la cible ce tp en avant
-        #il faut faire comme dans stage et soustraire le temps de pause
