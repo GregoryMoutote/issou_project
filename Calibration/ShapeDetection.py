@@ -6,7 +6,9 @@ class ShapeDetection():
         self.corners = []
         self.is_displaying = False
 
-
+    """
+    Trouve les contours du plus grand quadrilatère sur l'image envoyée
+    """
     def detect_from_picture(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 

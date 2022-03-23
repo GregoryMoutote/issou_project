@@ -43,6 +43,9 @@ class PreviewInterface(Interface):
         pygame.display.update()
 
 
+    """
+    Dessine les contours de la plus grande forme sur l'image
+    """
     def picture_draw_contour(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -86,7 +89,9 @@ class PreviewInterface(Interface):
 
         return img
 
-
+    """
+    Converti une image obtenu par le biais d'OpenCV en image affichable sur Python
+    """
     def convert_opencv_picture_to_pygame(self, img):
         opencv_image = img[:, :,::-1]
         shape = opencv_image.shape[1::-1]

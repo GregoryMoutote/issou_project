@@ -6,7 +6,9 @@ from Buttons.PictureButton import *
 from Interfaces.SettingsInterface import *
 from Buttons.PopupButton import *
 
-
+"""
+Découpe les lignes d'une chaine pour tenir dans une popup
+"""
 def split_lines(max_width,max_height, text,font, color=pygame.Color('white')):
     words = text.split(' ')
 
@@ -196,6 +198,10 @@ class PopupInterface(Interface):
         self.left_x = 0
         self.left_y = 0
 
+
+    """
+    Ajouter un bouton à la popup et choisir sa valeur de retour
+    """
     def add_button(self, text, return_value=0):
         nb_button = len(self.buttons)
         new_width = (self.popup_width - 100)/(nb_button+1)
@@ -216,10 +222,17 @@ class PopupInterface(Interface):
         self.reset_coo()
         return self.loop()
 
+
+    """
+    Change la valeur de retour d'un bouton
+    """
     def set_return(self,index, value):
         if len(self.return_values)>index:
             self.return_values[index] = value
 
+    """
+    Change le texte d'un bouton
+    """
     def set_button_text(self, index, text):
         if len(self.buttons)>index:
             self.buttons[index].text = text

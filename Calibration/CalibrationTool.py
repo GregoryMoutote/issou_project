@@ -97,7 +97,7 @@ class CalibrationTool:
                                 [self.matrix[point_order[3]][0], self.matrix[point_order[3]][1]]])
 
     """
-    ====================================================================================================================
+    Calibre une image selon la zone de jeu détectée
     """
     def calibrate_picture(self, img, preview: bool):
         if self.M is not None:
@@ -112,11 +112,9 @@ class CalibrationTool:
             return img
 
     """
-    ====================================================================================================================
+    Calibre les coordonnées d'un point pour correspondre au coordonnées en jeu
     """
     def calibrate_point(self, coord):
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
 
         if self.M is not None:
             result_matrix = np.matmul(self.M, np.float32([coord[0],coord[1],1]))

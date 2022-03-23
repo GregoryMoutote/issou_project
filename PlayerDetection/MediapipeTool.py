@@ -22,16 +22,23 @@ class MediapipeTool :
         self.screen = ctypes.windll.user32
 
 
+    """
+    Met en place le calibrage
+    """
     def set_up_calibration(self):
         _, img = self.cap.read()
         return self.calibration_util.setup(img)
 
-
+    """
+    Définit le paramètre de la détection des mains
+    """
     def init_hand_capture(self):
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5)
 
-
+    """
+    Calcule les coordonnées des mains et rempli les attributs left_hand et right_hand
+    """
     def hand_detection(self):
         if self.cap.isOpened():
 
@@ -114,12 +121,21 @@ class MediapipeTool :
                     result.extend(self.hand_points)
             return result
 
+    """
+    Ferme la caméra
+    """
     def close_camera(self):
         self.cap.release()
 
+    """
+    Redémarre la caméra
+    """
     def reopen_camera(self):
         self.cap = cv2.VideoCapture(0)
 
+    """
+    Vérifie si la main est ouverte ou fermée et rempli l'attribut is_fist_closed
+    """
     def closed_fist_detection(self, hand):
         number_of_fingers_closed = 0
 
