@@ -25,10 +25,10 @@ class SettingsInterface(Interface):
 
         if self.settings.volume == 0:
             self.mute_button = CheckButton(self.screen_width*0.1, self.screen_height *0.3, self.screen_height*0.11, self.screen_height*0.11, self.screen,
-                                          "SoundMute.png", "SoundActive.png", True)
+                                          "soundMute.png", "soundActive.png", True)
         else:
             self.mute_button = CheckButton(self.screen_width*0.1, self.screen_height *0.3, self.screen_height*0.11, self.screen_height*0.11, self.screen,
-                                          "SoundMute.png", "SoundActive.png", False)
+                                          "soundMute.png", "soundActive.png", False)
 
         self.animation_button = CheckButton(self.screen_width*0.4, self.screen_height *0.45, self.screen_height*0.11, self.screen_height*0.11, self.screen,
                                            "checkedOn.png", "checkedOff.png", self.settings.animation)
