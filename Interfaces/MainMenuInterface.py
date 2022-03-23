@@ -39,6 +39,8 @@ class MainMenuInterface(Interface):
         self.newScreen()
         self.reset_coo()
         self.detection.init_hand_capture()
+        if self.detection.isMocker :
+            popup = PopupInterface(self.screen_data,self.screen,self.detection,self.settings,self,"Information","Camera Inactive").start()
         self.loop()
         pygame.quit()
 

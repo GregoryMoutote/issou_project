@@ -61,7 +61,7 @@ class Stage:
             self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".mp3")
         else:
             self.stage_music = Music(self.path[0:self.path.find(".issou")] + ".wav")
-        with open(self.path, 'r') as file:
+        with open(self.path, 'r',encoding="ISO-8859-1") as file:
             line = file.readline()
             if "ext=issou" not in line:
                 file.close()
@@ -203,7 +203,7 @@ class Stage:
         if ".issou" not in self.path:
             return
         best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
-        with open(best_score_path, 'r') as file:
+        with open(best_score_path, 'r',encoding="ISO-8859-1") as file:
             line = file.readline()
             if "ext=issou" not in line:
                 file.close()
@@ -231,7 +231,7 @@ class Stage:
             return
         if self.best_score < self.score:
             best_score_path = self.path[0:self.path.find(".issou")] + "_bs.issou"
-            with open(best_score_path, 'w') as file:
+            with open(best_score_path, 'w',encoding="ISO-8859-1") as file:
                 file.write("ext=issou\ntype=best_score\nowner=player\n$\nval=" + str(self.score))
                 file.close()
                 self.best_score = self.score
@@ -239,7 +239,7 @@ class Stage:
     def load_targets(self):
         if ".issou" not in self.path:
             return
-        with open(self.path, 'r') as file:
+        with open(self.path, 'r',encoding="ISO-8859-1") as file:
             line = file.readline()
             if "ext=issou" not in line:
                 file.close()

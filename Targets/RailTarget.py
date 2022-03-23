@@ -3,7 +3,7 @@ import pygame
 from Targets.Target import Target
 from Model.Stage.Coordinates import  Coordinates
 from Model.Constants import *
-import ctypes
+from Model.ScreenData import *
 import math
 
 class RailTarget(Target):
@@ -20,11 +20,11 @@ class RailTarget(Target):
             self.transparent_picture = pygame.transform.scale(self.transparent_picture, (2 * Constants.TARGET_RADIUS, 2 * Constants.TARGET_RADIUS))
             iterator = 7
             self.steps = []
-            screen = ctypes.windll.user32
+            screen = ScreenData()
             self.steps.append(Coordinates(self.coordinates.x,self.coordinates.y))
             while iterator < len(target_data) - 1:
-                self.steps.append(Coordinates(target_data[iterator] * screen.GetSystemMetrics(0),
-                                              target_data[iterator + 1] * screen.GetSystemMetrics(1)))
+                self.steps.append(Coordinates(target_data[iterator] * screen.width,
+                                              target_data[iterator + 1] * screen.width))
                 iterator += 2
             self.is_achieved = False
 

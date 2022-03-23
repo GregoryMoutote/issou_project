@@ -156,7 +156,7 @@ class LevelCreationFirstInterface(Interface):
     def show(self):
         self.screen.blit(self.background, (0, 0))
         pygame.font.init()
-        littleglitch_font = pygame.font.Font("./Fonts/glitch.otf", 40)
+        littleglitch_font = pygame.font.Font("./Fonts/Glitch.otf", 40)
         text_surface = littleglitch_font.render(self.user_text, True, (255, 255, 255))
         pygame.font.quit()
 
@@ -190,8 +190,8 @@ class LevelCreationFirstInterface(Interface):
         self.screen.blit(pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png"), (0, 0))
 
         pygame.font.init()
-        glitch_font = pygame.font.Font("./Fonts/glitch.otf", 80)
-        littleglitch_font = pygame.font.Font("./Fonts/glitch.otf", 40)
+        glitch_font = pygame.font.Font("./Fonts/Glitch.otf", 80)
+        littleglitch_font = pygame.font.Font("./Fonts/Glitch.otf", 40)
         title_text = glitch_font.render("Creation de niveau", True, (255, 255, 255))
         text1 = littleglitch_font.render("Nom du niveau", True, (255, 255, 255))
         text2 = littleglitch_font.render("Image de fond", True, (255, 255, 255))

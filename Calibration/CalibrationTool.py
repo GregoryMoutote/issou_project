@@ -4,6 +4,7 @@ import numpy as np
 from Calibration import ShapeDetection
 import ctypes
 from datetime import datetime
+from Model.ScreenData import ScreenData
 
 
 class CalibrationTool:
@@ -17,8 +18,8 @@ class CalibrationTool:
         self.screen_width = 0
 
     def setup(self, img: np.ndarray):
-        screen = ctypes.windll.user32
-        self.screen_width = screen.GetSystemMetrics(0)
+        screen = ScreenData()
+        self.screen_width = screen.width
         self.image = img
         #print("TENTATIVE DE RECUPERATION DES POINTS...")
         is_done = self.get_points()
@@ -90,14 +91,11 @@ class CalibrationTool:
             return img
 
     def calibrate_point(self, coord):
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
 
         if self.M is not None:
             result_matrix = np.matmul(self.M, np.float32([coord[0],coord[1],1]))
             return self.screen_width - (result_matrix[0]/result_matrix[2]),result_matrix[1]/result_matrix[2]
         else:
-            #print("[", str(current_time),"]", str((coord[0], coord[1])))
             return coord[0], coord[1]
 
 

@@ -2,7 +2,7 @@ from Targets.Target import Target
 from Model.Stage.Coordinates import Coordinates
 from Model.Constants import *
 import time
-import ctypes
+from Model.ScreenData import ScreenData
 
 class MovingTarget(Target):
     def __init__(self, target_data, screen, level_name):
@@ -11,9 +11,9 @@ class MovingTarget(Target):
             self.screen=screen
             super(MovingTarget, self).__init__(target_data, screen, level_name)
             self.begin_coordinates = Coordinates(self.coordinates.x, self.coordinates.y)
-            screen = ctypes.windll.user32
-            self.end_coordinates = Coordinates(float(target_data[7] * screen.GetSystemMetrics(1)),
-                                               float(target_data[8] * screen.GetSystemMetrics(1)))
+            screen = ScreenData()
+            self.end_coordinates = Coordinates(float(target_data[7] * screen.height),
+                                               float(target_data[8] * screen.height))
 
     def display(self):
         print(self.coordinates, self.end_coordinates, self.duration, self.delay, self.value)
