@@ -8,11 +8,15 @@ class Settings:
     def set_animation(self, anim):
         self.animation = anim
 
+    """
+    Change l'état de l'affichage des animations (activé ou désactivé) en inversant l'état actuel
+    """
     def change_animation(self):
         if self.animation:
             self.animation = False
         else:
             self.animation = True
+
 
     def get_animation(self):
         return self.animation
@@ -24,6 +28,9 @@ class Settings:
     def get_volume(self):
         return self.volume
 
+    """
+    Sauvegarde l'état acutel des paramètres dans le fichier
+    """
     def save_change(self):
         file = open("Model/Settings/data.issou", "w")
         file.write("Data file ISSOU\n")
@@ -31,6 +38,9 @@ class Settings:
         file.write(str(self.animation) + "\n")
         file.close()
 
+    """
+    Charge les paramètres stockés dans le fichier
+    """
     def load_change(self):
         with open("Model/Settings/data.issou", "r") as file:
             line = file.readline()
