@@ -86,7 +86,7 @@ class TutorialPlayInterface(Interface):
                             self.thread.continuer = False
 
 
-            print(self.target_index)
+
 
     """
     créer le nouveau fond à afficher
