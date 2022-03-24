@@ -46,7 +46,7 @@ class LevelCreationFirstInterface(Interface):
         self.reset_coo()
         self.loop()
 
-    def loop(self):
+    def loop(self): #boucle de détection des actions
         try :
             go_on=True
 
@@ -153,7 +153,7 @@ class LevelCreationFirstInterface(Interface):
             PopupInterface(self.screen_data, self.screen, self.detection, self.settings, self, "ERREUR",
                            traceback.format_exc()).start()
 
-    def show(self):
+    def show(self): #affiche l'interface
         self.screen.blit(self.background, (0, 0))
         pygame.font.init()
         littleglitch_font = pygame.font.Font("./Fonts/glitch.otf", 40)
@@ -180,13 +180,13 @@ class LevelCreationFirstInterface(Interface):
             pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def reset_coo(self):
+    def reset_coo(self):  #affiche les mains du joueur
         self.right_x = 0
         self.right_y = 0
         self.left_x = 0
         self.left_y = 0
 
-    def newScreen(self):
+    def newScreen(self): #créer le nouveau fond à afficher
         self.screen.blit(pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png"), (0, 0))
 
         pygame.font.init()
@@ -213,5 +213,5 @@ class LevelCreationFirstInterface(Interface):
         self.show()
 
 
-    def get_extension(self, file_name):
+    def get_extension(self, file_name): #renvoie l'extension d'un fichier
         return file_name[file_name.find('.'):]

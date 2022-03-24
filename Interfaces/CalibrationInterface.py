@@ -23,7 +23,7 @@ class CalibrationInterface(Interface):
         self.loop()
 
 
-    def loop(self):
+    def loop(self): #boucle de détection des actions
         result = False
 
         while result == False:
@@ -35,14 +35,14 @@ class CalibrationInterface(Interface):
                         result = True
 
 
-    def show(self):
+    def show(self): #affiche l'interface
         self.screen.blit(self.background, (0, 0))
         self.moving_sprites.draw(self.screen)
         self.moving_sprites.update(0.25)
         self.clock.tick(60)
         pygame.display.update()
 
-    def newScreen(self):
+    def newScreen(self): #créer le nouveau fond à afficher
         self.screen.fill((255, 255, 255))
         pygame.font.init()
         arial_font = pygame.font.Font("./Fonts/lemonmilk.otf", int(self.screen_height*0.07))

@@ -53,7 +53,7 @@ class LevelSelectionInterface(Interface):
         self.loop()
 
 
-    def loop(self):
+    def loop(self): #boucle de détection des actions
         go_on = True
 
         while go_on:
@@ -126,7 +126,7 @@ class LevelSelectionInterface(Interface):
                     self.show()
 
 
-    def show_description(self, name, picture, difficulty, description, duration):
+    def show_description(self, name, picture, difficulty, description, duration): #affiche la description d'un niveau
         self.screen.blit(self.banner_top_picture, (0, 0))
 
         self.music_picture = pygame.image.load("Stages/" + picture + "/" + picture + ".png")
@@ -176,18 +176,18 @@ class LevelSelectionInterface(Interface):
         pygame.font.quit()
 
 
-    def show(self):
+    def show(self): #affiche l'interface
         self.screen.blit(self.background,(0,0))
 
 
-    def reset_coo(self):
+    def reset_coo(self): #réinitialise les coordonnées
         self.right_x = 0
         self.right_y = 0
         self.left_x = 0
         self.left_y = 0
 
 
-    def show_hand(self):
+    def show_hand(self): #affiche les mains du joueur
         self.show()
         if len(self.detection.left_hand) > 0:
             pygame.draw.circle(self.screen, (255, 0, 0), (self.left_x - 5, self.left_y - 5), 10)
@@ -196,7 +196,7 @@ class LevelSelectionInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def newScreen(self):
+    def newScreen(self):  #créer le nouveau fond à afficher
         background = pygame.image.load("./Pictures/Interfaces/background.jpg")
         background = pygame.transform.scale(background, (self.screen_width, self.screen_height))
         self.screen.blit(background, (0, 0))
@@ -232,7 +232,7 @@ class LevelSelectionInterface(Interface):
         self.background=pygame.image.load("background.jpg")
         self.show()
 
-    def pre_load_all_stages(self):
+    def pre_load_all_stages(self): #pré-charge les fichiers de niveaux
         self.file = os.listdir("Stages")
         for file in self.file:
             self.stages.append(Stage("Stages/" + file + "/" + file + ".issou", self.screen, False,self.settings))

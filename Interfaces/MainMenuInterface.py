@@ -106,14 +106,14 @@ class MainMenuInterface(Interface):
                     self.show()
 
 
-    def show(self):
+    def show(self): #boucle de détection des actions
         self.screen.blit(self.background,(0,0))
         self.moving_sprites.draw(self.screen)
         self.moving_sprites.update(1)
         self.clock.tick(60)
 
 
-    def show_hand(self):
+    def show_hand(self): #affiche les mains du joueur
         self.show()
         if len(self.detection.left_hand)>0:
             pygame.draw.circle(self.screen, (255, 0, 0), (self.left_x - 5, self.left_y - 5), 10)
@@ -122,7 +122,7 @@ class MainMenuInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def newScreen(self):
+    def newScreen(self): #créer le nouveau fond à afficher
         background=pygame.image.load("./Pictures/Interfaces/background.jpg")
         background=pygame.transform.scale(background, (self.screen_width, self.screen_height))
         self.screen.blit(background, (0, 0))
@@ -135,7 +135,7 @@ class MainMenuInterface(Interface):
         self.background=pygame.image.load("background.jpg")
         self.show()
 
-    def reset_coo(self):
+    def reset_coo(self): #réinitialise les coordonnées
         self.right_x = 0
         self.right_y = 0
         self.left_x = 0

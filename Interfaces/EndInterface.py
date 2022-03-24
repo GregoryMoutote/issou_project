@@ -25,7 +25,7 @@ class EndInterface(Interface):
         self.loop()
 
 
-    def loop(self):
+    def loop(self): #boucle de détection des actions
         go_on = True
 
         while go_on:
@@ -65,10 +65,10 @@ class EndInterface(Interface):
                     self.parent.go_on = False
                     go_on = False
 
-    def show(self):
+    def show(self): #affiche l'interface
         self.screen.blit(self.background, (0, 0))
 
-    def show_hand(self):
+    def show_hand(self): #affiche les mains du joueur
         #self.parent.show()
         self.show()
         if len(self.detection.left_hand) > 0:
@@ -78,7 +78,7 @@ class EndInterface(Interface):
             pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def newScreen(self):
+    def newScreen(self): #créer le nouveau fond à afficher
         background = pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
         background = pygame.transform.scale(background, (self.screen_width*0.30, self.screen_height*0.55))
         self.screen.blit(background, (self.screen_width*0.35, self.screen_height*0.225))
@@ -102,7 +102,7 @@ class EndInterface(Interface):
         self.background=pygame.image.load("background.jpg")
         self.show()
 
-    def reset_coo(self):
+    def reset_coo(self): #réinitialise les coordonnées
         self.right_x = 0
         self.right_y = 0
         self.leftX = 0

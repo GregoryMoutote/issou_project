@@ -22,7 +22,7 @@ class PreviewInterface(Interface):
         pygame.font.quit()
 
 
-    def loop(self):
+    def loop(self): #boucle de détection des actions
         go_on = True
         while go_on:
             self.show()
@@ -34,7 +34,7 @@ class PreviewInterface(Interface):
                         self.detection.init_hand_capture()
 
 
-    def show(self):
+    def show(self): #affiche l'interface
         self.screen.blit(self.background, (0, 0))
         _, img = self.webcam.read()
         img = self.picture_draw_contour(img)

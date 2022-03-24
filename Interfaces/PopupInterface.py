@@ -126,7 +126,7 @@ class PopupInterface(Interface):
 
 
 
-    def loop(self):
+    def loop(self): #boucle de détection des actions
         go_on = True
 
         while go_on:
@@ -158,7 +158,7 @@ class PopupInterface(Interface):
                         return self.return_values[i]
 
 
-    def show(self):
+    def show(self): #affiche l'interface
         if self.is_image_loaded:
             self.screen.blit(self.background, ((self.screen_width-self.popup_width)/2,
                                                (self.screen_height-self.popup_height)/2))
@@ -182,7 +182,7 @@ class PopupInterface(Interface):
             self.button.displayButton(self.popup_x + 40, self.popup_y + 60)
 
 
-    def show_hand(self):
+    def show_hand(self): #affiche les mains du joueur
         self.parent.show()
         self.show()
         if len(self.detection.left_hand)>0:
@@ -192,7 +192,7 @@ class PopupInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def reset_coo(self):
+    def reset_coo(self): #réinitialise les coordonnées
         self.right_x = 0
         self.right_y = 0
         self.left_x = 0

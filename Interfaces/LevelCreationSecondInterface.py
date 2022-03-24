@@ -74,7 +74,7 @@ class LevelCreationSecondInterface(Interface):
         self.loop()
 
 
-    def loop(self):
+    def loop(self): #boucle de détection des actions
         go_on=True
 
         while go_on:
@@ -175,7 +175,7 @@ class LevelCreationSecondInterface(Interface):
                 self.place_target()
                 self.reset_coo()
 
-    def show(self):
+    def show(self): #affiche l'interface
         self.screen.blit(self.background, (0, 0))
         self.import_delete_button.show_button()
 
@@ -192,7 +192,7 @@ class LevelCreationSecondInterface(Interface):
         self.timeline.show_button()
 
 
-    def show_hand(self):
+    def show_hand(self): #créer le nouveau fond à afficher
         self.show()
         if len(self.detection.left_hand)>0:
             pygame.draw.circle(self.screen, (255, 0, 0), (self.left_x - 5, self.left_y - 5), 10)
@@ -201,7 +201,8 @@ class LevelCreationSecondInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def newScreen(self):
+
+    def newScreen(self): #réinitialise les coordonnées
         background = pygame.image.load("./Stages/"+self.stage.stage_name+"/background."+self.stage.background_path)
         background = pygame.transform.scale(background, (self.screen_width * 0.80 + 1,self.screen_height * 0.80 + 1))
         self.screen.blit(background, (0, 0))
