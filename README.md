@@ -4,7 +4,9 @@ This project was carried out in Python by Benjamin VADUREL, Guillaume GRANDY and
 The topic was to develop a coordination game in mixed reality (both virtual and augmented) inspired by osu!    
 Main techologies used are OpenCV, MediaPipe and Pygame
 
-Installation Linux :   
+Install Linux :   
+*Clone this repository*    
+*Run the following commands in a terminal*
 sudo apt update    
 sudo apt install python3.9    
 sudo apt install python3-pip    
@@ -16,3 +18,8 @@ pip install mutagen
 pip install pygame   
 pip install screeninfo   
 sudo apt-get install python3-tk    
+
+
+To launch the game :    
+*Run the following command in a terminal in the root folder of the repository*    
+python3 main.py    
