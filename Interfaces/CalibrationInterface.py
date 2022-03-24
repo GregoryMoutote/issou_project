@@ -19,6 +19,9 @@ class CalibrationInterface(Interface):
         self.loop()
 
 
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         result = False
 
@@ -31,6 +34,9 @@ class CalibrationInterface(Interface):
                         result = True
 
 
+    """
+    affiche l'interface
+    """
     def show(self):
         self.screen.blit(self.background, (0, 0))
         self.moving_sprites.draw(self.screen)
@@ -38,6 +44,9 @@ class CalibrationInterface(Interface):
         self.clock.tick(60)
         pygame.display.update()
 
+    """
+    créer le nouveau fond à afficher
+    """
     def newScreen(self):
         self.screen.fill((255, 255, 255))
         pygame.font.init()

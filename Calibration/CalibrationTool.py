@@ -17,6 +17,9 @@ class CalibrationTool:
         self.is_done = False
         self.screen_width = 0
 
+    """
+    Met en place la matrice de transformation avec le calibrage
+    """
     def setup(self, img: np.ndarray):
         screen = ScreenData()
         self.screen_width = screen.width
@@ -27,13 +30,22 @@ class CalibrationTool:
             self.calc_matrix()
         return is_done
 
+    """
+    Initialise la caméra
+    """
     def init_camera(self):
         self.webcam = cv2.VideoCapture(0)
 
+    """
+    Ferme la caméra s'il y en a une ouverte
+    """
     def close_camera(self):
         if self.webcam is not None:
             self.webcam.release()
 
+    """
+    Insère les coins de l'image obtenue avec la caméra dans une matrice
+    """ 
     def get_points(self):
         self.shape_util = ShapeDetection.ShapeDetection()
         self.matrix = self.shape_util.detect_from_picture(self.image)
@@ -42,6 +54,9 @@ class CalibrationTool:
         else:
             return False
 
+    """
+    Calcule la matrice de transformation
+    """
     def calc_matrix(self):
         if self.matrix is not None and len(self.matrix)>=4:
             rows, cols, ch = self.image.shape
@@ -54,6 +69,10 @@ class CalibrationTool:
 
             self.is_done = True
 
+    """
+    Permet d'ordonner les points dans la matrice dans dans l'ordre coin haut gauche, coin haut droit,
+    coin bas gauche et coin bas droit 
+    """
     def sort_points(self):
         tab_sum = [self.matrix[0][0] + self.matrix[0][1], self.matrix[1][0] + self.matrix[1][1],
                   self.matrix[2][0] + self.matrix[2][1], self.matrix[3][0] + self.matrix[3][1]]
@@ -78,6 +97,9 @@ class CalibrationTool:
                                 [self.matrix[point_order[2]][0], self.matrix[point_order[2]][1]],
                                 [self.matrix[point_order[3]][0], self.matrix[point_order[3]][1]]])
 
+    """
+    Calibre une image selon la zone de jeu détectée
+    """
     def calibrate_picture(self, img, preview: bool):
         if self.M is not None:
             rows, cols, ch = img.shape
@@ -90,6 +112,9 @@ class CalibrationTool:
         else:
             return img
 
+    """
+    Calibre les coordonnées d'un point pour correspondre au coordonnées en jeu
+    """
     def calibrate_point(self, coord):
 
         if self.M is not None:
