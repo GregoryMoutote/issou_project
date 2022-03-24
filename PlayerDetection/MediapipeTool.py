@@ -37,6 +37,13 @@ class MediapipeTool :
     Met en place le calibrage
     """
     def set_up_calibration(self):
+        if not self.isMocker:
+            try:
+                _, img = self.cap.read()
+                self.isMocker = False
+                return self.calibration_util.setup(img)
+            except:
+                self.isMocker = True
         _, img = self.cap.read()
         return self.calibration_util.setup(img)
 
