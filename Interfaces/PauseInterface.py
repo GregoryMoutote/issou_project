@@ -21,7 +21,9 @@ class PauseInterface(Interface):
         self.reset_coo()
         self.loop()
 
-
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         go_on = True
 
@@ -74,10 +76,15 @@ class PauseInterface(Interface):
                     self.parent.go_on = False
                     go_on = False
 
+    """
+    affiche l'interface
+    """
     def show(self):
         self.screen.blit(self.background, (0, 0))
 
-
+    """
+    affiche les mains du joueur
+    """
     def show_hand(self):
         self.show()
         if len(self.detection.left_hand)>0:
@@ -87,6 +94,9 @@ class PauseInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
+    """
+    créer le nouveau fond à afficher
+    """
     def newScreen(self):
         background=pygame.image.load("./Pictures/Interfaces/parameterBackground.png")
         background = pygame.transform.scale(background, (self.screen_width*0.30, self.screen_height*0.55))
@@ -102,6 +112,9 @@ class PauseInterface(Interface):
         self.background=pygame.image.load("background.jpg")
         self.show()
 
+    """
+    réinitialise les coordonnées
+    """
     def reset_coo(self):
         self.right_x = 0
         self.right_y = 0

@@ -37,7 +37,9 @@ class TutorialPlayInterface(Interface):
         self.reset_coo()
         self.loop()
 
-
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         self.go_on = True
         while self.go_on:
@@ -86,7 +88,9 @@ class TutorialPlayInterface(Interface):
 
             print(self.target_index)
 
-
+    """
+    créer le nouveau fond à afficher
+    """
     def newScreen(self):
         print("./TutorialStage/tutorial/tuto"+str(self.target_index+1)+".jpg")
         backGround = pygame.image.load("./TutorialStage/tutorial/tuto"+str(self.target_index+1)+".jpg")
@@ -96,7 +100,9 @@ class TutorialPlayInterface(Interface):
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
 
-
+    """
+    réinitialise les coordonnées
+    """
     def reset_coo(self):
         self.right_x = 0
         self.right_y = 0
@@ -116,15 +122,27 @@ class PlayInterfaceThread(Interface,threading.Thread):
 
         self.number_of_active_targets = 0
 
+    """
+    créer le nouveau fond à afficher
+    """
     def newScreen(self):
         self.background=pygame.image.load("background.jpg")
 
+    """
+    arrête le thread
+    """
     def end(self):
         self.continuer = False
 
+    """
+    change la cible à afficher
+    """
     def newTarget(self,target):
         self.target=target
 
+    """
+    éxécution du thread
+    """
     def run(self):
         while (self.continuer):
             self.target.update()

@@ -14,7 +14,9 @@ class PictureButton(Button):
         self.text_color = text_color
         self.show_button()
 
-
+    """
+    affiche le bouton
+    """
     def show_button(self):
         self.screen.blit(self.picture, (self.x, self.y))
         if self.text != "" :

@@ -16,10 +16,15 @@ class InputCreationLevelButton(Button):
         self.text_size = text_size
         self.show_button()
 
-
+    """
+    affiche le bouton
+    """
     def show_button(self):
         self.screen.blit(self.picture, (self.x, self.y))
 
+    """
+    affiche le bouton avec la nouvelle valeur
+    """
     def show_value(self):
         pygame.font.init()
         my_font = pygame.font.Font(self.font, self.nb_size)
@@ -36,6 +41,9 @@ class InputCreationLevelButton(Button):
         self.screen.blit(text_surface,(self.x + self.width / 2 - (len(self.text)*self.text_size) /5 , self.y +self.height+ 5))
         pygame.font.quit()
 
+    """
+    incrémente ou décrémente la valeur du bouton
+    """
     def click(self,x):
         if self.show_input_value:
             if(x<self.x+self.width*0.32 and self.value>1):

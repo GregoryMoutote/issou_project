@@ -6,7 +6,9 @@ from Buttons.PictureButton import *
 from Interfaces.SettingsInterface import *
 from Buttons.PopupButton import *
 
-
+"""
+Découpe les lignes d'une chaine pour tenir dans une popup
+"""
 def split_lines(max_width,max_height, text,font, color=pygame.Color('white')):
     words = text.split(' ')
 
@@ -119,11 +121,9 @@ class PopupInterface(Interface):
         self.popup_x = (self.screen_width - self.popup_width) / 2
         self.popup_y = (self.screen_height - self.popup_height) / 2
 
-
-
-
-
-
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         go_on = True
 
@@ -155,7 +155,9 @@ class PopupInterface(Interface):
                         go_on = False
                         return self.return_values[i]
 
-
+    """
+    affiche l'interface
+    """
     def show(self):
         if self.is_image_loaded:
             self.screen.blit(self.background, ((self.screen_width-self.popup_width)/2,
@@ -179,7 +181,9 @@ class PopupInterface(Interface):
             self.screen.blit(self.text_surface, (self.popup_x, self.popup_y))
             self.button.displayButton(self.popup_x + 40, self.popup_y + 60)
 
-
+    """
+    affiche les mains du joueur
+    """
     def show_hand(self):
         self.parent.show()
         self.show()
@@ -190,12 +194,19 @@ class PopupInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
+    """
+    réinitialise les coordonnées
+    """
     def reset_coo(self):
         self.right_x = 0
         self.right_y = 0
         self.left_x = 0
         self.left_y = 0
 
+
+    """
+    Ajouter un bouton à la popup et choisir sa valeur de retour
+    """
     def add_button(self, text, return_value=0):
         nb_button = len(self.buttons)
         new_width = (self.popup_width - 100)/(nb_button+1)
@@ -216,10 +227,17 @@ class PopupInterface(Interface):
         self.reset_coo()
         return self.loop()
 
+
+    """
+    Change la valeur de retour d'un bouton
+    """
     def set_return(self,index, value):
         if len(self.return_values)>index:
             self.return_values[index] = value
 
+    """
+    Change le texte d'un bouton
+    """
     def set_button_text(self, index, text):
         if len(self.buttons)>index:
             self.buttons[index].text = text

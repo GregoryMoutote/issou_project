@@ -24,7 +24,9 @@ class PlayInterface(Interface):
 
         self.loop()
 
-
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         self.go_on = True
         while self.go_on:
@@ -52,7 +54,7 @@ class PlayInterface(Interface):
 
             self.stage.play()
 
-            if self.stage.is_end():
+            if self.stage.is_ended():
                 self.stage.save_best_score()
                 pygame.mixer.music.stop()
                 self.thread.end()
@@ -72,7 +74,9 @@ class PlayInterface(Interface):
                     self.detection.hand_points.clear()
                     self.reset_coo()
 
-
+    """
+    créer le nouveau fond à afficher
+    """
     def newScreen(self):
         background = pygame.image.load("./Stages/" + self.stage.name + "/background.png")
         background = pygame.transform.scale(background, (self.screen_width, self.screen_height))
@@ -81,13 +85,18 @@ class PlayInterface(Interface):
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
 
-
+    """
+    réinitialise les coordonnées
+    """
     def reset_coo(self):
         self.right_x = 0
         self.right_y = 0
         self.leftX = 0
         self.leftY = 0
 
+    """
+    redémarre le thread
+    """
     def restart(self):
         self.newScreen()
         self.thread = PlayInterfaceThread(self.screen, self.stage, self.detection, self)
@@ -108,9 +117,15 @@ class PlayInterfaceThread(Interface,threading.Thread):
         self.interface=interface
         self.continuer=True
 
+    """
+    arrête le thread
+    """
     def end(self):
         self.continuer = False
 
+    """
+    éxécution du thread
+    """
     def run(self):
         while (self.continuer):
             self.stage.update_targets()

@@ -73,7 +73,9 @@ class LevelCreationSecondInterface(Interface):
         self.reset_coo()
         self.loop()
 
-
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         go_on=True
 
@@ -101,7 +103,6 @@ class LevelCreationSecondInterface(Interface):
                     self.detection.is_fist_closed = 1
 
             self.show_hand()
-            #print(len(self.stage.stage.active_targets))
 
             if self.detection.is_fist_closed == 1:
                 print("--------------------"+str(len(self.stage.targets)))
@@ -161,20 +162,17 @@ class LevelCreationSecondInterface(Interface):
                         self.is_selected_target = True
                         self.import_delete_button.active = False
 
-                #print("actvie target selected "+str(self.stage.active_target_index))
-                #print("target selected " + str(self.stage.targets_index))
-                #print(len(self.stage.stage.active_targets))
 
-                #gestion du bouton d'import et de suppression
                 self.sup_import_target()
 
-                #sélection de cible
                 self.select_target()
 
-                #placer les cibles
                 self.place_target()
                 self.reset_coo()
 
+    """
+    affiche l'interface
+    """
     def show(self):
         self.screen.blit(self.background, (0, 0))
         self.import_delete_button.show_button()
@@ -191,7 +189,9 @@ class LevelCreationSecondInterface(Interface):
         self.inputDurationTarget.show_value()
         self.timeline.show_button()
 
-
+    """
+    affiche les mains du joueur
+    """
     def show_hand(self):
         self.show()
         if len(self.detection.left_hand)>0:
@@ -201,6 +201,9 @@ class LevelCreationSecondInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
+    """
+    créer le nouveau fond à afficher
+    """
     def newScreen(self):
         background = pygame.image.load("./Stages/"+self.stage.stage_name+"/background."+self.stage.background_path)
         background = pygame.transform.scale(background, (self.screen_width * 0.80 + 1,self.screen_height * 0.80 + 1))
@@ -234,18 +237,27 @@ class LevelCreationSecondInterface(Interface):
         self.background=pygame.image.load("background.jpg")
         self.show()
 
+    """
+    réinitialise les coordonnées
+    """
     def reset_coo(self):
-        #print("reset co")
         self.right_x = 0
         self.right_y = 0
         self.left_x = 0
         self.left_y = 0
 
+    """
+    supprimer la cible dans la main
+    """
     def delete(self):
         self.is_selected_target = False
         self.selected_picture = None
         self.selected_picture_name = None
 
+
+    """
+    selectione une cible
+    """
     def select_target(self):
         for target,delay in self.stage.stage.active_targets:
             if int(target.coordinates.x - self.right_x) ** 2 + int(target.coordinates.y - self.right_y) ** 2 <= Constants.TARGET_RADIUS ** 2:
@@ -258,19 +270,16 @@ class LevelCreationSecondInterface(Interface):
                 self.import_delete_button.active = False
                 return
 
-        # if not self.is_selected_target:
-        #     self.stage.moving_target_index=-1
-        #     self.stage.active_target_index=-1
-        #     self.stage.targets_index=-1
 
         if self.right_x < self.screen_width * 0.8 and self.right_y < self.screen_height * 0.8:
             self.inputDurationTarget.show_input_value = False
             self.inputValueTarget.show_input_value = False
             self.import_delete_button.active = True
 
-
+    """
+    déplace une cible
+    """
     def move_target(self):
-        # print("press deplacement de cible")
         if self.stage.active_target_index != -1:
             self.is_selected_target = True
             self.stage.moving_target_index=self.stage.active_target_index
@@ -282,18 +291,18 @@ class LevelCreationSecondInterface(Interface):
                                                             Constants.TARGET_RADIUS * 0.8))
             self.show()
 
-
+    """
+    place la cible que l'utilisateur à dans la main
+    """
     def place_target(self):
 
         if Constants.TARGET_RADIUS < self.right_x < self.screen_width * 0.8 - Constants.TARGET_RADIUS and \
              Constants.TARGET_RADIUS < self.right_y < self.screen_height * 0.8 - Constants.TARGET_RADIUS and \
               self.is_selected_target and time.time() - self.last_click > 1:
-            # print("press place cible")
             self.inputDurationTarget.show_input_value = True
             self.inputValueTarget.show_input_value = True
 
             if self.stage.moving_target_index != -1:
-                #print("placé après le déplacement")
                 self.stage.targets[self.stage.targets_index].coordinates.x = self.right_x
                 self.stage.targets[self.stage.targets_index].coordinates.y = self.right_y
                 self.stage.stage.active_targets[self.stage.moving_target_index][0].coordinates.x = self.right_x
@@ -312,25 +321,24 @@ class LevelCreationSecondInterface(Interface):
             self.last_click = time.time()
             self.is_selected_target = False
             self.import_delete_button.active = True
-            #print("active_target",self.stage.active_target_index)
             if len(self.stage.stage.active_targets)>0:
                 self.inputValueTarget.value=int(self.stage.stage.active_targets[self.stage.active_target_index][0].value)
                 self.inputDurationTarget.value=int(self.stage.stage.active_targets[self.stage.active_target_index][0].duration)
             self.show()
             self.stage.stage.actualise_active_targets()
 
-
-
+    """
+    gestion du bouton de suppréssion et d'import de cible
+    """
     def sup_import_target(self):
         if self.import_delete_button.x < self.right_x < (self.import_delete_button.x + self.import_delete_button.width) and \
              self.import_delete_button.y < self.right_y < (self.import_delete_button.y + self.import_delete_button.height):
-        #print("press import/suppression")
             if (time.time()-self.last_click)>1:
                 self.last_click=time.time()
                 if not self.import_delete_button.active:  # suppression
                     print("supréssion")
                     self.import_delete_button.active = True
-                    self.stage.remove_traget()
+                    self.stage.remove_target()
                     self.delete()
                     self.inputDurationTarget.show_input_value = False
                     self.inputValueTarget.show_input_value = False

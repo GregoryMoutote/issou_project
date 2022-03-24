@@ -14,6 +14,9 @@ class DynamicTarget(Target):
     def display(self):
         print(self.coordinates, self.duration, self.delay, self.value, self.end_value)
 
+    """
+    Met à jour la valeur de la cible en fonction du temps
+    """
     def update(self):
         if self.begin_time == 0:
             self.begin_time = time.time()

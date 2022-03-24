@@ -52,7 +52,9 @@ class LevelSelectionInterface(Interface):
         self.reset_coo()
         self.loop()
 
-
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         go_on = True
 
@@ -125,7 +127,9 @@ class LevelSelectionInterface(Interface):
                     self.reset_coo()
                     self.show()
 
-
+    """
+    affiche la description d'un niveau
+    """
     def show_description(self, name, picture, difficulty, description, duration):
         self.screen.blit(self.banner_top_picture, (0, 0))
 
@@ -175,18 +179,24 @@ class LevelSelectionInterface(Interface):
         self.screen.blit(duration_text, (self.screen_width / 5 * 4.2, self.screen_height / 10))
         pygame.font.quit()
 
-
+    """
+    affiche l'interface
+    """
     def show(self):
         self.screen.blit(self.background,(0,0))
 
-
+    """
+    réinitialise les coordonnées
+    """
     def reset_coo(self):
         self.right_x = 0
         self.right_y = 0
         self.left_x = 0
         self.left_y = 0
 
-
+    """
+    affiche les mains du joueur
+    """
     def show_hand(self):
         self.show()
         if len(self.detection.left_hand) > 0:
@@ -196,6 +206,9 @@ class LevelSelectionInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
+    """
+    créer le nouveau fond à afficher
+    """
     def newScreen(self):
         background = pygame.image.load("./Pictures/Interfaces/background.jpg")
         background = pygame.transform.scale(background, (self.screen_width, self.screen_height))
@@ -232,6 +245,9 @@ class LevelSelectionInterface(Interface):
         self.background=pygame.image.load("background.jpg")
         self.show()
 
+    """
+    pré-charge les fichiers de niveaux
+    """
     def pre_load_all_stages(self):
         self.file = os.listdir("Stages")
         for file in self.file:

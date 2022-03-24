@@ -37,7 +37,9 @@ class SettingsInterface(Interface):
         self.reset_coo()
         self.loop()
 
-
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         go_on = True
 
@@ -108,11 +110,15 @@ class SettingsInterface(Interface):
                         if(self.mute_button.active == True):
                             self.mute_button.change_stat()
                         self.newScreen()
-
+    """
+    affiche l'interface
+    """
     def show(self):
         self.screen.blit(self.background, (0, 0))
 
-
+    """
+    affiche les mains du joueur
+    """
     def show_hand(self):
         self.show()
         if len(self.detection.left_hand)>0:
@@ -122,6 +128,9 @@ class SettingsInterface(Interface):
            pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
+    """
+    créer le nouveau fond à afficher
+    """
     def newScreen(self):
         pygame.font.init()
         font_glitch = pygame.font.Font("./Fonts/Glitch.otf", 100)
@@ -147,7 +156,9 @@ class SettingsInterface(Interface):
         self.background=pygame.image.load("background.jpg")
         self.show()
 
-
+    """
+    réinitialise les coordonnées
+    """
     def reset_coo(self):
         self.right_x = 0
         self.right_y = 0

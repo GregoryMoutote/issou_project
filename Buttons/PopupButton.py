@@ -15,6 +15,9 @@ class PopupButton:
         self.button_width = self.text_surface.get_width()
         self.button_height = self.text_surface.get_height()
 
+    """
+    affiche le bouton
+    """
     def displayButton(self, x, y):
         button = pygame.Rect(x,y,self.button_width, self.button_height)
         pygame.draw.rect(self.screen, (255,255,255),button)

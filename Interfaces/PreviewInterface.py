@@ -21,7 +21,9 @@ class PreviewInterface(Interface):
         self.loop()
         pygame.font.quit()
 
-
+    """
+    boucle de détection des actions
+    """
     def loop(self):
         go_on = True
         while go_on:
@@ -33,7 +35,9 @@ class PreviewInterface(Interface):
                         self.detection.reopen_camera()
                         self.detection.init_hand_capture()
 
-
+    """
+    affiche l'interface
+    """
     def show(self):
         self.screen.blit(self.background, (0, 0))
         _, img = self.webcam.read()
@@ -43,6 +47,9 @@ class PreviewInterface(Interface):
         pygame.display.update()
 
 
+    """
+    Dessine les contours de la plus grande forme sur l'image
+    """
     def picture_draw_contour(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -67,7 +74,7 @@ class PreviewInterface(Interface):
 
         corners = []
 
-        ##Detection des coordonnees du contour
+        #Detection des coordonnees du contour
         for j in corner:
             if i % 2 == 0:
                 x = corner[i]
@@ -86,7 +93,9 @@ class PreviewInterface(Interface):
 
         return img
 
-
+    """
+    Converti une image obtenu par le biais d'OpenCV en image affichable sur Python
+    """
     def convert_opencv_picture_to_pygame(self, img):
         opencv_image = img[:, :,::-1]
         shape = opencv_image.shape[1::-1]

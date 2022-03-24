@@ -28,9 +28,9 @@ class RailTarget(Target):
                 iterator += 2
             self.is_achieved = False
 
-    def display(self):
-        print(self.coordinates, self.steps, self.duration, self.delay, self.value)
-
+    """
+    Affiche la cible et les étapes qui la composent
+    """
     def show_target(self):
         endx = self.steps[self.step_active].x
         endy = self.steps[self.step_active].y
@@ -52,7 +52,10 @@ class RailTarget(Target):
         if self.step_active < len(self.steps) - 1:
             if(((self.steps[self.step_active].x<self.actual_coordinates.x<self.steps[self.step_active+1].x) or (self.steps[self.step_active+1].x<self.actual_coordinates.x<self.steps[self.step_active].x))and self.is_active):
                 self.screen.blit(self.picture_position, (self.actual_coordinates.x,self.actual_coordinates.y))
-        
+
+    """
+    Met à jour la cible en fonction de l'étape à laquelle le joueur se trouve
+    """
     def actualise(self, actual_coordinates: Coordinates):
         if actual_coordinates == None:
             return
@@ -69,17 +72,6 @@ class RailTarget(Target):
                 if self.steps[self.step_active+1].x+Constants.TARGET_RADIUS/8<actual_coordinates.x and actual_coordinates.x<(self.steps[self.step_active+1].x+Constants.TARGET_RADIUS*2)-Constants.TARGET_RADIUS/8 \
                         and self.steps[self.step_active+1].y+Constants.TARGET_RADIUS/8<actual_coordinates.y and actual_coordinates.y<(self.steps[self.step_active+1].y+Constants.TARGET_RADIUS*2)+Constants.TARGET_RADIUS/8:
                     self.step_active += 1
-
-                #pygame.draw.line(self.screen,(0, 255, 0),(actual_coordinates.x,self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x) * math.tan(angle)),(actual_coordinates.x,self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x) * math.tan(angle)+2*Constants.TARGET_RADIUS),10)
-                #pygame.display.update()
-                #print(self.steps[self.step_active].y)
-                #print(actual_coordinates.y,"       >",self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - 2*Constants.TARGET_RADIUS) * math.tan(angle),"     <",self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle)+2*Constants.TARGET_RADIUS)
-
-                #if (actual_coordinates.y<self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle)) or \
-                 #(actual_coordinates.y>self.steps[self.step_active].y + (actual_coordinates.x - self.steps[self.step_active].x - Constants.TARGET_RADIUS) * math.tan(angle)+2*Constants.TARGET_RADIUS):
-                  #  print("stop")
-                   # self.step_active=0
-                    #self.is_active=False
 
         elif self.steps[0].x<actual_coordinates.x<self.steps[0].x+Constants.TARGET_RADIUS*2 \
                         and self.steps[0].y<actual_coordinates.y<self.steps[0].y+Constants.TARGET_RADIUS*2:

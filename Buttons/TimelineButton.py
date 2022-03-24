@@ -14,12 +14,16 @@ class TimelineButton(Button):
         self.percent = 0
         self.show_button()
 
-
+    """
+    affiche le bouton
+    """
     def show_button(self):
         self.screen.blit(self.back_picture, (self.x, self.y))
         self.screen.blit(self.front_scale_picture, (self.x, self.y))
 
-
+    """
+    change la valeur de la time line
+    """
     def change_stat(self, percent):
         print(percent)
         if percent <= 1:
