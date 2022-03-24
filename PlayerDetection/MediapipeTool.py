@@ -33,31 +33,22 @@ class MediapipeTool :
         self.screen = ScreenData()
 
 
-    """
-    Met en place le calibrage
-    """
+
     def set_up_calibration(self):
-        if not self.isMocker:
-            try:
+        if not self.isMocker :
+            try :
                 _, img = self.cap.read()
                 self.isMocker = False
                 return self.calibration_util.setup(img)
-            except:
+            except :
                 self.isMocker = True
-        _, img = self.cap.read()
-        return self.calibration_util.setup(img)
 
-    """
-    Définit le paramètre de la détection des mains
-    """
     def init_hand_capture(self):
         if not self.isMocker:
             self.mp_hands = mp.solutions.hands
             self.hands = self.mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5)
 
-    """
-    Calcule les coordonnées des mains et rempli les attributs left_hand et right_hand
-    """
+
     def hand_detection(self):
         if not self.isMocker and self.cap.isOpened():
             ret, frame = self.cap.read()
@@ -141,23 +132,14 @@ class MediapipeTool :
                     result.extend(self.hand_points)
             return result
 
-    """
-    Ferme la caméra
-    """
     def close_camera(self):
         if not self.isMocker:
             self.cap.release()
 
-    """
-    Redémarre la caméra
-    """
     def reopen_camera(self):
         if not self.isMocker:
             self.cap = cv2.VideoCapture(0)
 
-    """
-    Vérifie si la main est ouverte ou fermée et rempli l'attribut is_fist_closed
-    """
     def closed_fist_detection(self, hand):
         if not self.isMocker:
 
