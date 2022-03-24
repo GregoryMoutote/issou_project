@@ -11,7 +11,6 @@ class LevelCreationFirstInterface(Interface):
 
         super().__init__(screen_data, screen)
 
-        ##TEXT INPUT
         self.default_x = self.screen_width / 2 - 175
         self.input_rect = pygame.Rect(self.default_x, self.screen_height / 2 - 200, 1000, 50)
         self.is_input_active = False
@@ -46,7 +45,10 @@ class LevelCreationFirstInterface(Interface):
         self.reset_coo()
         self.loop()
 
-    def loop(self): #boucle de détection des actions
+    """
+    boucle de détection des actions
+    """
+    def loop(self):
         try :
             go_on=True
 
@@ -153,7 +155,10 @@ class LevelCreationFirstInterface(Interface):
             PopupInterface(self.screen_data, self.screen, self.detection, self.settings, self, "ERREUR",
                            traceback.format_exc()).start()
 
-    def show(self): #affiche l'interface
+    """
+    affiche l'interface
+    """
+    def show(self):
         self.screen.blit(self.background, (0, 0))
         pygame.font.init()
         littleglitch_font = pygame.font.Font("./Fonts/glitch.otf", 40)
@@ -169,8 +174,9 @@ class LevelCreationFirstInterface(Interface):
         pygame.draw.rect(self.screen, self.color, self.input_rect)
         self.screen.blit(text_surface, (self.input_rect.x + 5, self.input_rect.y + 5))
 
-
-
+    """
+    affiche les mains du joueur
+    """
     def show_hand(self):
         self.show()
         if len(self.detection.left_hand)>0:
@@ -180,13 +186,19 @@ class LevelCreationFirstInterface(Interface):
             pygame.draw.circle(self.screen, (255, 255, 255), (self.right_x - 5, self.right_y - 5), 10)
         pygame.display.update()
 
-    def reset_coo(self):  #affiche les mains du joueur
+    """
+    réinitialise les coordonnées
+    """
+    def reset_coo(self):
         self.right_x = 0
         self.right_y = 0
         self.left_x = 0
         self.left_y = 0
 
-    def newScreen(self): #créer le nouveau fond à afficher
+    """
+    créer le nouveau fond à afficher
+    """
+    def newScreen(self):
         self.screen.blit(pygame.image.load("./Pictures/Interfaces/levelBuilderBackground.png"), (0, 0))
 
         pygame.font.init()
@@ -212,6 +224,8 @@ class LevelCreationFirstInterface(Interface):
         self.background=pygame.image.load("background.jpg")
         self.show()
 
-
-    def get_extension(self, file_name): #renvoie l'extension d'un fichier
+    """
+    renvoie l'extension d'un fichier
+    """
+    def get_extension(self, file_name):
         return file_name[file_name.find('.'):]

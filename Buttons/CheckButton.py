@@ -14,14 +14,19 @@ class CheckButton(Button):
         self.active = active
         self.show_button()
 
-    def show_button(self): #affiche le bouton
+    """
+    affiche le bouton
+    """
+    def show_button(self):
         if self.active:
             self.screen.blit(self.true_picture, (self.x, self.y))
         else:
             self.screen.blit(self.false_picture, (self.x, self.y))
 
-
-    def change_stat(self): #change l'état du bouton (On,Off)
+    """
+    change l'état du bouton (On,Off)
+    """
+    def change_stat(self):
         if time.time() - self.time > 1:
             self.time = time.time()
             if self.active:

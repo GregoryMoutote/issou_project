@@ -14,7 +14,11 @@ class Level:
         self.background = pygame.image.load("Pictures/Interfaces/button2.png")
         self.background = pygame.transform.scale(self.background, (width, height))
 
-    def show(self, screen, x, y): #affiche le composant à l'écran
+
+    """
+    affiche le composant à l'écran
+    """
+    def show(self, screen, x, y):
         screen.blit(self.background, (x, y))
 
         image = pygame.image.load("stages/" + self.picture + "/" + self.picture + ".png")

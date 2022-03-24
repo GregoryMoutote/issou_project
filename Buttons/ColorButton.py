@@ -13,8 +13,10 @@ class ColorButton(Button):
         self.text_color = text_color
         self.show_button()
 
-
-    def show_button(self): #affiche le bouton
+    """
+    affiche le bouton
+    """
+    def show_button(self):
         if self.text != "":
             pygame.font.init()
             pygame.draw.rect(self.screen, self.color, (self.x, self.y, self.width, self.height))

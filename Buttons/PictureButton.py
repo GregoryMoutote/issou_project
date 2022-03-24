@@ -14,8 +14,10 @@ class PictureButton(Button):
         self.text_color = text_color
         self.show_button()
 
-
-    def show_button(self): #affiche le bouton
+    """
+    affiche le bouton
+    """
+    def show_button(self):
         self.screen.blit(self.picture, (self.x, self.y))
         if self.text != "" :
             pygame.font.init()

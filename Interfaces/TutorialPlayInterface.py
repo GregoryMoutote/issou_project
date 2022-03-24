@@ -37,8 +37,10 @@ class TutorialPlayInterface(Interface):
         self.reset_coo()
         self.loop()
 
-
-    def loop(self): #boucle de détection des actions
+    """
+    boucle de détection des actions
+    """
+    def loop(self):
         self.go_on = True
         while self.go_on:
             self.detection.hand_detection()
@@ -86,8 +88,10 @@ class TutorialPlayInterface(Interface):
 
             print(self.target_index)
 
-
-    def newScreen(self): #créer le nouveau fond à afficher
+    """
+    créer le nouveau fond à afficher
+    """
+    def newScreen(self):
         print("./TutorialStage/tutorial/tuto"+str(self.target_index+1)+".jpg")
         backGround = pygame.image.load("./TutorialStage/tutorial/tuto"+str(self.target_index+1)+".jpg")
         backGround = pygame.transform.scale(backGround, (self.screen_width, self.screen_height))
@@ -96,8 +100,10 @@ class TutorialPlayInterface(Interface):
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
 
-
-    def reset_coo(self): #réinitialise les coordonnées
+    """
+    réinitialise les coordonnées
+    """
+    def reset_coo(self):
         self.right_x = 0
         self.right_y = 0
         self.leftX = 0
@@ -116,16 +122,28 @@ class PlayInterfaceThread(Interface,threading.Thread):
 
         self.number_of_active_targets = 0
 
-    def newScreen(self): #créer le nouveau fond à afficher
+    """
+    créer le nouveau fond à afficher
+    """
+    def newScreen(self):
         self.background=pygame.image.load("background.jpg")
 
-    def end(self): #arrête le thread
+    """
+    arrête le thread
+    """
+    def end(self):
         self.continuer = False
 
-    def newTarget(self,target): #change la cible à afficher
+    """
+    change la cible à afficher
+    """
+    def newTarget(self,target):
         self.target=target
 
-    def run(self): #éxécution du thread
+    """
+    éxécution du thread
+    """
+    def run(self):
         while (self.continuer):
             self.target.update()
             self.screen.blit(self.background, (0, 0))

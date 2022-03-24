@@ -24,8 +24,10 @@ class PlayInterface(Interface):
 
         self.loop()
 
-
-    def loop(self): #boucle de détection des actions
+    """
+    boucle de détection des actions
+    """
+    def loop(self):
         self.go_on = True
         while self.go_on:
             self.detection.hand_detection()
@@ -72,8 +74,10 @@ class PlayInterface(Interface):
                     self.detection.hand_points.clear()
                     self.reset_coo()
 
-
-    def newScreen(self): #affiche les mains du joueur
+    """
+    créer le nouveau fond à afficher
+    """
+    def newScreen(self):
         background = pygame.image.load("./Stages/" + self.stage.name + "/background.png")
         background = pygame.transform.scale(background, (self.screen_width, self.screen_height))
         self.screen.blit(background, (0, 0))
@@ -81,14 +85,19 @@ class PlayInterface(Interface):
         pygame.image.save(self.screen,"background.jpg")
         self.background=pygame.image.load("background.jpg")
 
-
-    def reset_coo(self): #réinitialise les coordonnées
+    """
+    réinitialise les coordonnées
+    """
+    def reset_coo(self):
         self.right_x = 0
         self.right_y = 0
         self.leftX = 0
         self.leftY = 0
 
-    def restart(self): #redémarre le thread
+    """
+    redémarre le thread
+    """
+    def restart(self):
         self.newScreen()
         self.thread = PlayInterfaceThread(self.screen, self.stage, self.detection, self)
         self.thread.start()
@@ -108,10 +117,16 @@ class PlayInterfaceThread(Interface,threading.Thread):
         self.interface=interface
         self.continuer=True
 
-    def end(self): #arrête le thread
+    """
+    arrête le thread
+    """
+    def end(self):
         self.continuer = False
 
-    def run(self): #éxécution du thread
+    """
+    éxécution du thread
+    """
+    def run(self):
         while (self.continuer):
             self.stage.update_targets()
             self.screen.blit(self.background, (0, 0))

@@ -18,11 +18,17 @@ class MultipleButton(Button):
                 self.check.append(CheckButton(self.x + i * self.width / (self.nb_button + 1), self.y, self.height, self.height, self.screen, self.true_color, self.false_color, False))
         self.show_button()
 
-    def show_button(self): #affiche le bouton
+    """
+    affiche le bouton
+    """
+    def show_button(self):
         for i in range(0, self.nb_button):
              self.check[i].show_button()
 
-    def change_stat(self, nb_active): #change le nombre de bouton activé et désactivé
+    """
+    change le nombre de bouton activé et désactivé
+    """
+    def change_stat(self, nb_active):
         self.nb_active = nb_active
 
         for i in range(0, self.nb_button):

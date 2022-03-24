@@ -21,8 +21,10 @@ class PreviewInterface(Interface):
         self.loop()
         pygame.font.quit()
 
-
-    def loop(self): #boucle de détection des actions
+    """
+    boucle de détection des actions
+    """
+    def loop(self):
         go_on = True
         while go_on:
             self.show()
@@ -33,8 +35,10 @@ class PreviewInterface(Interface):
                         self.detection.reopen_camera()
                         self.detection.init_hand_capture()
 
-
-    def show(self): #affiche l'interface
+    """
+    affiche l'interface
+    """
+    def show(self):
         self.screen.blit(self.background, (0, 0))
         _, img = self.webcam.read()
         img = self.picture_draw_contour(img)
@@ -70,7 +74,7 @@ class PreviewInterface(Interface):
 
         corners = []
 
-        ##Detection des coordonnees du contour
+        #Detection des coordonnees du contour
         for j in corner:
             if i % 2 == 0:
                 x = corner[i]
