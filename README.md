@@ -1,5 +1,8 @@
 # issou_project
-Supervised project for second year of DUT in IT
+This is a supervised project made as part of our second year of IUT Lyon1 DUT in IT in 2022    
+This project was carried out in Python by Benjamin VADUREL, Guillaume GRANDY and Grégory MOUTOTE    
+The topic was to develop a coordination game in mixed reality (both virtual and augmented) inspired by osu!    
+Main techologies used are OpenCV, MediaPipe and Pygame
 
 Installation Linux :   
 sudo apt update    
